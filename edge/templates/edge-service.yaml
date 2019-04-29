@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: edge
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: edge
+spec:
+  ports:
+    - name: http
+      port: 8443
+    - name: metrics
+      port: 8080
+  selector:
+    app: edge

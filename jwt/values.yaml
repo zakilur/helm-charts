@@ -1,0 +1,124 @@
+environment: openshift 
+
+jwt:
+  deployment_type: normal
+  version: 0.2.0
+  use_aac: 'false' # when deploying the jwt-gov version, this should be set to 'true' if you want jwt to use aac for auth control
+  image: 'docker.production.deciphernow.com/deciphernow/gm-jwt-security:0.2.0'
+  #redis_host: redis.greymatter.svc.cluster.local
+  redis_db: "0"
+  redis_pass: redis
+  base_path: /services/jwt-security/0.2.0
+  egress_use_tls: 'true'
+  users_mount_point: /gm-jwt-security/etc
+  certs_mount_point: /gm-jwt-security/certs
+  imagePullPolicy: Always
+
+  envvars:
+    - type: value
+      name: HTTPS_PORT
+      value: "3000"
+    - type: secret
+      name: PRIVATE_KEY
+      secret: jwt-security
+      key: jwt_private_key
+    - type: secret
+      name: JWT_API_KEY	
+      secret: jwt-security
+      key: jwt_api_key
+    - type: value
+      name: ENABLE_TLS
+      value: true
+    - type: secret
+      name: SERVER_TRUST
+      secret: jwt-certs
+      key: jwt.trust.pem
+    - type: secret
+      name: SERVER_CERT
+      secret: jwt-certs
+      key: jwt.cert.pem
+    - type: secret
+      name: SERVER_KEY	
+      secret: jwt-certs
+      key: jwt.key.pem
+
+  certificates:
+  - name: jwt-certs
+    jwt.cert.pem: |-
+      -----BEGIN CERTIFICATE-----
+      ...
+      -----END CERTIFICATE-----
+    jwt.key.pem: |-
+      -----BEGIN CERTIFICATE-----
+      ...
+      -----END CERTIFICATE-----
+    jwt.trust.pem: |-
+      -----BEGIN RSA PRIVATE KEY-----
+      ...
+      -----END RSA PRIVATE KEY-----
+    server.cert.pem: |-
+      -----BEGIN CERTIFICATE-----
+      ...
+      -----END CERTIFICATE-----
+    server.key.pem: |-
+      -----BEGIN CERTIFICATE-----
+      ...
+      -----END CERTIFICATE-----
+    server.trust.pem: |-  
+      -----BEGIN RSA PRIVATE KEY-----
+      ...
+      -----END RSA PRIVATE KEY-----
+  - name: jwt-security
+    jwt.key: |-
+      -----BEGIN EC PRIVATE KEY-----
+      ...
+      -----END EC PRIVATE KEY-----
+    jwt.pub:
+      -----BEGIN PUBLIC KEY-----
+      ...
+      -----END PUBLIC KEY-----
+    
+redis:
+  secret_name: redis-password
+  password: 'redis'
+  openshift:
+    image: 'centos/redis-32-centos7'
+  k8s:
+    image: 'redis:3.2'
+  replica_count: 1  
+  imagePullPolicy: Always
+  #private_image: false
+
+sidecar:
+  image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1'
+  proxy_dynamic: 'true'
+  metrics_key_function: depth
+  ingress_use_tls: 'true'
+  imagePullPolicy: Always
+
+  # Set this to true if you are attempting to deploy xDS by itself.  
+  # Ideally, xDS is deployed as a dependency to Grey Matter, which creates the 
+  # sidecar secret, but if individual testing is being done, the sidecar secret will
+  # need to be created.  
+  create_sidecar_secret: false
+  certificates:
+    # name: sidecar
+    # ca: |-
+    #   -----BEGIN CERTIFICATE-----
+    #   ...
+    #   -----END CERTIFICATE-----
+    # cert: |-
+    #   -----BEGIN CERTIFICATE-----
+    #   ...
+    #   -----END CERTIFICATE-----
+    # key: |-
+    #   -----BEGIN RSA PRIVATE KEY-----
+    #   ...
+    #   -----END RSA PRIVATE KEY-----
+
+xds:
+  port: 18000
+  cluster: greymatter
+
+exhibitor:
+  replicas: 3

@@ -1,0 +1,145 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+#apiVersion: apps/v1
+metadata:
+  name: data
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: data
+  strategy:
+  activeDeadlineSeconds: '21600'
+  resources: {}
+  rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+  type: Rolling
+  template:
+    metadata:
+      labels:
+        app: data
+    spec:
+      containers:
+      - name: data
+        image: {{ .Values.data.image | quote }}
+        imagePullPolicy: {{ .Values.data.imagePullPolicy }}
+        env:
+    {{- range $envvar := .Values.data.envvars }}
+      {{- $envName := $envvar.name | upper | replace "." "_" | replace "-" "_" }}
+        {{- if eq $envvar.type "secret" }}
+        - name: {{ $envName }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ $envvar.secret }}
+              key: {{ $envvar.key }}
+        {{- else if eq $envvar.type "value" }}
+        - name: {{ $envName }}
+          value: {{ $envvar.value | quote }}
+        {{- end }}
+      {{- end  }}   
+      
+        - name: MONGOHOST
+          value: {{ template "greymatter.mongo.address" . }}
+        
+        {{- if .Values.mongo.ssl.enabled }}
+        - name: MONGO_USE_TLS
+          value: "true"
+        - name: MONGO_CERT
+          valueFrom: 
+            secretKeyRef: 
+              name: {{ .Values.mongo.ssl.name }}
+              key: cert_b64
+        - name: MONGO_KEY
+          valueFrom: 
+            secretKeyRef: 
+              name: {{ .Values.mongo.ssl.name }}
+              key: key_b64
+        - name: MONGO_TRUST
+          valueFrom: 
+            secretKeyRef: 
+              name: {{ .Values.mongo.ssl.name }}
+              key: ca_b64
+        {{- end }}
+        ports:
+        - containerPort: 8181
+          name: internal
+          protocol: TCP
+      - name: sidecar
+        env:
+        - name: INGRESS_USE_TLS
+          value: "true"
+        - name: INGRESS_CA_CERT_PATH
+          value: '/etc/proxy/tls/sidecar/ca.crt'
+        - name: INGRESS_CERT_PATH
+          value: '/etc/proxy/tls/sidecar/server.crt'
+        - name: INGRESS_KEY_PATH
+          value: '/etc/proxy/tls/sidecar/server.key'
+      {{- if .Values.data.use_tls }}
+        - name: EGRESS_USE_TLS
+          value: "true" 
+        - name: EGRESS_CA_CERT_PATH
+          value: '/etc/proxy/tls/sidecar/ca.crt'
+        - name: EGRESS_CERT_PATH
+          value: '/etc/proxy/tls/sidecar/server.crt'
+        - name: EGRESS_KEY_PATH
+          value: '/etc/proxy/tls/sidecar/server.key'
+      {{- end }}
+        - name: METRICS_KEY_FUNCTION
+          value: {{ .Values.sidecar.metrics_key_function | quote }}
+        - name: METRICS_PORT
+          value:  "8081"
+        - name: PORT
+          value: "8080"
+        - name: PROXY_DYNAMIC
+          value: {{ .Values.sidecar.proxy_dynamic | quote }}
+        - name: SERVICE_HOST
+          value: "127.0.0.1"
+        - name: SERVICE_PORT
+          value: "8181"
+        - name: XDS_CLUSTER
+          value: {{ .Values.xds.cluster | quote }}
+        - name: XDS_HOST
+          value: "xds.{{ .Release.Namespace }}.svc.cluster.local"
+        - name: XDS_PORT
+          value: {{ .Values.xds.port | quote }}
+        - name: ZK_ADDRS
+          value: {{ template "greymatter.exhibitor.address" . }}
+        - name: ZK_ANNOUNCE_PATH
+          value: {{ .Values.data.base_path | quote }}
+        - name: TIMEOUT
+          value: {{ .Values.sidecar.timeout | quote  }}
+        image: {{ .Values.sidecar.image | quote }}
+        imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 8081
+          name: metrics
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /etc/proxy/tls/sidecar
+          name: sidecar
+        - name: edge
+          mountPath: /etc/proxy/tls/edge
+      imagePullSecrets:
+      - name: docker.production.deciphernow.com
+      volumes:
+      - name: sidecar
+        secret:
+          secretName: sidecar
+      - name: data
+        secret:
+          secretName: data
+      - name: jwt-security
+        secret:
+          secretName: jwt-security
+      - name: edge
+        secret:
+          secretName: edge

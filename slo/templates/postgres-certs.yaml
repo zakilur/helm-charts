@@ -1,0 +1,22 @@
+{{- if .Values.postgres.ssl.enabled }}
+{{ if .Values.postgres.ssl.certificates }}
+{{- with .Values.postgres.ssl.certificates }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ $.Values.postgres.ssl.name }}
+  labels:
+    chart: "{{ $.Chart.Name }}-{{ $.Chart.Version }}"
+    release: "{{ $.Release.Name }}"
+    heritage: "{{ $.Release.Service }}"
+type: Opaque
+data:
+  ca.pem: {{ .ca | b64enc }}
+  postgres.crt: {{ .cert | b64enc }}
+  postgres.key: {{ .key | b64enc }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+

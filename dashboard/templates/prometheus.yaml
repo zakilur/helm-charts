@@ -1,0 +1,98 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: prometheus
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: prometheus
+      deployment: prometheus
+  replicas: {{ .Values.prometheus.replica_count }}
+  template:
+    metadata:
+      labels:
+        app: prometheus
+        deployment: prometheus
+    spec:
+      {{- if and .Values.environment (ne .Values.environment "openshift") }}
+      securityContext:
+        fsGroup: 65534
+      {{- end }}  
+      containers:
+      - name: prometheus
+        image: {{ .Values.prometheus.image | quote }}
+        ports:
+        - name: internal
+          containerPort: 9090
+        command:
+        - {{ .Values.prometheus.start_cmd | quote }}
+        args:
+        - "--query.timeout=4m"
+        - "--query.max-samples=5000000000"
+        - "--storage.tsdb.path={{ .Values.prometheus.data_mount_point }}/data"
+        - "--config.file={{ .Values.prometheus.config_mount_point }}/prometheus.yaml"
+        - "--web.console.libraries=/usr/share/prometheus/console_libraries"
+        - "--web.console.templates=/usr/share/prometheus/consoles"
+        - "--web.enable-admin-api"
+        - "--web.external-url=https://{{ .Values.route_url_name }}.{{ .Release.Namespace }}.{{ .Values.DOMAIN }}/services/prometheus/{{ .Values.prometheus.version }}"
+        - "--web.route-prefix=/"
+        volumeMounts:
+        - name: prometheus-configuration
+          mountPath: {{ .Values.prometheus.config_mount_point }}
+        - name: prometheus-data
+          mountPath: {{ .Values.prometheus.data_mount_point }}
+      - name: sidecar
+        image: {{ .Values.sidecar.image | quote }}
+        imagePullPolicy: {{ .Values.prometheus.imagePullPolicy }}
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: metrics
+          containerPort: 8081
+        env:
+        - name: INGRESS_USE_TLS
+          value: {{ .Values.dashboard.ingress_use_tls | quote }}
+        - name: INGRESS_CA_CERT_PATH
+          value: "/etc/proxy/tls/sidecar/ca.crt"
+        - name: INGRESS_CERT_PATH
+          value: "/etc/proxy/tls/sidecar/server.crt"
+        - name: INGRESS_KEY_PATH
+          value: "/etc/proxy/tls/sidecar/server.key"
+        - name: METRICS_KEY_FUNCTION
+          value: {{ .Values.sidecar.metrics_key_function | quote }}
+        - name: METRICS_PORT
+          value: "8081"
+        - name: PORT
+          value: "8080"
+        - name: PROXY_DYNAMIC
+          value: {{ .Values.sidecar.proxy_dynamic | quote }}
+        - name: SERVICE_HOST
+          value: "127.0.0.1"
+        - name: SERVICE_PORT
+          value: "9090"
+        - name: XDS_CLUSTER
+          value: {{ .Values.xds.cluster | quote }}
+        - name: XDS_HOST
+          value: "xds.{{ .Release.Namespace }}.svc.cluster.local"
+        - name: XDS_PORT
+          value: {{ .Values.xds.port | quote }}
+        - name: ZK_ADDRS
+          value:  {{ template "greymatter.exhibitor.address" . }}
+        - name: ZK_ANNOUNCE_PATH
+          value: "/services/prometheus/{{ .Values.prometheus.version }}"
+        volumeMounts:
+        - name: sidecar
+          mountPath: /etc/proxy/tls/sidecar
+      imagePullSecrets:
+      - name: docker.production.deciphernow.com
+      volumes:
+      - name: prometheus-configuration
+        configMap:
+          name: prometheus
+      - name: prometheus-data
+        persistentVolumeClaim:
+          claimName: prometheus
+      - name: sidecar
+        secret:
+          secretName: sidecar

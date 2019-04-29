@@ -1,0 +1,171 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: catalog
+  namespace: {{.Release.Namespace}}
+spec:
+  selector:
+    matchLabels:
+      app: catalog
+      deployment: catalog
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: catalog
+        deployment: catalog
+    spec:
+      containers:
+        - name: catalog
+          image: {{.Values.catalog.image}}
+          imagePullPolicy: {{.Values.catalog.imagePullPolicy}}
+          ports:
+            - name: internal
+              containerPort: 9080
+          env:
+            - name: DATA_SOURCE
+              value: {{.Values.catalog.source | quote}}
+            - name: DEBUG
+              value: {{.Values.catalog.debug | quote}}
+            - name: PORT
+              value: '9080'
+            - name: XDS_SERVER_ADDRESS
+              value: 'xds.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.xds.port }}'
+            - name: ZK_HOST
+              value: {{template "greymatter.exhibitor.address" .}}
+            - name: SERVICE_0_CAPABILITY
+              value: 'Grey Matter'
+            - name: SERVICE_0_DOCUMENTATION
+              value: '/services/catalog/{{ .Values.catalog.version }}/'
+            - name: SERVICE_0_NAME
+              value: 'Grey Matter Catalog'
+            - name: SERVICE_0_OWNER
+              value: 'Decipher'
+            - name: SERVICE_0_VERSION
+              value: {{.Values.catalog.version | trunc 3 | quote}}
+            - name: SERVICE_0_ZOOKEEPER_ANNOUNCEMENT_POINT
+              value: '/services/catalog/{{ .Values.catalog.version }}/metrics'
+
+            - name: SERVICE_1_CAPABILITY
+              value: 'Grey Matter'
+            - name: SERVICE_1_DOCUMENTATION
+              value: ''
+            - name: SERVICE_1_NAME
+              value: 'Grey Matter Control'
+            - name: SERVICE_1_OWNER
+              value: 'Decipher'
+            - name: SERVICE_1_VERSION
+              value: {{.Values.xds.version | trunc 3 | quote}}
+            - name: SERVICE_1_ZOOKEEPER_ANNOUNCEMENT_POINT
+              value: '/services/xds/{{ .Values.xds.version }}/metrics'
+
+            - name: SERVICE_2_CAPABILITY
+              value: 'Grey Matter'
+            - name: SERVICE_2_DOCUMENTATION
+              value: ''
+            - name: SERVICE_2_NAME
+              value: 'Grey Matter Dashboard'
+            - name: SERVICE_2_OWNER
+              value: 'Decipher'
+            - name: SERVICE_2_VERSION
+              value: {{.Values.dashboard.version | trunc 3 | quote}}
+            - name: SERVICE_2_ZOOKEEPER_ANNOUNCEMENT_POINT
+              value: '/services/dashboard/{{ .Values.dashboard.version }}/metrics'
+
+            - name: SERVICE_3_CAPABILITY
+              value: 'Grey Matter'
+            - name: SERVICE_3_DOCUMENTATION
+              value: '/services/data/{{ .Values.data.version }}/'
+            - name: SERVICE_3_NAME
+              value: 'Grey Matter Data'
+            - name: SERVICE_3_OWNER
+              value: 'Decipher'
+            - name: SERVICE_3_VERSION
+              value: {{.Values.data.version | trunc 3 | quote}}
+            - name: SERVICE_3_ZOOKEEPER_ANNOUNCEMENT_POINT
+              value: '/services/data/{{ .Values.data.version }}/metrics'
+
+            - name: SERVICE_4_CAPABILITY
+              value: 'Grey Matter'
+            - name: SERVICE_4_DOCUMENTATION
+              value: '/services/jwt-security/{{ .Values.jwt.version }}/'
+            - name: SERVICE_4_NAME
+              value: 'Grey Matter JWT Security'
+            - name: SERVICE_4_OWNER
+              value: 'Decipher'
+            - name: SERVICE_4_VERSION
+              value: {{.Values.jwt.version | trunc 3 | quote}}
+            - name: SERVICE_4_ZOOKEEPER_ANNOUNCEMENT_POINT
+              value: '/services/jwt-security/{{ .Values.jwt.version }}/metrics'
+
+            - name: SERVICE_5_CAPABILITY
+              value: 'Grey Matter'
+            - name: SERVICE_5_DOCUMENTATION
+              value: ''
+            - name: SERVICE_5_NAME
+              value: 'Grey Matter Edge'
+            - name: SERVICE_5_OWNER
+              value: 'Decipher'
+            - name: SERVICE_5_VERSION
+              value: {{.Values.sidecar.version | trunc 3 | quote}}
+            - name: SERVICE_5_ZOOKEEPER_ANNOUNCEMENT_POINT
+              value: '/services/edge/{{ .Values.sidecar.version }}/metrics'
+
+            - name: SERVICE_6_CAPABILITY
+              value: 'Grey Matter'
+            - name: SERVICE_6_DOCUMENTATION
+              value: ''
+            - name: SERVICE_6_NAME
+              value: 'Grey Matter Service Level Objectives'
+            - name: SERVICE_6_OWNER
+              value: 'Decipher'
+            - name: SERVICE_6_VERSION
+              value: {{.Values.slo.version | trunc 3 | quote}}
+            - name: SERVICE_6_ZOOKEEPER_ANNOUNCEMENT_POINT
+              value: '/services/slo/{{ .Values.slo.version }}/metrics'
+        - name: sidecar
+          image: {{.Values.sidecar.image}}
+          imagePullPolicy: {{.Values.sidecar.imagePullPolicy}}
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: metrics
+              containerPort: 8081
+          env:
+            - name: INGRESS_USE_TLS
+              value: 'true'
+            - name: INGRESS_CA_CERT_PATH
+              value: '/etc/proxy/tls/sidecar/ca.crt'
+            - name: INGRESS_CERT_PATH
+              value: '/etc/proxy/tls/sidecar/server.crt'
+            - name: INGRESS_KEY_PATH
+              value: '/etc/proxy/tls/sidecar/server.key'
+            - name: METRICS_PORT
+              value: '8081'
+            - name: PORT
+              value: '8080'
+            - name: PROXY_DYNAMIC
+              value: {{.Values.sidecar.proxy_dynamic | quote}}
+            - name: SERVICE_HOST
+              value: '127.0.0.1'
+            - name: SERVICE_PORT
+              value: '9080'
+            - name: XDS_CLUSTER
+              value: {{.Values.xds.cluster | quote}}
+            - name: XDS_HOST
+              value: 'xds.{{ .Release.Namespace }}.svc.cluster.local'
+            - name: XDS_PORT
+              value: '18000'
+            - name: ZK_ADDRS
+              value: {{template "greymatter.exhibitor.address" .}}
+            - name: ZK_ANNOUNCE_PATH
+              value: '/services/catalog/{{ .Values.catalog.version }}'
+          volumeMounts:
+            - name: sidecar
+              mountPath: /etc/proxy/tls/sidecar
+      imagePullSecrets:
+        - name: docker.production.deciphernow.com
+      volumes:
+        - name: sidecar
+          secret:
+            secretName: sidecar

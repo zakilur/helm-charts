@@ -1,0 +1,81 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: edge
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: edge
+      deployment: edge
+  template:
+    metadata:
+      labels:
+        app: edge
+        deployment: edge
+    spec:
+      containers:
+      - name: edge
+        image: {{ .Values.sidecar.image | quote }}
+        imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
+        env:
+        - name: EGRESS_USE_TLS
+          value: {{ .Values.edge.egress_use_tls | quote }}
+        - name:  EGRESS_CA_CERT_PATH
+          value: '/etc/proxy/tls/sidecar/ca.crt'
+        - name: EGRESS_CERT_PATH
+          value: '/etc/proxy/tls/sidecar/server.crt'
+        - name: EGRESS_KEY_PATH
+          value: '/etc/proxy/tls/sidecar/server.key'
+        - name: INGRESS_USE_TLS
+          value: {{ .Values.edge.ingress_use_tls | quote }}
+        - name: INGRESS_CA_CERT_PATH
+          value: '/etc/proxy/tls/edge/ca.crt'
+        - name: INGRESS_CERT_PATH
+          value: '/etc/proxy/tls/edge/server.crt'
+        - name: INGRESS_KEY_PATH
+          value: '/etc/proxy/tls/edge/server.key'
+        - name: INHEADERS_ENABLED
+          value: {{ .Values.edge.inheaders_enabled | quote }}
+        - name: OBS_ENABLED
+          value: {{ .Values.edge.obs_enabled | quote }}
+        - name: OBS_FULL_RESPONSE
+          value: {{ .Values.edge.obs_full_response | quote }}
+        - name: PORT
+          value: "8443"
+        - name: PROXY_DYNAMIC
+          value: {{ .Values.sidecar.proxy_dynamic | quote }}
+        - name: XDS_CLUSTER
+          value: {{ .Values.xds.cluster | quote }}
+        - name: XDS_HOST
+          value: "xds.{{ .Release.Namespace }}.svc.cluster.local"
+        - name: XDS_PORT
+          value: {{ .Values.xds.port | quote }}
+        - name: ZK_ADDRS
+          value: {{ template "greymatter.exhibitor.address" . }}
+        - name: ZK_ANNOUNCE_PATH
+          value: {{ .Values.edge.base_path | quote }}
+        - name: ACL_ENABLED
+          value: {{ .Values.edge.acl_enabled | quote }}
+        - name: TIMEOUT
+          value: {{ .Values.sidecar.timeout  | quote }}
+        ports:
+        - name: http
+          containerPort: 8443
+        - name: metrics
+          containerPort: 8081
+        volumeMounts:
+        - name: edge
+          mountPath: /etc/proxy/tls/edge
+        - name: sidecar
+          mountPath: /etc/proxy/tls/sidecar
+      imagePullSecrets:
+      - name: docker.production.deciphernow.com
+      volumes:
+      - name: edge
+        secret:
+          secretName: edge
+      - name: sidecar
+        secret:
+          secretName: sidecar

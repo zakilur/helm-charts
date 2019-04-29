@@ -1,0 +1,127 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+    name: jwt-security
+    namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.exhibitor.replica_count | default 1 }}
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: jwt-security
+      deployment: jwt-security
+  template:
+    metadata:
+      labels:
+        app: jwt-security
+        deployment: jwt-security
+    spec:
+      containers:
+      - name: jwt-security
+        image: {{ .Values.jwt.image | quote }}
+        imagePullPolicy: {{ .Values.jwt.imagePullPolicy }}
+        command: ["/bin/sh"]
+        args: ["-c", "if [[ ! -d ./certs ]]; then mkdir -p ./certs; fi && if [[ ! -d ./etc ]]; then mkdir -p ./certs; fi && /gm-jwt-security/gm-jwt-security"]
+        env:
+      {{- range $envvar := .Values.jwt.envvars }}
+      {{- $envName := $envvar.name | upper | replace "." "_" | replace "-" "_" }}
+        {{- if eq $envvar.type "secret" }}
+        - name: {{ $envName }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ $envvar.secret }}
+              key: {{ $envvar.key }}
+        {{- else if eq $envvar.type "value" }}
+        - name: {{ $envName }}
+          value: {{ $envvar.value | quote }}
+        {{- end }}
+      {{- end  }}   
+        - name: REDIS_HOST
+          value: redis.{{ .Release.Namespace }}.svc.cluster.local
+        - name:  REDIS_PORT
+          value: "6379"
+        - name: REDIS_DB
+          value: {{ .Values.jwt.redis_db | quote }}
+        - name: REDIS_PASS
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.redis.secret_name }}
+              key: password
+        - name: DEMO_MODE
+          value: {{ .Values.jwt.use_aac | default false | quote }}
+        ports:
+        - containerPort: 3000
+          name: internal
+          protocol: TCP
+        volumeMounts:
+        - name: jwt-users
+          mountPath: {{ .Values.jwt.users_mount_point }}
+      - name: sidecar
+        env:
+        - name: EGRESS_USE_TLS
+          value:  {{ .Values.jwt.egress_use_tls | quote }}
+        - name: EGRESS_CA_CERT_PATH
+          value: '/etc/proxy/tls/sidecar/ca.crt'
+        - name: EGRESS_CERT_PATH
+          value: '/etc/proxy/tls/sidecar/server.crt'
+        - name: EGRESS_KEY_PATH
+          value: '/etc/proxy/tls/sidecar/server.key'
+        - name: INGRESS_USE_TLS
+          value: {{ .Values.sidecar.ingress_use_tls | quote }}
+        - name: INGRESS_CA_CERT_PATH
+          value: '/etc/proxy/tls/sidecar/ca.crt'
+        - name: INGRESS_CERT_PATH
+          value: '/etc/proxy/tls/sidecar/server.crt'
+        - name: INGRESS_KEY_PATH
+          value: '/etc/proxy/tls/sidecar/server.key'
+        - name: METRICS_KEY_FUNCTION
+          value: {{ .Values.sidecar.metrics_key_function | quote }}
+        - name: METRICS_PORT
+          value: "8081"
+        - name: PORT
+          value: "8080"
+        - name: PROXY_DYNAMIC
+          value: {{ .Values.sidecar.proxy_dynamic  | quote }}
+        - name: SERVICE_HOST
+          value: 127.0.0.1
+        - name: SERVICE_PORT
+          value: "3000"
+        - name: XDS_CLUSTER
+          value: {{ .Values.xds.cluster  | quote }}
+        - name: XDS_HOST
+          value: "xds.{{ .Release.Namespace }}.svc.cluster.local"
+        - name: XDS_PORT
+          value: {{ .Values.xds.port | quote }}
+        - name: ZK_ADDRS
+          value: {{ template "greymatter.exhibitor.address" . }}
+        - name: ZK_ANNOUNCE_PATH
+          value: "/services/jwt-security/{{ .Values.jwt.version }}"
+        image: {{ .Values.sidecar.image | quote }}
+        imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 8081
+          name: metrics
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /etc/proxy/tls/sidecar
+          name: sidecar
+        - name: edge
+          mountPath: /etc/proxy/tls/edge
+      imagePullSecrets:
+        - name: docker.production.deciphernow.com
+      volumes:
+        - name: sidecar
+          secret:
+            secretName: sidecar
+        - name: jwt-security
+          secret:
+            secretName: jwt-security
+        - name: jwt-users
+          configMap:
+            name: jwt-users
+        - name: edge
+          secret:
+            secretName: edge

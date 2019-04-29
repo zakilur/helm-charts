@@ -1,0 +1,81 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dashboard
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: dashboard
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dashboard
+    spec:
+      containers:
+      - name: dashboard
+        image: '{{ .Values.dashboard.image }}'
+        imagePullPolicy: {{ .Values.dashboard.imagePullPolicy }}
+        ports:
+        - name: internal
+          containerPort: 1337
+        env:
+        - name: FABRIC_SERVER
+          value: '{{ .Values.dashboard.fabric_server }}'
+        - name: USE_PROMETHEUS
+          value: '{{ .Values.dashboard.use_prometheus }}'
+        - name: OBJECTIVES_SERVER
+          value: '{{ .Values.dashboard.objectives_server }}'
+        - name: PROMETHEUS_SERVER
+          value: '{{ .Values.dashboard.prometheus_server }}'
+        - name: BASE_PATH
+          value: '{{ .Values.dashboard.base_path }}'
+      - name: sidecar
+        image: '{{ .Values.sidecar.image }}'
+        imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: metrics
+          containerPort: 8081
+        env:
+        - name: INGRESS_USE_TLS
+          value: '{{ .Values.sidecar.ingress_use_tls }}'
+        - name: INGRESS_CA_CERT_PATH
+          value: "/etc/proxy/tls/sidecar/ca.crt"
+        - name: INGRESS_CERT_PATH
+          value: "/etc/proxy/tls/sidecar/server.crt"
+        - name: INGRESS_KEY_PATH
+          value: "/etc/proxy/tls/sidecar/server.key"
+        - name: METRICS_KEY_FUNCTION
+          value: '{{ .Values.sidecar.metrics_key_function }}'
+        - name: METRICS_PORT
+          value:  "8081"
+        - name: PORT
+          value: "8080"
+        - name: PROXY_DYNAMIC
+          value: '{{ .Values.sidecar.proxy_dynamic }}'
+        - name: SERVICE_HOST
+          value: "127.0.0.1"
+        - name: SERVICE_PORT
+          value: "1337"
+        - name: XDS_CLUSTER
+          value: '{{ .Values.xds.cluster }}'
+        - name: XDS_HOST
+          value: "xds.{{ .Release.Namespace }}.svc.cluster.local"
+        - name: XDS_PORT
+          value: '{{ .Values.xds.port }}'
+        - name: ZK_ADDRS
+          value: {{ template "greymatter.exhibitor.address" . }}
+        - name: ZK_ANNOUNCE_PATH
+          value: '{{ .Values.dashboard.base_path }}'
+        volumeMounts:
+        - name: sidecar
+          mountPath: /etc/proxy/tls/sidecar
+      imagePullSecrets:
+        - name: docker.production.deciphernow.com
+      volumes:
+        - name: sidecar
+          secret:
+            secretName: sidecar

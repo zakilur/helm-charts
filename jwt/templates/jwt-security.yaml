@@ -1,0 +1,12 @@
+kind: Secret
+apiVersion: v1
+metadata:
+  name: jwt-security
+  namespace: {{ .Release.Namespace }}
+type: Opaque
+stringData:
+  jwt_private_key: |-
+    {{ .Files.Get "certificates/jwt/jwt.key" | b64enc }}
+  jwt_api_key: c2tpcGphY2stc2x1bmstc3VzcGVjdC1pc3JhZWwtc2NyYXA=
+  jwt_pub_key: |-
+    {{ .Files.Get "certificates/jwt/jwt.pub" | b64enc }}

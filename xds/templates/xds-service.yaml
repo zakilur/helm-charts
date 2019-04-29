@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: xds
+  namespace: {{ .Release.Namespace }}
+  labels:
+  app: xds
+spec:
+  ports:
+    - name: grpc
+      port: 8443
+      targetPort: grpc
+    - name: metrics
+      port: 8080
+      targetPort: 8080
+  clusterIP: None
+  selector:
+    app: xds
+  type: ClusterIP

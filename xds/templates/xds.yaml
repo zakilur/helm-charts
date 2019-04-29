@@ -1,0 +1,87 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: xds
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: xds
+      deployment: xds
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: xds
+        deployment: xds
+    spec:
+      containers:
+      - name: xds
+        image: {{ .Values.xds.image }}
+        imagePullPolicy: {{ .Values.xds.imagePullPolicy }}
+        ports:
+        - name: grpc
+          containerPort: {{ .Values.xds.port }}
+        - name: http
+          containerPort: 18001
+        - name: config
+          containerPort: 18002
+        - name: log
+          containerPort: 18003
+        env:
+        - name: ALS_SERVER
+          value: "18003"
+        - name: DEBUG
+          value: {{ .Values.xds.debug | quote }}
+        - name: GATEWAY_PORT
+          value: "18001"
+        - name: NODE_ID
+          value: {{ .Values.xds.cluster | quote }}
+        - name: "RUNTIME_CONFIG_PORT"
+          value: "18002"
+        - name: SERVER_PORT
+          value: {{ .Values.xds.port | quote }}
+        - name: ZK_BASE_PATH
+          value: {{ .Values.xds.zk_base_path | quote }}
+        - name: ZK_DISCOVER
+          value: {{ .Values.xds.use_zk | quote }}
+        - name: ZK_SERVERS
+          value: {{ template "greymatter.exhibitor.address" . }}
+      - name: sidecar
+        image: {{ .Values.sidecar.image }}
+        imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
+        ports:
+        - name: grpc
+          containerPort: 8443
+        - name: metrics
+          containerPort: 8080
+        env:
+        - name: INGRESS_USE_TLS
+          value: "true"
+        - name: INGRESS_CA_CERT_PATH
+          value: "/etc/proxy/tls/sidecar/ca.crt"
+        - name: INGRESS_CERT_PATH
+          value: "/etc/proxy/tls/sidecar/server.crt"
+        - name: INGRESS_KEY_PATH
+          value: "/etc/proxy/tls/sidecar/server.key"
+        - name: METRICS_PORT
+          value: "8080"
+        - name: PORT
+          value: "8443"
+        - name: SERVICE_HOST
+          value: "127.0.0.1"
+        - name: SERVICE_PORT
+          value: {{ .Values.xds.port | quote }}
+        - name: ZK_ADDRS
+          value: {{ template "greymatter.exhibitor.address" . }}
+        - name: ZK_ANNOUNCE_PATH
+          value: "/services/xds/{{ .Values.xds.version }}"
+        volumeMounts:
+        - name: sidecar
+          mountPath: /etc/proxy/tls/sidecar
+      imagePullSecrets:
+      - name: docker.production.deciphernow.com
+      volumes:
+      - name: sidecar
+        secret:
+          secretName: sidecar

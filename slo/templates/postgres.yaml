@@ -1,0 +1,62 @@
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: postgres-slo
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: postgres-slo
+spec:
+  selector:
+    matchLabels:
+      app: postgres-slo
+  replicas: {{ .Values.postgres.replica_count }}
+  template:
+    metadata:
+      labels:
+        app: postgres-slo
+    spec:
+      containers:
+      - name: postgres
+        {{- if and .Values.environment (eq .Values.environment "openshift") }}
+        image: {{ .Values.postgres.openshift.image }}
+        {{- else }}
+        image: {{ .Values.postgres.k8s.image }}
+        {{- end }}
+        imagePullPolicy: {{ .Values.postgres.imagePullPolicy }}
+        ports:
+          - name: postgres
+            containerPort: 5432
+        env:
+      {{- range $envvar := .Values.postgres.envvars }}
+        {{- $envName := $envvar.name | upper | replace "." "_" | replace "-" "_" }}
+        {{- if eq $envvar.type "secret" }}
+          - name: {{ $envName }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ $envvar.secret }}
+                key: {{ $envvar.key }}
+        {{- else if eq $envvar.type "value" }}
+          - name: {{ $envName }}
+            value: {{ $envvar.value | quote }}
+        {{- end }}
+      {{- end  }}
+        volumeMounts:
+          - name: postgres-slo
+            mountPath: {{ .Values.postgres.data_mount_point }}
+        {{- if .Values.postgres.ssl.enabled }}
+          - name: certificates
+            mountPath: {{ .Values.postgres.ssl.mount_path }}
+        {{- end }}
+      {{- if .Values.postgres.private_image }}
+      imagePullSecrets:
+      - name: docker.production.deciphernow.com
+      {{- end }}
+      volumes:
+      - name: postgres-slo
+        persistentVolumeClaim:
+          claimName: postgres-slo
+      {{- if .Values.postgres.ssl.enabled }}
+      - name: certificates
+        secret:
+          secretName: {{ .Values.postgres.ssl.name }}
+      {{- end }}

@@ -1,0 +1,117 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: slo
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: slo
+      deployment: slo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: slo
+        deployment: slo
+    spec:
+      containers:
+      - name: slo
+        image: {{ .Values.slo.image | quote }}
+        imagePullPolicy: {{ .Values.slo.imagePullPolicy }}
+        ports:
+        - name: internal
+          containerPort: 1337
+        env:
+        - name: POSTGRESQL_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.postgres.credentials.secret_name }}
+              key: username
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.postgres.credentials.secret_name }}
+              key: password
+        - name: POSTGRESQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.postgres.credentials.secret_name }}
+              key: database 
+        - name: DATABASE_URI
+          value: postgres://$(POSTGRESQL_USERNAME):$(POSTGRESQL_PASSWORD)@postgres-slo.{{ .Release.Namespace }}.svc.cluster.local:5432/$(POSTGRESQL_DATABASE)
+        - name: DROP_SCHEMA
+          value: "true"
+        - name: SERVICE_PORT
+          value: "1337"
+        {{- if .Values.postgres.ssl.enabled  }}
+        - name: "SSL_ENABLED"
+          value: {{ .Values.postgres.ssl.enabled | quote }}
+        - name: SSL_SERVER_CA
+          value: "{{ .Values.postgres.ssl.mount_path }}/ca.pem"
+        - name: SSL_SERVER_CERT
+          value: "{{ .Values.postgres.ssl.mount_path }}/postgres.crt"
+        - name: SSL_SERVER_KEY
+          value: "{{ .Values.postgres.ssl.mount_path }}/postgres.key"
+        volumeMounts:
+        - name: certs
+          mountPath: {{ .Values.postgres.ssl.mount_path | quote }}
+        {{- end }}
+      - name: sidecar
+        image: {{ .Values.sidecar.image | quote }}
+        imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: metrics
+          containerPort: 8081
+        env:
+        - name: INGRESS_USE_TLS
+          value: "true"
+        - name: INGRESS_CA_CERT_PATH
+          value: "/etc/proxy/tls/sidecar/ca.crt"
+        - name: INGRESS_CERT_PATH
+          value: "/etc/proxy/tls/sidecar/server.crt"
+        - name: INGRESS_KEY_PATH
+          value: "/etc/proxy/tls/sidecar/server.key"
+        - name: METRICS_PORT
+          value: "8081"
+        - name: PORT
+          value: "8080"
+        - name: PROXY_DYNAMIC
+          value: {{ .Values.sidecar.proxy_dynamic | quote }}
+        - name: SERVICE_HOST
+          value: "127.0.0.1"
+        - name: SERVICE_PORT
+          value: "1337"
+        - name: XDS_CLUSTER
+          value: {{ .Values.xds.cluster | quote }}
+        - name: XDS_HOST
+          value: xds.{{ .Release.Namespace }}.svc.cluster.local
+        - name: XDS_PORT
+          value: {{ .Values.xds.port | quote }}
+        - name: ZK_ADDRS
+          value: {{ template "greymatter.exhibitor.address" . }}
+        - name: ZK_ANNOUNCE_PATH
+          value: "/services/slo/{{ .Values.slo.version }}"
+        volumeMounts:
+        - name: sidecar
+          mountPath: /etc/proxy/tls/sidecar
+        - name: edge
+          mountPath: /etc/proxy/tls/edge
+      imagePullSecrets:
+        - name: docker.production.deciphernow.com
+      volumes:
+        - name: sidecar
+          secret:
+            secretName: sidecar
+        - name: edge
+          secret:
+            secretName: edge
+        {{- if .Values.postgres.ssl.enabled }}
+        - name: certs
+          secret:
+            secretName: {{ .Values.postgres.ssl.name }}
+        {{- end }}
+
+

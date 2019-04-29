@@ -1,0 +1,72 @@
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  labels:
+    app: mongo
+  name: mongo
+  namespace: {{ .Release.Namespace }}
+spec:
+  podManagementPolicy: Parallel
+  replicas: {{ .Values.mongo.replicas }}
+  selector:
+    matchLabels:
+      app: mongo
+  serviceName: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - env:
+      {{- range $envvar := .Values.mongo.envvars }}
+      {{- $envName := $envvar.name | upper | replace "." "_" | replace "-" "_" }}
+        {{- if eq $envvar.type "secret" }}
+        - name: {{ $envName }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ $envvar.secret }}
+              key: {{ $envvar.key }}
+        {{- else if eq $envvar.type "value" }}
+        - name: {{ $envName }}
+          value: {{ $envvar.value | quote }}
+        {{- end }}
+      {{- end  }}
+        image: {{ .Values.mongo.image }}
+        imagePullPolicy: {{ .Values.mongo.imagePullPolicy }}
+        name: mongo
+        ports:
+        - containerPort: 27017
+          name: mongo
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/lib/mongodb/data
+          name: data
+        - mountPath: /docker-entrypoint-initdb.d/
+          name: mongo-init
+        {{- if .Values.mongo.ssl.enabled }}
+        - name: certificates
+          mountPath: {{ .Values.mongo.ssl.mount_path }}
+        {{- end }}
+      volumes:
+        - name: mongo-init
+          configMap:
+            name: mongo-init
+        {{- if .Values.mongo.ssl.enabled }}
+        - name: certificates
+          secret:
+            secretName: {{ .Values.mongo.ssl.name }}
+        {{- end }}
+      {{- if .Values.mongo.private_image }}
+      imagePullSecrets:
+      - name: docker.production.deciphernow.com
+      {{- end }}
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: {{ .Values.mongo.pvc_size }}Gi
