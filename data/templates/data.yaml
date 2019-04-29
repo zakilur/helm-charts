@@ -29,6 +29,10 @@ spec:
       - name: data
         image: {{ .Values.data.image | quote }}
         imagePullPolicy: {{ .Values.data.imagePullPolicy }}
+        {{- if .Values.data.resources }}
+        resources:
+{{ toYaml .Values.data.resources | indent 10 }}
+        {{- end }}
         env:
     {{- range $envvar := .Values.data.envvars }}
       {{- $envName := $envvar.name | upper | replace "." "_" | replace "-" "_" }}
@@ -42,7 +46,7 @@ spec:
         - name: {{ $envName }}
           value: {{ $envvar.value | quote }}
         {{- end }}
-      {{- end  }}   
+    {{- end  }}   
       
         - name: MONGOHOST
           value: {{ template "greymatter.mongo.address" . }}
@@ -116,6 +120,10 @@ spec:
           value: {{ .Values.sidecar.timeout | quote  }}
         image: {{ .Values.sidecar.image | quote }}
         imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
+        {{- if .Values.sidecar.resources }}
+        resources:
+{{ toYaml .Values.sidecar.resources | indent 10 }}
+        {{- end }}
         ports:
         - containerPort: 8080
           name: http

@@ -17,6 +17,10 @@ spec:
       - name: dashboard
         image: '{{ .Values.dashboard.image }}'
         imagePullPolicy: {{ .Values.dashboard.imagePullPolicy }}
+        {{- if .Values.dashboard.resources }}
+        resources:
+{{ toYaml .Values.dashboard.resources | indent 10 }}
+        {{- end }}
         ports:
         - name: internal
           containerPort: 1337
@@ -34,6 +38,10 @@ spec:
       - name: sidecar
         image: '{{ .Values.sidecar.image }}'
         imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
+        {{- if .Values.dashboard.resources }}
+        resources:
+{{ toYaml .Values.sidecar.resources | indent 10 }}
+        {{- end }}
         ports:
         - name: http
           containerPort: 8080

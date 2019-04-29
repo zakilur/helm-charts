@@ -19,6 +19,10 @@ spec:
       - name: edge
         image: {{ .Values.sidecar.image | quote }}
         imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
+        {{- if .Values.edge.resources }}
+        resources:
+{{ toYaml .Values.edge.resources | indent 10 }}
+        {{- end }}
         env:
         - name: EGRESS_USE_TLS
           value: {{ .Values.edge.egress_use_tls | quote }}

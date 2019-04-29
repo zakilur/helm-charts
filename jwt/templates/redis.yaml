@@ -48,6 +48,10 @@ spec:
                 name: {{ .Values.redis.secret_name }}
                 key: password
           imagePullPolicy: {{ .Values.redis.imagePullPolicy }}
+        {{- if .Values.redis.resources }}
+          resources:
+{{ toYaml .Values.redis.resources | indent 12 }}
+        {{- end }}
       {{- if .Values.redis.private_image }}
       imagePullSecrets:
       - name: docker.production.deciphernow.com

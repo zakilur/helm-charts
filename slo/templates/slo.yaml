@@ -19,6 +19,10 @@ spec:
       - name: slo
         image: {{ .Values.slo.image | quote }}
         imagePullPolicy: {{ .Values.slo.imagePullPolicy }}
+        {{- if .Values.slo.resources }}
+        resources:
+{{ toYaml .Values.slo.resources | indent 10 }}
+        {{- end }}
         ports:
         - name: internal
           containerPort: 1337
@@ -60,6 +64,10 @@ spec:
       - name: sidecar
         image: {{ .Values.sidecar.image | quote }}
         imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
+        {{- if .Values.sidecar.resources }}
+        resources:
+{{ toYaml .Values.sidecar.resources | indent 10 }}
+        {{- end }}
         ports:
         - name: http
           containerPort: 8080
