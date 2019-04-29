@@ -23,6 +23,10 @@ spec:
         image: {{ .Values.postgres.k8s.image }}
         {{- end }}
         imagePullPolicy: {{ .Values.postgres.imagePullPolicy }}
+        {{- if .Values.postgres.resources }}
+        resources:
+{{ toYaml .Values.postgres.resources | indent 10 }}
+        {{- end }}
         ports:
           - name: postgres
             containerPort: 5432
