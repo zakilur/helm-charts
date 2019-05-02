@@ -1,0 +1,12 @@
+{{- if not .Values.jwt.use_aac }}
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: jwt-users
+  namespace: {{ .Release.Namespace }}
+data:
+  AOs.json: |-
+{{- toJson .Values.jwt.users | nindent 4 }}
+  admins.json: |-
+{{- toJson .Values.jwt.admins | nindent 4 }}
+{{- end }}
