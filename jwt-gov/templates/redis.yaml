@@ -1,0 +1,62 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  labels:
+    app: redis
+  name: redis
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.redis.replica_count  }}
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: redis
+      deployment: redis
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: redis
+        deployment: redis
+    spec:
+      containers:
+        - name: redis
+          {{- if and .Values.environment (eq .Values.environment "openshift") }}
+          image: {{ .Values.redis.openshift.image }}
+          {{- else }}
+          image: {{ .Values.redis.k8s.image }}
+          command:
+            - 'redis-server'
+          args:
+            - '--requirepass'
+            - "$(REDIS_PASSWORD)"
+          {{- end }}
+          env:
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.redis.secret_name }}
+                key: password
+          imagePullPolicy: {{ .Values.redis.imagePullPolicy }}
+      {{- if .Values.redis.private_image }}
+      imagePullSecrets:
+      - name: docker.production.deciphernow.com
+      {{- end }}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+    - type: ConfigChange
