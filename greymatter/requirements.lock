@@ -1,24 +1,24 @@
 dependencies:
 - name: dashboard
   repository: file://../dashboard
-  version: 2.5.0
+  version: 1.0.0
 - name: catalog
   repository: file://../catalog
-  version: 0.3.6
+  version: 1.0.0
 - name: xds
   repository: file://../xds
-  version: 0.2.6
+  version: 1.0.0
 - name: edge
   repository: file://../edge
-  version: 0.7.1
+  version: 1.0.0
 - name: data
   repository: file://../data
-  version: 0.2.3
+  version: 1.0.0
 - name: jwt
   repository: file://../jwt
-  version: 0.2.0
+  version: 1.0.0
 - name: slo
   repository: file://../slo
-  version: 0.4.0
-digest: sha256:ef718cdddabb58b9f27f084b92a8e45cd9ea0833fa8465f5d80181bfa2b388e5
-generated: 2019-04-26T17:00:26.370259-04:00
+  version: 1.0.0
+digest: sha256:b42297cd8927862060289e8d0b061ccc13ec56095f0ea6170f228de87a2222ef
+generated: 2019-05-01T11:32:00.512268-04:00
