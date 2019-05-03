@@ -1,28 +1,28 @@
 dependencies:
 - name: dashboard
-  version: "2.5.0"
+  version: "1.0.0"
   repository: "file://../dashboard"
 
 - name: catalog
-  version: "0.3.6"
+  version: "1.0.0"
   repository: "file://../catalog"
 
 - name: xds
-  version: "0.2.6"
+  version: "1.0.0"
   repository: "file://../xds"
 
 - name: edge
-  version: "0.7.1"
+  version: "1.0.0"
   repository: "file://../edge"
 
 - name: data
-  version: "0.2.3"
+  version: "1.0.0"
   repository: "file://../data"
 
 - name: jwt
-  version: "0.2.0"
+  version: "1.0.0"
   repository: "file://../jwt"
 
 - name: slo
-  version: "0.4.0"
+  version: "1.0.0"
   repository: "file://../slo"

@@ -1,4 +1,4 @@
-Grey Matter Control {{ .Chart.Version }} has been installed.
+Grey Matter Control {{ .Chart.AppVersion }} has been installed.
 
 NOTE: It may take a few minutes for the installation to become stable.
       You can watch the status of the pods by running 'kubectl get pods -w -n {{ .Release.Namespace }}'
