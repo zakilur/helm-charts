@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: redis
+  namespace: {{ .Release.Namespace }}
+spec:
+  clusterIP: None
+  ports:
+    - name: server
+      port: 6379
+      protocol: TCP
+      targetPort: 6379
+  selector:
+    app: redis
+  sessionAffinity: None
+  type: ClusterIP

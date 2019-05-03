@@ -47,13 +47,17 @@ spec:
             secretKeyRef:
               name: {{ .Values.redis.secret_name }}
               key: password
+        - name: DEMO_MODE
+          value: {{ .Values.jwt.use_aac | default false | quote }}
         ports:
         - containerPort: 3000
           name: internal
           protocol: TCP
+        {{- if not .Values.jwt.use_aac }}
         volumeMounts:
         - name: jwt-users
           mountPath: {{ .Values.jwt.users_mount_point }}
+        {{- end }}
       - name: sidecar
         env:
         - name: EGRESS_USE_TLS
@@ -117,9 +121,11 @@ spec:
         - name: jwt-security
           secret:
             secretName: jwt-security
+        {{- if not .Values.jwt.use_aac }}
         - name: jwt-users
           configMap:
             name: jwt-users
+        {{- end }}
         - name: edge
           secret:
             secretName: edge
