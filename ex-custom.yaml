@@ -1,0 +1,32 @@
+# To override default chart values you can either use `--set <key>=<value>` via helm cli.  
+# Alternatively you can add values to a custom yaml file.  Pass it into the cli via `-f <relative file route>.
+# You can rename this file to `custom.yaml` and fill it in.  .gitignore will make sure you do not accidentally check it in.
+
+exhibitor:
+  aws:
+    access_key: 
+    secret_key:
+    region: 
+    bucket: 
+
+data:
+  aws:
+    access_key: 
+    secret_key:
+    region: 
+    bucket: 
+
+dockerCredentials:
+  registry: docker.production.deciphernow.com
+  email: 
+  username: 
+  password:
+
+domain: development.deciphernow.com
+route_url_name: fabric
+
+# What type of enviornment are you deploying Grey Matter into?
+#  Valid answers are openshift or kubernetes
+#  Defaults to kubernetes
+global:
+  environment: openshift
