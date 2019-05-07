@@ -111,7 +111,7 @@ The following table lists the configurable parameters of the gm-catalog chart an
 | data.version                                            | Data Version               | 0.2.3                                                          |
 | jwt.version                                             | JWT Version                | 0.2.0                                                          |
 | slo.version                                             | Slo Version                | 0.4.0                                                          |
-| exhibitor.replicas                                      | Exhibitor Version          | 1                                                              |
+| exhibitor.replicas                                      | Exhibitor Replicas         | 1                                                              |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
