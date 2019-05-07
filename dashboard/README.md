@@ -77,7 +77,7 @@ The following table lists the configurable parameters of the gm-catalog chart an
 | xds.port                            | Xds Port              | 18000                                                              |
 | xds.cluster                         | XDS Cluster           | greymatter                                                         |
 |                                     |                       |                                                                    |
-| exhibitor.replicas                  | Exhibitor Version     | 1                                                                  |
+| exhibitor.replicas                  | Exhibitor Replicas    | 1                                                                  |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
