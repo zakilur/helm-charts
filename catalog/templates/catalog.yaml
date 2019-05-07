@@ -2,7 +2,7 @@ kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
   name: catalog
-  namespace: {{.Release.Namespace}}
+  namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:
@@ -17,16 +17,20 @@ spec:
     spec:
       containers:
         - name: catalog
-          image: {{.Values.catalog.image}}
-          imagePullPolicy: {{.Values.catalog.imagePullPolicy}}
+          image: {{ .Values.catalog.image }}
+          imagePullPolicy: {{ .Values.catalog.imagePullPolicy }}
+          {{- if .Values.catalog.resources }}
+          resources:
+{{ toYaml .Values.catalog.resources | indent 10 }}
+        {{- end }}
           ports:
             - name: internal
               containerPort: 9080
           env:
             - name: DATA_SOURCE
-              value: {{.Values.catalog.source | quote}}
+              value: {{ .Values.catalog.source | quote }}
             - name: DEBUG
-              value: {{.Values.catalog.debug | quote}}
+              value: {{ .Values.catalog.debug | quote }}
             - name: PORT
               value: '9080'
             - name: XDS_SERVER_ADDRESS
@@ -42,8 +46,12 @@ spec:
             {{- end }}
             
         - name: sidecar
-          image: {{.Values.sidecar.image}}
-          imagePullPolicy: {{.Values.sidecar.imagePullPolicy}}
+          image: {{ .Values.sidecar.image }}
+          imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
+          {{- if .Values.sidecar.resources }}
+          resources:
+{{ toYaml .Values.sidecar.resources | indent 10 }}
+          {{- end }}
           ports:
             - name: http
               containerPort: 8080
@@ -63,19 +71,19 @@ spec:
             - name: PORT
               value: '8080'
             - name: PROXY_DYNAMIC
-              value: {{.Values.sidecar.proxy_dynamic | quote}}
+              value: {{ .Values.sidecar.proxy_dynamic | quote }}
             - name: SERVICE_HOST
               value: '127.0.0.1'
             - name: SERVICE_PORT
               value: '9080'
             - name: XDS_CLUSTER
-              value: {{.Values.xds.cluster | quote}}
+              value: {{ .Values.xds.cluster | quote }}
             - name: XDS_HOST
               value: 'xds.{{ .Release.Namespace }}.svc.cluster.local'
             - name: XDS_PORT
               value: '18000'
             - name: ZK_ADDRS
-              value: {{template "greymatter.exhibitor.address" .}}
+              value: {{ template "greymatter.exhibitor.address" . }}
             - name: ZK_ANNOUNCE_PATH
               value: '/services/catalog/{{ .Values.catalog.version }}'
           volumeMounts:

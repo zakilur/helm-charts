@@ -4,6 +4,14 @@ catalog:
   debug: 'false'
   version: 0.3.6
   imagePullPolicy: Always
+  resources:
+   limits:
+     cpu: 200m
+     memory: 1Gi
+   requests:
+     cpu: 100m
+     memory: 128Mi
+
   port: 9080
 
   services:
@@ -62,7 +70,7 @@ catalog:
       owner: 'Decipher'
       version: "{{ $.Values.slo.version | trunc 3 }}"
       zookeeper_announcement_point: "/services/slo/{{ $.Values.slo.version }}/metrics"
-
+   
 sidecar:
   version: 0.7.1
   image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1'
@@ -70,6 +78,13 @@ sidecar:
   metrics_key_function: depth
   ingress_use_tls: 'true'
   imagePullPolicy: Always
+  resources:
+   limits:
+     cpu: 200m
+     memory: 512Mi
+   requests:
+     cpu: 100m
+     memory: 128Mi
 
   # Set this to true if you are attempting to deploy Catalog by itself.  
   # Ideally, catalog is deployed as a dependency to Grey Matter, which creates the 
