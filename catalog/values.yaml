@@ -4,6 +4,64 @@ catalog:
   debug: 'false'
   version: 0.3.6
   imagePullPolicy: Always
+  port: 9080
+
+  services:
+    service_0:
+      capability: 'Grey Matter'
+      documentation: '/services/catalog/{{ $.Values.catalog.version }}/'
+      name: 'Grey Matter Catalog'
+      owner: 'Decipher'
+      version: "{{ $.Values.catalog.version | trunc 3 }}"
+      zookeeper_announcement_point: "/services/catalog/{{ $.Values.catalog.version }}/metrics"
+    
+    service_1:
+      capability: 'Grey Matter'
+      documentation: ''
+      name: 'Grey Matter Control'
+      owner: 'Decipher'
+      version: "{{ $.Values.xds.version | trunc 3 }}"
+      zookeeper_announcement_point: "/services/xds/{{ $.Values.xds.version }}/metrics"
+    
+    service_2:
+      capability: 'Grey Matter'
+      documentation: ''
+      name: 'Grey Matter Dashboard'
+      owner: 'Decipher'
+      version: "{{ $.Values.dashboard.version | trunc 3 }}"
+      zookeeper_announcement_point: "/services/dashboard/{{ $.Values.dashboard.version }}/metrics"
+    
+    service_3:
+      capability: 'Grey Matter'
+      documentation:  "/services/data/{{ $.Values.data.version }}/"
+      name: 'Grey Matter Data'
+      owner: 'Decipher'
+      version: "{{ $.Values.data.version | trunc 3 }}"
+      zookeeper_announcement_point: "/services/data/{{ $.Values.data.version }}/metrics"
+    
+    service_4:
+      capability: 'Grey Matter'
+      documentation: "/services/jwt-security/{{ $.Values.jwt.version }}/"
+      name: 'Grey Matter JWT Security'
+      owner: 'Decipher'
+      version: "{{ $.Values.jwt.version | trunc 3 }}"
+      zookeeper_announcement_point: "/services/jwt-security/{{ $.Values.jwt.version }}/metrics"
+    
+    service_5:
+      capability: 'Grey Matter'
+      documentation: ''
+      name: 'Grey Matter Edge'
+      owner: 'Decipher'
+      version: "{{ $.Values.sidecar.version | trunc 3 }}"
+      zookeeper_announcement_point: "/services/edge/{{ $.Values.sidecar.version }}/metrics"
+    
+    service_6:
+      capability: 'Grey Matter'
+      documentation: ''
+      name: 'Grey Matter Service Level Objectives'
+      owner: 'Decipher'
+      version: "{{ $.Values.slo.version | trunc 3 }}"
+      zookeeper_announcement_point: "/services/slo/{{ $.Values.slo.version }}/metrics"
 
 sidecar:
   version: 0.7.1
