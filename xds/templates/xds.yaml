@@ -19,6 +19,10 @@ spec:
       - name: xds
         image: {{ .Values.xds.image }}
         imagePullPolicy: {{ .Values.xds.imagePullPolicy }}
+        {{- if .Values.xds.resources }}
+        resources:
+{{ toYaml .Values.xds.resources | indent 10 }}
+        {{- end }}
         ports:
         - name: grpc
           containerPort: {{ .Values.xds.port }}
@@ -50,6 +54,10 @@ spec:
       - name: sidecar
         image: {{ .Values.sidecar.image }}
         imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
+        {{- if .Values.sidecar.resources }}
+        resources:
+{{ toYaml .Values.sidecar.resources | indent 10 }}
+        {{- end }}
         ports:
         - name: grpc
           containerPort: 8443

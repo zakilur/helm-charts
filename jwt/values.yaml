@@ -1,27 +1,40 @@
-environment: openshift 
+environment: openshift
 
 jwt:
   version: 0.2.0
   image: 'docker.production.deciphernow.com/deciphernow/gm-jwt-security:0.2.0'
   #redis_host: redis.greymatter.svc.cluster.local
-  redis_db: "0"
+  command: ['/bin/sh']
+  args:
+    [
+      '-c',
+      'if [[ ! -d ./certs ]]; then mkdir -p ./certs; fi && if [[ ! -d ./etc ]]; then mkdir -p ./certs; fi && /gm-jwt-security/gm-jwt-security',
+    ]
+  redis_db: '0'
   redis_pass: redis
   base_path: /services/jwt-security/0.2.0
   egress_use_tls: 'true'
   users_mount_point: /gm-jwt-security/etc
   certs_mount_point: /gm-jwt-security/certs
   imagePullPolicy: Always
+  resources:
+    limits:
+      cpu: 200m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 64Mi
 
   envvars:
     - type: value
       name: HTTPS_PORT
-      value: "3000"
+      value: '3000'
     - type: secret
       name: PRIVATE_KEY
       secret: jwt-security
       key: jwt.key
     - type: secret
-      name: JWT_API_KEY	
+      name: JWT_API_KEY
       secret: jwt-security
       key: jwt.api_key
     - type: value
@@ -36,7 +49,7 @@ jwt:
       secret: jwt-certs
       key: jwt.cert.pem
     - type: secret
-      name: SERVER_KEY	
+      name: SERVER_KEY
       secret: jwt-certs
       key: jwt.key.pem
 
@@ -104,9 +117,16 @@ redis:
     image: 'centos/redis-32-centos7'
   k8s:
     image: 'redis:3.2'
-  replica_count: 1  
+  replica_count: 1
   imagePullPolicy: Always
   #private_image: false
+  resources:
+    limits:
+      cpu: 200m
+      memory: 500Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
 sidecar:
   image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1'
@@ -114,11 +134,18 @@ sidecar:
   metrics_key_function: depth
   ingress_use_tls: 'true'
   imagePullPolicy: Always
+  resources:
+    limits:
+      cpu: 200m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
-  # Set this to true if you are attempting to deploy xDS by itself.  
-  # Ideally, xDS is deployed as a dependency to Grey Matter, which creates the 
+  # Set this to true if you are attempting to deploy xDS by itself.
+  # Ideally, xDS is deployed as a dependency to Grey Matter, which creates the
   # sidecar secret, but if individual testing is being done, the sidecar secret will
-  # need to be created.  
+  # need to be created.
   create_sidecar_secret: false
   secrets:
     name: sidecar

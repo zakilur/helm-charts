@@ -18,6 +18,14 @@ data:
     secret_key: 
     region: 
     bucket: 
+    
+  resources:
+    limits:
+      cpu: 250m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
   envvars:
     - type: value
@@ -27,7 +35,7 @@ data:
       name: aws_access_key_id
       secret: data
       key: aws_access_key_id
-    - type: secret 
+    - type: secret
       name: aws_secret_access_key
       secret: data
       key: aws_secret_access_key
@@ -92,7 +100,7 @@ data:
       key: server.trust.pem
     - type: value
       name: client_prefix
-      value:  /services/data/0.2.3
+      value: /services/data/0.2.3
     - type: value
       name: client_jwt_prefix
       value: /services/jwt-security/0.2.0
@@ -120,7 +128,7 @@ data:
       name: client_jwt_endpoint_trust
       secret: jwt-certs
       key: jwt.trust.pem
-  
+
 mongo:
   replicas: 1
   image: 'deciphernow/mongo:4.0.3'
@@ -128,6 +136,13 @@ mongo:
   #private_image: false
   # The size, in Gi, that the Mongo PVC should be
   pvc_size: 40
+  resources:
+    limits:
+      cpu: 200m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
   envvars:
     - type: secret
@@ -148,11 +163,11 @@ mongo:
       key: admin_password
 
   credentials:
-    secret_name: "mongo-credentials"
-    root_username: "mongo"
-    root_password: "mongo"
-    database: "gmdata"
-    admin_password: "mongopassword"
+    secret_name: 'mongo-credentials'
+    root_username: 'mongo'
+    root_password: 'mongo'
+    database: 'gmdata'
+    admin_password: 'mongopassword'
 
   ssl:
     enabled: false
@@ -180,7 +195,6 @@ mongo:
           ...
           -----END RSA PRIVATE KEY-----
 
-
 sidecar:
   version: 0.7.1
   image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1'
@@ -188,11 +202,18 @@ sidecar:
   metrics_key_function: depth
   ingress_use_tls: 'true'
   imagePullPolicy: Always
+  resources:
+    limits:
+      cpu: 200m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
-  # Set this to true if you are attempting to deploy Catalog by itself.  
-  # Ideally, catalog is deployed as a dependency to Grey Matter, which creates the 
+  # Set this to true if you are attempting to deploy Catalog by itself.
+  # Ideally, catalog is deployed as a dependency to Grey Matter, which creates the
   # sidecar secret, but if individual testing is being done, the sidecar secret will
-  # need to be created.  
+  # need to be created.
   create_sidecar_secret: false
   certificates:
     name: sidecar
