@@ -17,7 +17,7 @@ catalog:
   services:
     service_0:
       capability: 'Grey Matter'
-      documentation: '/services/catalog/{{ $.Values.catalog.version }}/'
+      documentation: ''
       name: 'Grey Matter Catalog'
       owner: 'Decipher'
       version: "{{ $.Values.catalog.version | trunc 3 }}"
@@ -41,7 +41,7 @@ catalog:
     
     service_3:
       capability: 'Grey Matter'
-      documentation:  "/services/data/{{ $.Values.data.version }}/"
+      documentation:  "/services/data/{{ .Values.data.version }}/static/ui/index.html"
       name: 'Grey Matter Data'
       owner: 'Decipher'
       version: "{{ $.Values.data.version | trunc 3 }}"
@@ -49,7 +49,7 @@ catalog:
     
     service_4:
       capability: 'Grey Matter'
-      documentation: "/services/jwt-security/{{ $.Values.jwt.version }}/"
+      documentation: ''
       name: 'Grey Matter JWT Security'
       owner: 'Decipher'
       version: "{{ $.Values.jwt.version | trunc 3 }}"
