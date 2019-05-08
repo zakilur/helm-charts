@@ -8,7 +8,7 @@ $ helm install catalog
 
 ## Introduction
 
-This chart bootstraps a gm-catalog deployment on a [Kubernetes](http://kubernetes.io) or [OpenShift](https://www.openshift.com/) cluser using the [Helm](https://helm.sh) package manager.
+This chart bootstraps a gm-catalog deployment on a [Kubernetes](http://kubernetes.io) or [OpenShift](https://www.openshift.com/) cluster using the [Helm](https://helm.sh) package manager.
 
 ## Installing the Chart
 
@@ -115,7 +115,7 @@ The following table lists the configurable parameters of the gm-catalog chart an
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
-- All the files listed under this variable will overwrite any existing files by the same name in gm-catalog config directory.
+- All the files listed under this variable will overwrite any existing files by the same name in the gm-catalog config directory.
 - Files not mentioned under this variable will remain unaffected.
 
 ```console
