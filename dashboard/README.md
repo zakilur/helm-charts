@@ -8,7 +8,7 @@ $ helm install dashboard
 
 ## Introduction
 
-This chart bootstraps a dashboard deployment on a [Kubernetes](http://kubernetes.io) or [OpenShift](https://www.openshift.com/) cluser using the [Helm](https://helm.sh) package manager.
+This chart bootstraps a dashboard deployment on a [Kubernetes](http://kubernetes.io) or [OpenShift](https://www.openshift.com/) cluster using the [Helm](https://helm.sh) package manager.
 
 ## Installing the Chart
 
@@ -32,7 +32,7 @@ The command removes all components associated with the chart and deletes the rel
 
 ## Configuration
 
-The following table lists the configurable parameters of the gm-catalog chart and their default values.
+The following table lists the configurable parameters of the dashboard chart and their default values.
 
 | Parameter                           | Description           | Default                                                            |
 | ----------------------------------- | --------------------- | ------------------------------------------------------------------ |
@@ -70,9 +70,7 @@ The following table lists the configurable parameters of the gm-catalog chart an
 | sidecar.ingress_use_tls             | Enable TLS            | 'true'                                                             |
 | sidecar.imagePullPolicy             | Image pull policy     | Always                                                             |
 | sidecar.create_sidecar_secret       | Create Certs          | false                                                              |
-| sidecar.certificates.ca             |                       | '...'                                                              |
-| sidecar.certificates.cert           |                       | '...'                                                              |
-| sidecar.certificates.key            |                       | '...'                                                              |
+| sidecar.certificates                |                       | {name:{ca: ... , cert: ... , key ...}}                             |
 |                                     |                       |                                                                    |
 | xds.port                            | Xds Port              | 18000                                                              |
 | xds.cluster                         | XDS Cluster           | greymatter                                                         |
@@ -81,7 +79,7 @@ The following table lists the configurable parameters of the gm-catalog chart an
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
-- All the files listed under this variable will overwrite any existing files by the same name in dashboard config directory.
+- All the files listed under this variable will overwrite any existing files by the same name in the dashboard config directory.
 - Files not mentioned under this variable will remain unaffected.
 
 ```console
