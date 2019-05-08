@@ -32,7 +32,7 @@ The command removes all components associated with the chart and deletes the rel
 
 ## Configuration
 
-The following table lists the configurable parameters of the gm-catalog chart and their default values.
+The following table lists the configurable parameters of the data chart and their default values.
 
 | Parameter                          | Description        | Default                                                        |
 | ---------------------------------- | ------------------ | -------------------------------------------------------------- |
@@ -81,9 +81,7 @@ The following table lists the configurable parameters of the gm-catalog chart an
 | sidecar.ingress_use_tls            | Enable TLS         | 'true'                                                         |
 | sidecar.imagePullPolicy            | Image pull policy  | Always                                                         |
 | sidecar.create_sidecar_secret      | Create Certs       | false                                                          |
-| sidecar.certificates.ca            |                    | '...'                                                          |
-| sidecar.certificates.cert          |                    | '...'                                                          |
-| sidecar.certificates.key           |                    | '...'                                                          |
+| sidecar.certificates               |                    | {name:{ca: ... , cert: ... , key ...}}                         |
 | sidecar.resources.limits.cpu       |                    | 200m                                                           |
 | sidecar.resources.limits.memory    |                    | 512Mi                                                          |
 | sidecar.resources.requests.cpu     |                    | 100m                                                           |
