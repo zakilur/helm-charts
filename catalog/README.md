@@ -32,7 +32,7 @@ The command removes all components associated with the chart and deletes the rel
 
 ## Configuration
 
-The following table lists the configurable parameters of the gm-catalog chart and their default values.
+The following table lists the configurable parameters of the catalog chart and their default values.
 
 | Parameter                                               | Description                | Default                                                        |
 | ------------------------------------------------------- | -------------------------- | -------------------------------------------------------------- |
@@ -99,9 +99,7 @@ The following table lists the configurable parameters of the gm-catalog chart an
 | sidecar.ingress_use_tls                                 | Enable TLS                 | 'true'                                                         |
 | sidecar.imagePullPolicy                                 | Image pull policy          | Always                                                         |
 | sidecar.create_sidecar_secret                           | Create Certs               | false                                                          |
-| sidecar.certificates.ca                                 |                            | '...'                                                          |
-| sidecar.certificates.cert                               |                            | '...'                                                          |
-| sidecar.certificates.key                                |                            | '...'                                                          |
+| sidecar.certificates                                    |                            | {name:{ca: ... , cert: ... , key ...}}                         |
 |                                                         |                            |                                                                |
 | xds.version                                             | Xds Version                | 0.2.6                                                          |
 | xds.port                                                | Xds Port                   | 18000                                                          |
