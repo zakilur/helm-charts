@@ -12,7 +12,7 @@ node('ubuntu-18.04'){
         try { 
             stage ('Find Updated Charts'){ 
                 sh '''#!/bin/bash
-                    files=$(git diff --name-only HEAD HEAD~1 ':(exclude).gitignore' ':(exclude)ci/*' ':(exclude)README.md')
+                    files=$(git diff --name-only HEAD origin/master ':(exclude).gitignore' ':(exclude)ci/*' ':(exclude)README.md')
                     for file in ${files[@]}; do 
                         charts+=($(cut -d'/' -f1 <<< $file))
                     done
@@ -83,18 +83,21 @@ node('ubuntu-18.04'){
             throw err
         }
             
-
-        stage ('Publish Charts') { 
-            // Find all of the charts that were created, known by the *.tgz file extension.  Then upload them to Nexus
-            withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh '''#!/bin/bash
-                        toPublish=($(ls *.tgz))
-                        for pubChart in ${toPublish[@]}; do
-                            curl -u ${USERNAME}:${PASSWORD} https://nexus.production.deciphernow.com/repository/helm-hosted/ -T $pubChart
-                        done
-                    '''
+        branch = sh(returnStdout: true, script: "git rev-parse HEAD | git branch -a --contains | grep remotes | sed s/.*remotes.origin.//").trim()
+        if ( branch == 'master' || branch == 'update-pipeline'){
+            stage ('Publish Charts') { 
+                Find all of the charts that were created, known by the *.tgz file extension.  Then upload them to Nexus
+                withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        sh '''#!/bin/bash
+                            toPublish=($(ls *.tgz))
+                            for pubChart in ${toPublish[@]}; do
+                                curl -u ${USERNAME}:${PASSWORD} https://nexus.production.deciphernow.com/repository/helm-hosted/ -T $pubChart
+                            done
+                        '''
+                }
             }
         }
+        
     }
     catch (e) {
         echo "Caught: ${e}"
