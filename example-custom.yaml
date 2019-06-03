@@ -1,0 +1,182 @@
+# To override default chart values you can either use `--set <key>=<value>` via helm cli.  
+# Alternatively you can add values to a custom yaml file.  Pass it into the cli via `-f <relative file route>.
+# You can rename this file to `custom.yaml` and fill it in.  .gitignore will make sure you do not accidentally check it in.
+
+dockerCredentials:
+  registry: docker.production.deciphernow.com
+  email: 
+  username: 
+  password:
+domain: development.deciphernow.com
+route_url_name: fabric
+# What type of enviornment are you deploying Grey Matter into?
+#  Valid answers are openshift or kubernetes
+#  Defaults to kubernetes
+global:
+  environment: openshift
+exhibitor:  
+  exhibitor:
+    aws:
+      access_key: 
+      secret_key:
+      region: 
+      bucket: 
+data:
+  data:
+    aws:
+      access_key: 
+      secret_key:
+      region: 
+      bucket: 
+ # If Grey Matter Data is being deployed as a standalone instance, these values need to be provided
+    deploy:
+      standalone: false 
+      exhibitor_address: 
+      xds:
+        cluster: 
+        address:
+      secrets:
+      - name: jwt-security
+        jwt.key:
+        jwt.pub:
+        jwt.api_key:
+      - name: jwt-certs
+        jwt.cert.pem: 
+        jwt.key.pem: 
+        jwt.trust.pem:
+        server.cert.pem:
+        server.key.pem:
+        server.trust.pem:
+jwt:
+  jwt:
+    secrets:
+      - name: jwt-certs
+        jwt.cert.pem: |-
+          -----BEGIN CERTIFICATE-----
+          ...
+          -----END CERTIFICATE-----
+        jwt.key.pem: |-
+          -----BEGIN RSA PRIVATE KEY-----
+          ...
+          -----END RSA PRIVATE KEY-----
+        jwt.trust.pem: |-
+          -----BEGIN CERTIFICATE-----
+          ...
+          -----END CERTIFICATE-----
+          -----BEGIN CERTIFICATE-----
+          ...
+          -----END CERTIFICATE-----
+        server.cert.pem: |-
+          -----BEGIN CERTIFICATE-----
+          ...
+          -----END CERTIFICATE-----
+        server.key.pem: |-
+          -----BEGIN RSA PRIVATE KEY-----
+          ...
+          -----END RSA PRIVATE KEY-----
+        server.trust.pem: |-
+          -----BEGIN CERTIFICATE-----
+          ...
+          -----END CERTIFICATE-----
+          -----BEGIN CERTIFICATE-----
+          ...
+          -----END CERTIFICATE-----
+      - name: jwt-security
+        jwt.key: |-
+          -----BEGIN EC PRIVATE KEY-----
+          ...
+          -----END EC PRIVATE KEY-----
+        jwt.pub: |-
+          -----BEGIN PUBLIC KEY-----
+          ...
+          -----END PUBLIC KEY-----
+        jwt.api_key: ...
+sidecar:
+  create_sidecar_secret: true
+  certificates:
+    ca: |-
+      -----BEGIN CERTIFICATE-----
+      ...
+      -----END CERTIFICATE-----
+      -----BEGIN CERTIFICATE-----
+      ...
+      -----END CERTIFICATE-----
+    cert: |-
+      -----BEGIN CERTIFICATE-----
+      ...
+      -----END CERTIFICATE-----
+    key: |-
+      -----BEGIN RSA PRIVATE KEY-----
+      ...
+      -----END RSA PRIVATE KEY-----
+edge:
+  edge:
+    create_edge_secret: true
+    certificates:
+      name: edge
+      ca: |-
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+      cert: |-
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+      key: |-
+        -----BEGIN RSA PRIVATE KEY-----
+        ...
+        -----END RSA PRIVATE KEY-----
+
+mongo:
+  standalone_image: 'docker-code.artifactory.dicelab.net/adx3/platform/adx-mongodb:1.0.0.1'
+  private_image: true
+  ssl:
+    enabled: true
+    name: mongo-ssl-certs
+    certificates:
+      ca: |-
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+      cert: |-
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+      key: |-
+        -----BEGIN RSA PRIVATE KEY-----
+        ...
+        -----END RSA PRIVATE KEY-----
+      cert_key: |-
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+        -----BEGIN RSA PRIVATE KEY-----
+        ...
+        -----END RSA PRIVATE KEY-----
+
+  envvars:
+    - type: secret
+      name: MONGODB_ADMIN_PASSWORD
+      secret: 
+      key: 
+    - type: secret
+      name: MONGODB_DATABASE
+      secret: 
+      key: 
+    - type: secret
+      name: MONGODB_USER
+      secret: 
+      key: 
+    - type: secret
+      name: MONGODB_PASSWORD
+      secret:
+      key: 
+    - type: value
+      name: MONGO_CLIENT_DN
+      value: 
