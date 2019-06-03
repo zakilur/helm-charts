@@ -127,6 +127,10 @@ To override values in a particular chart's values.yaml file you will need to inc
       <key_to_override>: <value>
 ```
 
+## Jenkins pipeline:
+
+- To change the branch jenkins builds from use `./change-build-branch.sh`. The script will ask if you want to change to master, then your current branch, then a manual entry. You must be logged in openshift for this to work.
+
 ## Troubleshooting:
 
 - Keep in mind that helm will not teardown any rescources that it did not create in the firstplace. Therefore bestpractice is to manage everything inside a project/namespace with helm or nothing at all.

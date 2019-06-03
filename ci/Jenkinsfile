@@ -84,7 +84,7 @@ node('ubuntu-18.04'){
         }
             
         branch = sh(returnStdout: true, script: "git rev-parse HEAD | git branch -a --contains | grep remotes | sed s/.*remotes.origin.//").trim()
-        if ( branch == 'master' || branch == 'update-pipeline'){
+        if ( branch == 'master' ){
             stage ('Publish Charts') { 
                 Find all of the charts that were created, known by the *.tgz file extension.  Then upload them to Nexus
                 withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
