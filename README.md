@@ -10,6 +10,13 @@ helm repo add decipher https://nexus.production.deciphernow.com/repository/helm-
 
 ## Prerequisites:
 
+### Helm
+
+- Helm version 2.13.1 or greater
+
+Installing helm:
+To install Helm on mac os you can run `brew install kubernetes-helm` [(other install methods )](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links).
+
 ### OpenShift:
 
 - Be able to loginto development environment.
