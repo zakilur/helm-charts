@@ -16,7 +16,7 @@ data:
   
   # If Grey Matter Data is being deployed as a standalone instance, these values need to be provided
   deploy:
-    standalone: galse
+    standalone: false
     exhibitor_address: 
     xds:
       cluster: 
