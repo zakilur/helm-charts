@@ -17,7 +17,7 @@ catalog:
   services:
     service_0:
       capability: 'Grey Matter'
-      documentation: ''
+      documentation: '/services/catalog/0.3.6/'
       name: 'Grey Matter Catalog'
       owner: 'Decipher'
       version: "{{ $.Values.catalog.version | trunc 3 }}"
@@ -70,6 +70,14 @@ catalog:
       owner: 'Decipher'
       version: "{{ $.Values.slo.version | trunc 3 }}"
       zookeeper_announcement_point: "/services/slo/{{ $.Values.slo.version }}/metrics"
+
+    service_7:
+      capability: 'Grey Matter'
+      documentation: '/services/documentation/{{ $.Values.documentation.version }}/'
+      name: 'Grey Matter Documentation'
+      owner: 'Decipher'
+      version: "{{ $.Values.documentation.version | trunc 3 }}"
+      zookeeper_announcement_point: "/services/documentation/{{ $.Values.documentation.version }}/metrics"
    
 sidecar:
   version: 0.7.1
@@ -112,6 +120,9 @@ xds:
 
 dashboard:
   version: 2.5.0
+
+documentation:
+  version: 3.0.0
 
 data:
   version: 0.2.3
