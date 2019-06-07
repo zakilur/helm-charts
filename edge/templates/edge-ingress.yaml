@@ -1,11 +1,16 @@
-{{- if and .Values.environment (eq .Values.environment "openshift") }}
+{{- if and .Values.ingress_config.environment (eq .Values.ingress_config.environment "openshift") }}
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: edge
   namespace: {{ .Release.Namespace }}
 spec:
-  host: {{ .Values.route_url_name }}.{{ .Release.Namespace }}.{{ .Values.domain}}
+  host: 
+  {{- if eq .Values.ingress_config.remove_namespace_from_url "true" }}
+    {{ .Values.ingress_config.route_url_name }}.{{ .Values.ingress_config.domain }}
+  {{- else }}
+    {{ .Values.ingress_config.route_url_name }}.{{ .Release.Namespace }}.{{ .Values.ingress_config.domain }}
+  {{- end }}
   port: 
     targetPort: http
   tls:
@@ -27,7 +32,11 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   rules:
-    - host: {{ .Values.route_url_name }}.{{ .Release.Namespace }}.{{ .Values.domain }}
+  {{- if eq .Values.ingress_config.remove_namespace_from_url "true" }}
+    - host: {{ .Values.ingress_config.route_url_name }}.{{ .Values.ingress_config.domain }}
+  {{- else }}
+    - host: {{ .Values.ingress_config.route_url_name }}.{{ .Release.Namespace }}.{{ .Values.ingress_config.domain }}
+  {{- end }}
       http:
         paths:
           - path: /
