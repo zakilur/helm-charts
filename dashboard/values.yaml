@@ -6,8 +6,8 @@ dashboard:
   use_prometheus: 'true'
   objectives_server: '/services/slo/0.4.0/'
   prometheus_server: '/services/prometheus/2.7.1/api/v1/'
-  base_path: '/services/dashboard/2.5.0/'
-  version: 2.5.0
+  base_path: '/services/dashboard/latest/'
+  version: latest
   imagePullPolicy: Always
   resources:
     limits:
