@@ -42,8 +42,8 @@ The following table lists the configurable parameters of the dashboard chart and
 | dashboard.use_prometheus            |                       | 'true'                                                             |
 | dashboard.prometheus_server         |                       | '/services/prometheus/2.7.1/api/v1/'                               |
 | dashboard.objectives_server         |                       | '/services/slo/0.4.0/'                                             |
-| dashboard.base_path                 |                       | '/services/dashboard/2.5.0'                                        |
-| dashboard.version                   |                       | 2.5.0                                                              |
+| dashboard.base_path                 |                       | '/services/dashboard/latest'                                       |
+| dashboard.version                   |                       | latest                                                             |
 | dashboard.imagePullPolicy           |                       | Always                                                             |
 | dashboard.resources.limits.cpu      |                       | 200m                                                               |
 | dashboard.resources.limits.memory   |                       | 1Gi                                                                |

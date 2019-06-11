@@ -105,7 +105,7 @@ The following table lists the configurable parameters of the catalog chart and t
 | xds.port                                                | Xds Port                   | 18000                                                          |
 | xds.cluster                                             | XDS Cluster                | greymatter                                                     |
 |                                                         |                            |                                                                |
-| dashboard.version                                       | Dashboard Version          | 2.5.0                                                          |
+| dashboard.version                                       | Dashboard Version          | latest                                                         |
 | data.version                                            | Data Version               | 0.2.3                                                          |
 | jwt.version                                             | JWT Version                | 0.2.0                                                          |
 | slo.version                                             | Slo Version                | 0.4.0                                                          |

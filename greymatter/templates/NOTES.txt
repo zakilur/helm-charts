@@ -8,9 +8,9 @@ NOTE: It may take a few minutes for the installation to become stable.
 {{- if .Values.edge_config }}
 Once the environment has spun up you will be able to view Grey Matter's Dashboard at:
     {{- if eq .Values.edge_config.remove_namespace_from_url "true" }}
-        https://{{ .Values.edge_config.route_url_name }}.{{ .Values.edge_config.domain }}/services/dashboard/2.5.0/
+        https://{{ .Values.edge_config.route_url_name }}.{{ .Values.edge_config.domain }}/services/dashboard/latest/
     {{- else }}
-        https://{{ .Values.edge_config.route_url_name }}.{{ .Release.Namespace }}.{{ .Values.edge_config.domain }}/services/dashboard/2.5.0/
+        https://{{ .Values.edge_config.route_url_name }}.{{ .Release.Namespace }}.{{ .Values.edge_config.domain }}/services/dashboard/latest/
     {{- end }}
 {{- end }}
         
