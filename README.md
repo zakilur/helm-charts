@@ -86,45 +86,7 @@ To delete a deployment run `helm del --purge <namespace>`. This will delete ever
 
 ### Custom file:
 
-You can override configurations in the `values.yaml` file by including them in the `custom.yaml` file:
-
-```
-# What type of enviornment are you deploying Grey Matter into?
-#  Valid answers are openshift or kubernetes (all lowercase)
-#  Defaults to kubernetes
-environment: openshift
-domain: development.deciphernow.com
-route_url_name: fabric
-
-data:
-  data:
-    access_key:
-    secret_key:
-    bucket:
-    region:
-exhibitor:
-  exhibitor:
-    access_key:
-    secret_key:
-    bucket:
-    region:
-
-dockerCredentials:
-  registry:
-  email:
-  username:
-  password:
-
-jwt:
-  jwt:
-    secrets:
-      - name: jwt-certs
-        jwt.cert.pem: |-
-        -----BEGIN CERTIFICATE-----
-        ...
-        -----END CERTIFICATE-----
-
-```
+You can override configurations in the `values.yaml` file by including them in the `custom.yaml` file, the `example-custom.yaml` file can be used to start modifications from. To use a custom file you will need to pass a flag, `-f <custom_file>`.
 
 To override values in a particular chart's values.yaml file you will need to include a line in the custom.yaml file similar to the following:
 
