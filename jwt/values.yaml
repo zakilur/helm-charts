@@ -1,5 +1,9 @@
-environment: openshift
-
+global:
+  environment: kubernetes
+  domain: 
+  route_url_name: 
+  remove_namespace_from_url: ''
+  
 jwt:
   version: 0.2.0
   image: 'docker.production.deciphernow.com/deciphernow/gm-jwt-security:0.2.0'

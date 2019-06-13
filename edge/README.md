@@ -36,17 +36,16 @@ By default Helm will deploy edge with an ingress URL of `<route_url_name>.<names
 
 ## Configuration
 
-The following table lists the configurable parameters of the edge chart and their default values.
+The following tables list the configurable parameters of the edge chart and their default values.
 
-### Ingress Configuration
+### Global Configuration
 
-| Parameter                                | Description | Default                     |
-| ---------------------------------------- | ----------- | --------------------------- |
-| ingress_config.environment               |             | kubernetes                  |
-| ingress_config.domain                    |             | development.deciphernow.com |
-| ingress_config.route_url_name            |             | greymatter                  |
-| ingress_config.remove_namespace_from_url |             | 'false'                     |
-|                                          |             |                             |
+| Parameter                        | Description       | Default                     |
+| -------------------------------- | ----------------- | --------------------------- |
+| global.environment               |                   | kubernetes                  |
+| global.domain                    | edge-ingress.yaml | development.deciphernow.com |
+| global.route_url_name            | edge-ingress.yaml | greymatter                  |
+| global.remove_namespace_from_url | edge-ingress.yaml | 'false'                     |
 
 ### Service Configuration
 

@@ -1,5 +1,11 @@
 # Grey Matter Exhibitor settings
 #
+global:
+  environment: kubernetes
+  domain: 
+  route_url_name: 
+  remove_namespace_from_url: ''
+
 # These are the settings for Exhibitor
 exhibitor:
  #These are the AWS settings that Exhibitor requires

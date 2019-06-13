@@ -32,7 +32,18 @@ The command removes all components associated with the chart and deletes the rel
 
 ## Configuration
 
-The following table lists the configurable parameters of the catalog chart and their default values.
+The following tables list the configurable parameters of the catalog chart and their default values.
+
+### Global Configuration
+
+| Parameter                        | Description       | Default    |
+| -------------------------------- | ----------------- | ---------- |
+| global.environment               |                   | kubernetes |
+| global.domain                    | edge-ingress.yaml |            |
+| global.route_url_name            | edge-ingress.yaml |            |
+| global.remove_namespace_from_url | edge-ingress.yaml | ''         |
+
+### Service Configuration
 
 | Parameter                                               | Description                | Default                                                        |
 | ------------------------------------------------------- | -------------------------- | -------------------------------------------------------------- |
@@ -92,24 +103,33 @@ The following table lists the configurable parameters of the catalog chart and t
 | catalog.services.service_6.version                      |                            | "{{ \$.Values.slo.version \| trunc 3 }}"                       |
 | catalog.services.service_6.zookeeper_announcement_point |                            | "/services/slo/{{ $.Values.slo.version }}/metrics"             |
 |                                                         |                            |                                                                |
-| sidecar.version                                         | Proxy Version              | 0.7.1                                                          |
-| sidecar.image                                           | Proxy Image                | 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1' |
-| sidecar.proxy_dynamic                                   |                            | 'true'                                                         |
-| sidecar.metrics_key_function                            |                            | depth                                                          |
-| sidecar.ingress_use_tls                                 | Enable TLS                 | 'true'                                                         |
-| sidecar.imagePullPolicy                                 | Image pull policy          | Always                                                         |
-| sidecar.create_sidecar_secret                           | Create Certs               | false                                                          |
-| sidecar.certificates                                    |                            | {name:{ca: ... , cert: ... , key ...}}                         |
-|                                                         |                            |                                                                |
-| xds.version                                             | Xds Version                | 0.2.6                                                          |
-| xds.port                                                | Xds Port                   | 18000                                                          |
-| xds.cluster                                             | XDS Cluster                | greymatter                                                     |
-|                                                         |                            |                                                                |
-| dashboard.version                                       | Dashboard Version          | latest                                                         |
-| data.version                                            | Data Version               | 0.2.3                                                          |
-| jwt.version                                             | JWT Version                | 0.2.0                                                          |
-| slo.version                                             | Slo Version                | 0.4.0                                                          |
-| exhibitor.replicas                                      | Exhibitor Replicas         | 1                                                              |
+
+### Sidecar Configuration
+
+| Parameter                     | Description       | Default                                                        |
+| ----------------------------- | ----------------- | -------------------------------------------------------------- |
+| sidecar.version               | Proxy Version     | 0.7.1                                                          |
+| sidecar.image                 | Proxy Image       | 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1' |
+| sidecar.proxy_dynamic         |                   | 'true'                                                         |
+| sidecar.metrics_key_function  |                   | depth                                                          |
+| sidecar.ingress_use_tls       | Enable TLS        | 'true'                                                         |
+| sidecar.imagePullPolicy       | Image pull policy | Always                                                         |
+| sidecar.create_sidecar_secret | Create Certs      | false                                                          |
+| sidecar.certificates          |                   | {name:{ca: ... , cert: ... , key ...}}                         |
+
+### Additional Configuration
+
+| Parameter          | Description        | Default    |
+| ------------------ | ------------------ | ---------- |
+| xds.version        | Xds Version        | 0.2.6      |
+| xds.port           | Xds Port           | 18000      |
+| xds.cluster        | XDS Cluster        | greymatter |
+|                    |                    |            |
+| dashboard.version  | Dashboard Version  | latest     |
+| data.version       | Data Version       | 0.2.3      |
+| jwt.version        | JWT Version        | 0.2.0      |
+| slo.version        | Slo Version        | 0.4.0      |
+| exhibitor.replicas | Exhibitor Replicas | 1          |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

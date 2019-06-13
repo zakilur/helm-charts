@@ -1,4 +1,8 @@
-environment: openshift
+global:
+  environment: kubernetes
+  domain: 
+  route_url_name: 
+  remove_namespace_from_url: ''
 
 dashboard:
   image: 'docker.production.deciphernow.com/deciphernow/gm-dashboard:2.5.0'
