@@ -21,6 +21,11 @@ global:
   domain: 
   route_url_name: 
   remove_namespace_from_url: ''
+  exhibitor:
+    replicas: 1
+  xds:
+    port: 
+    cluster: 
 
 dockerCredentials:
   registry: docker.production.deciphernow.com
