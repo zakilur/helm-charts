@@ -1,6 +1,8 @@
-environment: openshift
-domain: development.deciphernow.com
-route_url_name: greymatter
+global:
+  environment: kubernetes
+  domain: 
+  route_url_name: 
+  remove_namespace_from_url: ''
 
 documentation:
   name: documentation

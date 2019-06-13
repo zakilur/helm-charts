@@ -32,55 +32,71 @@ The command removes all components associated with the chart and deletes the rel
 
 ## Configuration
 
-The following table lists the configurable parameters of the jwt chart and their default values.
+The following tables list the configurable parameters of the jwt chart and their default values.
 
-| Parameter                         | Description        | Default                                                                                                                                             |
-| --------------------------------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Parameter                         | Description        | Default                                                                                                                                             |
-| --------------------------------- | -------------      | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| environment                       |                    | openshift                                                                                                                                           |
-| jwt.version                       |                    | 0.2.0                                                                                                                                               |
-| jwt.image                         |                    |                                                                                                                                                     |
-| jwt.command                       |                    | ['/bin/sh']                                                                                                                                         |
-| jwt.args                          |                    | ['-c','if [[ ! -d ./certs ]]; then mkdir -p ./certs; fi && if [[ ! -d ./etc ]]; then mkdir -p ./certs; fi && /gm-jwt-security/gm-jwt-security',,]   |
-| jwt.redis_db                      |                    | '0'                                                                                                                                                 |
-| jwt.redis_pass                    |                    | redis                                                                                                                                               |
-| jwt.base_pass                     |                    | /services/jwt-security/0.2.0                                                                                                                        |
-| jwt.egress_use_tls                |                    | 'true'                                                                                                                                              |
-| jwt.users_mount_point             |                    | /gm-jwt-security/etc                                                                                                                                |
-| jwt.certs_mount_point             |                    | /gm-jwt-security/certs                                                                                                                              |
-| jwt.imagePullPolicy               |                    | Always                                                                                                                                              |
-| jwt.rescources.limits.cpu         |                    | 200m                                                                                                                                                |
-| jwt.rescources.limits.memory      |                    | 512Mi                                                                                                                                               |
-| jwt.resources.requests.cpu        |                    | 100m                                                                                                                                                |
-| jwt.resources.requests.memory     |                    | 64Mi                                                                                                                                                |
-| jwt.envars                        |                    | See jwt/values.yaml                                                                                                                                 |
-| jwt.secrets                       |                    | See jwt/values.yaml                                                                                                                                 |
-| jwt.users                         |                    | See jwt/values.yaml                                                                                                                                 |
-|                                   |                    |                                                                                                                                                     |
-| redis.secret_name                 |                    | redis-password                                                                                                                                      |
-| redis.password                    |                    | 'password'                                                                                                                                          |
-| redis.openshift.image             |                    | 'centos/redis-32-centos7'                                                                                                                           |
-| redis.k8s.image                   |                    | 'redis:3.2'                                                                                                                                         |
-| redis.replica_count               |                    | 1                                                                                                                                                   |
-| redis.imagePullPolicy             |                    | Always                                                                                                                                              |
-| redis.resources.limits.cpu        |                    | 200m                                                                                                                                                |
-| redis.resources.limits.memory     |                    | 500Mi                                                                                                                                               |
-| redis.resources.requests.cpu      |                    | 100m                                                                                                                                                |
-| redis.resources.requests.memory   |                    | 128Mi                                                                                                                                               |
-|                                   |                    |                                                                                                                                                     |
-| sidecar.image                     | Proxy Image        | 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1'                                                                                      |
-| sidecar.proxy_dynamic             |                    | 'true'                                                                                                                                              |
-| sidecar.metrics_key_function      |                    | depth                                                                                                                                               |
-| sidecar.ingress_use_tls           | Enable TLS         | 'true'                                                                                                                                              |
-| sidecar.imagePullPolicy           | Image pull policy  | Always                                                                                                                                              |
-| sidecar.create_sidecar_secret     | Create Certs       | false                                                                                                                                               |
-| sidecar.certificates              |                    | {name:{ca: ... , cert: ... , key ...}}                                                                                                              |
-|                                   |                    |                                                                                                                                                     |
-| xds.port                          |                    | 18000                                                                                                                                               |
-| xds.cluster                       |                    | greymatter                                                                                                                                          |
-|                                   |                    |                                                                                                                                                     |
-| exhibitor.replicas                | Exhibitor Replicas | 1                                                                                                                                                   |
+### Global Configuration
+
+| Parameter                        | Description | Default    |
+| -------------------------------- | ----------- | ---------- |
+| global.environment               |             | kubernetes |
+| global.domain                    |             |            |
+| global.route_url_name            |             |            |
+| global.remove_namespace_from_url |             |            |
+
+### Service Configuration
+
+| Parameter                       | Description | Default                                                                                                                                           |
+| ------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| jwt.version                     |             | 0.2.0                                                                                                                                             |
+| jwt.image                       |             |                                                                                                                                                   |
+| jwt.command                     |             | ['/bin/sh']                                                                                                                                       |
+| jwt.args                        |             | ['-c','if [[ ! -d ./certs ]]; then mkdir -p ./certs; fi && if [[ ! -d ./etc ]]; then mkdir -p ./certs; fi && /gm-jwt-security/gm-jwt-security',,] |
+| jwt.redis_db                    |             | '0'                                                                                                                                               |
+| jwt.redis_pass                  |             | redis                                                                                                                                             |
+| jwt.base_pass                   |             | /services/jwt-security/0.2.0                                                                                                                      |
+| jwt.egress_use_tls              |             | 'true'                                                                                                                                            |
+| jwt.users_mount_point           |             | /gm-jwt-security/etc                                                                                                                              |
+| jwt.certs_mount_point           |             | /gm-jwt-security/certs                                                                                                                            |
+| jwt.imagePullPolicy             |             | Always                                                                                                                                            |
+| jwt.rescources.limits.cpu       |             | 200m                                                                                                                                              |
+| jwt.rescources.limits.memory    |             | 512Mi                                                                                                                                             |
+| jwt.resources.requests.cpu      |             | 100m                                                                                                                                              |
+| jwt.resources.requests.memory   |             | 64Mi                                                                                                                                              |
+| jwt.envars                      |             | See jwt/values.yaml                                                                                                                               |
+| jwt.secrets                     |             | See jwt/values.yaml                                                                                                                               |
+| jwt.users                       |             | See jwt/values.yaml                                                                                                                               |
+|                                 |             |                                                                                                                                                   |
+| redis.secret_name               |             | redis-password                                                                                                                                    |
+| redis.password                  |             | 'password'                                                                                                                                        |
+| redis.openshift.image           |             | 'centos/redis-32-centos7'                                                                                                                         |
+| redis.k8s.image                 |             | 'redis:3.2'                                                                                                                                       |
+| redis.replica_count             |             | 1                                                                                                                                                 |
+| redis.imagePullPolicy           |             | Always                                                                                                                                            |
+| redis.resources.limits.cpu      |             | 200m                                                                                                                                              |
+| redis.resources.limits.memory   |             | 500Mi                                                                                                                                             |
+| redis.resources.requests.cpu    |             | 100m                                                                                                                                              |
+| redis.resources.requests.memory |             | 128Mi                                                                                                                                             |
+
+### Sidecar Configuration
+
+| Parameter                     | Description       | Default                                                        |
+| ----------------------------- | ----------------- | -------------------------------------------------------------- |
+| sidecar.image                 | Proxy Image       | 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1' |
+| sidecar.proxy_dynamic         |                   | 'true'                                                         |
+| sidecar.metrics_key_function  |                   | depth                                                          |
+| sidecar.ingress_use_tls       | Enable TLS        | 'true'                                                         |
+| sidecar.imagePullPolicy       | Image pull policy | Always                                                         |
+| sidecar.create_sidecar_secret | Create Certs      | false                                                          |
+| sidecar.certificates          |                   | {name:{ca: ... , cert: ... , key ...}}                         |
+
+### Additional Configuration
+
+| Parameter          | Description        | Default    |
+| ------------------ | ------------------ | ---------- |
+| xds.port           |                    | 18000      |
+| xds.cluster        |                    | greymatter |
+|                    |                    |            |
+| exhibitor.replicas | Exhibitor Replicas | 1          |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

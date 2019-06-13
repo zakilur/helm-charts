@@ -15,7 +15,7 @@ spec:
         app: prometheus
         deployment: prometheus
     spec:
-      {{- if and .Values.environment (ne .Values.environment "openshift") }}
+      {{- if and .Values.global.environment (ne .Values.global.environment "openshift") }}
       securityContext:
         fsGroup: 65534
       {{- end }}  

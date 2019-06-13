@@ -1,6 +1,7 @@
 # Edge Values File
 
-ingress_config:
+
+global:
   environment: kubernetes
   domain: development.deciphernow.com
   # Edge access is typically determine by <route_url_name>.<namespace>.<domain>
@@ -9,8 +10,9 @@ ingress_config:
   #   route_url_name is unique or openshift will throw errors.
   route_url_name: greymatter
   remove_namespace_from_url: 'false'
-  default_url: "{{ .Values.ingress_config.route_url_name }}.{{ .Release.Namespace }}.{{ .Values.ingress_config.domain }}"
-  custom_url: "{{ .Values.ingress_config.route_url_name }}.{{ .Values.ingress_config.domain }}"
+ingress_config:  
+  default_url: "{{ .Values.global.route_url_name }}.{{ .Release.Namespace }}.{{ .Values.global.domain }}"
+  custom_url: "{{ .Values.global.route_url_name }}.{{ .Values.global.domain }}"
 
 edge:
   egress_use_tls: 'true'

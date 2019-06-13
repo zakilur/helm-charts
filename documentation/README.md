@@ -32,9 +32,18 @@ The command removes all components associated with the chart and deletes the rel
 
 ## Configuration
 
-The following table lists the configurable parameters of the documentation chart and their default values.
+The following tables list the configurable parameters of the documentation chart and their default values.
 
-### Service
+### Global Configuration
+
+| Parameter                        | Description       | Default |
+| -------------------------------- | ----------------- | ------- |
+| global.environment               |                   |         |
+| global.domain                    | edge-ingress.yaml |         |
+| global.route_url_name            | edge-ingress.yaml |         |
+| global.remove_namespace_from_url | edge-ingress.yaml | ''      |
+
+### Service Configuration
 
 | Parameter                     | Description | Default                                                                 |
 | ----------------------------- | ----------- | ----------------------------------------------------------------------- |
@@ -51,7 +60,7 @@ Environment variables set in values.yaml:
 | base_path            | "services/documentation/3.0.0/" |
 | ingres_ca_cert_path  | 'Setup,FAQ'                     |
 
-### Sidecar
+### Sidecar Configuration
 
 | Parameter                         | Description | Default                                                       |
 | --------------------------------- | ----------- | ------------------------------------------------------------- |
@@ -80,7 +89,7 @@ Environment variables set in values.yaml:
 | service_port         | '8080'                              |
 | service_host         | '127.0.0.1                          |
 
-### Additional configurations
+### Additional Configuration
 
 | Parameter          | Description | Default    |
 | ------------------ | ----------- | ---------- |

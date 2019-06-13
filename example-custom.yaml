@@ -2,16 +2,32 @@
 # Alternatively you can add values to a custom yaml file.  Pass it into the cli via `-f <relative file route>.
 # You can rename this file to `custom.yaml` and fill it in.  .gitignore will make sure you do not accidentally check it in.
 
+# (environment):
+#   What type of enviornment are you deploying Grey Matter into? 
+#   Valid answers are openshift or kubernetes.  Defaults to kubernetes throughout
+#   package unless this is defined otherwise.
+# (domain):
+#   self explanitory
+# (remove_namespace_from_url): 
+#   Edge access is typically determine by <route_url_name>.<namespace>.<domain>.
+#   If this is true then it will be determined by <route_url_name>.<domain>.
+#   In this case the route_url_name will need to be unique per the domain
+# (route_url_name):
+#   Namespace is only removed whe setting remove_namespace_from_url to true
+#   If you choose to remove the namespace from the url you must ensure your 
+#   route_url_name is unique or openshift will throw errors.
+global:
+  environment: 
+  domain: 
+  route_url_name: 
+  remove_namespace_from_url: ''
+
 dockerCredentials:
   registry: docker.production.deciphernow.com
   email: 
   username: 
   password:
-# What type of enviornment are you deploying Grey Matter into?
-#  Valid answers are openshift or kubernetes
-#  Defaults to kubernetes
-global:
-  environment: kubernetes
+
 exhibitor:  
   exhibitor:
     aws:
@@ -108,11 +124,6 @@ sidecar:
       ...
       -----END RSA PRIVATE KEY-----
 edge:
-  ingress_config:
-    environment:
-    domain: 
-    route_url_name: 
-    remove_namespace_from_url: ''
   edge:
     create_edge_secret: true
     certificates:

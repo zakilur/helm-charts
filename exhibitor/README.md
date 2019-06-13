@@ -34,6 +34,17 @@ The command removes all components associated with the chart and deletes the rel
 
 The following table lists the configurable parameters of the exhibitor chart and their default values.
 
+### Global Configuration
+
+| Parameter                        | Description | Default    |
+| -------------------------------- | ----------- | ---------- |
+| global.environment               |             | kubernetes |
+| global.domain                    |             |            |
+| global.route_url_name            |             |            |
+| global.remove_namespace_from_url |             |            |
+
+### Service Configuration
+
 | Parameter                           | Description | Default                                                                                                                                                                                       |
 | ----------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | exhibitor.aws.access_key            |             |                                                                                                                                                                                               |

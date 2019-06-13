@@ -1,4 +1,4 @@
-{{- if and .Values.ingress_config.environment (eq .Values.ingress_config.environment "openshift") }}
+{{- if and .Values.global.environment (eq .Values.global.environment "openshift") }}
 
 kind: Route
 apiVersion: route.openshift.io/v1
@@ -7,7 +7,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   host: 
-  {{- if eq .Values.ingress_config.remove_namespace_from_url "true" }}
+  {{- if eq .Values.global.remove_namespace_from_url "true" }}
     {{ tpl .Values.ingress_config.custom_url . }}
   {{- else }}
     {{ tpl .Values.ingress_config.default_url . }}
@@ -35,7 +35,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   rules:
-  {{- if eq .Values.ingress_config.remove_namespace_from_url "true" }}
+  {{- if eq .Values.global.remove_namespace_from_url "true" }}
     - host: {{ tpl .Values.ingress_config.custom_url . }}
   {{- else }}
     - host: {{ tpl .Values.ingress_config.default_url . }}

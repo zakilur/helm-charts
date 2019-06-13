@@ -20,6 +20,19 @@ $ helm install greymatter --name <my-release>
 
 The command deploys greymatter on the cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
 
+## Configuration
+
+The following table lists the configurable parameters of the edge chart and their default values.
+
+### Global Configuration
+
+| Parameter                        | Description       | Default                     |
+| -------------------------------- | ----------------- | --------------------------- |
+| global.environment               |                   | kubernetes                  |
+| global.domain                    | edge-ingress.yaml | development.deciphernow.com |
+| global.route_url_name            | edge-ingress.yaml | greymatter                  |
+| global.remove_namespace_from_url | edge-ingress.yaml | 'false'                     |
+
 ## Testing the Chart
 
 To test run a test use:
