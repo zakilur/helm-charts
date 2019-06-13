@@ -3,6 +3,8 @@ global:
   domain: 
   route_url_name: 
   remove_namespace_from_url: ''
+  exhibitor:
+    replicas: 1
 
 jwt:
   version: 0.2.0
@@ -220,6 +222,3 @@ sidecar:
 xds:
   port: 18000
   cluster: greymatter
-
-exhibitor:
-  replicas: 1

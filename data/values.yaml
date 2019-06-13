@@ -5,6 +5,8 @@ global:
   domain: 
   route_url_name: 
   remove_namespace_from_url: ''
+  exhibitor:
+    replicas: 1
 
 data:
   # The name of this installation of GM Data.  Used in the zookeeper address.  Allow to be unique to support multiple installations of Data
@@ -265,5 +267,3 @@ xds:
   port: 18000
   cluster: greymatter
 
-exhibitor:
-  replicas: 1

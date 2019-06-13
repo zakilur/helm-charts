@@ -10,6 +10,9 @@ global:
   #   route_url_name is unique or openshift will throw errors.
   route_url_name: greymatter
   remove_namespace_from_url: 'false'
+  exhibitor:
+    replicas: 1
+
 ingress_config:  
   default_url: "{{ .Values.global.route_url_name }}.{{ .Release.Namespace }}.{{ .Values.global.domain }}"
   custom_url: "{{ .Values.global.route_url_name }}.{{ .Values.global.domain }}"
@@ -86,6 +89,3 @@ sidecar:
 xds:
   cluster: greymatter
   port: 18000
-
-exhibitor:
-  replicas: 1

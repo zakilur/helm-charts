@@ -42,6 +42,7 @@ The following tables list the configurable parameters of the xds chart and their
 | global.domain                    |             |            |
 | global.route_url_name            |             |            |
 | global.remove_namespace_from_url |             |            |
+| global.exhibitor.replicas        |             | 1          |
 
 ### Service Configuration
 
@@ -76,12 +77,6 @@ The following tables list the configurable parameters of the xds chart and their
 | sidecar.resources.limits.memory   |                   | 512Mi                                                          |
 | sidecar.resources.requests.cpu    |                   | 100m                                                           |
 | sidecar.resources.requests.memory |                   | 128Mi                                                          |
-
-### Additional Configuration
-
-| Parameter's        | Description | Default |
-| ------------------ | ----------- | ------- |
-| exhibitor.replicas |             | 1       |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

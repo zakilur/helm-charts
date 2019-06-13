@@ -42,6 +42,7 @@ The following tables list the configurable parameters of the data chart and thei
 | global.domain                    | edge-ingress.yaml |            |
 | global.route_url_name            | edge-ingress.yaml |            |
 | global.remove_namespace_from_url | edge-ingress.yaml | ''         |
+| global.exhibitor.replicas        |                   | 1          |
 
 ### Service Configuration
 
@@ -87,25 +88,27 @@ The following tables list the configurable parameters of the data chart and thei
 
 ## Sidecar Configuration
 
-| sidecar.version | Proxy Version | 0.7.1 |
-| sidecar.image | Proxy Image | 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1' |
-| sidecar.proxy_dynamic | | 'true' |
-| sidecar.metrics_key_function | | depth |
-| sidecar.ingress_use_tls | Enable TLS | 'true' |
-| sidecar.imagePullPolicy | Image pull policy | Always |
-| sidecar.create_sidecar_secret | Create Certs | false |
-| sidecar.certificates | | {name:{ca: ... , cert: ... , key ...}} |
-| sidecar.resources.limits.cpu | | 200m |
-| sidecar.resources.limits.memory | | 512Mi |
-| sidecar.resources.requests.cpu | | 100m |
-| sidecar.resources.requests.memory | | 128Mi |
+| Parameter                         | Description       | Default                                                        |
+| --------------------------------- | ----------------- | -------------------------------------------------------------- |
+| sidecar.version                   | Proxy Version     | 0.7.1                                                          |
+| sidecar.image                     | Proxy Image       | 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1' |
+| sidecar.proxy_dynamic             |                   | 'true'                                                         |
+| sidecar.metrics_key_function      |                   | depth                                                          |
+| sidecar.ingress_use_tls           | Enable TLS        | 'true'                                                         |
+| sidecar.imagePullPolicy           | Image pull policy | Always                                                         |
+| sidecar.create_sidecar_secret     | Create Certs      | false                                                          |
+| sidecar.certificates              |                   | {name:{ca: ... , cert: ... , key ...}}                         |
+| sidecar.resources.limits.cpu      |                   | 200m                                                           |
+| sidecar.resources.limits.memory   |                   | 512Mi                                                          |
+| sidecar.resources.requests.cpu    |                   | 100m                                                           |
+| sidecar.resources.requests.memory |                   | 128Mi                                                          |
 
 ### Additional Configuration
 
-| xds.port | Xds Port | 18000 |
+| Parameter   | Description | Default    |
+| ----------- | ----------- | ---------- |
+| xds.port    | Xds Port    | 18000      |
 | xds.cluster | XDS Cluster | greymatter |
-| | | |
-| exhibitor.replicas | Exhibitor Replicas | 1 |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

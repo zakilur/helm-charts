@@ -4,6 +4,8 @@ global:
   domain: 
   route_url_name: 
   remove_namespace_from_url: ''
+  exhibitor:
+    replicas: 1
 
 xds:
   image: 'docker.production.deciphernow.com/deciphernow/gm-xds:0.2.6'
@@ -57,6 +59,3 @@ sidecar:
     #   -----BEGIN RSA PRIVATE KEY-----
     #   ...
     #   -----END RSA PRIVATE KEY-----
-
-exhibitor:
-  replicas: 1

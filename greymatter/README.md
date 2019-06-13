@@ -32,6 +32,7 @@ The following table lists the configurable parameters of the edge chart and thei
 | global.domain                    | edge-ingress.yaml | development.deciphernow.com |
 | global.route_url_name            | edge-ingress.yaml | greymatter                  |
 | global.remove_namespace_from_url | edge-ingress.yaml | 'false'                     |
+| global.exhibitor.replicas        |                   | 1                           |
 
 ## Testing the Chart
 
