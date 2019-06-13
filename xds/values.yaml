@@ -6,6 +6,10 @@ global:
   remove_namespace_from_url: ''
   exhibitor:
     replicas: 1
+  # Might want to point the xds values to the global values or vice versa
+  xds:
+    port:
+    cluster:
 
 xds:
   image: 'docker.production.deciphernow.com/deciphernow/gm-xds:0.2.6'

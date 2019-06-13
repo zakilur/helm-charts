@@ -33,6 +33,8 @@ The following table lists the configurable parameters of the edge chart and thei
 | global.route_url_name            | edge-ingress.yaml | greymatter                  |
 | global.remove_namespace_from_url | edge-ingress.yaml | 'false'                     |
 | global.exhibitor.replicas        |                   | 1                           |
+| global.xds.port                  |                   | 18000                       |
+| global.xds.cluster               |                   | greymatter                  |
 
 ## Testing the Chart
 

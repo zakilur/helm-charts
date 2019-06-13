@@ -34,7 +34,7 @@ spec:
             - name: PORT
               value: '9080'
             - name: XDS_SERVER_ADDRESS
-              value: 'xds.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.xds.port }}'
+              value: 'xds.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.global.xds.port }}'
             - name: ZK_HOST
               value: {{template "greymatter.exhibitor.address" .}}
             
@@ -77,7 +77,7 @@ spec:
             - name: SERVICE_PORT
               value: '9080'
             - name: XDS_CLUSTER
-              value: {{ .Values.xds.cluster | quote }}
+              value: {{ .Values.global.xds.cluster | quote }}
             - name: XDS_HOST
               value: 'xds.{{ .Release.Namespace }}.svc.cluster.local'
             - name: XDS_PORT

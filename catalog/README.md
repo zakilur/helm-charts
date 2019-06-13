@@ -43,6 +43,8 @@ The following tables list the configurable parameters of the catalog chart and t
 | global.route_url_name            | edge-ingress.yaml |            |
 | global.remove_namespace_from_url | edge-ingress.yaml | ''         |
 | global.exhibitor.replicas        |                   | 1          |
+| global.xds.port                  |                   | 18000      |
+| global.xds.cluster               |                   | greymatter |
 
 ### Service Configuration
 
@@ -120,16 +122,13 @@ The following tables list the configurable parameters of the catalog chart and t
 
 ### Additional Configuration
 
-| Parameter         | Description       | Default    |
-| ----------------- | ----------------- | ---------- |
-| xds.version       | Xds Version       | 0.2.6      |
-| xds.port          | Xds Port          | 18000      |
-| xds.cluster       | XDS Cluster       | greymatter |
-|                   |                   |            |
-| dashboard.version | Dashboard Version | latest     |
-| data.version      | Data Version      | 0.2.3      |
-| jwt.version       | JWT Version       | 0.2.0      |
-| slo.version       | Slo Version       | 0.4.0      |
+| Parameter         | Description       | Default |
+| ----------------- | ----------------- | ------- |
+| xds.version       | Xds Version       | 0.2.6   |
+| dashboard.version | Dashboard Version | latest  |
+| data.version      | Data Version      | 0.2.3   |
+| jwt.version       | JWT Version       | 0.2.0   |
+| slo.version       | Slo Version       | 0.4.0   |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

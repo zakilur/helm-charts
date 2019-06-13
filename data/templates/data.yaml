@@ -105,7 +105,7 @@ spec:
           value: {{ .Values.data.deploy.xds.cluster }}
           {{- end }}
           {{- else }}
-          value: {{ .Values.xds.cluster | quote }}
+          value: {{ .Values.global.xds.cluster | quote }}
           {{- end }}
         - name: XDS_HOST
           {{- if .Values.data.deploy.standalone }}
@@ -116,7 +116,7 @@ spec:
           value: "xds.{{ .Release.Namespace }}.svc.cluster.local"
           {{- end }}
         - name: XDS_PORT
-          value: {{ .Values.xds.port | quote }}
+          value: {{ .Values.global.xds.port | quote }}
         - name: ZK_ADDRS
           {{- if .Values.data.deploy.standalone }}
           {{- if .Values.data.deploy.exhibitor_address }}
