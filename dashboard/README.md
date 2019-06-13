@@ -36,13 +36,15 @@ The following tables list the configurable parameters of the dashboard chart and
 
 ### Global Configuration
 
-| Parameter                        | Description       | Default |
-| -------------------------------- | ----------------- | ------- |
-| global.environment               |                   |         |
-| global.domain                    | edge-ingress.yaml |         |
-| global.route_url_name            | edge-ingress.yaml |         |
-| global.remove_namespace_from_url | edge-ingress.yaml | ''      |
-| global.exhibitor.replicas        |                   | 1       |
+| Parameter                        | Description       | Default    |
+| -------------------------------- | ----------------- | ---------- |
+| global.environment               |                   |            |
+| global.domain                    | edge-ingress.yaml |            |
+| global.route_url_name            | edge-ingress.yaml |            |
+| global.remove_namespace_from_url | edge-ingress.yaml | ''         |
+| global.exhibitor.replicas        |                   | 1          |
+| global.xds.port                  |                   | 18000      |
+| global.xds.cluster               |                   | greymatter |
 
 ### Service Configuration
 
@@ -86,13 +88,6 @@ The following tables list the configurable parameters of the dashboard chart and
 | sidecar.create_sidecar_secret | Create Certs      | false                                                          |
 | sidecar.certificates          |                   | {name:{ca: ... , cert: ... , key ...}}                         |
 |                               |                   |                                                                |
-
-### Additional Configuration
-
-| Parameter   | Description | Default    |
-| ----------- | ----------- | ---------- |
-| xds.port    | Xds Port    | 18000      |
-| xds.cluster | XDS Cluster | greymatter |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

@@ -43,6 +43,8 @@ The following tables list the configurable parameters of the jwt-gov chart and t
 | global.route_url_name            |             |            |
 | global.remove_namespace_from_url |             |            |
 | global.exhibitor.replicas        |             | 1          |
+| global.xds.port                  |             | 18000      |
+| global.xds.cluster               |             | greymatter |
 
 ### Service Configuration
 
@@ -90,13 +92,6 @@ The following tables list the configurable parameters of the jwt-gov chart and t
 | sidecar.imagePullPolicy       | Image pull policy | Always                                                         |
 | sidecar.create_sidecar_secret | Create Certs      | false                                                          |
 | sidecar.secrets               |                   | {name:{ca: ... , cert: ... , key ...}}                         |
-
-### Additional Configuration
-
-| Parameter   | Description | Default    |
-| ----------- | ----------- | ---------- |
-| xds.port    |             | 18000      |
-| xds.cluster |             | greymatter |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

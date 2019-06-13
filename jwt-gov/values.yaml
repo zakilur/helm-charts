@@ -5,6 +5,9 @@ global:
   remove_namespace_from_url: ''
   exhibitor:
     replicas: 1
+  xds:
+    port: 18000
+    cluster: greymatter
 
 jwt:
   version: 0.2.0
@@ -218,7 +221,3 @@ sidecar:
     #   -----BEGIN RSA PRIVATE KEY-----
     #   ...
     #   -----END RSA PRIVATE KEY-----
-
-xds:
-  port: 18000
-  cluster: greymatter

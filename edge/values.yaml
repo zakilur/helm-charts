@@ -12,6 +12,9 @@ global:
   remove_namespace_from_url: 'false'
   exhibitor:
     replicas: 1
+  xds:
+    port: 18000
+    cluster: greymatter
 
 ingress_config:  
   default_url: "{{ .Values.global.route_url_name }}.{{ .Release.Namespace }}.{{ .Values.global.domain }}"
@@ -85,7 +88,3 @@ sidecar:
       -----BEGIN RSA PRIVATE KEY-----
       ...
       -----END RSA PRIVATE KEY-----
-
-xds:
-  cluster: greymatter
-  port: 18000

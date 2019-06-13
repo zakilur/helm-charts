@@ -5,6 +5,9 @@ global:
   remove_namespace_from_url: ''
   exhibitor:
     replicas: 1
+  xds:
+    port: 18000
+    cluster: greymatter
 
 slo:
   version: 0.4.0
@@ -52,9 +55,6 @@ sidecar:
     #   -----BEGIN RSA PRIVATE KEY-----
     #   ...
     #   -----END RSA PRIVATE KEY-----
-xds:
-  port: 18000
-  cluster: greymatter
 
 postgres:
   data_mount_point: /var/lib/pgsql/data

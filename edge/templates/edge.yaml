@@ -51,11 +51,11 @@ spec:
         - name: PROXY_DYNAMIC
           value: {{ .Values.sidecar.proxy_dynamic | quote }}
         - name: XDS_CLUSTER
-          value: {{ .Values.xds.cluster | quote }}
+          value: {{ .Values.global.xds.cluster | quote }}
         - name: XDS_HOST
           value: "xds.{{ .Release.Namespace }}.svc.cluster.local"
         - name: XDS_PORT
-          value: {{ .Values.xds.port | quote }}
+          value: {{ .Values.global.xds.port | quote }}
         - name: ZK_ADDRS
           value: {{ template "greymatter.exhibitor.address" . }}
         - name: ZK_ANNOUNCE_PATH

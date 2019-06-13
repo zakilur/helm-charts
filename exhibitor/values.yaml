@@ -7,6 +7,9 @@ global:
   remove_namespace_from_url: ''
   exhibitor:
     replicas: 1
+  xds:
+    port: 18000
+    cluster: greymatter
 
 # These are the settings for Exhibitor
 exhibitor:

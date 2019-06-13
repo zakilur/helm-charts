@@ -33,7 +33,7 @@ Define the exhibitor host.
         - name: SERVICE_HOST
             value: "127.0.0.1"
         - name: SERVICE_PORT
-            value: {{ .Values.xds.port | quote }}
+            value: {{ .Values.global.xds.port | quote }}
         - name: ZK_ADDRS
             value: {{ template "greymatter.exhibitor.address" . }}
         - name: ZK_ANNOUNCE_PATH

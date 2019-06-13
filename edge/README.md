@@ -47,6 +47,8 @@ The following tables list the configurable parameters of the edge chart and thei
 | global.route_url_name            | edge-ingress.yaml | greymatter                  |
 | global.remove_namespace_from_url | edge-ingress.yaml | 'false'                     |
 | global.exhibitor.replicas        |                   | 1                           |
+| global.xds.port                  |                   | 18000                       |
+| global.xds.cluster               |                   | greymatter                  |
 
 ### Service Configuration
 
@@ -83,13 +85,6 @@ The following tables list the configurable parameters of the edge chart and thei
 | sidecar.resources.requests.cpu    |                   | 100m                                                           |
 | sidecar.resources.requests.memory |                   | 128Mi                                                          |
 |                                   |                   |                                                                |
-
-## Additional Configurations
-
-| Parameter   | Description | Default    |
-| ----------- | ----------- | ---------- |
-| xds.port    | xDS Port    | 18000      |
-| xds.cluster | xDS Cluster | greymatter |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

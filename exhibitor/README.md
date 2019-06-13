@@ -43,6 +43,8 @@ The following table lists the configurable parameters of the exhibitor chart and
 | global.route_url_name            |             |            |
 | global.remove_namespace_from_url |             |            |
 | global.exhibitor.replicas        |             | 1          |
+| global.xds.port                  |             | 18000      |
+| global.xds.cluster               |             | greymatter |
 
 ### Service Configuration
 

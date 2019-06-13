@@ -5,6 +5,9 @@ global:
   remove_namespace_from_url: ''
   exhibitor:
     replicas: 1
+  xds:
+    port: 18000
+    cluster: greymatter
 
 dashboard:
   image: 'docker.production.deciphernow.com/deciphernow/gm-dashboard:2.5.0'
@@ -75,7 +78,3 @@ sidecar:
       -----BEGIN RSA PRIVATE KEY-----
       ...
       -----END RSA PRIVATE KEY-----
-
-xds:
-  port: 18000
-  cluster: greymatter
