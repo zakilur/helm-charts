@@ -4,6 +4,8 @@ global:
   domain: 
   route_url_name: 
   remove_namespace_from_url: ''
+  exhibitor:
+    replicas: 1
 
 sidecar:
   # Set this to true if you are attempting to deploy Catalog by itself.  

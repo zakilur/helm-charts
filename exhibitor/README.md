@@ -42,6 +42,7 @@ The following table lists the configurable parameters of the exhibitor chart and
 | global.domain                    |             |            |
 | global.route_url_name            |             |            |
 | global.remove_namespace_from_url |             |            |
+| global.exhibitor.replicas        |             | 1          |
 
 ### Service Configuration
 

@@ -42,6 +42,7 @@ The following tables list the configurable parameters of the dashboard chart and
 | global.domain                    | edge-ingress.yaml |         |
 | global.route_url_name            | edge-ingress.yaml |         |
 | global.remove_namespace_from_url | edge-ingress.yaml | ''      |
+| global.exhibitor.replicas        |                   | 1       |
 
 ### Service Configuration
 
@@ -88,12 +89,10 @@ The following tables list the configurable parameters of the dashboard chart and
 
 ### Additional Configuration
 
-| Parameter          | Description        | Default    |
-| ------------------ | ------------------ | ---------- |
-| xds.port           | Xds Port           | 18000      |
-| xds.cluster        | XDS Cluster        | greymatter |
-|                    |                    |            |
-| exhibitor.replicas | Exhibitor Replicas | 1          |
+| Parameter   | Description | Default    |
+| ----------- | ----------- | ---------- |
+| xds.port    | Xds Port    | 18000      |
+| xds.cluster | XDS Cluster | greymatter |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

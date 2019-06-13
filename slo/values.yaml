@@ -3,6 +3,8 @@ global:
   domain: 
   route_url_name: 
   remove_namespace_from_url: ''
+  exhibitor:
+    replicas: 1
 
 slo:
   version: 0.4.0
@@ -121,6 +123,3 @@ postgres:
       name: POSTGRESQL_DATABASE
       secret: postgres-credentials
       key: database
-
-exhibitor:
-  replicas: 1
