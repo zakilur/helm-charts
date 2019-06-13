@@ -20,6 +20,34 @@ $ helm install greymatter --name <my-release>
 
 The command deploys greymatter on the cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
 
+## Testing the Chart
+
+To test run a test use:
+
+```console
+$ helm test <deployment_name>
+```
+
+ex:
+
+```console
+$ helm test greymatter_test_deploy
+
+#Result
+
+RUNNING: greymatter_test_deploy-connection-test
+PASSED: greymatter_test_deploy-connection-test
+```
+
+Running this command will spin up a new pod named `documentation-connection-test` which will run the tests defined in `documentation/templates/tests`.
+
+### Tests
+
+| Test Name               | Description            | Desired Result |
+| ----------------------- | ---------------------- | -------------- |
+| test-documentation.yaml | curl documentation url | 200            |
+|                         |                        |                |
+
 ## Uninstalling the Chart
 
 To uninstall/delete the `<my-release>` deployment:
