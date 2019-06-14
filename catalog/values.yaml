@@ -3,17 +3,32 @@ global:
   domain: 
   route_url_name: 
   remove_namespace_from_url: ''
+  catalog:
+    version: 
+  dashboard:
+    version: 
+  data:
+    version: 
+  documentation:
+    version: 
+  edge:
+    version: 
   exhibitor:
-    replicas: 1
+    replicas: 
+    version: 
+  jwt:
+    version: 
+  slo:
+    version: 
   xds:
-    port: 18000
-    cluster: greymatter
+    cluster: 
+    port: 
+    version: 
 
 catalog:
-  image: docker.production.deciphernow.com/deciphernow/gm-catalog:0.3.6
+  image: docker.production.deciphernow.com/deciphernow/gm-catalog:{{ $.Values.global.catalog.version }}
   source: xds
   debug: 'false'
-  version: 0.3.6
   imagePullPolicy: Always
   resources:
    limits:
@@ -28,71 +43,71 @@ catalog:
   services:
     service_0:
       capability: 'Grey Matter'
-      documentation: '/services/catalog/0.3.6/'
+      documentation: '/services/catalog/{{ $.Values.global.catalog.version }}/'
       name: 'Grey Matter Catalog'
       owner: 'Decipher'
-      version: "{{ $.Values.catalog.version | trunc 3 }}"
-      zookeeper_announcement_point: "/services/catalog/{{ $.Values.catalog.version }}/metrics"
+      version: "{{ $.Values.global.catalog.version | trunc 3 }}"
+      zookeeper_announcement_point: "/services/catalog/{{ $.Values.global.catalog.version }}/metrics"
     
     service_1:
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter Control'
       owner: 'Decipher'
-      version: "{{ $.Values.xds.version | trunc 3 }}"
-      zookeeper_announcement_point: "/services/xds/{{ $.Values.xds.version }}/metrics"
+      version: "{{ $.Values.global.xds.version | trunc 3 }}"
+      zookeeper_announcement_point: "/services/xds/{{ $.Values.global.xds.version }}/metrics"
     
     service_2:
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter Dashboard'
       owner: 'Decipher'
-      version: "{{ $.Values.dashboard.version | trunc 3 }}"
-      zookeeper_announcement_point: "/services/dashboard/{{ $.Values.dashboard.version }}/metrics"
+      version: "{{ $.Values.global.dashboard.version | trunc 3 }}"
+      zookeeper_announcement_point: "/services/dashboard/{{ $.Values.global.dashboard.version }}/metrics"
     
     service_3:
       capability: 'Grey Matter'
-      documentation:  "/services/data/{{ .Values.data.version }}/static/ui/index.html"
+      documentation:  "/services/data/{{ .Values.global.data.version }}/static/ui/index.html"
       name: 'Grey Matter Data'
       owner: 'Decipher'
-      version: "{{ $.Values.data.version | trunc 3 }}"
-      zookeeper_announcement_point: "/services/data/{{ $.Values.data.version }}/metrics"
+      version: "{{ $.Values.global.data.version | trunc 3 }}"
+      zookeeper_announcement_point: "/services/data/{{ $.Values.global.data.version }}/metrics"
     
     service_4:
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter JWT Security'
       owner: 'Decipher'
-      version: "{{ $.Values.jwt.version | trunc 3 }}"
-      zookeeper_announcement_point: "/services/jwt-security/{{ $.Values.jwt.version }}/metrics"
+      version: "{{ $.Values.global.jwt.version | trunc 3 }}"
+      zookeeper_announcement_point: "/services/jwt-security/{{ $.Values.global.jwt.version }}/metrics"
     
     service_5:
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter Edge'
       owner: 'Decipher'
-      version: "{{ $.Values.sidecar.version | trunc 3 }}"
-      zookeeper_announcement_point: "/services/edge/{{ $.Values.sidecar.version }}/metrics"
+      version: "{{ $.Values.global.edge.version | trunc 3 }}"
+      zookeeper_announcement_point: "/services/edge/{{ $.Values.global.edge.version }}/metrics"
     
     service_6:
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter Service Level Objectives'
       owner: 'Decipher'
-      version: "{{ $.Values.slo.version | trunc 3 }}"
-      zookeeper_announcement_point: "/services/slo/{{ $.Values.slo.version }}/metrics"
+      version: "{{ $.Values.global.slo.version | trunc 3 }}"
+      zookeeper_announcement_point: "/services/slo/{{ $.Values.global.slo.version }}/metrics"
 
     service_7:
       capability: 'Grey Matter'
-      documentation: '/services/documentation/{{ $.Values.documentation.version }}/'
+      documentation: '/services/documentation/{{ $.Values.global.documentation.version }}/'
       name: 'Grey Matter Documentation'
       owner: 'Decipher'
-      version: "{{ $.Values.documentation.version | trunc 3 }}"
-      zookeeper_announcement_point: "/services/documentation/{{ $.Values.documentation.version }}/metrics"
+      version: "{{ $.Values.global.documentation.version | trunc 3 }}"
+      zookeeper_announcement_point: "/services/documentation/{{ $.Values.global.documentation.version }}/metrics"
    
 sidecar:
   version: 0.7.1
-  image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1'
+  image: "docker.production.deciphernow.com/deciphernow/gm-proxy:{{ $.Values.sidecar.version }}"
   proxy_dynamic: 'true'
   metrics_key_function: depth
   ingress_use_tls: 'true'
@@ -124,21 +139,3 @@ sidecar:
       -----BEGIN RSA PRIVATE KEY-----
       ...
       -----END RSA PRIVATE KEY-----
-
-dashboard:
-  version: latest
-
-documentation:
-  version: 3.0.0
-
-data:
-  version: 0.2.3
-
-jwt:
-  version: 0.2.0
-
-slo:
-  version: 0.4.0
-
-xds:
-  version: 0.2.6

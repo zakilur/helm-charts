@@ -42,9 +42,18 @@ The following tables list the configurable parameters of the catalog chart and t
 | global.domain                    | edge-ingress.yaml |            |
 | global.route_url_name            | edge-ingress.yaml |            |
 | global.remove_namespace_from_url | edge-ingress.yaml | ''         |
+| global.catalog.version           |                   |            |
+| global.dashboard.version         |                   |            |
+| global.data.version              |                   |            |
+| global.documentation.version     |                   |            |
+| global.edge.version              |                   |            |
 | global.exhibitor.replicas        |                   | 1          |
-| global.xds.port                  |                   | 18000      |
+| global.exhibitor.version         |                   |            |
+| global.jwt.version               |                   |            |
+| global.slo.version               |                   |            |
 | global.xds.cluster               |                   | greymatter |
+| global.xds.port                  |                   | 18000      |
+| global.xds.version               |                   |            |
 
 ### Service Configuration
 
