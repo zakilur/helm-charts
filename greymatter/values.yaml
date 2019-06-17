@@ -4,11 +4,27 @@ global:
   domain: 
   route_url_name: 
   remove_namespace_from_url: false
+  catalog:
+    version: 0.3.6
+  dashboard:
+    version: latest
+  data:
+    version: 0.2.3
+  documentation:
+    version: 3.0.0
+  edge:
+    version: 0.7.1
   exhibitor:
     replicas: 1
+    version: 
+  jwt:
+    version: 0.2.0
+  slo:
+    version: 0.4.0
   xds:
-    port: 18000
     cluster: greymatter
+    port: 18000
+    version: 0.2.6
 
 sidecar:
   # Set this to true if you are attempting to deploy Catalog by itself.  

@@ -21,6 +21,16 @@ global:
   domain:
   route_url_name:
   remove_namespace_from_url: false
+  catalog:
+    version: 
+  dashboard:
+    version: 
+  data:
+    version: 
+  documentation:
+    version: 
+  edge:
+    version: 
   exhibitor:
     replicas: 1
     version: 
@@ -29,8 +39,9 @@ global:
   slo:
     version: 
   xds:
+    cluster: greymatter-kg
     port: 18000
-    cluster: greymatter
+    version: 
 
 dockerCredentials:
   registry: docker.production.deciphernow.com

@@ -2,28 +2,28 @@ global:
   environment: kubernetes
   domain: 
   route_url_name: 
-  remove_namespace_from_url: ''
+  remove_namespace_from_url: false
   catalog:
-    version: 
+    version: 0.3.6
   dashboard:
-    version: 
+    version: latest
   data:
-    version: 
+    version: 0.2.3
   documentation:
-    version: 
+    version: 3.0.0
   edge:
-    version: 
+    version: 0.7.1
   exhibitor:
-    replicas: 
+    replicas: 1
     version: 
   jwt:
-    version: 
+    version: 0.2.0
   slo:
-    version: 
+    version: 0.4.0
   xds:
-    cluster: 
-    port: 
-    version: 
+    cluster: greymatter
+    port: 18000
+    version: 0.2.6
 
 catalog:
   image: docker.production.deciphernow.com/deciphernow/gm-catalog:{{ $.Values.global.catalog.version }}
