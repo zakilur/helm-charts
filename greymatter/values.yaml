@@ -3,7 +3,7 @@ global:
   environment: kubernetes
   domain: 
   route_url_name: 
-  remove_namespace_from_url: ''
+  remove_namespace_from_url: false
   exhibitor:
     replicas: 1
   xds:
