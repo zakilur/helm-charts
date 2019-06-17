@@ -69,11 +69,11 @@ spec:
         - name: SERVICE_PORT
           value: "1337"
         - name: XDS_CLUSTER
-          value: '{{ .Values.xds.cluster }}'
+          value: '{{ .Values.global.xds.cluster }}'
         - name: XDS_HOST
           value: "xds.{{ .Release.Namespace }}.svc.cluster.local"
         - name: XDS_PORT
-          value: '{{ .Values.xds.port }}'
+          value: '{{ .Values.global.xds.port }}'
         - name: ZK_ADDRS
           value: {{ template "greymatter.exhibitor.address" . }}
         - name: ZK_ANNOUNCE_PATH

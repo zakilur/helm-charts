@@ -36,17 +36,19 @@ By default Helm will deploy edge with an ingress URL of `<route_url_name>.<names
 
 ## Configuration
 
-The following table lists the configurable parameters of the edge chart and their default values.
+The following tables list the configurable parameters of the edge chart and their default values.
 
-### Ingress Configuration
+### Global Configuration
 
-| Parameter                                | Description | Default                     |
-| ---------------------------------------- | ----------- | --------------------------- |
-| ingress_config.environment               |             | kubernetes                  |
-| ingress_config.domain                    |             | development.deciphernow.com |
-| ingress_config.route_url_name            |             | greymatter                  |
-| ingress_config.remove_namespace_from_url |             | 'false'                     |
-|                                          |             |                             |
+| Parameter                        | Description       | Default                     |
+| -------------------------------- | ----------------- | --------------------------- |
+| global.environment               |                   | kubernetes                  |
+| global.domain                    | edge-ingress.yaml | development.deciphernow.com |
+| global.route_url_name            | edge-ingress.yaml | greymatter                  |
+| global.remove_namespace_from_url | edge-ingress.yaml | 'false'                     |
+| global.exhibitor.replicas        |                   | 1                           |
+| global.xds.port                  |                   | 18000                       |
+| global.xds.cluster               |                   | greymatter                  |
 
 ### Service Configuration
 
@@ -83,15 +85,6 @@ The following table lists the configurable parameters of the edge chart and thei
 | sidecar.resources.requests.cpu    |                   | 100m                                                           |
 | sidecar.resources.requests.memory |                   | 128Mi                                                          |
 |                                   |                   |                                                                |
-
-## Additional Configurations
-
-| Parameter          | Description        | Default    |
-| ------------------ | ------------------ | ---------- |
-| xds.port           | xDS Port           | 18000      |
-| xds.cluster        | xDS Cluster        | greymatter |
-|                    |                    |            |
-| exhibitor.replicas | Exhibitor Replicas | 1          |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

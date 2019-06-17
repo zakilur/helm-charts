@@ -32,11 +32,24 @@ The command removes all components associated with the chart and deletes the rel
 
 ## Configuration
 
-The following table lists the configurable parameters of the dashboard chart and their default values.
+The following tables list the configurable parameters of the dashboard chart and their default values.
+
+### Global Configuration
+
+| Parameter                        | Description       | Default    |
+| -------------------------------- | ----------------- | ---------- |
+| global.environment               |                   |            |
+| global.domain                    | edge-ingress.yaml |            |
+| global.route_url_name            | edge-ingress.yaml |            |
+| global.remove_namespace_from_url | edge-ingress.yaml | ''         |
+| global.exhibitor.replicas        |                   | 1          |
+| global.xds.port                  |                   | 18000      |
+| global.xds.cluster               |                   | greymatter |
+
+### Service Configuration
 
 | Parameter                           | Description           | Default                                                            |
 | ----------------------------------- | --------------------- | ------------------------------------------------------------------ |
-| environment                         |                       | openshift                                                          |
 | dashboard.image                     | Docker Image          | 'docker.production.deciphernow.com/deciphernow/gm-dashboard:2.5.0' |
 | dashboard.fabric_server             | Path to fabric server | '/services/catalog/0.3.6/'                                         |
 | dashboard.use_prometheus            |                       | 'true'                                                             |
@@ -61,21 +74,20 @@ The following table lists the configurable parameters of the dashboard chart and
 | prometheus.limit.memory             |                       | 2Gi                                                                |
 | prometheus.request.cpu              |                       | 500m                                                               |
 | prometheus.request.memory           |                       | 256Mi                                                              |
-|                                     |                       |                                                                    |
-|                                     |                       |                                                                    |
-| sidecar.version                     | Proxy Version         | 0.7.1                                                              |
-| sidecar.image                       | Proxy Image           | 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1'     |
-| sidecar.proxy_dynamic               |                       | 'true'                                                             |
-| sidecar.metrics_key_function        |                       | depth                                                              |
-| sidecar.ingress_use_tls             | Enable TLS            | 'true'                                                             |
-| sidecar.imagePullPolicy             | Image pull policy     | Always                                                             |
-| sidecar.create_sidecar_secret       | Create Certs          | false                                                              |
-| sidecar.certificates                |                       | {name:{ca: ... , cert: ... , key ...}}                             |
-|                                     |                       |                                                                    |
-| xds.port                            | Xds Port              | 18000                                                              |
-| xds.cluster                         | XDS Cluster           | greymatter                                                         |
-|                                     |                       |                                                                    |
-| exhibitor.replicas                  | Exhibitor Replicas    | 1                                                                  |
+
+### Sidecar Configuration
+
+| Parameter                     | Description       | Default                                                        |
+| ----------------------------- | ----------------- | -------------------------------------------------------------- |
+| sidecar.version               | Proxy Version     | 0.7.1                                                          |
+| sidecar.image                 | Proxy Image       | 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1' |
+| sidecar.proxy_dynamic         |                   | 'true'                                                         |
+| sidecar.metrics_key_function  |                   | depth                                                          |
+| sidecar.ingress_use_tls       | Enable TLS        | 'true'                                                         |
+| sidecar.imagePullPolicy       | Image pull policy | Always                                                         |
+| sidecar.create_sidecar_secret | Create Certs      | false                                                          |
+| sidecar.certificates          |                   | {name:{ca: ... , cert: ... , key ...}}                         |
+|                               |                   |                                                                |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

@@ -32,54 +32,67 @@ The command removes all components associated with the chart and deletes the rel
 
 ## Configuration
 
-The following table lists the configurable parameters of the slo chart and their default values.
+The following tables list the configurable parameters of the slo chart and their default values.
 
-| Perameters                         | Description       | Default                                                        |
-| ---------------------------------- | ----------------- | -------------------------------------------------------------- |
-| slo.version                        |                   | 0.4.0                                                          |
-| slo.image                          |                   | docker.production.deciphernow.com/deciphernow/gm-slo:0.4.0     |
-| slo.imagePullPolicy                |                   | Always                                                         |
-| slo.resources.limits.cpu           |                   | 250m                                                           |
-| slo.resources.limits.memory        |                   | 512Mi                                                          |
-| slo.resources.requests.cpu         |                   | 100m                                                           |
-| slo.resources.requests.memory      |                   | 128Mi                                                          |
-|                                    |                   |                                                                |
-| postgres.data_mount_point          |                   | /var/lib/pgsql/data                                            |
-| postgres.openshift.image           |                   | 'docker.io/centos/postgresql-95-centos7:9.5'                   |
-| postgres.k8s.image                 |                   | 'postgres:9.5'                                                 |
-| postgres.imagePullPolicy           |                   | Always                                                         |
-| postgres.replica_count             |                   | 1                                                              |
-| postgres.resources.limits.cpu      |                   | 200m                                                           |
-| postgres.resources.limits.memory   |                   | 512Mi                                                          |
-| postgres.resources.requests.cpu    |                   | 100m                                                           |
-| postgres.resources.requests.memory |                   | 128Mi                                                          |
-| postgres.credentials.secret_name   |                   | postgres-credentials                                           |
-| postgres.credentials.username      |                   | greymatter                                                     |
-| postgres.credentials.password      |                   | greymatter                                                     |
-| postgres.credentials.database      |                   | greymatter                                                     |
-| postgres.ssl.enabled               |                   | false                                                          |
-| postgres.ssl.name                  |                   | postgres-ssl-certs                                             |
-| postgres.ssl.mount_path            |                   | /secret/cert                                                   |
-| postgres.certificates              |                   | See slo/values.yaml                                            |
-| postgres.envvars                   |                   | See slo/values.yaml                                            |
-|                                    |                   |                                                                |
-| sidecar.version                    | Proxy Version     | 0.7.1                                                          |
-| sidecar.image                      | Proxy Image       | 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1' |
-| sidecar.proxy_dynamic              |                   | 'true'                                                         |
-| sidecar.metrics_key_function       |                   | depth                                                          |
-| sidecar.ingress_use_tls            | Enable TLS        | 'true'                                                         |
-| sidecar.imagePullPolicy            | Image pull policy | Always                                                         |
-| sidecar.create_sidecar_secret      | Create Certs      | false                                                          |
-| sidecar.certificates               |                   | {name:{ca: ... , cert: ... , key ...}}                         |
-| sidecar.resources.limits.cpu       |                   | 200m                                                           |
-| sidecar.resources.limits.memory    |                   | 512Mi                                                          |
-| sidecar.resources.requests.cpu     |                   | 100m                                                           |
-| sidecar.resources.requests.memory  |                   | 128Mi                                                          |
-|                                    |                   |                                                                |
-| xds.port                           |                   | 18000                                                          |
-| xds.cluster                        |                   | greymatter                                                     |
-|                                    |                   |                                                                |
-| exhibitor.replicas                 |                   | 1                                                              |
+### Global Configuration
+
+| Parameter                        | Description | Default    |
+| -------------------------------- | ----------- | ---------- |
+| global.environment               |             | kubernetes |
+| global.domain                    |             |            |
+| global.route_url_name            |             |            |
+| global.remove_namespace_from_url |             |            |
+| global.exhibitor.replicas        |             | 1          |
+| global.xds.port                  |             | 18000      |
+| global.xds.cluster               |             | greymatter |
+
+### Service Configuration
+
+| Parameter                          | Description | Default                                                    |
+| ---------------------------------- | ----------- | ---------------------------------------------------------- |
+| slo.version                        |             | 0.4.0                                                      |
+| slo.image                          |             | docker.production.deciphernow.com/deciphernow/gm-slo:0.4.0 |
+| slo.imagePullPolicy                |             | Always                                                     |
+| slo.resources.limits.cpu           |             | 250m                                                       |
+| slo.resources.limits.memory        |             | 512Mi                                                      |
+| slo.resources.requests.cpu         |             | 100m                                                       |
+| slo.resources.requests.memory      |             | 128Mi                                                      |
+|                                    |             |                                                            |
+| postgres.data_mount_point          |             | /var/lib/pgsql/data                                        |
+| postgres.openshift.image           |             | 'docker.io/centos/postgresql-95-centos7:9.5'               |
+| postgres.k8s.image                 |             | 'postgres:9.5'                                             |
+| postgres.imagePullPolicy           |             | Always                                                     |
+| postgres.replica_count             |             | 1                                                          |
+| postgres.resources.limits.cpu      |             | 200m                                                       |
+| postgres.resources.limits.memory   |             | 512Mi                                                      |
+| postgres.resources.requests.cpu    |             | 100m                                                       |
+| postgres.resources.requests.memory |             | 128Mi                                                      |
+| postgres.credentials.secret_name   |             | postgres-credentials                                       |
+| postgres.credentials.username      |             | greymatter                                                 |
+| postgres.credentials.password      |             | greymatter                                                 |
+| postgres.credentials.database      |             | greymatter                                                 |
+| postgres.ssl.enabled               |             | false                                                      |
+| postgres.ssl.name                  |             | postgres-ssl-certs                                         |
+| postgres.ssl.mount_path            |             | /secret/cert                                               |
+| postgres.certificates              |             | See slo/values.yaml                                        |
+| postgres.envvars                   |             | See slo/values.yaml                                        |
+
+### Sidecar Configuration
+
+| Parameter                         | Description       | Default                                                        |
+| --------------------------------- | ----------------- | -------------------------------------------------------------- |
+| sidecar.version                   | Proxy Version     | 0.7.1                                                          |
+| sidecar.image                     | Proxy Image       | 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1' |
+| sidecar.proxy_dynamic             |                   | 'true'                                                         |
+| sidecar.metrics_key_function      |                   | depth                                                          |
+| sidecar.ingress_use_tls           | Enable TLS        | 'true'                                                         |
+| sidecar.imagePullPolicy           | Image pull policy | Always                                                         |
+| sidecar.create_sidecar_secret     | Create Certs      | false                                                          |
+| sidecar.certificates              |                   | {name:{ca: ... , cert: ... , key ...}}                         |
+| sidecar.resources.limits.cpu      |                   | 200m                                                           |
+| sidecar.resources.limits.memory   |                   | 512Mi                                                          |
+| sidecar.resources.requests.cpu    |                   | 100m                                                           |
+| sidecar.resources.requests.memory |                   | 128Mi                                                          |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

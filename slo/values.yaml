@@ -1,4 +1,13 @@
-environment: openshift
+global:
+  environment: kubernetes
+  domain: 
+  route_url_name: 
+  remove_namespace_from_url: ''
+  exhibitor:
+    replicas: 1
+  xds:
+    port: 18000
+    cluster: greymatter
 
 slo:
   version: 0.4.0
@@ -46,9 +55,6 @@ sidecar:
     #   -----BEGIN RSA PRIVATE KEY-----
     #   ...
     #   -----END RSA PRIVATE KEY-----
-xds:
-  port: 18000
-  cluster: greymatter
 
 postgres:
   data_mount_point: /var/lib/pgsql/data
@@ -97,11 +103,11 @@ postgres:
     # Any environments listed here will be populated in the postgres yaml. Use the
     # correct variables for the version of Postgres you are deploying
     #
-    # Formerly, when .Values.environment was set to "openshift", these environment variables were used:
+    # Formerly, when .Values.global.environment was set to "openshift", these environment variables were used:
     #   - POSTGRESQL_USER
     #   - POSTGRESQL_PASSWORD
     #   - POSTGRESQL_DATABASE
-    # When .Values.environment was set to "kubernetes", these were used:
+    # When .Values.global.environment was set to "kubernetes", these were used:
     #   - POSTGRES_USER
     #   - POSTGRES_PASSWORD
     #   - POSTGRES_DB
@@ -117,6 +123,3 @@ postgres:
       name: POSTGRESQL_DATABASE
       secret: postgres-credentials
       key: database
-
-exhibitor:
-  replicas: 1

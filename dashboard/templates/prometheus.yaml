@@ -15,7 +15,7 @@ spec:
         app: prometheus
         deployment: prometheus
     spec:
-      {{- if and .Values.environment (ne .Values.environment "openshift") }}
+      {{- if and .Values.global.environment (ne .Values.global.environment "openshift") }}
       securityContext:
         fsGroup: 65534
       {{- end }}  
@@ -80,11 +80,11 @@ spec:
         - name: SERVICE_PORT
           value: "9090"
         - name: XDS_CLUSTER
-          value: {{ .Values.xds.cluster | quote }}
+          value: {{ .Values.global.xds.cluster | quote }}
         - name: XDS_HOST
           value: "xds.{{ .Release.Namespace }}.svc.cluster.local"
         - name: XDS_PORT
-          value: {{ .Values.xds.port | quote }}
+          value: {{ .Values.global.xds.port | quote }}
         - name: ZK_ADDRS
           value:  {{ template "greymatter.exhibitor.address" . }}
         - name: ZK_ANNOUNCE_PATH

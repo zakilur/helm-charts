@@ -1,3 +1,16 @@
+# xDs values
+global:
+  environment: kubernetes
+  domain: 
+  route_url_name: 
+  remove_namespace_from_url: ''
+  exhibitor:
+    replicas: 1
+  # Might want to point the xds values to the global values or vice versa
+  xds:
+    port:
+    cluster:
+
 xds:
   image: 'docker.production.deciphernow.com/deciphernow/gm-xds:0.2.6'
   imagePullPolicy: Always
@@ -50,6 +63,3 @@ sidecar:
     #   -----BEGIN RSA PRIVATE KEY-----
     #   ...
     #   -----END RSA PRIVATE KEY-----
-
-exhibitor:
-  replicas: 1

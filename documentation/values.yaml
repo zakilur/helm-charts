@@ -1,6 +1,13 @@
-environment: openshift
-domain: development.deciphernow.com
-route_url_name: greymatter
+global:
+  environment: kubernetes
+  domain: 
+  route_url_name: 
+  remove_namespace_from_url: ''
+  exhibitor:
+    replicas: 1
+  xds:
+    port: 18000
+    cluster: greymatter
 
 documentation:
   name: documentation
@@ -78,10 +85,3 @@ sidecar:
       -----BEGIN RSA PRIVATE KEY-----
       ...
       -----END RSA PRIVATE KEY-----
-
-xds:
-  port: 18000
-  cluster: greymatter
-
-exhibitor:
-  replicas: 1

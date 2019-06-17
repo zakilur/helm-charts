@@ -1,5 +1,16 @@
 # Grey Matter Exhibitor settings
 #
+global:
+  environment: kubernetes
+  domain: 
+  route_url_name: 
+  remove_namespace_from_url: ''
+  exhibitor:
+    replicas: 1
+  xds:
+    port: 18000
+    cluster: greymatter
+
 # These are the settings for Exhibitor
 exhibitor:
  #These are the AWS settings that Exhibitor requires
