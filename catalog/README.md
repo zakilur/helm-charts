@@ -41,19 +41,19 @@ The following tables list the configurable parameters of the catalog chart and t
 | global.environment               |                   | kubernetes |
 | global.domain                    | edge-ingress.yaml |            |
 | global.route_url_name            | edge-ingress.yaml |            |
-| global.remove_namespace_from_url | edge-ingress.yaml | ''         |
-| global.catalog.version           |                   |            |
-| global.dashboard.version         |                   |            |
-| global.data.version              |                   |            |
-| global.documentation.version     |                   |            |
-| global.edge.version              |                   |            |
+| global.remove_namespace_from_url | edge-ingress.yaml | false      |
+| global.catalog.version           |                   | 0.3.6      |
+| global.dashboard.version         |                   | latest     |
+| global.data.version              |                   | 0.2.3      |
+| global.documentation.version     |                   | 3.0.0      |
+| global.edge.version              |                   | 0.7.1      |
 | global.exhibitor.replicas        |                   | 1          |
 | global.exhibitor.version         |                   |            |
-| global.jwt.version               |                   |            |
-| global.slo.version               |                   |            |
+| global.jwt.version               |                   | 0.2.0      |
+| global.slo.version               |                   | 0.4.0      |
 | global.xds.cluster               |                   | greymatter |
 | global.xds.port                  |                   | 18000      |
-| global.xds.version               |                   |            |
+| global.xds.version               |                   | 0.2.6      |
 
 ### Service Configuration
 
