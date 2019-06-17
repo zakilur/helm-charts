@@ -1,4 +1,4 @@
-{{- if .Values.edge_config }}
+{{- if .Values.global }}
 
 
 apiVersion: v1
@@ -11,10 +11,10 @@ spec:
   containers:
   - name: {{ .Release.Name }}-connections-test
     image: "centos"
-{{- if and .Values.edge_config ( eq .Values.edge_config.remove_namespace_from_url "true" ) }}
-    command: ["sh", "-c", "ls /etc/test/certs/ && curl --location --cert /etc/test/certs/server.crt --key /etc/test/certs/server.key --request GET \"https://{{ .Values.edge_config.route_url_name }}.{{ .Values.edge_config.domain }}/{{ .Values.documentation.base_path }}\" -vk"]
+{{- if and .Values.global .Values.global.remove_namespace_from_url  }}
+    command: ["sh", "-c", "ls /etc/test/certs/ && curl --location --cert /etc/test/certs/server.crt --key /etc/test/certs/server.key --request GET \"https://{{ .Values.global.route_url_name }}.{{ .Values.global.domain }}/{{ .Values.documentation.base_path }}\" -vk"]
 {{- else }}
-    command: ["sh", "-c", "ls /etc/test/certs/ && curl --location --cert /etc/test/certs/server.crt --key /etc/test/certs/server.key --request GET \"https://{{ .Values.edge_config.route_url_name }}.{{ .Release.Namespace }}.{{ .Values.edge_config.domain }}/{{ .Values.documentation.base_path }}\" -vk"]
+    command: ["sh", "-c", "ls /etc/test/certs/ && curl --location --cert /etc/test/certs/server.crt --key /etc/test/certs/server.key --request GET \"https://{{ .Values.global.route_url_name }}.{{ .Release.Namespace }}.{{ .Values.global.domain }}/{{ .Values.documentation.base_path }}\" -vk"]
 {{- end }}
     volumeMounts:
       - name: test-certs

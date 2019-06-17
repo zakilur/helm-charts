@@ -3,7 +3,7 @@ Define the exhibitor host.
 */}}
 {{- define "greymatter.exhibitor.address" -}}
 {{- $zk := dict "servers" (list) -}}
-{{- range $i, $e := until (atoi (printf "%d" (int64 .Values.exhibitor.replicas))) -}} 
+{{- range $i, $e := until (atoi (printf "%d" (int64 .Values.global.exhibitor.replicas))) -}} 
 {{- $noop := printf "%s%d.%s.%s.%s"  "exhibitor-" . "exhibitor" $.Release.Namespace "svc.cluster.local:2181" | append $zk.servers | set $zk "servers" -}}
 {{- end -}}
 {{- join "," $zk.servers | quote -}}
@@ -33,7 +33,7 @@ Define the exhibitor host.
         - name: SERVICE_HOST
             value: "127.0.0.1"
         - name: SERVICE_PORT
-            value: {{ .Values.xds.port | quote }}
+            value: {{ .Values.global.xds.port | quote }}
         - name: ZK_ADDRS
             value: {{ template "greymatter.exhibitor.address" . }}
         - name: ZK_ANNOUNCE_PATH

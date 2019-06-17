@@ -1,40 +1,37 @@
 dependencies:
 - name: catalog
-  version: "1.0.1"
+  version: "1.0.2"
   repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
 
 - name: data
-  version: "1.0.1"
+  version: "1.0.2"
   repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
 
 - name: dashboard
-  version: "1.0.1"
+  version: "1.0.2"
   repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
 
 - name: documentation
-  version: "1.0.0"
+  version: "1.0.1"
   repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
 
 - name: edge
-  version: "1.0.2"
+  version: "1.0.3"
   repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
-  import-values:
-    - child: ingress_config
-      parent: edge_config
 
 - name: xds
-  version: "1.0.0"
+  version: "1.0.1"
   repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
 
 - name: exhibitor
-  version: "1.0.0"
+  version: "1.0.1"
   repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
 
 - name: jwt
-  version: "1.0.0"
+  version: "1.0.1"
   repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
 
 - name: slo
-  version: "1.0.0"
+  version: "1.0.1"
   repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
 

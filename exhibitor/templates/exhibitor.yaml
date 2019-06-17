@@ -11,7 +11,7 @@ spec:
     matchLabels:
       app: exhibitor
   serviceName: exhibitor
-  replicas: {{ .Values.exhibitor.replica_count | default 1 }}
+  replicas: {{ .Values.global.exhibitor.replicas | default 1 }}
   template:
     metadata:
       labels:
