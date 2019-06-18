@@ -47,7 +47,7 @@ The following table lists the configurable parameters of the edge chart and thei
 
 ## Testing the Chart
 
-To test run a test use:
+To run a test, wait for dashboard to startup and you can hit the url displayed in the release notes, then use:
 
 ```console
 $ helm test <deployment_name>
@@ -64,14 +64,14 @@ RUNNING: greymatter_test_deploy-connection-test
 PASSED: greymatter_test_deploy-connection-test
 ```
 
-Running this command will spin up a new pod named `documentation-connection-test` which will run the tests defined in `documentation/templates/tests`.
+Running this command will spin up a new pod named `<service>-<deployment_name>-connection-test` which will run the tests defined in `greymatter/templates/tests`. These test pods do not automatically delete so if they need to be run multiple times then they will need to be deleted manually in the ui or with `oc delete pod <name>`.
 
 ### Tests
 
 | Test Name               | Description            | Desired Result |
 | ----------------------- | ---------------------- | -------------- |
-| test-documentation.yaml | curl documentation url | 200            |
-|                         |                        |                |
+| documentation-test.yaml | curl documentation url | 200            |
+| catalog-test.yaml       | curl catalog url       | 200            |
 
 ## Uninstalling the Chart
 
