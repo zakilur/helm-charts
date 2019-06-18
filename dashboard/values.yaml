@@ -10,7 +10,7 @@ global:
     cluster: greymatter
 
 dashboard:
-  image: 'docker.production.deciphernow.com/deciphernow/gm-dashboard:2.5.0'
+  image: 'docker.production.deciphernow.com/deciphernow/gm-dashboard:{{ $.Values.global.dashboard.version }}'
   fabric_server: '/services/catalog/0.3.6/'
   use_prometheus: 'true'
   objectives_server: '/services/slo/0.4.0/'
