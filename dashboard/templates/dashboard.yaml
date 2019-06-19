@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: dashboard
-        image: '{{ .Values.dashboard.image }}'
+        image: '{{ tpl .Values.dashboard.image $ }}'
         imagePullPolicy: {{ .Values.dashboard.imagePullPolicy }}
         {{- if .Values.dashboard.resources }}
         resources:

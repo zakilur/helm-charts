@@ -6,7 +6,7 @@ global:
   catalog:
     version: 0.3.6
   dashboard:
-    version: latest
+    version: 2.5.0
   data:
     version: 0.2.3
   documentation:
@@ -63,7 +63,7 @@ catalog:
       name: 'Grey Matter Dashboard'
       owner: 'Decipher'
       version: "{{ $.Values.global.dashboard.version | trunc 3 }}"
-      zookeeper_announcement_point: "/services/dashboard/{{ $.Values.global.dashboard.version }}/metrics"
+      zookeeper_announcement_point: "/services/dashboard/latest/metrics"
     
     service_3:
       capability: 'Grey Matter'
