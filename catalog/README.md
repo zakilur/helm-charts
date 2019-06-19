@@ -43,7 +43,7 @@ The following tables list the configurable parameters of the catalog chart and t
 | global.route_url_name            | edge-ingress.yaml |            |
 | global.remove_namespace_from_url | edge-ingress.yaml | false      |
 | global.catalog.version           |                   | 0.3.6      |
-| global.dashboard.version         |                   | latest     |
+| global.dashboard.version         |                   | 2.5.0      |
 | global.data.version              |                   | 0.2.3      |
 | global.documentation.version     |                   | 3.0.0      |
 | global.edge.version              |                   | 0.7.1      |
@@ -85,7 +85,7 @@ The following tables list the configurable parameters of the catalog chart and t
 | catalog.services.service_2.name                         |                            | 'Grey Matter Dashboard'                                        |
 | catalog.services.service_2.owner                        |                            | 'Decipher'                                                     |
 | catalog.services.service_2.version                      |                            | "{{ \$.Values.dashboard.version \| trunc 3 }}"                 |
-| catalog.services.service_2.zookeeper_announcement_point |                            | "/services/dashboard/{{ $.Values.dashboard.version }}/metrics" |
+| catalog.services.service_2.zookeeper_announcement_point |                            | "/services/dashboard/latest/metrics"                           |
 |                                                         |                            |                                                                |
 | catalog.services.service_3.capability                   |                            | 'Grey Matter'                                                  |
 | catalog.services.service_3.documentation                |                            | '/services/data/{{ $.Values.data.version }}/'                  |
