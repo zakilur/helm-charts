@@ -67,9 +67,6 @@ The following tables list the configurable parameters of the xds chart and their
 | --------------------------------- | ----------------- | -------------------------------------------------------------- |
 | sidecar.version                   | Proxy Version     | 0.7.1                                                          |
 | sidecar.image                     | Proxy Image       | 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1' |
-| sidecar.proxy_dynamic             |                   | 'true'                                                         |
-| sidecar.metrics_key_function      |                   | depth                                                          |
-| sidecar.ingress_use_tls           | Enable TLS        | 'true'                                                         |
 | sidecar.imagePullPolicy           | Image pull policy | Always                                                         |
 | sidecar.create_sidecar_secret     | Create Certs      | false                                                          |
 | sidecar.certificates              |                   | {name:{ca: ... , cert: ... , key ...}}                         |
@@ -77,6 +74,26 @@ The following tables list the configurable parameters of the xds chart and their
 | sidecar.resources.limits.memory   |                   | 512Mi                                                          |
 | sidecar.resources.requests.cpu    |                   | 100m                                                           |
 | sidecar.resources.requests.memory |                   | 128Mi                                                          |
+
+Environment variables set in values.yaml:
+
+| Environment variable    | Default                             |
+| ----------------------- | ----------------------------------- |
+| ingres_use_tls          | 'true'                              |
+| ingres_ca_cert_path     | '/etc/proxy/tls/sidecar/ca.crt'     |
+| ingress_cert_path       | '/etc/proxy/tls/sidecar/server.crt' |
+| ingress_key_path        | '/etc/proxy/tls/sidecar/server.key' |
+| metrics_port            | '8080                               |
+| port                    | '8443'                              |
+| kafka_zk_discover       | 'false'                             |
+| kafka-server_connection | 'kafka:9091,kafka2:9091'            |
+| kafka_enabled           | 'false'                             |
+| kafka_topic             | 'xds'                               |
+| metrics_key_function    | 'depth'                             |
+| proxy_dynamic           | 'false'                             |
+| obs_enabled             | 'false'                             |
+| obs_enforce             | 'false'                             |
+| obs_full_response       | 'false'                             |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
