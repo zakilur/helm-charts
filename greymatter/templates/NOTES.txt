@@ -1,5 +1,6 @@
 Grey Matter {{ .Chart.Version }} has been installed.
 
+{{ .Release.Name }} deployed to namespace {{ quote .Release.Namespace }} at {{now | date "03:04:05 on 01/02/03"}}
 
 
 NOTE: It may take a few minutes for the installation to become stable.
