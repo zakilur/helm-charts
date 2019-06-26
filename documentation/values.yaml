@@ -66,7 +66,7 @@ sidecar:
     name: service_host
     value: "127.0.0.1"
   - type: value
-    name: osb_enabled
+    name: obs_enabled
     value: 'false'
   - type: value
     name: kafka_zk_discover
