@@ -5,11 +5,12 @@ metadata:
   namespace: {{ .Release.Namespace }}
 data:
   gmdata.js: |-
-    db.auth('mongo', 'mongo')
-    db = db.getSiblingDB('gmdata')
+  {{- with .Values.mongo.credentials }}
+    db.auth({{ quote .root_username }}, {{ quote .root_password }})
+    db = db.getSiblingDB({{ quote .database }})
     db.createUser({
-        user: 'mongo',
-        pwd: 'mongo',
+        user: {{ quote .root_username }},
+        pwd: {{ quote .admin_password }},
         roles: [
         {
             role: 'root',
@@ -17,3 +18,4 @@ data:
         },
         ],
     });
+  {{- end }}
