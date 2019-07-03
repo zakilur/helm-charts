@@ -58,29 +58,29 @@ spec:
             - name: metrics
               containerPort: 8081
           env:
-          {{- range $envvar := .Values.sidecar.envvars }}
-            {{- $envName := $envvar.name | upper | replace "." "_" | replace "-" "_" }}
-            {{- if eq $envvar.type "secret" }}
-            - name: {{ $envName }}
+        {{- range $envvar := .Values.sidecar.envvars }}
+          {{- $envName := $envvar.name | upper | replace "." "_" | replace "-" "_" }}
+          {{- if eq $envvar.type "secret" }}
+          - name: {{ $envName }}
             valueFrom:
-                secretKeyRef:
-                name: {{ $envvar.secret }}
-                key: {{ $envvar.key }}
-            {{- else if eq $envvar.type "value" }}
-            - name: {{ $envName }}
+              secretKeyRef:
+              name: {{ $envvar.secret }}
+              key: {{ $envvar.key }}
+          {{- else if eq $envvar.type "value" }}
+          - name: {{ $envName }}
             value: {{ tpl $envvar.value $ | quote }}
-            {{- end }}
-        {{- end  }} 
-            - name: XDS_CLUSTER
-              value: {{ .Values.global.xds.cluster | quote }}
-            - name: XDS_HOST
-              value: 'xds.{{ .Release.Namespace }}.svc.cluster.local'
-            - name: XDS_PORT
-              value: '18000'
-            - name: ZK_ADDRS
-              value: {{ template "greymatter.exhibitor.address" . }}
-            - name: ZK_ANNOUNCE_PATH
-              value: '/services/catalog/{{ .Values.global.catalog.version }}'
+          {{- end }}
+      {{- end  }} 
+          - name: XDS_CLUSTER
+            value: {{ .Values.global.xds.cluster | quote }}
+          - name: XDS_HOST
+            value: 'xds.{{ .Release.Namespace }}.svc.cluster.local'
+          - name: XDS_PORT
+            value: '18000'
+          - name: ZK_ADDRS
+            value: {{ template "greymatter.exhibitor.address" . }}
+          - name: ZK_ANNOUNCE_PATH
+            value: '/services/catalog/{{ .Values.global.catalog.version }}'
           volumeMounts:
             - name: sidecar
               mountPath: /etc/proxy/tls/sidecar
