@@ -24,26 +24,16 @@ spec:
 
 {{- else }}
 
-apiVersion: extensions/v1beta1
+apiVersion: voyager.appscode.com/v1beta1
 kind: Ingress
 metadata:
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   name: edge
   namespace: {{ .Release.Namespace }}
 spec:
   rules:
-  {{- if .Values.global.remove_namespace_from_url }}
-    - host: {{ tpl .Values.ingress_config.custom_url . }}
-  {{- else }}
-    - host: {{ tpl .Values.ingress_config.default_url . }}
-  {{- end }}
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: edge
-              servicePort: 8443
+  - tcp:
+      port: '443'
+      backend:
+        serviceName: edge
+        servicePort: 8443
 {{- end }}
