@@ -69,34 +69,19 @@ spec:
         {{- end }}
       - name: sidecar
         env:
-        - name: EGRESS_USE_TLS
-          value:  {{ .Values.jwt.egress_use_tls | quote }}
-        - name: EGRESS_CA_CERT_PATH
-          value: '/etc/proxy/tls/sidecar/ca.crt'
-        - name: EGRESS_CERT_PATH
-          value: '/etc/proxy/tls/sidecar/server.crt'
-        - name: EGRESS_KEY_PATH
-          value: '/etc/proxy/tls/sidecar/server.key'
-        - name: INGRESS_USE_TLS
-          value: {{ .Values.sidecar.ingress_use_tls | quote }}
-        - name: INGRESS_CA_CERT_PATH
-          value: '/etc/proxy/tls/sidecar/ca.crt'
-        - name: INGRESS_CERT_PATH
-          value: '/etc/proxy/tls/sidecar/server.crt'
-        - name: INGRESS_KEY_PATH
-          value: '/etc/proxy/tls/sidecar/server.key'
-        - name: METRICS_KEY_FUNCTION
-          value: {{ .Values.sidecar.metrics_key_function | quote }}
-        - name: METRICS_PORT
-          value: "8081"
-        - name: PORT
-          value: "8080"
-        - name: PROXY_DYNAMIC
-          value: {{ .Values.sidecar.proxy_dynamic  | quote }}
-        - name: SERVICE_HOST
-          value: 127.0.0.1
-        - name: SERVICE_PORT
-          value: "3000"
+        {{- range $envvar := .Values.sidecar.envvars }}
+            {{- $envName := $envvar.name | upper | replace "." "_" | replace "-" "_" }}
+            {{- if eq $envvar.type "secret" }}
+            - name: {{ $envName }}
+            valueFrom:
+                secretKeyRef:
+                name: {{ $envvar.secret }}
+                key: {{ $envvar.key }}
+            {{- else if eq $envvar.type "value" }}
+            - name: {{ $envName }}
+            value: {{ tpl $envvar.value $ | quote }}
+            {{- end }}
+    {{- end  }}
         - name: XDS_CLUSTER
           value: {{ .Values.global.xds.cluster  | quote }}
         - name: XDS_HOST
