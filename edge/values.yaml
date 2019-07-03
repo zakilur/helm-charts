@@ -56,9 +56,7 @@ edge:
 sidecar:
   version: 0.7.1
   image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1'
-  proxy_dynamic: 'true'
   metrics_key_function: depth
-  ingress_use_tls: 'true'
   imagePullPolicy: Always
   resources:
     limits:
@@ -67,6 +65,52 @@ sidecar:
     requests:
       cpu: 100m
       memory: 128Mi
+  envvars:
+    - name: egress_use_tls
+      type: 'value'
+      value: '{{ .values.edge.egress_use_tls | quote }}'
+    - name: egress_ca_cert_path
+      type: 'value'
+      value: '/etc/proxy/tls/sidecar/ca.crt'
+    - name: egress_cert_path
+      type: 'value'
+      value: '/etc/proxy/tls/sidecar/server.crt'
+    - name: egress_key_path
+      type: 'value'
+      value: '/etc/proxy/tls/sidecar/server.key'
+    - name: ingress_use_tls
+      type: 'value'
+      value: 'true'
+    - name: ingress_ca_cert_path
+      type: 'value'
+      value: '/etc/proxy/tls/edge/ca.crt'
+    - name: ingress_cert_path
+      type: 'value'
+      value: '/etc/proxy/tls/edge/server.crt'
+    - name: ingress_key_path
+      type: 'value'
+      value: '/etc/proxy/tls/edge/server.key'
+    - name: inheaders_enabled
+      type: 'value'
+      value: '{{ .values.edge.inheaders_enabled | quote }}'
+    - name: obs_enabled
+      type: 'value'
+      value: '{{ .values.edge.obs_enabled | quote }}'
+    - name: obs_full_response
+      type: 'value'
+      value: '{{ .values.edge.obs_full_response | quote }}'
+    - name: port
+      type: 'value'
+      value: '8443'
+    - name: proxy_dynamic
+      type: 'value'
+      value: 'true'
+    - name: acl_enabled
+      type: 'value'
+      value: '{{ .values.edge.acl_enabled | quote }}'
+    - name: timeout
+      type: 'value'
+      value: '{{ .values.sidecar.timeout  | quote }}'
 
   # Set this to true if you are attempting to deploy Catalog by itself.
   # Ideally, catalog is deployed as a dependency to Grey Matter, which creates the
