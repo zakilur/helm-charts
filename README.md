@@ -13,7 +13,6 @@ Each step is important  so that helm has all the information it needs to finally
 4. Install your Helm chart dependencies
 5. Deploy the helm chart
 
-
 ## 1. Prerequisites
 
 ### Helm
@@ -60,10 +59,16 @@ You need valid Docker credentials which have access to the Decipher repository i
 
 ## 2. Helm Values Configuration
 
-You need to setup:
+Each Helm chart has a `values.yaml` file which specifies the default values used to generate/template the final Kubernetes resource files with YAML.
+
+These values can be overwritten by you, the user, and in fact, several of them **MUST** be configured for Grey Matter to deploy sucessfully. 
+
+We've provided an `example-custom.yaml` file that showcases the general structure of a Helm values file and shows how top-level keys are passed down to dependency subcharts. Most of these keys you don't need to worry about.
+
+However, you **need** to configure the:
  1. Basic values
  2. Voyager `cloudProvider`
- 3. AWS + Docker credentials
+ 3. and AWS + Docker credentials
 
 
 #### Basics
@@ -101,7 +106,7 @@ voyager:
 
 More details on Voyager are in [`edge/README.md`](edge#setting-up-the-ingress).
 
-### Credentials
+#### Credentials
 Finally, you need to set the values for all the AWS and Docker credentials you located above. Fill out all the values for the following top-level keys:
 
 ```yaml
@@ -112,6 +117,15 @@ exhibitor: ...
 data: ...
 ```
 
+#### NOTE: Certificates
+
+You may notice a huge section of the file which is just various TLS certificates with public and private keys. These are used in many services, including JWT, the sidecar, and the edge.
+
+To actually access the Grey Matter Dashboard or any other service in the cluster, your request will pass through the edge service, which performs mTLS or Mutual TLS. This means that both the client and the server must authenticate themselves, and that your browser (or other HTTPS client e.g. `curl`) will need to have the appropriate certificates loaded.
+
+To keep things simple, the `example-custom.yaml` uses the same certificates as those from `common/certificates/user/quickstart.p12` in the [DecipherNow/grey-matter-quickstart](https://github.com/DecipherNow/grey-matter-quickstarts) repository. 
+
+If you load `quickstart.p12` into your browser, when you access the GM Dashboard, you'll be prompted to use that certificate to verify yourself, which you should do to gain access.
 
 ## 3. Add the Decipher Helm Repo to Helm
 
@@ -126,7 +140,13 @@ This allows you to install the dependency charts of Grey Matter.
 
 ## 4. Install Dependencies
 
-If you are deploying a chart like `greymatter` with dependencies defined in `requirements.yaml` you will have an additional step before you can install. You will have to first run `helm dep up greymatter`. This command will create a `charts/` directory with tarballs of the child charts that the parent chart will use. After the charts directory is populated then you will be able to run a `helm install greymatter <options>`
+If you are deploying a chart like `greymatter` with dependencies defined in `requirements.yaml`, you need to run:
+
+```bash
+helm dep up greymatter
+```
+
+This command will create a `charts/` directory with tarballs of the child charts that the parent chart will use. After the charts directory is populated then you will be able to run a `helm install greymatter <options>`
 
 By default the greymatter dependencies will be pulled from a repository as defined in `requirements.yaml`:
 
@@ -149,7 +169,9 @@ dependencies:
 ## 5. Install Charts
 
 To deploy a chart use the helm install command:
-`helm install --name <release_name> --namespace <my_namespace> --debug -f custom.yaml <chart_to_deploy>`
+```bash
+helm install --name <release_name> --namespace <my_namespace> --debug -f custom.yaml <chart_to_deploy>
+```
 
 - `--debug` prints out the deployment YAML to the terminal
 - `--dry-run` w/ debug will print out the deployment YAML without actually deploying to OS/kubernetes env
@@ -158,7 +180,7 @@ To deploy a chart use the helm install command:
 
 For installing the entire Grey Matter service mesh, you can run this command:
 
-```
+```bash
 helm install greymatter -f ./custom.yaml --name gm-deploy
 ```
 
