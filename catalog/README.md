@@ -129,6 +129,27 @@ The following tables list the configurable parameters of the catalog chart and t
 | sidecar.create_sidecar_secret | Create Certs      | false                                                          |
 | sidecar.certificates          |                   | {name:{ca: ... , cert: ... , key ...}}                         |
 
+#### Sidecar Environment Variables set in values.yaml
+
+| Environment Variable    | Default                             |
+| ----------------------- | ----------------------------------- |
+| ingress_use_tls         | 'true'                              |
+| ingress_ca_cert_path    | "/etc/proxy/tls/sidecar/ca.crt"     |
+| ingress_cert_path       | "/etc/proxy/tls/sidecar/server.crt" |
+| ingress_key_path        | "/etc/proxy/tls/sidecar/server.key" |
+| metrics_key_function    | 'depth'                             |
+| metrics_port            | "8081"                              |
+| port                    | "8080"                              |
+| proxy_dynamic           | 'true'                              |
+| service_host            | '127.0.0.1'                         |
+| service_port            | '9080'                              |
+| osb_enabled             | 'false'                             |
+| obs_enforce             | 'false'                             |
+| kafka_zk_discover       | 'false'                             |
+| kafka_server_connection | 'kafka:9091,kafka2:9091'            |
+| kafka_enabled           | 'false'                             |
+| kafka_topic             | 'gm-catalog'                        |
+
 ### Additional Configuration
 
 | Parameter         | Description       | Default |
