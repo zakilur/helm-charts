@@ -20,6 +20,11 @@ $ helm install greymatter --name <my-release>
 
 The command deploys greymatter on the cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
 
+## Making the cluster accessible from the internet
+
+Take a look at the `edge` chart documentation for details on how Grey Matter is exposed to the internet in both OpenShift and Kubernetes environments.
+For Kubernetes, you need to take some additional steps to install Voyager, the ingress controller we use.
+
 ## Configuration
 
 The following table lists the configurable parameters of the edge chart and their default values.
