@@ -1,7 +1,7 @@
 global:
   environment: kubernetes
-  domain: 
-  route_url_name: 
+  domain:
+  route_url_name:
   remove_namespace_from_url: ''
   exhibitor:
     replicas: 1
@@ -20,7 +20,7 @@ jwt:
       'if [[ ! -d ./certs ]]; then mkdir -p ./certs; fi && if [[ ! -d ./etc ]]; then mkdir -p ./certs; fi && /gm-jwt-security-gov/gm-jwt-security-gov',
     ]
   #redis_host: redis.greymatter.svc.cluster.local
-  redis_db: "0"
+  redis_db: '0'
   redis_pass: redis
   base_path: /services/jwt-security/0.2.0
   egress_use_tls: 'true'
@@ -38,13 +38,13 @@ jwt:
   envvars:
     - type: value
       name: HTTPS_PORT
-      value: "3000"
+      value: '3000'
     - type: secret
       name: PRIVATE_KEY
       secret: jwt-security
       key: jwt.key
     - type: secret
-      name: JWT_API_KEY	
+      name: JWT_API_KEY
       secret: jwt-security
       key: jwt.api_key
     - type: value
@@ -59,47 +59,45 @@ jwt:
       secret: jwt-certs
       key: jwt.cert.pem
     - type: secret
-      name: SERVER_KEY	
+      name: SERVER_KEY
       secret: jwt-certs
       key: jwt.key.pem
 
   secrets:
-  - name: jwt-certs
-    jwt.cert.pem: |-
-      -----BEGIN CERTIFICATE-----
-      ...
-      -----END CERTIFICATE-----
-    jwt.key.pem: |-
-      -----BEGIN CERTIFICATE-----
-      ...
-      -----END CERTIFICATE-----
-    jwt.trust.pem: |-
-      -----BEGIN RSA PRIVATE KEY-----
-      ...
-      -----END RSA PRIVATE KEY-----
-    server.cert.pem: |-
-      -----BEGIN CERTIFICATE-----
-      ...
-      -----END CERTIFICATE-----
-    server.key.pem: |-
-      -----BEGIN CERTIFICATE-----
-      ...
-      -----END CERTIFICATE-----
-    server.trust.pem: |-  
-      -----BEGIN RSA PRIVATE KEY-----
-      ...
-      -----END RSA PRIVATE KEY-----
-  - name: jwt-security
-    jwt.key: |-
-      -----BEGIN EC PRIVATE KEY-----
-      ...
-      -----END EC PRIVATE KEY-----
-    jwt.pub:
-      -----BEGIN PUBLIC KEY-----
-      ...
-      -----END PUBLIC KEY-----
-    jwt.api_key: c2tpcGphY2stc2x1bmstc3VzcGVjdC1pc3JhZWwtc2NyYXA=
-
+    - name: jwt-certs
+      jwt.cert.pem: |-
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+      jwt.key.pem: |-
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+      jwt.trust.pem: |-
+        -----BEGIN RSA PRIVATE KEY-----
+        ...
+        -----END RSA PRIVATE KEY-----
+      server.cert.pem: |-
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+      server.key.pem: |-
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+      server.trust.pem: |-
+        -----BEGIN RSA PRIVATE KEY-----
+        ...
+        -----END RSA PRIVATE KEY-----
+    - name: jwt-security
+      jwt.key: |-
+        -----BEGIN EC PRIVATE KEY-----
+        ...
+        -----END EC PRIVATE KEY-----
+      jwt.pub: -----BEGIN PUBLIC KEY-----
+        ...
+        -----END PUBLIC KEY-----
+      jwt.api_key: c2tpcGphY2stc2x1bmstc3VzcGVjdC1pc3JhZWwtc2NyYXA=
 
   # A JSON list of users and their AOs that will be permited access to JWT
   users: |-
@@ -183,7 +181,7 @@ jwt:
       "CN=quickstart,OU=Engineering,O=Decipher Technology Studios,=Alexandria,=Virginia,C=US"
     ]
           
-    
+
 redis:
   secret_name: redis-password
   password: 'redis'
@@ -191,7 +189,7 @@ redis:
     image: 'centos/redis-32-centos7'
   k8s:
     image: 'redis:3.2'
-  replica_count: 1  
+  replica_count: 1
   imagePullPolicy: Always
   #private_image: false
 
@@ -202,10 +200,10 @@ sidecar:
   ingress_use_tls: 'true'
   imagePullPolicy: Always
 
-  # Set this to true if you are attempting to deploy xDS by itself.  
-  # Ideally, xDS is deployed as a dependency to Grey Matter, which creates the 
+  # Set this to true if you are attempting to deploy xDS by itself.
+  # Ideally, xDS is deployed as a dependency to Grey Matter, which creates the
   # sidecar secret, but if individual testing is being done, the sidecar secret will
-  # need to be created.  
+  # need to be created.
   create_sidecar_secret: false
   secrets:
     # name: sidecar
