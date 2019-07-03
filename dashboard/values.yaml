@@ -26,10 +26,79 @@ dashboard:
       cpu: 100m
       memory: 128Mi
 
+sidecar:
+  image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1'
+  imagePullPolicy: Always
+  resources:
+    limits:
+      cpu: 200m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  envvars:
+    - type: value
+      name: ingress_use_tls
+      value: 'true'
+    - type: value
+      name: ingress_ca_cert_path
+      value: '/etc/proxy/tls/sidecar/ca.crt'
+    - type: value
+      name: ingress_cert_path
+      value: '/etc/proxy/tls/sidecar/server.crt'
+    - type: value
+      name: ingress_key_path
+      value: '/etc/proxy/tls/sidecar/server.key'
+    - type: value
+      name: metrics_key_function
+      value: 'depth'
+    - type: value
+      name: metrics_port
+      value: '8081'
+    - type: value
+      name: port
+      value: '8080'
+    - type: value
+      name: proxy_dynamic
+      value: 'true'
+    - type: value
+      name: service_host
+      value: '127.0.0.1'
+    - type: value
+      name: service_port
+      value: '1337'
+    - type: value
+      name: obs_enabled 
+      value: 'false'
+    - type: value
+      name: obs_enforce 
+      value: 'false'
+    - type: value
+      name: obs_full_response
+      value: 'false'
+  # Set this to true if you are attempting to deploy xDS by itself.
+  # Ideally, xDS is deployed as a dependency to Grey Matter, which creates the
+  # sidecar secret, but if individual testing is being done, the sidecar secret will
+  # need to be created.
+  create_sidecar_secret: false
+  certificates:
+    name: sidecar
+    ca: |-
+      -----BEGIN CERTIFICATE-----
+      ...
+      -----END CERTIFICATE-----
+    cert: |-
+      -----BEGIN CERTIFICATE-----
+      ...
+      -----END CERTIFICATE-----
+    key: |-
+      -----BEGIN RSA PRIVATE KEY-----
+      ...
+      -----END RSA PRIVATE KEY-----
+
 prometheus:
   image: 'prom/prometheus:v2.7.1'
   imagePullPolicy: Always
-  metrics_key_function: 'depth'
   zk_announce_path: '/services/prometheus/2.7.1'
   version: '2.7.1'
   replica_count: 1
@@ -45,11 +114,8 @@ prometheus:
       cpu: 500m
       memory: 256Mi
 
-sidecar:
+sidecar_prometheus:
   image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1'
-  proxy_dynamic: 'true'
-  metrics_key_function: depth
-  ingress_use_tls: 'true'
   imagePullPolicy: Always
   resources:
     limits:
@@ -58,7 +124,46 @@ sidecar:
     requests:
       cpu: 100m
       memory: 128Mi
-
+  envvars:
+    - type: value
+      name: ingress_use_tls
+      value: 'true'
+    - type: value
+      name: ingress_ca_cert_path
+      value: '/etc/proxy/tls/sidecar/ca.crt'
+    - type: value
+      name: ingress_cert_path
+      value: '/etc/proxy/tls/sidecar/server.crt'
+    - type: value
+      name: ingress_key_path
+      value: '/etc/proxy/tls/sidecar/server.key'
+    - type: value
+      name: metrics_key_function
+      value: 'depth'
+    - type: value
+      name: metrics_port
+      value: '8081'
+    - type: value
+      name: port
+      value: '8080'
+    - type: value
+      name: proxy_dynamic
+      value: 'true'
+    - type: value
+      name: service_host
+      value: '127.0.0.1'
+    - type: value
+      name: service_port
+      value: '9090'
+    - type: value
+      name: obs_enabled 
+      value: 'false'
+    - type: value
+      name: obs_enforce 
+      value: 'false'
+    - type: value
+      name: obs_full_response
+      value: 'false'
   # Set this to true if you are attempting to deploy xDS by itself.
   # Ideally, xDS is deployed as a dependency to Grey Matter, which creates the
   # sidecar secret, but if individual testing is being done, the sidecar secret will

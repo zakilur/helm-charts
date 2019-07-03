@@ -36,7 +36,7 @@ sidecar:
       memory: 128Mi
   envvars:
     - type: value
-      name: ingres_use_tls
+      name: ingress_use_tls
       value: 'true'
     - type: value
       name: ingress_ca_cert_path
