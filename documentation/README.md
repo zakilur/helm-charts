@@ -61,7 +61,7 @@ Environment variables set in values.yaml:
 | Environment variable | Default                         |
 | -------------------- | ------------------------------- |
 | base_path            | "services/documentation/3.0.0/" |
-| ingres_ca_cert_path  | 'Setup,FAQ'                     |
+| ingress_ca_cert_path | 'Setup,FAQ'                     |
 
 ### Sidecar Configuration
 
@@ -81,8 +81,8 @@ Environment variables set in values.yaml:
 
 | Environment variable    | Default                             |
 | ----------------------- | ----------------------------------- |
-| ingres_use_tls          | 'true'                              |
-| ingres_ca_cert_path     | '/etc/proxy/tls/sidecar/ca.crt'     |
+| ingress_use_tls         | 'true'                              |
+| ingress_ca_cert_path    | '/etc/proxy/tls/sidecar/ca.crt'     |
 | ingress_cert_path       | '/etc/proxy/tls/sidecar/server.crt' |
 | ingress_key_path        | '/etc/proxy/tls/sidecar/server.key' |
 | metrics_key_function    | 'depth'                             |
