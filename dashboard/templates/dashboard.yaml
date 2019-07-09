@@ -48,19 +48,7 @@ spec:
         - name: metrics
           containerPort: 8081
         env:
-    {{- range $envvar := .Values.sidecar.envvars }}
-        {{- $envName := $envvar.name | upper | replace "." "_" | replace "-" "_" }}
-        {{- if eq $envvar.type "secret" }}
-        - name: {{ $envName }}
-          valueFrom:
-            secretKeyRef:
-              name: {{ $envvar.secret }}
-              key: {{ $envvar.key }}
-        {{- else if eq $envvar.type "value" }}
-        - name: {{ $envName }}
-          value: {{ tpl $envvar.value $ | quote }}
-        {{- end }}
-    {{- end  }}
+        {{- template "greymatter.envvars" . }}
         - name: XDS_CLUSTER
           value: '{{ .Values.global.xds.cluster }}'
         - name: XDS_HOST
