@@ -45,6 +45,43 @@ The following table lists the configurable parameters of the edge chart and thei
 | global.xds.port                  |                   | 18000      |
 | global.xds.version               |                   | 0.2.6      |
 
+### Sidecar Configuration
+
+Grey Matter supports defining default values for sidecar environment variables to help quickly change properties of the service mesh instantly across every component. These are set in the `global.sidecar` key. However, we also support overwriting default sidecar environment variables at the subchart/service level for flexibility and customization.
+
+In the table below we outline all of the supported sidecar environment variables along with their default global values. For this documentation, we will simply use the key used to configure that variable, which is accessible and configurable at both `global.sidecar.envvars.<key>` or `sidecar.envvars.<key>`.
+
+| Key                     | Description                       | Default |
+| ----------------------- | --------------------------------- | ------- |
+| ingress_use_tls         | true                              |         |
+| ingress_ca_cert_path    | /etc/proxy/tls/sidecar/ca.crt     |         |
+| ingress_cert_path       | /etc/proxy/tls/sidecar/server.crt |         |
+| ingress_key_path        | /etc/proxy/tls/sidecar/server.key |         |
+| metrics_key_function    | depth                             |         |
+| metrics_port            | 8081                              |         |
+| proxy_dynamic           | true                              |         |
+| service_host            | 127.0.0.1                         |         |
+| obs_enabled             | false                             |         |
+| obs_enforce             | false                             |         |
+| obs_full_response       | false                             |         |
+| kafka_enabled           | false                             |         |
+| kafka_zk_discover       | false                             |         |
+| kafka_server_connection | kafka:9091,kafka2:9091            |         |
+| port                    |                                   |         |
+| service_port            |                                   |         |
+| kafka_topic             |                                   |         |
+| zk_addrs                |                                   |         |
+| zk_announce_path        |                                   |         |
+| egress_use_tls          |                                   |         |
+| egress_ca_cert_path     |                                   |         |
+| egress_cert_path        |                                   |         |
+| egress_key_path         |                                   |         |
+
+#### Caveats
+This is implemented by a helper template (in  `templates/_helpers.tpl`) which loops over the global envvars and uses local ones if they are available. This means that to use a sidecar environment variable at the local level, its name and type must already be defined at the global level, however, a global default does not need to be set.
+
+If no value is found, either at the local level or in a global default, the template will just ignore that environment variable.
+
 ## Testing the Chart
 
 To run a test, wait for dashboard to startup and you can hit the url displayed in the release notes, then use:
