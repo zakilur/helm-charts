@@ -41,51 +41,21 @@ sidecar:
       cpu: 100m
       memory: 128Mi
   envvars:
-    - type: value
-      name: ingres_use_tls
-      value: 'true'
-    - type: value
-      name: ingress_ca_cert_path
-      value: '/etc/proxy/tls/sidecar/ca.crt'
-    - type: value
-      name: ingress_cert_path
-      value: '/etc/proxy/tls/sidecar/server.crt'
-    - type: value
-      name: ingress_key_path
-      value: '/etc/proxy/tls/sidecar/server.key'
-    - type: value
-      name: metrics_port
+    metrics_port:
+      type: value
       value: '8080'
-    - type: value
-      name: port
+    port:
+      type: value
       value: '8443'
-    - type: value
-      name: kafka_zk_discover
-      value: 'false'
-    - type: value
-      name: kafka_server_connection
-      value: 'kafka:9091,kafka2:9091'
-    - type: value
-      name: kafka_enabled
-      value: 'false'
-    - type: value
-      name: kafka_topic
+    kafka_topic:
+      type: value
       value: 'xds'
-    - type: value
-      name: metrics_key_function
-      value: 'depth'
-    - type: value
-      name: proxy_dynamic
+    proxy_dynamic:
+      type: value
       value: 'false'
-    - type: value
-      name: obs_enabled
-      value: 'false'
-    - type: value
-      name: obs_enforce
-      value: 'false'
-    - type: value
-      name: obs_full_response
-      value: 'false'
+    service_port:
+      type: value
+      value: '{{ .Values.xds.port }}'
   # Setcreate_sidecar_secret to true if you are attempting to deploy Catalog by itself.
   # Ideally, catalog is deployed as a dependency to Grey Matter, which creates the
   # sidecar secret, but if individual testing is being done, the sidecar secret will
