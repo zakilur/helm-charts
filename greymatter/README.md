@@ -51,7 +51,7 @@ Grey Matter supports defining default values for sidecar environment variables t
 
 In the table below we outline all of the supported sidecar environment variables along with their default global values. For this documentation, we will simply use the key used to configure that variable, which is accessible and configurable at both `global.sidecar.envvars.<key>` or `sidecar.envvars.<key>`.
 
-| Key                     | Description                       | Default |
+| Environment Variable    | Description                       | Default |
 | ----------------------- | --------------------------------- | ------- |
 | ingress_use_tls         | true                              |         |
 | ingress_ca_cert_path    | /etc/proxy/tls/sidecar/ca.crt     |         |
