@@ -93,6 +93,18 @@ The following tables list the configurable parameters of the jwt-gov chart and t
 | sidecar.create_sidecar_secret | Create Certs      | false                                                          |
 | sidecar.secrets               |                   | {name:{ca: ... , cert: ... , key ...}}                         |
 
+### Sidecar Environment Variable Configuration
+| Environment Variable | Default                           |
+| -------------------- | --------------------------------- |
+| egress_use_tls       | {{ .Values.jwt.egress_use_tls }}  |
+| egress_ca_cert_path  | /etc/proxy/tls/sidecar/ca.crt     |
+| egress_cert_path     | /etc/proxy/tls/sidecar/server.crt |
+| egress_key_path      | /etc/proxy/tls/sidecar/server.key |
+| port                 | 8080                              |
+| service_host         | 127.0.0.1                         |
+| service_port         | 3000                              |
+
+
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 - All the files listed under this variable will overwrite any existing files by the same name in the jwt-gov config directory.
