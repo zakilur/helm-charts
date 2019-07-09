@@ -147,46 +147,25 @@ sidecar:
       cpu: 100m
       memory: 128Mi
   envvars:
-    - name: egress_use_tls
+    egress_use_tls:
       type: value
-      value: '{{ .Values.jwt.egress_use_tls | quote }}'
-    - name: egress_ca_cert_path
-      type: value
-      value: '/etc/proxy/tls/sidecar/ca.crt'
-    - name: egress_cert_path
-      type: value
-      value: '/etc/proxy/tls/sidecar/server.crt'
-    - name: egress_key_path
-      type: value
-      value: '/etc/proxy/tls/sidecar/server.key'
-    - name: ingress_use_tls
-      type: value
-      value: 'true'
-    - name: ingress_ca_cert_path
+      value: '{{ .Values.jwt.egress_use_tls }}'
+    egress_ca_cert_path:
       type: value
       value: '/etc/proxy/tls/sidecar/ca.crt'
-    - name: ingress_cert_path
+    egress_cert_path:
       type: value
       value: '/etc/proxy/tls/sidecar/server.crt'
-    - name: ingress_key_path
+    egress_key_path:
       type: value
       value: '/etc/proxy/tls/sidecar/server.key'
-    - name: metrics_key_function
-      type: value
-      value: 'depth'
-    - name: metrics_port
-      type: value
-      value: '8081'
-    - name: port
+    port:
       type: value
       value: '8080'
-    - name: proxy_dynamic
-      type: value
-      value: 'true'
-    - name: service_host
+    service_host:
       type: value
       value: 127.0.0.1
-    - name: service_port
+    service_port:
       type: value
       value: '3000'
 
