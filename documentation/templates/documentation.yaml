@@ -43,7 +43,7 @@ spec:
           image: {{ .Values.sidecar.image | quote }}
           imagePullPolicy: Always
           env:
-          {{- template "greymatter.envvars" . }}
+          {{- include "greymatter.envvars" . | indent 10 }}
           - name: XDS_CLUSTER
             value: {{ .Values.global.xds.cluster | quote }}
           - name: XDS_HOST
