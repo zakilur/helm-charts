@@ -1,14 +1,14 @@
 global:
   environment: kubernetes
-  domain: 
-  route_url_name: 
+  domain:
+  route_url_name:
   remove_namespace_from_url: ''
   exhibitor:
     replicas: 1
   xds:
     port: 18000
     cluster: greymatter
-  
+
 jwt:
   version: 0.2.0
   image: 'docker.production.deciphernow.com/deciphernow/gm-jwt-security:0.2.0'
@@ -63,42 +63,41 @@ jwt:
       key: jwt.key.pem
 
   secrets:
-  - name: jwt-certs
-    jwt.cert.pem: |-
-      -----BEGIN CERTIFICATE-----
-      ...
-      -----END CERTIFICATE-----
-    jwt.key.pem: |-
-      -----BEGIN CERTIFICATE-----
-      ...
-      -----END CERTIFICATE-----
-    jwt.trust.pem: |-
-      -----BEGIN RSA PRIVATE KEY-----
-      ...
-      -----END RSA PRIVATE KEY-----
-    server.cert.pem: |-
-      -----BEGIN CERTIFICATE-----
-      ...
-      -----END CERTIFICATE-----
-    server.key.pem: |-
-      -----BEGIN CERTIFICATE-----
-      ...
-      -----END CERTIFICATE-----
-    server.trust.pem: |-  
-      -----BEGIN RSA PRIVATE KEY-----
-      ...
-      -----END RSA PRIVATE KEY-----
-  - name: jwt-security
-    jwt.key: |-
-      -----BEGIN EC PRIVATE KEY-----
-      ...
-      -----END EC PRIVATE KEY-----
-    jwt.pub:
-      -----BEGIN PUBLIC KEY-----
-      ...
-      -----END PUBLIC KEY-----
-    jwt.api_key: c2tpcGphY2stc2x1bmstc3VzcGVjdC1pc3JhZWwtc2NyYXA=
-  
+    - name: jwt-certs
+      jwt.cert.pem: |-
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+      jwt.key.pem: |-
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+      jwt.trust.pem: |-
+        -----BEGIN RSA PRIVATE KEY-----
+        ...
+        -----END RSA PRIVATE KEY-----
+      server.cert.pem: |-
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+      server.key.pem: |-
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+      server.trust.pem: |-
+        -----BEGIN RSA PRIVATE KEY-----
+        ...
+        -----END RSA PRIVATE KEY-----
+    - name: jwt-security
+      jwt.key: |-
+        -----BEGIN EC PRIVATE KEY-----
+        ...
+        -----END EC PRIVATE KEY-----
+      jwt.pub: -----BEGIN PUBLIC KEY-----
+        ...
+        -----END PUBLIC KEY-----
+      jwt.api_key: c2tpcGphY2stc2x1bmstc3VzcGVjdC1pc3JhZWwtc2NyYXA=
+
   # A JSON list of users that will be permited access to JWT
   users: |-
     {
@@ -118,7 +117,7 @@ jwt:
           }
       }]
     }
-    
+
 redis:
   secret_name: redis-password
   password: 'redis'
@@ -139,9 +138,6 @@ redis:
 
 sidecar:
   image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1'
-  proxy_dynamic: 'true'
-  metrics_key_function: depth
-  ingress_use_tls: 'true'
   imagePullPolicy: Always
   resources:
     limits:
@@ -150,6 +146,49 @@ sidecar:
     requests:
       cpu: 100m
       memory: 128Mi
+  envvars:
+    - name: egress_use_tls
+      type: value
+      value: '{{ .Values.jwt.egress_use_tls | quote }}'
+    - name: egress_ca_cert_path
+      type: value
+      value: '/etc/proxy/tls/sidecar/ca.crt'
+    - name: egress_cert_path
+      type: value
+      value: '/etc/proxy/tls/sidecar/server.crt'
+    - name: egress_key_path
+      type: value
+      value: '/etc/proxy/tls/sidecar/server.key'
+    - name: ingress_use_tls
+      type: value
+      value: 'true'
+    - name: ingress_ca_cert_path
+      type: value
+      value: '/etc/proxy/tls/sidecar/ca.crt'
+    - name: ingress_cert_path
+      type: value
+      value: '/etc/proxy/tls/sidecar/server.crt'
+    - name: ingress_key_path
+      type: value
+      value: '/etc/proxy/tls/sidecar/server.key'
+    - name: metrics_key_function
+      type: value
+      value: 'depth'
+    - name: metrics_port
+      type: value
+      value: '8081'
+    - name: port
+      type: value
+      value: '8080'
+    - name: proxy_dynamic
+      type: value
+      value: 'true'
+    - name: service_host
+      type: value
+      value: 127.0.0.1
+    - name: service_port
+      type: value
+      value: '3000'
 
   # Set this to true if you are attempting to deploy xDS by itself.
   # Ideally, xDS is deployed as a dependency to Grey Matter, which creates the
