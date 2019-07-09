@@ -69,7 +69,7 @@ spec:
           protocol: TCP
       - name: sidecar
         env:
-        {{- template "greymatter.envvars" . }}
+          {{- include "greymatter.envvars" . | indent 10 }}
           - name: XDS_CLUSTER
             {{- if .Values.data.deploy.standalone }}
             {{- if .Values.data.deploy.xds.address }}
