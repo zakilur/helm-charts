@@ -46,7 +46,9 @@ The following tables list the configurable parameters of the dashboard chart and
 | global.xds.port                  |                   | 18000      |
 | global.xds.cluster               |                   | greymatter |
 
-### Service Configuration
+### Dashboard
+
+#### Service Configuration
 
 | Parameter                           | Description           | Default                                                            |
 | ----------------------------------- | --------------------- | ------------------------------------------------------------------ |
@@ -62,32 +64,80 @@ The following tables list the configurable parameters of the dashboard chart and
 | dashboard.resources.limits.memory   |                       | 1Gi                                                                |
 | dashboard.resources.requests.cpu    |                       | 100m                                                               |
 | dashboard.resources.requests.memory |                       | 128Mi                                                              |
-| prometheus.image                    |                       | 'prom/prometheus:v2.7.1'                                           |
-| prometheus.imagePullPolicy          |                       | Always                                                             |
-| prometheus.metrics_key_function     |                       | 'depth'                                                            |
-| prometheus.zk_announce_path         |                       | '/services/prometheus/2.7.1'                                       |
-| prometheus.replica_count            |                       | 1                                                                  |
-| prometheus.data_mount_point         |                       | /var/lib/prometheus/data                                           |
-| prometheus.config_mount_point       |                       | /etc/prometheus                                                    |
-| prometheus.start_cmd                |                       | /bin/prometheus                                                    |
-| prometheus.limit.cpu                |                       | 1                                                                  |
-| prometheus.limit.memory             |                       | 2Gi                                                                |
-| prometheus.request.cpu              |                       | 500m                                                               |
-| prometheus.request.memory           |                       | 256Mi                                                              |
 
-### Sidecar Configuration
+#### Sidecar Configuration
 
 | Parameter                     | Description       | Default                                                        |
 | ----------------------------- | ----------------- | -------------------------------------------------------------- |
 | sidecar.version               | Proxy Version     | 0.7.1                                                          |
 | sidecar.image                 | Proxy Image       | 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1' |
-| sidecar.proxy_dynamic         |                   | 'true'                                                         |
-| sidecar.metrics_key_function  |                   | depth                                                          |
-| sidecar.ingress_use_tls       | Enable TLS        | 'true'                                                         |
 | sidecar.imagePullPolicy       | Image pull policy | Always                                                         |
 | sidecar.create_sidecar_secret | Create Certs      | false                                                          |
 | sidecar.certificates          |                   | {name:{ca: ... , cert: ... , key ...}}                         |
-|                               |                   |                                                                |
+
+#### Sidecar Environment Variables
+
+| Environment variable | Default                             |
+| -------------------- | ----------------------------------- |
+| ingress_use_tls      | 'true'                              |
+| ingress_ca_cert_path | '/etc/proxy/tls/sidecar/ca.crt'     |
+| ingress_cert_path    | '/etc/proxy/tls/sidecar/server.crt' |
+| ingress_key_path     | '/etc/proxy/tls/sidecar/server.key' |
+| metrics_port         | '8081                               |
+| port                 | '8080'                              |
+| metrics_key_function | 'depth'                             |
+| proxy_dynamic        | 'true'                              |
+| service_host         | 127.0.0.1                           |
+| service_port         | 1337                                |
+| obs_enabled          | 'false'                             |
+| obs_enforce          | 'false'                             |
+| obs_full_response    | 'false'                             |
+
+### Prometheus
+
+#### Service Configuration
+
+| Parameter                     | Description | Default                      |
+| ----------------------------- | ----------- | ---------------------------- |
+| prometheus.image              |             | 'prom/prometheus:v2.7.1'     |
+| prometheus.imagePullPolicy    |             | Always                       |
+| prometheus.zk_announce_path   |             | '/services/prometheus/2.7.1' |
+| prometheus.replica_count      |             | 1                            |
+| prometheus.data_mount_point   |             | /var/lib/prometheus/data     |
+| prometheus.config_mount_point |             | /etc/prometheus              |
+| prometheus.start_cmd          |             | /bin/prometheus              |
+| prometheus.limit.cpu          |             | 1                            |
+| prometheus.limit.memory       |             | 2Gi                          |
+| prometheus.request.cpu        |             | 500m                         |
+| prometheus.request.memory     |             | 256Mi                        |
+
+#### Sidecar Configuration
+
+| Parameter                                | Description       | Default                                                        |
+| ---------------------------------------- | ----------------- | -------------------------------------------------------------- |
+| sidecar_prometheus.version               | Proxy Version     | 0.7.1                                                          |
+| sidecar_prometheus.image                 | Proxy Image       | 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1' |
+| sidecar_prometheus.imagePullPolicy       | Image pull policy | Always                                                         |
+| sidecar_prometheus.create_sidecar_secret | Create Certs      | false                                                          |
+| sidecar_prometheus.certificates          |                   | {name:{ca: ... , cert: ... , key ...}}                         |
+
+#### Sidecar Environment Variables
+
+| Environment variable | Default                             |
+| -------------------- | ----------------------------------- |
+| ingress_use_tls      | 'true'                              |
+| ingress_ca_cert_path | '/etc/proxy/tls/sidecar/ca.crt'     |
+| ingress_cert_path    | '/etc/proxy/tls/sidecar/server.crt' |
+| ingress_key_path     | '/etc/proxy/tls/sidecar/server.key' |
+| metrics_port         | '8081                               |
+| port                 | '8080'                              |
+| metrics_key_function | 'depth'                             |
+| proxy_dynamic        | 'true'                              |
+| service_host         | 127.0.0.1                           |
+| service_port         | 9090                                |
+| obs_enabled          | 'false'                             |
+| obs_enforce          | 'false'                             |
+| obs_full_response    | 'false'                             |
 
 
 ### Sidecar Environment Variable Configuration
