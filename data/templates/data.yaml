@@ -68,6 +68,11 @@ spec:
           name: internal
           protocol: TCP
       - name: sidecar
+        {{- if .Values.data.deploy.standalone }}
+        image: {{ tpl .Values.sidecar.standalone_image $ | quote }}
+        {{- else }} 
+        image: {{ tpl .Values.sidecar.image $ | quote }}
+        {{- end }}
         env:
           {{- include "greymatter.envvars" . | indent 10 }}
           - name: XDS_CLUSTER
@@ -108,11 +113,6 @@ spec:
             {{- end }}
           - name: TIMEOUT
             value: {{ .Values.sidecar.timeout | quote  }}
-          {{- if .Values.data.deploy.standalone }}
-          image: {{ tpl .Values.sidecar.standalone_image $ | quote }}
-          {{- else }} 
-          image: {{ tpl .Values.sidecar.image $ | quote }}
-          {{- end }}
 
 
         imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}

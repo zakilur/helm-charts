@@ -20,7 +20,7 @@ node('ubuntu-18.04'){
                 [[ -e charts.txt ]] && rm -f charts.txt
 
                 # get a list of all directories (ignoring the .git, ci and . directories)
-                charts=$(find . -type d \\( ! -name .git \\)  \\( ! -name ci \\) \\( ! -name . \\) \\( ! -name greymatter \\) -maxdepth 1)
+                charts=$(find . -type d \\( ! -name .git \\)  \\( ! -name ci \\) \\( ! -name . \\) \\( ! -name greymatter \\) \\( ! -name examples \\) -maxdepth 1)
 
                 # the charts are returned looking like "./dashboard", so we want to strip off the first two characters of each listing
                 for chart in $charts; do
@@ -51,12 +51,12 @@ node('ubuntu-18.04'){
                 charts = readFile('charts.txt').trim()
                 echo "Charts found to be packaged: " + charts
 
-                // We need to initialize Helm and add the Decipher repo since Grey Matter using the remote charts as dependencies
+                // We need to initialize Helm and add the Decipher and appscode repo since Grey Matter using the remote charts as dependencies
                 withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh """
                         ./helm/helm init --client-only
                         ./helm/helm repo add decipher https://nexus.production.deciphernow.com/repository/helm-hosted/ --username ${USERNAME} --password ${PASSWORD}
-
+                        ./helm/helm repo add appscode https://charts.appscode.com/stable/
                     """
                 }
                 // Loop over the charts that be packaged
