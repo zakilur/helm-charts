@@ -13,9 +13,9 @@ Most users should use the `indent` or `nindent` functions to automatically inden
           {{- if eq $e.type "secret" }}
 - name: {{ $envName }}
   valueFrom:
-  secretKeyRef:
-  name: {{ $e.secret }}
-  key: {{ $e.key }}
+    secretKeyRef:
+      name: {{ $e.secret }}
+      key: {{ $e.key }}
           {{- else if eq $e.type "value" }}
           {{- /* The following removes any undefined values. At this stage, it means both the local and global values are undefined, so its best to just get rid of it */}}
             {{- if (tpl $e.value $) ne "" }}
