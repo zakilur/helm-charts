@@ -37,45 +37,12 @@ sidecar:
       cpu: 100m
       memory: 128Mi
   envvars:
-    - type: value
-      name: ingress_use_tls
-      value: 'true'
-    - type: value
-      name: ingress_ca_cert_path
-      value: '/etc/proxy/tls/sidecar/ca.crt'
-    - type: value
-      name: ingress_cert_path
-      value: '/etc/proxy/tls/sidecar/server.crt'
-    - type: value
-      name: ingress_key_path
-      value: '/etc/proxy/tls/sidecar/server.key'
-    - type: value
-      name: metrics_key_function
-      value: 'depth'
-    - type: value
-      name: metrics_port
-      value: '8081'
-    - type: value
-      name: port
+    port:
+      type: value
       value: '8080'
-    - type: value
-      name: proxy_dynamic
-      value: 'true'
-    - type: value
-      name: service_host
-      value: '127.0.0.1'
-    - type: value
-      name: service_port
+    service_port:
+      type: value
       value: '1337'
-    - type: value
-      name: obs_enabled 
-      value: 'false'
-    - type: value
-      name: obs_enforce 
-      value: 'false'
-    - type: value
-      name: obs_full_response
-      value: 'false'
   # Set this to true if you are attempting to deploy xDS by itself.
   # Ideally, xDS is deployed as a dependency to Grey Matter, which creates the
   # sidecar secret, but if individual testing is being done, the sidecar secret will
