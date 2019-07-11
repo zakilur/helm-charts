@@ -17,7 +17,7 @@ dependencies:
 
   - name: edge
     repository: 'file://../edge'
-    version: '1.0.4'
+    version: '1.0.5'
 
   - name: xds
     repository: 'file://../xds'

@@ -87,6 +87,13 @@ This is implemented by a helper template (in  `templates/_helpers.tpl`) which lo
 
 If no value is found, either at the local level or in a global default, the template will just ignore that environment variable.
 
+To support deploying the services individually, we copy the `greymatter` `_envvars_.tpl` into each service's `template` folder, which allows Helm to see it even when it is note used as a subchart. The template determines that if the value `.Values.global.sidecar` is not set, then it will only use the local `.Values.sidecar` options.
+To copy `_envvars.tpl`, run this command:
+
+```sh
+echo **/templates | xargs -n 1 | grep -v greymatter/ | xargs -I{} sh -c 'cp greymatter/templates/_envvars.tpl "$1"' -- {}
+```
+
 ## Testing the Chart
 
 To run a test, wait for dashboard to startup and you can hit the url displayed in the release notes, then use:
