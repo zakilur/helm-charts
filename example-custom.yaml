@@ -20,46 +20,46 @@
 #   Tells our ingress proxy voyager which cloud provider's API to use to
 #   provision LoadBalancers exposing the cluster to the internet
 global:
-  environment: 
+  environment:
   domain:
   route_url_name:
   # remove_namespace_from_url: false
-  ############ 
+  ############
   # To modify the version of any service from the default, comment out the below liens and update them to the desired avi_api_version
   ############
   # catalog:
-  #   version: 
+  #   version:
   # dashboard:
-  #   version: 
+  #   version:
   # data:
-  #   version: 
+  #   version:
   # documentation:
-  #   version: 
+  #   version:
   # edge:
-  #   version: 
+  #   version:
   # exhibitor:
   #   replicas: 1
-  #   version: 
+  #   version:
   # jwt:
-  #   version: 
+  #   version:
   # slo:
-  #   version: 
+  #   version:
   # xds:
   #   cluster: greymatter
   #   port: 18000
-  #   version: 
+  #   version:
 
 voyager:
   enabled: true
-  cloudProvider: 
+  cloudProvider:
   # This disables Voyager's default setting of sending data to Google Analytics
   # Don't change this -- you're never going to want to send analytics data
   enableAnalytics: false
 
 dockerCredentials:
   registry: docker.production.deciphernow.com
-  email: 
-  username: 
+  email:
+  username:
   password:
 
 exhibitor:

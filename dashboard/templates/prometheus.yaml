@@ -1,3 +1,4 @@
+# changed PVC to `emptyDir: {}`
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
@@ -18,7 +19,7 @@ spec:
       {{- if and .Values.global.environment (ne .Values.global.environment "openshift") }}
       securityContext:
         fsGroup: 65534
-      {{- end }}  
+      {{- end }}
       containers:
       - name: prometheus
         image: {{ .Values.prometheus.image | quote }}
@@ -46,7 +47,7 @@ spec:
           mountPath: {{ .Values.prometheus.config_mount_point }}
         - name: prometheus-data
           mountPath: {{ .Values.prometheus.data_mount_point }}
-      
+
       - name: sidecar
         image: {{ .Values.sidecar_prometheus.image | quote }}
         imagePullPolicy: {{ .Values.prometheus.imagePullPolicy }}
@@ -93,8 +94,7 @@ spec:
         configMap:
           name: prometheus
       - name: prometheus-data
-        persistentVolumeClaim:
-          claimName: prometheus
+        emptyDir: {}
       - name: sidecar
         secret:
           secretName: sidecar
