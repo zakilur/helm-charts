@@ -19,9 +19,17 @@ dependencies:
     repository: 'file://../edge'
     version: '1.0.5'
 
-  - name: xds
-    repository: 'file://../xds'
-    version: '1.0.2'
+  # - name: xds
+  #   repository: 'file://../xds'
+  #   version: '1.0.2'
+
+  - name: oldtown
+    repository: 'file://../oldtown'
+    version: '0.1.0'
+
+  - name: control
+    repository: 'file://../control'
+    version: '0.1.0'
 
   - name: exhibitor
     repository: 'file://../exhibitor'

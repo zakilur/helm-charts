@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.oldtown.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.oldtown.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.oldtown.name }}
+      deployment: {{ .Values.oldtown.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.oldtown.name }}
+        deployment: {{ .Values.oldtown.name }}
+    spec:
+      containers:
+        - name: {{ .Values.oldtown.name }}
+          image: {{ tpl .Values.oldtown.image $ }}
+          imagePullPolicy: {{ .Values.oldtown.imagePullPolicy }}
+          envvars:
+            {{- include "envvars" (dict "envvar" .Values.oldtown.envvars "top" $) | indent 12 }}
+          ports:
+            - name: http
+              containerPort: 5555
+              protocol: TCP
+          # TODO:
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - name: oldtown-config-volume
+            mountPath: {{ .Values.oldtown.envvars.oldtown_persister_path.value }}
+            subPath: oldtown_backend.json
+      volumes:
+        - name: oldtown-config-volume
+          configMap:
+            name: oldtown-config
+          {{/* volumeMounts:
+            - mountPath: {{ .Values.oldtown.envvars.oldtown_persister_path.value }}
+              name: oldtown-config
+      volumes:
+        - name: oldtown-config
+          hostPath:
+            path: {{ .Values.oldtown.initialConfigPath }}
+            type: File */}}
+      imagePullSecrets:
+        - name: docker.secret
+      # volumes:
+      #   - name: "config"
+      #     configMap:
+      #       name: "config"

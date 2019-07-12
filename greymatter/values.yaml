@@ -24,6 +24,10 @@ global:
     cluster: greymatter
     port: 18000
     version: 0.2.6
+  oldtown:
+    version: latest
+  control:
+    version: latest
   sidecar:
     envvars:
       # These are sorted by how different the values are for the sidecars running on different services. The options are "all the same", "all except XDS". and "different"

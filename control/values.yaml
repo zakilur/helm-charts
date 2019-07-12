@@ -1,0 +1,63 @@
+# Default values for oldtown.
+global:
+  environment: kubernetes
+  domain:
+  route_url_name:
+  remove_namespace_from_url: ''
+  exhibitor:
+    replicas: 1
+  # XDS will be replaced with oldtown eventually
+  xds:
+    port: 18000
+    cluster: greymatter
+
+control:
+  name: 'control'
+  displayName: 'Control'
+  replicas: 1
+  image: 'docker.production.deciphernow.com/deciphernow/gm-control:{{ $.Values.global.control.version }}'
+  imagePullPolicy: IfNotPresent
+  # initialConfigPath: './oldtown_backend.json'
+  envvars:
+    gm_control_console_level:
+      type: 'value'
+      value: 'debug'
+    gm_control_api_key:
+      type: 'value'
+      value: 'xxx'
+    gm_control_api_zone_name:
+      type: 'value'
+      value: 'default-zone'
+    gm_control_api_ssl:
+      type: 'value'
+      value: 'false'
+    gm_control_api_host:
+      type: 'value'
+      value: 'oldtown:5555'
+    gm_control_cmd:
+      type: 'value'
+      value: 'file'
+    gm_control_file_format:
+      type: 'value'
+      value: 'yaml'
+    gm_control_file_filename:
+      type: 'value'
+      value: '/app/routes.yaml'
+    gm_control_xds_resolve_dns:
+      type: 'value'
+      value: 'true'
+    gm_control_xds_ads_enabled:
+      type: 'value'
+      value: 'true'
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi

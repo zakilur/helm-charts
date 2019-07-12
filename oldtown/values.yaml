@@ -1,0 +1,48 @@
+# Default values for oldtown.
+global:
+  environment: kubernetes
+  domain:
+  route_url_name:
+  remove_namespace_from_url: ''
+  exhibitor:
+    replicas: 1
+  # XDS will be replaced with oldtown eventually
+  xds:
+    port: 18000
+    cluster: greymatter
+
+oldtown:
+  name: oldtown
+  displayName: oldtown
+  replicas: 1
+  image: 'docker.production.deciphernow.com/deciphernow/oldtown:{{ $.Values.global.oldtown.version }}'
+  imagePullPolicy: IfNotPresent
+  initialConfigPath: 'config/oldtown_backend.json'
+  envvars:
+    oldtown_log_level:
+      type: 'value'
+      value: 'debug'
+    oldtown_address:
+      type: 'value'
+      value: '0.0.0.0:5555'
+    oldtown_org_key:
+      type: 'value'
+      value: 'deciphernow'
+    oldtown_persister_type:
+      type: 'value'
+      value: 'file'
+    oldtown_persister_path:
+      type: 'value'
+      value: '/control-plane/oldtown_backend.json'
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
