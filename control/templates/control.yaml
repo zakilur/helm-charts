@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.control.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.control.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.control.name }}
+      deployment: {{ .Values.control.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.control.name }}
+        deployment: {{ .Values.control.name }}
+    spec:
+      containers:
+        - name: {{ .Values.control.name }}
+          image: {{ tpl .Values.control.image $ }}
+          imagePullPolicy: {{ .Values.control.imagePullPolicy }}
+          envvars:
+            {{- include "envvars" (dict "envvar" .Values.control.envvars "top" $) | indent 12 }}
+          ports:
+            - name: http
+              containerPort: 50000
+              protocol: TCP
+          # TODO:
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      imagePullSecrets:
+        - name: docker.secret
+      # volumes:
+      #   - name: "config"
+      #     configMap:
+      #       name: "config"
