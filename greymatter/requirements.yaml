@@ -1,4 +1,7 @@
+## Diff: No Voyager, No JWT, redirects to local charts, not Nexus
+
 dependencies:
+<<<<<<< HEAD
   - name: catalog
     repository: 'file://../catalog'
     version: '1.0.3'
@@ -42,3 +45,36 @@ dependencies:
   - name: slo
     repository: 'file://../slo'
     version: '1.0.2'
+=======
+- name: catalog
+  version: "1.0.3"
+  repository: "file://../catalog"
+
+- name: data
+  version: "1.0.3"
+  repository: "file://../data"
+
+- name: dashboard
+  version: "1.0.3"
+  repository: "file://../dashboard"
+
+- name: documentation
+  version: "1.0.2"
+  repository: "file://../documentation"
+
+- name: edge
+  version: "1.0.5"
+  repository: "file://../edge"
+
+- name: xds
+  version: "1.0.2"
+  repository: "file://../xds"
+
+- name: exhibitor
+  version: "1.0.1"
+  repository: "file://../exhibitor"
+
+- name: slo
+  version: "1.0.2"
+  repository: "file://../slo"
+>>>>>>> removing PV claims and jwt

@@ -48,6 +48,7 @@ global:
   #   cluster: greymatter
   #   port: 18000
   #   version:
+<<<<<<< HEAD
   sidecar:
     envvars:
       # You can customize the sidecar environment variables mesh-wide to enable features in the mesh
@@ -138,6 +139,8 @@ global:
       # There may be more sidecar environment variables, but we haven't added them here yet.
       # However, to use an env var with the sidecar, even if it doesn't have a global default,
       # it needs to be set globally as either a value or a secret
+=======
+>>>>>>> removing PV claims and jwt
 
 voyager:
   enabled: true
