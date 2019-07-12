@@ -6,11 +6,11 @@ metadata:
   labels:
     app: edge
 spec:
-  type: NodePort
+  type: NodePort # added type NodePort here
   ports:
     - name: http
       port: 8443
-      nodePort: 30443
+      nodePort: 30443 # Defined port here
     - name: metrics
       port: 8080
     - name: metrics
