@@ -1,13 +1,9 @@
-## Diff: No Voyager, No JWT, redirects to local charts, not Nexus
+## Diff: No Voyager, No jwt, no data, redirects to local charts, not Nexus
 
 dependencies:
 - name: catalog
   version: "1.0.3"
   repository: "file://../catalog"
-
-- name: data
-  version: "1.0.3"
-  repository: "file://../data"
 
 - name: dashboard
   version: "1.0.3"
