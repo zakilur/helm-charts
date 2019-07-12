@@ -32,7 +32,7 @@ spec:
             containerPort: 5432
         env:
       {{- range $envvar := .Values.postgres.envvars }}
-        {{- $envName := $envvar.name | upper | replace "." "_" | replace "-" "_" }}
+        {{- $envName := tpl $envvar.name $ | upper | replace "." "_" | replace "-" "_" }}
         {{- if eq $envvar.type "secret" }}
           - name: {{ $envName }}
             valueFrom:
