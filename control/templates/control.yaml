@@ -14,12 +14,14 @@ spec:
       labels:
         app: {{ .Values.control.name }}
         deployment: {{ .Values.control.name }}
+        run: {{ .Values.control.name }}
     spec:
+      serviceAccountName: {{ .Values.control.name }}-sa
       containers:
         - name: {{ .Values.control.name }}
           image: {{ tpl .Values.control.image $ }}
           imagePullPolicy: {{ .Values.control.imagePullPolicy }}
-          envvars:
+          env:
             {{- include "envvars" (dict "envvar" .Values.control.envvars "top" $) | indent 12 }}
           ports:
             - name: http
@@ -36,8 +38,14 @@ spec:
           #     port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      initContainers:
+        - name: ensure-oldtown
+          image: busybox:1.28
+          command: ['sh', '-c', 'env; until nslookup oldtown; do echo waiting for oldtown; sleep 2; done;'] #'for i in {1..100}; do sleep 1; if dig myservice; then exit 0; fi; done; exit 1']
+          envvars:
+            {{- include "envvars" (dict "envvar" .Values.control.envvars "top" $) | indent 12 }}
       imagePullSecrets:
-        - name: docker.secret
+        - name: dev.docker.secret
       # volumes:
       #   - name: "config"
       #     configMap:

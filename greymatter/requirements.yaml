@@ -1,42 +1,44 @@
 dependencies:
-- name: catalog
-  version: "1.0.3"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
+  - name: catalog
+    repository: 'file://../catalog'
+    version: '1.0.3'
 
-- name: data
-  version: "1.0.3"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
+  - name: data
+    repository: 'file://../data'
+    version: '1.0.3'
 
-- name: dashboard
-  version: "1.0.3"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
+  - name: dashboard
+    repository: 'file://../dashboard'
+    version: '1.0.3'
 
-- name: documentation
-  version: "1.0.2"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
+  - name: documentation
+    repository: 'file://../documentation'
+    version: '1.0.2'
 
-- name: edge
-  version: "1.0.5"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
+  - name: edge
+    repository: 'file://../edge'
+    version: '1.0.5'
 
-- name: xds
-  version: "1.0.2"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
+  # - name: xds
+  #   repository: 'file://../xds'
+  #   version: '1.0.2'
 
-- name: exhibitor
-  version: "1.0.1"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
+  - name: oldtown
+    repository: 'file://../oldtown'
+    version: '0.1.0'
 
-- name: jwt
-  version: "1.0.1"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
+  - name: control
+    repository: 'file://../control'
+    version: '0.1.0'
 
-- name: slo
-  version: "1.0.2"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
+  - name: exhibitor
+    repository: 'file://../exhibitor'
+    version: '1.0.1'
 
-# This is the Kubernetes ingress controller
-- name: voyager
-  repository: 'https://charts.appscode.com/stable/'
-  version: '10.0.0'
-  condition: voyager.enabled
+  - name: jwt
+    repository: 'file://../jwt'
+    version: '1.0.1'
+
+  - name: slo
+    repository: 'file://../slo'
+    version: '1.0.2'

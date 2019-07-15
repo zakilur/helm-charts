@@ -10,12 +10,14 @@ global:
   xds:
     port: 18000
     cluster: greymatter
+  control:
+    version: latest
 
 control:
   name: 'control'
   displayName: 'Control'
   replicas: 1
-  image: 'docker.production.deciphernow.com/deciphernow/gm-control:{{ $.Values.global.control.version }}'
+  image: 'alexkreidler/gm-control:latest' #'docker.production.deciphernow.com/deciphernow/gm-control:{{ $.Values.global.control.version }}'
   imagePullPolicy: IfNotPresent
   # initialConfigPath: './oldtown_backend.json'
   envvars:
@@ -36,7 +38,7 @@ control:
       value: 'oldtown:5555'
     gm_control_cmd:
       type: 'value'
-      value: 'file'
+      value: 'kubernetes'
     gm_control_file_format:
       type: 'value'
       value: 'yaml'
