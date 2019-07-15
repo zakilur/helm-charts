@@ -139,6 +139,13 @@ The following tables list the configurable parameters of the dashboard chart and
 | obs_enforce          | 'false'                             |
 | obs_full_response    | 'false'                             |
 
+
+### Sidecar Environment Variable Configuration
+| Environment Variable | Default |
+| -------------------- | ------: |
+| port                 |    8080 |
+| service_port         |    1337 |
+
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 - All the files listed under this variable will overwrite any existing files by the same name in the dashboard config directory.

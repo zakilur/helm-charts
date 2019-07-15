@@ -68,7 +68,7 @@ sidecar:
   envvars:
     - name: egress_use_tls
       type: 'value'
-      value: '{{ .Values.edge.egress_use_tls | quote }}'
+      value: '{{ .Values.edge.egress_use_tls }}'
     - name: egress_ca_cert_path
       type: 'value'
       value: '/etc/proxy/tls/sidecar/ca.crt'
@@ -92,13 +92,13 @@ sidecar:
       value: '/etc/proxy/tls/edge/server.key'
     - name: inheaders_enabled
       type: 'value'
-      value: '{{ .Values.edge.inheaders_enabled | quote }}'
+      value: '{{ .Values.edge.inheaders_enabled }}'
     - name: obs_enabled
       type: 'value'
-      value: '{{ .Values.edge.obs_enabled | quote }}'
+      value: '{{ .Values.edge.obs_enabled }}'
     - name: obs_full_response
       type: 'value'
-      value: '{{ .Values.edge.obs_full_response | quote }}'
+      value: '{{ .Values.edge.obs_full_response }}'
     - name: port
       type: 'value'
       value: '8443'
@@ -107,10 +107,10 @@ sidecar:
       value: 'true'
     - name: acl_enabled
       type: 'value'
-      value: '{{ .Values.edge.acl_enabled | quote }}'
+      value: '{{ .Values.edge.acl_enabled }}'
     - name: timeout
       type: 'value'
-      value: '{{ .Values.sidecar.timeout  | quote }}'
+      value: '{{ .Values.sidecar.timeout }}'
 
   # Set this to true if you are attempting to deploy Catalog by itself.
   # Ideally, catalog is deployed as a dependency to Grey Matter, which creates the

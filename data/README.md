@@ -105,6 +105,16 @@ The following tables list the configurable parameters of the data chart and thei
 | sidecar.resources.requests.cpu    |                   | 100m                                                           |
 | sidecar.resources.requests.memory |                   | 128Mi                                                          |
 
+## Sidecar Environment Variable Configuration
+| Environment Variable | Default                           |
+| -------------------- | --------------------------------- |
+| egress_use_tls       | {{ .Values.data.use_tls }}        |
+| egress_ca_cert_path  | /etc/proxy/tls/sidecar/ca.crt     |
+| egress_cert_path     | /etc/proxy/tls/sidecar/server.crt |
+| egress_key_path      | /etc/proxy/tls/sidecar/server.key |
+| port                 | 8080                              |
+| service_port         | 8181                              |
+
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 - All the files listed under this variable will overwrite any existing files by the same name in the data config directory.

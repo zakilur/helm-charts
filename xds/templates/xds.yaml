@@ -65,23 +65,7 @@ spec:
         - name: metrics
           containerPort: 8080
         env:
-    {{- range $envvar := .Values.sidecar.envvars }}
-      {{- $envName := $envvar.name | upper | replace "." "_" | replace "-" "_" }}
-        {{- if eq $envvar.type "secret" }}
-        - name: {{ $envName }}
-          valueFrom:
-            secretKeyRef:
-              name: {{ $envvar.secret }}
-              key: {{ $envvar.key }}
-        {{- else if eq $envvar.type "value" }}
-        - name: {{ $envName }}
-          value: {{ tpl $envvar.value $ | quote }}
-        {{- end }}
-    {{- end  }} 
-        - name: SERVICE_HOST
-          value: "127.0.0.1"
-        - name: SERVICE_PORT
-          value: {{ .Values.xds.port | quote }}
+        {{- include "greymatter.envvars" . | indent 8 }}
         - name: ZK_ADDRS
           value: {{ template "greymatter.exhibitor.address" . }}
         - name: ZK_ANNOUNCE_PATH
