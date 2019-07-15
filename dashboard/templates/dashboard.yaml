@@ -11,6 +11,7 @@ spec:
   template:
     metadata:
       labels:
+        gm_cluster: dashboard
         app: dashboard
     spec:
       containers:

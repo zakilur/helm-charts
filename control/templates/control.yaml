@@ -45,7 +45,7 @@ spec:
           envvars:
             {{- include "envvars" (dict "envvar" .Values.control.envvars "top" $) | indent 12 }}
       imagePullSecrets:
-        - name: dev.docker.secret
+        - name: docker.secret
       # volumes:
       #   - name: "config"
       #     configMap:

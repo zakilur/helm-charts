@@ -17,7 +17,7 @@ control:
   name: 'control'
   displayName: 'Control'
   replicas: 1
-  image: 'alexkreidler/gm-control:latest' #'docker.production.deciphernow.com/deciphernow/gm-control:{{ $.Values.global.control.version }}'
+  image: 'docker.production.deciphernow.com/deciphernow/gm-control:{{ $.Values.global.control.version }}'
   imagePullPolicy: IfNotPresent
   # initialConfigPath: './oldtown_backend.json'
   envvars:

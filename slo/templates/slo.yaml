@@ -14,6 +14,7 @@ spec:
       labels:
         app: slo
         deployment: slo
+        gm_cluster: sla
     spec:
       containers:
       - name: slo
