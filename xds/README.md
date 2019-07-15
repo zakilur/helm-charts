@@ -75,25 +75,14 @@ The following tables list the configurable parameters of the xds chart and their
 | sidecar.resources.requests.cpu    |                   | 100m                                                           |
 | sidecar.resources.requests.memory |                   | 128Mi                                                          |
 
-Environment variables set in values.yaml:
-
-| Environment variable    | Default                             |
-| ----------------------- | ----------------------------------- |
-| ingres_use_tls          | 'true'                              |
-| ingres_ca_cert_path     | '/etc/proxy/tls/sidecar/ca.crt'     |
-| ingress_cert_path       | '/etc/proxy/tls/sidecar/server.crt' |
-| ingress_key_path        | '/etc/proxy/tls/sidecar/server.key' |
-| metrics_port            | '8080                               |
-| port                    | '8443'                              |
-| kafka_zk_discover       | 'false'                             |
-| kafka-server_connection | 'kafka:9091,kafka2:9091'            |
-| kafka_enabled           | 'false'                             |
-| kafka_topic             | 'xds'                               |
-| metrics_key_function    | 'depth'                             |
-| proxy_dynamic           | 'false'                             |
-| obs_enabled             | 'false'                             |
-| obs_enforce             | 'false'                             |
-| obs_full_response       | 'false'                             |
+### Sidecar Environment Variable Configuration
+| Environment Variable | Default                |
+| -------------------- | ---------------------- |
+| metrics_port         | 8080                   |
+| port                 | 8443                   |
+| kafka_topic          | xds                    |
+| proxy_dynamic        | False                  |
+| service_port         | {{ .Values.xds.port }} |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

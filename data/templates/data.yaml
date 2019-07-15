@@ -68,63 +68,51 @@ spec:
           name: internal
           protocol: TCP
       - name: sidecar
-        env:
-    {{- range $envvar := .Values.sidecar.envvars }}
-        {{- $envName := $envvar.name | upper | replace "." "_" | replace "-" "_" }}
-        {{- if eq $envvar.type "secret" }}
-        - name: {{ $envName }}
-          valueFrom:
-            secretKeyRef:
-            name: {{ $envvar.secret }}
-            key: {{ $envvar.key }}
-        {{- else if eq $envvar.type "value" }}
-        - name: {{ $envName }}
-          value: {{ tpl $envvar.value $ | quote }}
-        {{- end }}
-    {{- end  }} 
-        - name: XDS_CLUSTER
-          {{- if .Values.data.deploy.standalone }}
-          {{- if .Values.data.deploy.xds.address }}
-          value: {{ .Values.data.deploy.xds.cluster }}
-          {{- end }}
-          {{- else }}
-          value: {{ .Values.global.xds.cluster | quote }}
-          {{- end }}
-        - name: XDS_HOST
-          {{- if .Values.data.deploy.standalone }}
-          {{- if .Values.data.deploy.xds.address }}
-          value: {{ .Values.data.deploy.xds.address }}
-          {{- end }}
-          {{- else }}
-          value: "xds.{{ .Release.Namespace }}.svc.cluster.local"
-          {{- end }}
-        - name: XDS_PORT
-          value: {{ .Values.global.xds.port | quote }}
-        - name: ZK_ADDRS
-          {{- if .Values.data.deploy.standalone }}
-          {{- if .Values.data.deploy.exhibitor_address }}
-          value: {{ .Values.data.deploy.exhibitor_address }}
-          {{- else }}
-          value: {{ template "greymatter.exhibitor.address" . }}
-          {{- end }}
-          {{- else }}
-          value: {{ template "greymatter.exhibitor.address" . }}
-          {{- end }}
-        - name: ZK_ANNOUNCE_PATH
-          {{- if .Values.data.deploy.standalone }}
-          {{- if .Values.data.deploy.base_path }}
-          value: {{ tpl .Values.data.deploy.base_path $ | quote }}
-          {{- end }}
-          {{- else }}
-          value: {{ tpl .Values.data.base_path $ | quote }}
-          {{- end }}
-        - name: TIMEOUT
-          value: {{ .Values.sidecar.timeout | quote  }}
         {{- if .Values.data.deploy.standalone }}
         image: {{ tpl .Values.sidecar.standalone_image $ | quote }}
         {{- else }} 
         image: {{ tpl .Values.sidecar.image $ | quote }}
         {{- end }}
+        env:
+          {{- include "greymatter.envvars" . | indent 10 }}
+          - name: XDS_CLUSTER
+            {{- if .Values.data.deploy.standalone }}
+            {{- if .Values.data.deploy.xds.address }}
+            value: {{ .Values.data.deploy.xds.cluster }}
+            {{- end }}
+            {{- else }}
+            value: {{ .Values.global.xds.cluster | quote }}
+            {{- end }}
+          - name: XDS_HOST
+            {{- if .Values.data.deploy.standalone }}
+            {{- if .Values.data.deploy.xds.address }}
+            value: {{ .Values.data.deploy.xds.address }}
+            {{- end }}
+            {{- else }}
+            value: "xds.{{ .Release.Namespace }}.svc.cluster.local"
+            {{- end }}
+          - name: XDS_PORT
+            value: {{ .Values.global.xds.port | quote }}
+          - name: ZK_ADDRS
+            {{- if .Values.data.deploy.standalone }}
+            {{- if .Values.data.deploy.exhibitor_address }}
+            value: {{ .Values.data.deploy.exhibitor_address }}
+            {{- else }}
+            value: {{ template "greymatter.exhibitor.address" . }}
+            {{- end }}
+            {{- else }}
+            value: {{ template "greymatter.exhibitor.address" . }}
+            {{- end }}
+          - name: ZK_ANNOUNCE_PATH
+            {{- if .Values.data.deploy.standalone }}
+            {{- if .Values.data.deploy.base_path }}
+            value: {{ tpl .Values.data.deploy.base_path $ | quote }}
+            {{- end }}
+            {{- else }}
+            value: {{ tpl .Values.data.base_path $ | quote }}
+            {{- end }}
+          - name: TIMEOUT
+            value: {{ .Values.sidecar.timeout | quote  }}
 
 
         imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
