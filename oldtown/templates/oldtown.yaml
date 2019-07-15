@@ -19,11 +19,11 @@ spec:
         - name: {{ .Values.oldtown.name }}
           image: {{ tpl .Values.oldtown.image $ }}
           imagePullPolicy: {{ .Values.oldtown.imagePullPolicy }}
-          envvars:
+          env:
             {{- include "envvars" (dict "envvar" .Values.oldtown.envvars "top" $) | indent 12 }}
           ports:
             - name: http
-              containerPort: 5555
+              containerPort: {{ .Values.oldtown.containerPort }}
               protocol: TCP
           # TODO:
           # livenessProbe:
@@ -44,14 +44,6 @@ spec:
         - name: oldtown-config-volume
           configMap:
             name: oldtown-config
-          {{/* volumeMounts:
-            - mountPath: {{ .Values.oldtown.envvars.oldtown_persister_path.value }}
-              name: oldtown-config
-      volumes:
-        - name: oldtown-config
-          hostPath:
-            path: {{ .Values.oldtown.initialConfigPath }}
-            type: File */}}
       imagePullSecrets:
         - name: docker.secret
       # volumes:

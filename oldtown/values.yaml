@@ -10,6 +10,8 @@ global:
   xds:
     port: 18000
     cluster: greymatter
+  oldtown:
+    version: latest
 
 oldtown:
   name: oldtown
@@ -18,6 +20,7 @@ oldtown:
   image: 'docker.production.deciphernow.com/deciphernow/oldtown:{{ $.Values.global.oldtown.version }}'
   imagePullPolicy: IfNotPresent
   initialConfigPath: 'config/oldtown_backend.json'
+  containerPort: 5555
   envvars:
     oldtown_log_level:
       type: 'value'

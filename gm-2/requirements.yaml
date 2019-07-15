@@ -1,0 +1,8 @@
+dependencies:
+  - name: oldtown
+    repository: 'file://../oldtown'
+    version: '0.1.0'
+
+  - name: control
+    repository: 'file://../control'
+    version: '0.1.0'

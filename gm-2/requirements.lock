@@ -1,0 +1,9 @@
+dependencies:
+- name: oldtown
+  repository: file://../oldtown
+  version: 0.1.0
+- name: control
+  repository: file://../control
+  version: 0.1.0
+digest: sha256:4d2d8450992624462807cd4c8187002e42e57cf760121d40e803c4c3a516a458
+generated: "2019-07-15T10:01:44.623924-04:00"
