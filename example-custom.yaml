@@ -126,6 +126,15 @@ global:
       egress_key_path:
         type: value
         value: ''
+      xds_cluster:
+        type: 'value'
+        value: '{{ .Values.global.xds.cluster }}'
+      xds_host:
+        type: 'value'
+        value: 'xds.{{ .Release.Namespace }}.svc.cluster.local'
+      xds_port:
+        type: 'value'
+        value: '{{ .Values.global.xds.port }}'
       # There may be more sidecar environment variables, but we haven't added them here yet.
       # However, to use an env var with the sidecar, even if it doesn't have a global default,
       # it needs to be set globally as either a value or a secret

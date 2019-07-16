@@ -59,12 +59,6 @@ spec:
               containerPort: 8081
           env:
           {{- include "greymatter.envvars" . | indent 10 }}
-          - name: XDS_CLUSTER
-            value: {{ .Values.global.xds.cluster | quote }}
-          - name: XDS_HOST
-            value: 'xds.{{ .Release.Namespace }}.svc.cluster.local'
-          - name: XDS_PORT
-            value: '18000'
           - name: ZK_ADDRS
             value: {{ template "greymatter.exhibitor.address" . }}
           - name: ZK_ANNOUNCE_PATH
