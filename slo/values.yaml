@@ -118,15 +118,16 @@ postgres:
     #   - POSTGRES_USER
     #   - POSTGRES_PASSWORD
     #   - POSTGRES_DB
+    # Now, helm automatically chooses the correct environment variable based on the environment value.
     - type: secret
-      name: POSTGRESQL_USER
+      name: '{{ ternary "POSTGRESQL_USER" "POSTGRES_USER" (eq .Values.global.environment "openshift") }}'
       secret: postgres-credentials
       key: username
     - type: secret
-      name: POSTGRESQL_PASSWORD
+      name:  '{{ ternary "POSTGRESQL_PASSWORD" "POSTGRES_PASSWORD" (eq .Values.global.environment "openshift") }}'
       secret: postgres-credentials
       key: password
     - type: secret
-      name: POSTGRESQL_DATABASE
+      name: '{{ ternary "POSTGRESQL_DATABASE" "POSTGRES_DB" (eq .Values.global.environment "openshift") }}'
       secret: postgres-credentials
       key: database
