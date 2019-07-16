@@ -37,13 +37,8 @@ node('ubuntu-18.04'){
                 # check to see if the chart.txt file exists.  If so, remove it first to ensure we're using a clean file
                 [[ -e charts.txt ]] && rm -f charts.txt
 
-                # get a list of all directories (ignoring the .git, ci and . directories)
-                charts=$(find . -type d \\( ! -name .git \\)  \\( ! -name ci \\) \\( ! -name . \\) \\( ! -name greymatter \\) \\( ! -name examples \\) \\( ! -name .github \\) -maxdepth 1)
-
-                # the charts are returned looking like "./dashboard", so we want to strip off the first two characters of each listing
-                for chart in $charts; do
-                    echo ${chart:2} >> charts.txt
-                done
+                # get a list of directories with chart.yaml and populate a file charts.txt with that list
+                python ./ci/find_charts.py
             '''
         }
         
@@ -156,12 +151,12 @@ node('ubuntu-18.04'){
                 """
             }
         }
-    sendSuccess("Successfully Packaged Helm Charts")
+    // sendSuccess("Successfully Packaged Helm Charts")
     }
     catch (e) {
         echo "Caught: ${e}"
         currentBuild.result = 'FAILURE'
-        sendFailure("Error caught: ${e}")
+        // sendFailure("Error caught: ${e}")
         throw e
     } 
 }
