@@ -11,7 +11,6 @@ spec:
   template:
     metadata:
       labels:
-        gm_cluster: dashboard
         app: dashboard
     spec:
       containers:
@@ -50,12 +49,6 @@ spec:
           containerPort: 8081
         env:
         {{- include "greymatter.envvars" . | indent 8 }}
-        - name: XDS_CLUSTER
-          value: '{{ .Values.global.xds.cluster }}'
-        - name: XDS_HOST
-          value: "xds.{{ .Release.Namespace }}.svc.cluster.local"
-        - name: XDS_PORT
-          value: '{{ .Values.global.xds.port }}'
         - name: ZK_ADDRS
           value: {{ template "greymatter.exhibitor.address" . }}
         - name: ZK_ANNOUNCE_PATH

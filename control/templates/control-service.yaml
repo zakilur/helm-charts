@@ -3,7 +3,7 @@ kind: Service
 metadata:
   labels:
     run: {{ .Values.control.name }}
-  name: {{ .Values.control.name }}
+  name: xds #{{ .Values.control.name }}
   namespace: {{ .Release.Namespace }}
 spec:
   ports:
