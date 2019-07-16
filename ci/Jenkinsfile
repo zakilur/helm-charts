@@ -1,3 +1,15 @@
+#!groovy
+import groovy.transform.Field
+
+@Library('slack-notifications') import jenkins.Slack
+
+@Field def slackNotificationChannel = 'decipher-sres'
+@Field def branch
+@Field def commitId
+@Field def author
+@Field def commitMessage
+@Field def gitTag
+
 node('ubuntu-18.04'){
     try{
       
@@ -9,8 +21,14 @@ node('ubuntu-18.04'){
             checkout scm
         }
         
-        def branch = sh(returnStdout: true, script: "git rev-parse HEAD | git branch -a --contains | grep remotes | sed s/.*remotes.origin.//").trim()
+        branch = sh(returnStdout: true, script: "git rev-parse HEAD | git branch -a --contains | grep remotes | sed s/.*remotes.origin.//").trim()
         echo "branch = ${branch}"
+        commitId = sh(script: 'git rev-parse HEAD', returnStdout: true)
+        echo "commitId = ${commitId}" 
+        author = sh(returnStdout: true, script: "git --no-pager show -s --format='%an' ${commitId }").trim()
+        echo "author = ${author}"
+        commitMessage = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim().replace('(','').replace(')','')
+        echo "commitMessage = ${commitMessage}"
 
         // Do some git and bash magic to find the charts that were updated in this pull request and ignore the ci folder
         
@@ -20,7 +38,7 @@ node('ubuntu-18.04'){
                 [[ -e charts.txt ]] && rm -f charts.txt
 
                 # get a list of all directories (ignoring the .git, ci and . directories)
-                charts=$(find . -type d \\( ! -name .git \\)  \\( ! -name ci \\) \\( ! -name . \\) \\( ! -name greymatter \\) \\( ! -name examples \\) -maxdepth 1)
+                charts=$(find . -type d \\( ! -name .git \\)  \\( ! -name ci \\) \\( ! -name . \\) \\( ! -name greymatter \\) \\( ! -name examples \\) \\( ! -name .github \\) -maxdepth 1)
 
                 # the charts are returned looking like "./dashboard", so we want to strip off the first two characters of each listing
                 for chart in $charts; do
@@ -138,10 +156,99 @@ node('ubuntu-18.04'){
                 """
             }
         }
+    sendSuccess("Successfully Packaged Helm Charts")
     }
     catch (e) {
         echo "Caught: ${e}"
         currentBuild.result = 'FAILURE'
+        sendFailure("Error caught: ${e}")
         throw e
-    }     
+    } 
+}
+
+/////// Notify slack about build status
+// customing implementation of slack library
+def sendSuccess(successMessage) {
+    stage("Notify Slack") {
+        def slack = new Slack(this, env)
+        slack.notifySuccess(slackNotificationChannel, author,
+                [
+                        [
+                                title: "Helm Charts",
+                                value: "${successMessage}",
+                                short: false
+                        ],
+                        [
+                                title: "Branch",
+                                value: "${branch}",
+                                short: false
+                        ],
+                        [
+                                title: "Last Commit Message",
+                                value: "${commitMessage}",
+                                short: false
+                        ],
+                        [
+                                title: "Summary",
+                                value: "TODO Build Summary",
+                                short: false
+                        ]
+                ]
+        )
+    }
+}
+
+def sendWarning(warnMessage) {
+    stage("Notify Slack") {
+        def slack = new Slack(this, env)
+        slack.notifyWarning(slackNotificationChannel, author,
+                [
+                        [
+                                title: "Reason",
+                                value: "${warnMessage}",
+                                short: false
+                        ],
+                        [
+                                title: "Branch",
+                                value: "${branch}",
+                                short: false
+                        ],
+                        [
+                                title: "Last Commit Message",
+                                value: "${commitMessage}",
+                                short: false
+                        ]
+                ]
+        )
+    }
+}
+
+def sendFailure(errMessage) {
+    stage("Notify Slack") {
+        def slack = new Slack(this, env)
+        slack.notifyFailure(slackNotificationChannel, author,
+                [
+                        [
+                                title: "Reason",
+                                value: "${errMessage}",
+                                short: false
+                        ],
+                        [
+                                title: "Branch",
+                                value: "${branch}",
+                                short: false
+                        ],
+                        [
+                                title: "Last Commit Message",
+                                value: "${commitMessage}",
+                                short: false
+                        ],
+                        [
+                                title: "Summary",
+                                value: "TODO- build summary",
+                                short: false
+                        ]
+                ]
+        )
+    }
 }
