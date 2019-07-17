@@ -10,6 +10,9 @@ import groovy.transform.Field
 @Field def commitMessage
 @Field def gitTag
 
+// define warning list
+@Field def warnings =[]
+
 node('ubuntu-18.04'){
     try{
       
@@ -74,11 +77,19 @@ node('ubuntu-18.04'){
                 }
                 // Loop over the charts that be packaged
                 for (chart in charts.split()) {
-                    sh """
-                        echo "Packaging: ${chart}"
-                        ./helm/helm dependency update ${chart}
-                        ./helm/helm package ${chart}
-                    """
+                    try{
+                        sh """
+                            echo "Packaging: ${chart}"
+                            ./helm/helm dependency update ${chart}
+                            ./helm/helm package ${chart}
+                        """
+                    }
+                    catch (e) {
+                        errMessage = "WARN: ${chart} failed to package subcharts [Stage- Pachage Helm Charts]"
+                        warnings.add(errMessage)
+                        currentBuild.result = 'UNSTABLE'
+                    }
+
                 }
             }
         }
@@ -90,8 +101,9 @@ node('ubuntu-18.04'){
             
         if ( branch == 'master' ){
             stage ('Publish Charts') { 
-                // Find all of the charts that were created, known by the *.tgz file extension.  Then upload them to Nexus
-                withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                try{
+                    // Find all of the charts that were created, known by the *.tgz file extension.  Then upload them to Nexus
+                    withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         sh '''#!/bin/bash
                             toPublish=($(ls *.tgz))
                             for pubChart in ${toPublish[@]}; do
@@ -99,64 +111,105 @@ node('ubuntu-18.04'){
                             done
                             rm -f *.tgz
                         '''
+                    }
+                }
+                catch (e){
+                    errMessage = "WARN: failed to publish some or all subcharts [Stage- Publish Charts (master)]"
+                    warnings.add(errMessage)
+                    currentBuild.result = 'UNSTABLE'
                 }
             }
 
             stage ('Package Grey Matter') {
+                try{
                     sh """
                         echo "Packaging: Grey Matter"
                         ./helm/helm dependency update greymatter
                         ./helm/helm package greymatter
                     """
+                }
+                catch (e){
+                    errMessage = "WARN: Greymatter failed to package [Stage- Pachage Grey Matter]"
+                    warnings.add(errMessage)
+                    currentBuild.result = 'UNSTABLE'
+                }
             }
 
             stage ('Publish Grey Matter') {
-                withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh '''#!/bin/bash
-                        toPublish=($(ls greymatter*.tgz))
-                        for pubChart in ${toPublish[@]}; do
-                            curl -u ${USERNAME}:${PASSWORD} https://nexus.production.deciphernow.com/repository/helm-hosted/ -T $pubChart
-                        done
-                        rm -f *.tgz
-                    '''
+                try{
+                    withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        sh '''#!/bin/bash
+                            toPublish=($(ls greymatter*.tgz))
+                            for pubChart in ${toPublish[@]}; do
+                                curl -u ${USERNAME}:${PASSWORD} https://nexus.production.deciphernow.com/repository/helm-hosted/ -T $pubChart
+                            done
+                            rm -f *.tgz
+                        '''
+                    }
+                }
+                catch (e){
+                    errMessage = "WARN: failed to publish Greymatter [Stage- Publish Grey Matter (master)]"
+                    warnings.add(errMessage)
+                    currentBuild.result = 'UNSTABLE'
                 }
             }
         }
         else {
             stage ('Publish Charts to Staging') {
-                // Find all of the charts that were created, known by the *.tgz file extension.  Then upload them to Nexus
-                withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        sh '''#!/bin/bash
-                            toPublish=($(ls *.tgz))
-                            for pubChart in ${toPublish[@]}; do
-                                curl -u ${USERNAME}:${PASSWORD} https://nexus.production.deciphernow.com/repository/helm-staging/ -T $pubChart
-                            done
-                            rm -f *.tgz
-                        '''
+                try{
+                    // Find all of the charts that were created, known by the *.tgz file extension.  Then upload them to Nexus
+                    withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            sh '''#!/bin/bash
+                                toPublish=($(ls *.tgz))
+                                for pubChart in ${toPublish[@]}; do
+                                    curl -u ${USERNAME}:${PASSWORD} https://nexus.production.deciphernow.com/repository/helm-staging/ -T $pubChart
+                                done
+                                rm -f *.tgz
+                            '''
+                    }
+                }
+                catch (e){
+                    errMessage = "WARN: failed to publish some or all sub charts [Stage- Publish Charts to Staging]"
+                    warnings.add(errMessage)
+                    currentBuild.result = 'UNSTABLE'
                 }
             }
 
             stage ('Package Grey Matter from Staging') {
-                // Need to point the Grey Matter requirements to the staging environment then package
-                withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                sh """
-                    ./helm/helm repo add decipher-staging https://nexus.production.deciphernow.com/repository/helm-staging/ --username ${USERNAME} --password ${PASSWORD}
-                """
+                try{
+                    // Need to point the Grey Matter requirements to the staging environment then package
+                    withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh """
+                        ./helm/helm repo add decipher-staging https://nexus.production.deciphernow.com/repository/helm-staging/ --username ${USERNAME} --password ${PASSWORD}
+                    """
+                    }
+                    sh """
+                        sed -i "s/helm-hosted/helm-staging/g" greymatter/requirements.yaml
+                        echo "Packaging: Grey Matter"
+                        ./helm/helm dependency update greymatter
+                        ./helm/helm package greymatter
+                    """
                 }
-                sh """
-                    sed -i "s/helm-hosted/helm-staging/g" greymatter/requirements.yaml
-                    echo "Packaging: Grey Matter"
-                    ./helm/helm dependency update greymatter
-                    ./helm/helm package greymatter
-                """
+                catch (e){
+                    errMessage = "WARN: failed to package Grey Matter [Stage- Package Grey Matter from Staging]"
+                    warnings.add(errMessage)
+                    currentBuild.result = 'UNSTABLE'
+                }
             }
         }
-    // sendSuccess("Successfully Packaged Helm Charts")
+        if (warnings.size() > 0) {
+            String warnMessage = warnings.join("\n")
+            sendWarning(warnMessage)
+        }
+        else{
+            println "Successfully completed the jenkins pipeline"
+            // sendSuccess("Successfully Packaged Helm Charts")
+        }
     }
     catch (e) {
         echo "Caught: ${e}"
         currentBuild.result = 'FAILURE'
-        // sendFailure("Error caught: ${e}")
+        sendFailure("Error caught: ${e}")
         throw e
     } 
 }
