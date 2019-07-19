@@ -21,6 +21,64 @@ oldtown:
   imagePullPolicy: IfNotPresent
   initialConfigPath: 'config/oldtown_backend.json'
   containerPort: 5555
+  zone: default-zone
+  proxyPort: 8080
+  init:
+    envvars:
+      greymatter_console_level:
+          value: 'debug'
+          type: 'value'
+      greymatter_api_host:
+          value: '{{ .Values.oldtown.name }}:{{ .Values.oldtown.containerPort }}'
+          type: 'value'
+      greymatter_api_key:
+          value: 'xxx'
+          type: 'value'
+      greymatter_api_ssl:
+          value: 'false'
+          type: 'value'
+  services:
+    catalog:
+      name: 'Grey Matter Catalog'
+      serviceName: 'catalog'
+      route: '/services/catalog/{{ $.Values.global.catalog.version }}'
+
+    # control:
+    #   name: 'Grey Matter Control'
+    #   serviceName: 'control'
+    #   route: '/services/xds/{{ $.Values.global.xds.version }}'
+
+    dashboard:
+      name: 'Grey Matter Dashboard'
+      serviceName: 'dashboard'
+      route: '/services/dashboard/latest'
+
+    data:
+      name: 'Grey Matter Data'
+      serviceName: 'data'
+      route: '/services/data/{{ $.Values.global.data.version }}'
+
+    jwt:
+      name: 'Grey Matter JWT Security'
+      serviceName: 'jwt'
+      route: '/services/jwt-security/{{ $.Values.global.jwt.version }}'
+
+    edge:
+      name: 'Grey Matter Edge'
+      serviceName: 'edge'
+      route: '/' #/services/edge/{{ $.Values.global.edge.version }}
+    # TODO: multiple routes
+
+    slo:
+      name: 'Grey Matter Service Level Objectives'
+      serviceName: 'slo'
+      route: '/services/slo/{{ $.Values.global.slo.version }}'
+
+    documentation:
+      name: 'Grey Matter Documentation'
+      serviceName: 'documentation'
+      route: '/services/documentation/{{ $.Values.global.documentation.version }}'
+
   envvars:
     oldtown_log_level:
       type: 'value'

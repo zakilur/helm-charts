@@ -5,4 +5,4 @@ metadata:
   namespace: {{ .Release.Namespace }}
 data:
   oldtown_backend.json: |
-    {{ .Files.Get .Values.oldtown.initialConfigPath }}
+{{ .Files.Get .Values.oldtown.initialConfigPath | indent 4 }}

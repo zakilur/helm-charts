@@ -3,6 +3,7 @@ global:
   domain:
   route_url_name:
   remove_namespace_from_url: false
+  zone: default-zone
   catalog:
     version: 0.3.6
   dashboard:

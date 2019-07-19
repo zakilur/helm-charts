@@ -1,33 +1,3 @@
-dependencies:
-- name: catalog
-  repository: file://../catalog
-  version: 1.0.3
-- name: data
-  repository: file://../data
-  version: 1.0.3
-- name: dashboard
-  repository: file://../dashboard
-  version: 1.0.3
-- name: documentation
-  repository: file://../documentation
-  version: 1.0.2
-- name: edge
-  repository: file://../edge
-  version: 1.0.5
-- name: oldtown
-  repository: file://../oldtown
-  version: 0.1.0
-- name: control
-  repository: file://../control
-  version: 0.1.0
-- name: exhibitor
-  repository: file://../exhibitor
-  version: 1.0.1
-- name: jwt
-  repository: file://../jwt
-  version: 1.0.1
-- name: slo
-  repository: file://../slo
-  version: 1.0.2
-digest: sha256:9d045d8dbf52047455c34459b5aca31ee36e9dc751adcad7809a68c297bfc124
-generated: "2019-07-12T06:35:07.598748-04:00"
+dependencies: []
+digest: sha256:a4028ef6b5df0ba52501af1116d232a75056093f30ddf3b725e34fff764048c2
+generated: "2019-07-18T15:31:15.733603-04:00"
