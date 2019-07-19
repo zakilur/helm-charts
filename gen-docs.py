@@ -230,7 +230,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--out-dir",
         dest="output_directory",
-        default="./docs/",  # os.path.(os.getcwd(),"./docs/",#./docs/",
+        default="./docs/",
         help="where to output documentation to, when embedding is off (default ./docs/))",
     )
 

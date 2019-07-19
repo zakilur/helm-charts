@@ -1,0 +1,14 @@
+{{- define "route" }}
+{
+  "route_key": {{ .route | quote }},
+  "domain_key": "domain-*",
+  "zone_key": "zone-default-zone",
+  "path": {{ .route | quote }},
+  "prefix_rewrite": "/",
+  "shared_rules_key": "shared-rules-dashboard",
+  "rules": null,
+  "response_data": {},
+  "cohort_seed": null,
+  "retry_policy": null
+}
+{{- end }}

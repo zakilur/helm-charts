@@ -1,44 +1,44 @@
 dependencies:
-  - name: catalog
-    repository: 'file://../catalog'
-    version: '1.0.3'
+  # - name: catalog
+  #   repository: 'file://../catalog'
+  #   version: '1.0.3'
 
-  - name: data
-    repository: 'file://../data'
-    version: '1.0.3'
+  # - name: data
+  #   repository: 'file://../data'
+  #   version: '1.0.3'
 
-  - name: dashboard
-    repository: 'file://../dashboard'
-    version: '1.0.3'
+  # - name: dashboard
+  #   repository: 'file://../dashboard'
+  #   version: '1.0.3'
 
-  - name: documentation
-    repository: 'file://../documentation'
-    version: '1.0.2'
-
-  - name: edge
-    repository: 'file://../edge'
-    version: '1.0.5'
-
-  # - name: xds
-  #   repository: 'file://../xds'
+  # - name: documentation
+  #   repository: 'file://../documentation'
   #   version: '1.0.2'
 
-  - name: oldtown
-    repository: 'file://../oldtown'
-    version: '0.1.0'
+  # - name: edge
+  #   repository: 'file://../edge'
+  #   version: '1.0.5'
 
-  - name: control
-    repository: 'file://../control'
-    version: '0.1.0'
+  # # - name: xds
+  # #   repository: 'file://../xds'
+  # #   version: '1.0.2'
 
-  - name: exhibitor
-    repository: 'file://../exhibitor'
-    version: '1.0.1'
+  # - name: oldtown
+  #   repository: 'file://../oldtown'
+  #   version: '0.1.0'
 
-  - name: jwt
-    repository: 'file://../jwt'
-    version: '1.0.1'
+  # - name: control
+  #   repository: 'file://../control'
+  #   version: '0.1.0'
 
-  - name: slo
-    repository: 'file://../slo'
-    version: '1.0.2'
+  # - name: exhibitor
+  #   repository: 'file://../exhibitor'
+  #   version: '1.0.1'
+
+  # - name: jwt
+  #   repository: 'file://../jwt'
+  #   version: '1.0.1'
+
+  # - name: slo
+  #   repository: 'file://../slo'
+  #   version: '1.0.2'
