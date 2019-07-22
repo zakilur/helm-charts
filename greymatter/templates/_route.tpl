@@ -1,6 +1,6 @@
 {{- define "route" }}
 {
-  "route_key": {{ .route | quote }},
+  "route_key": "route-{{ .route }}",
   "domain_key": "domain-*",
   "zone_key": "zone-default-zone",
   "path": {{ .route | quote }},

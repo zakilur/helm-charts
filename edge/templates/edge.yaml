@@ -30,7 +30,7 @@ spec:
         # - name: ZK_ANNOUNCE_PATH
         #   value: {{ .Values.edge.base_path | quote }}
         ports:
-        - name: http
+        - name: proxy
           containerPort: 8080
         - name: metrics
           containerPort: 8001
