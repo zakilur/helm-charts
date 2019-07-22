@@ -1,4 +1,6 @@
-# XDS
+# XDS [depracated]
+
+**NOTE: As part of the transition from legacy Grey Matter to `oldtown` and `gm-control`, the XDS service for providing XDS information to the envoy data plane is now depracated. Please use `gm-control` instead. **
 
 ## TL;DR;
 

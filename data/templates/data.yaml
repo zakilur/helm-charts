@@ -65,7 +65,7 @@ spec:
         {{- end }}
         ports:
         - containerPort: 8181
-          name: internal
+          name: http
           protocol: TCP
       - name: sidecar
         {{- if .Values.data.deploy.standalone }}
@@ -121,7 +121,7 @@ spec:
         {{- end }}
         ports:
         - containerPort: 8080
-          name: http
+          name: proxy
           protocol: TCP
         - containerPort: 8081
           name: metrics

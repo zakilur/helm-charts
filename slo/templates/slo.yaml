@@ -24,7 +24,7 @@ spec:
 {{ toYaml .Values.slo.resources | indent 10 }}
         {{- end }}
         ports:
-        - name: internal
+        - name: http
           containerPort: 1337
         env:
         - name: POSTGRESQL_USERNAME
@@ -70,7 +70,7 @@ spec:
 {{ toYaml .Values.sidecar.resources | indent 10 }}
         {{- end }}
         ports:
-        - name: http
+        - name: proxy
           containerPort: 8080
         - name: metrics
           containerPort: 8081
