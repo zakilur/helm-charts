@@ -2,7 +2,7 @@
 {{- $top := . }}
 {{- range $name, $service := .Values.oldtown.services }}
 ---
-{{- $serviceConfig := dict "serviceName" $service.serviceName "route" (tpl $service.route $top) "port" $top.Values.oldtown.proxyPort "zone" $top.Values.oldtown.zone }}
+{{- $serviceConfig := dict "serviceName" $service.serviceName "routes" $service.routes "port" $top.Values.oldtown.proxyPort "zone" $top.Values.oldtown.zone "top" $top }}
 {{- include "mesh_svc_config" $serviceConfig }}
 ...
 {{- end}}

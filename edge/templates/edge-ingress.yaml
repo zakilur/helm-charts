@@ -32,8 +32,12 @@ metadata:
 spec:
   rules:
   - tcp:
+      port: '80'
+      backend:
+        serviceName: edge
+        servicePort: 8080
       port: '443'
       backend:
         serviceName: edge
-        servicePort: 8443
+        servicePort: 8080
 {{- end }}

@@ -42,10 +42,16 @@ for d in */; do
     #     greymatter create $filename <$fullfile
     # done
 
-    names="cluster listener proxy shared_rules route"
+    names="cluster listener proxy shared_rules"
     for name in $names; do
         echo "Creating mesh object: $name."
         greymatter create $name <$name.json
+        sleep 0.01
+    done
+
+    for file in route-*.json; do
+        echo "Creating mesh object: $name."
+        greymatter create route <$file
         sleep 0.01
     done
 

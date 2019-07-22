@@ -223,3 +223,14 @@ Each subchart has a `README.md` which describes
  - details about the service
  - Helm configuration values
  - Helm tests/other testing options
+
+
+ ## Grey Matter 2.0 Considerations
+
+ We use the `app:` metadata tag on all of our deployemensts and pods to signify to the `gm-control` kuberntes service discovery backend that it each pod is a certain cluster.
+
+ We use the `XDS_CLUSTER` (currently in the process of being renamed to `GM_CONTROL_CLUSTER`) to tell `gm-proxy` which cluster they are a part of.
+
+ The Kubernetes backend collector API also uses a named port on a pod called `http` to act as the service port of the proxy. The proxy will then point to this port, but serve on any `Listener` host/port combination you have specified through the oldtown API.
+
+ Currently, all of our proxies listen on the interface and port `0.0.0.0:8080` on every pod which they are deployed in. When connecting externally to a service, or even using service-to-service communication inside the mesh, always connect to the port `8080` or the named port `proxy`, so that all traffic goes through the proxy. Never use the named port `http`, which can change based on the service.

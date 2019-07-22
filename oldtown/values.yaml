@@ -41,43 +41,59 @@ oldtown:
     catalog:
       name: 'Grey Matter Catalog'
       serviceName: 'catalog'
-      route: '/services/catalog/{{ $.Values.global.catalog.version }}'
+      routes:
+        - '/services/catalog/{{ $.Values.global.catalog.version }}'
+        - '/services/catalog/{{ $.Values.global.catalog.version }}/'
 
     # control:
     #   name: 'Grey Matter Control'
     #   serviceName: 'control'
-    #   route: '/services/xds/{{ $.Values.global.xds.version }}'
+    #   routes:
+        # - '/services/xds/{{ $.Values.global.xds.version }}'
+        # - '/services/xds/{{ $.Values.global.xds.version }}'
 
     dashboard:
       name: 'Grey Matter Dashboard'
       serviceName: 'dashboard'
-      route: '/services/dashboard/latest'
+      routes:
+        - '/services/dashboard/latest'
+        - '/services/dashboard/latest/'
 
     data:
       name: 'Grey Matter Data'
       serviceName: 'data'
-      route: '/services/data/{{ $.Values.global.data.version }}'
+      routes:
+        - '/services/data/{{ $.Values.global.data.version }}'
+        - '/services/data/{{ $.Values.global.data.version }}/'
 
     jwt:
       name: 'Grey Matter JWT Security'
       serviceName: 'jwt'
-      route: '/services/jwt-security/{{ $.Values.global.jwt.version }}'
+      routes:
+        - '/services/jwt-security/{{ $.Values.global.jwt.version }}'
+        - '/services/jwt-security/{{ $.Values.global.jwt.version }}/'
 
     edge:
       name: 'Grey Matter Edge'
       serviceName: 'edge'
-      route: '/' #/services/edge/{{ $.Values.global.edge.version }}
+      routes:
+        - '/' #/services/edge/{{ $.Values.global.edge.version }}
+        # - '/' #/services/edge/{{ $.Values.global.edge.version }}
     # TODO: multiple routes
 
     slo:
       name: 'Grey Matter Service Level Objectives'
       serviceName: 'slo'
-      route: '/services/slo/{{ $.Values.global.slo.version }}'
+      routes:
+        - '/services/slo/{{ $.Values.global.slo.version }}'
+        - '/services/slo/{{ $.Values.global.slo.version }}/'
 
     documentation:
       name: 'Grey Matter Documentation'
       serviceName: 'documentation'
-      route: '/services/documentation/{{ $.Values.global.documentation.version }}'
+      routes:
+        - '/services/documentation/{{ $.Values.global.documentation.version }}'
+        - '/services/documentation/{{ $.Values.global.documentation.version }}/'
 
   envvars:
     oldtown_log_level:
