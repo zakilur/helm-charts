@@ -44,10 +44,10 @@ spec:
           imagePullPolicy: Always
           env:
           {{- include "greymatter.envvars" . | indent 10 }}
-          - name: ZK_ADDRS
-            value: {{ template "greymatter.exhibitor.address" . }}
-          - name: ZK_ANNOUNCE_PATH
-            value: {{ .Values.documentation.base_path | quote }}
+          # - name: ZK_ADDRS
+          #   value: {{ template "greymatter.exhibitor.address" . }}
+          # - name: ZK_ANNOUNCE_PATH
+          #   value: {{ .Values.documentation.base_path | quote }}
 
           ports:
             - containerPort: 8080

@@ -39,12 +39,12 @@ control:
     gm_control_cmd:
       type: 'value'
       value: 'kubernetes'
-    gm_control_file_format:
-      type: 'value'
-      value: 'yaml'
-    gm_control_file_filename:
-      type: 'value'
-      value: '/app/routes.yaml'
+    # gm_control_file_format:
+    #   type: 'value'
+    #   value: 'yaml'
+    # gm_control_file_filename:
+    #   type: 'value'
+    #   value: '/app/routes.yaml'
     gm_control_xds_resolve_dns:
       type: 'value'
       value: 'true'

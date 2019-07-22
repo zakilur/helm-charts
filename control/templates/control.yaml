@@ -41,7 +41,7 @@ spec:
       initContainers:
         - name: ensure-oldtown
           image: busybox:1.28
-          command: ['sh', '-c', 'env; until nslookup oldtown; do echo waiting for oldtown; sleep 2; done;'] #'for i in {1..100}; do sleep 1; if dig myservice; then exit 0; fi; done; exit 1']
+          command: ['sh', '-c', 'env; until nslookup oldtown; do echo "Waiting for oldtown ..."; sleep 2; done; echo "Waiting 30 seconds"; sleep 30;'] #'for i in {1..100}; do sleep 1; if dig myservice; then exit 0; fi; done; exit 1']
           envvars:
             {{- include "envvars" (dict "envvar" .Values.control.envvars "top" $) | indent 12 }}
       imagePullSecrets:

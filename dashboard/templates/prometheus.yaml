@@ -73,10 +73,10 @@ spec:
           value: {{ tpl $envvar.value $ | quote }}
         {{- end }}
     {{- end  }}
-        - name: ZK_ADDRS
-          value:  {{ template "greymatter.exhibitor.address" . }}
-        - name: ZK_ANNOUNCE_PATH
-          value: "/services/prometheus/{{ .Values.prometheus.version }}"
+        # - name: ZK_ADDRS
+        #   value:  {{ template "greymatter.exhibitor.address" . }}
+        # - name: ZK_ANNOUNCE_PATH
+        #   value: "/services/prometheus/{{ .Values.prometheus.version }}"
         volumeMounts:
         - name: sidecar
           mountPath: /etc/proxy/tls/sidecar
