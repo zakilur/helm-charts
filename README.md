@@ -1,11 +1,12 @@
 # Helm Charts for Grey Matter
 
 ## Overview
-This repository provides helm charts for easily configuring and deploying every component in the Grey Matter service mesh to both Openshift and Kubernetes environments. 
+
+This repository provides helm charts for easily configuring and deploying every component in the Grey Matter service mesh to both Openshift and Kubernetes environments.
 
 ## Getting Started
 
-Each step is important  so that helm has all the information it needs to finally deploy Grey Matter.
+Each step is important so that helm has all the information it needs to finally deploy Grey Matter.
 
 1. Setup the prerequisites (helm, openshift, kubernetes, AWS S3, and docker)
 2. Setup your custom values (domain, environment, S3 creds)
@@ -35,7 +36,7 @@ You must obtain an API token by visiting https://development.deciphernow.com:844
 ```
 
 Follow the link provided and use the provided comand to login. The command will look something like:
-  `oc login --token=<some_crazy_long_and_random_string> --server=https://development.deciphernow.com:8443`
+`oc login --token=<some_crazy_long_and_random_string> --server=https://development.deciphernow.com:8443`
 
 ### AWS
 
@@ -52,7 +53,7 @@ Make sure you have an:
 
 You need valid Docker credentials which have access to the Decipher repository in order to pull all the Grey Matter images.
 
-- The URL of the docker registry containing GM images 
+- The URL of the docker registry containing GM images
 - Access to the images in that registry
 - Account Email
 - Account Username/pass
@@ -61,23 +62,24 @@ You need valid Docker credentials which have access to the Decipher repository i
 
 Each Helm chart has a `values.yaml` file which specifies the default values used to generate/template the final Kubernetes resource files with YAML.
 
-These values can be overwritten by you, the user, and in fact, several of them **MUST** be configured for Grey Matter to deploy sucessfully. 
+These values can be overwritten by you, the user, and in fact, several of them **MUST** be configured for Grey Matter to deploy sucessfully.
 
 We've provided an `example-custom.yaml` file that showcases the general structure of a Helm values file and shows how top-level keys are passed down to dependency subcharts. Most of these keys you don't need to worry about.
 
 However, you **need** to configure the:
- 1. Basic values
- 2. Voyager `cloudProvider`
- 3. and AWS + Docker credentials
 
+1.  Basic values
+2.  Voyager `cloudProvider`
+3.  and AWS + Docker credentials
 
 #### Basics
+
 Firstly, setup the basic information about your deployment by editing the following:
 
 ```yaml
 global:
   environment: # openshift or kubernetes
-  domain: 
+  domain:
   route_url_name:
 ```
 
@@ -92,9 +94,10 @@ route_url_name: greymatter
 namespace: default
 ```
 
-The URL would be `greymatter.default.deciphernow.com`. 
+The URL would be `greymatter.default.deciphernow.com`.
 
 #### Voyager
+
 Next, you need to set the type of environment you are in and pass it to the Voyager edge proxy.
 Edit `cloudProvider` in the following to be one of the [supported providers](https://appscode.com/products/voyager/7.1.1/setup/install/#using-script)
 
@@ -107,12 +110,13 @@ voyager:
 More details on Voyager are in [`edge/README.md`](edge#setting-up-the-ingress).
 
 #### Credentials
+
 Finally, you need to set the values for all the AWS and Docker credentials you located above. Fill out all the values for the following top-level keys:
 
 ```yaml
 dockerCredentials: ...
 exhibitor: ...
- 
+
 # Optionally:
 data: ...
 ```
@@ -123,9 +127,13 @@ You may notice a huge section of the file which is just various TLS certificates
 
 To actually access the Grey Matter Dashboard or any other service in the cluster, your request will pass through the edge service, which performs mTLS or Mutual TLS. This means that both the client and the server must authenticate themselves, and that your browser (or other HTTPS client e.g. `curl`) will need to have the appropriate certificates loaded.
 
-To keep things simple, the `example-custom.yaml` uses the same certificates as those from `common/certificates/user/quickstart.p12` in the [DecipherNow/grey-matter-quickstart](https://github.com/DecipherNow/grey-matter-quickstarts) repository. 
+To keep things simple, the `example-custom.yaml` uses the same certificates as those from `common/certificates/user/quickstart.p12` in the [DecipherNow/grey-matter-quickstart](https://github.com/DecipherNow/grey-matter-quickstarts) repository.
 
 If you load `quickstart.p12` into your browser, when you access the GM Dashboard, you'll be prompted to use that certificate to verify yourself, which you should do to gain access.
+
+#### NOTE: Single-service deployments
+
+If you want to deploy a Helm chart for a single service without the entire service mesh, you need to make sure that your `custom.yaml` `globals.sidecar.envvars` key contains all of the necessary global defaults for the sidecar environment variables. You can just copy these values from our `example-custom.yaml` file. Otherwise, the sidecar for the single service will only contain the environment variables that are different for that service. This will most likely break your sidecar installation, so be sure that you set these values.
 
 ## 3. Add the Decipher Helm Repo to Helm
 
@@ -136,7 +144,6 @@ helm repo add decipher https://nexus.production.deciphernow.com/repository/helm-
 ```
 
 This allows you to install the dependency charts of Grey Matter.
-
 
 ## 4. Install Dependencies
 
@@ -152,23 +159,24 @@ By default the greymatter dependencies will be pulled from a repository as defin
 
 ```yaml
 dependencies:
-- name: dashboard
-  version: "1.0.0"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
+  - name: dashboard
+    version: '1.0.0'
+    repository: 'https://nexus.production.deciphernow.com/repository/helm-hosted'
 ```
 
 If you want to make changes to charts you will need to change the requirements.yaml file to point to the appropriate directory:
 
 ```yaml
 dependencies:
-- name: dashboard
-  version: "1.0.0"
-  repository: "file://../dashboard"
+  - name: dashboard
+    version: '1.0.0'
+    repository: 'file://../dashboard'
 ```
 
 ## 5. Install Charts
 
 To deploy a chart use the helm install command:
+
 ```bash
 helm install --name <release_name> --namespace <my_namespace> --debug -f custom.yaml <chart_to_deploy>
 ```
@@ -207,15 +215,16 @@ The most important keys for a barebones deployment are described in Step #2: Con
 ### Jenkins pipeline:
 
 - To change the branch jenkins builds from use `./change-build-branch.sh`. The script will ask if you want to change to master, then your current branch, then a manual entry. You must be logged in openshift for this to work.
+- The CI pipeline can be skipped by including any of skip term ("ci skip", "skip ci", "ci-skip", "skip-ci").
 
 ### Troubleshooting:
 
 - Keep in mind that helm will not tear down any resources that it did not create in the firstplace. Therefore the best practice is to manage everything inside a project/namespace with helm or nothing at all.
 
-
 ### Additional Readme Files
 
 Each subchart has a `README.md` which describes
- - details about the service
- - Helm configuration values
- - Helm tests/other testing options
+
+- details about the service
+- Helm configuration values
+- Helm tests/other testing options

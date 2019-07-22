@@ -91,25 +91,12 @@ The following tables list the configurable parameters of the slo chart and their
 | sidecar.resources.requests.cpu    |                   | 100m                                                           |
 | sidecar.resources.requests.memory |                   | 128Mi                                                          |
 
-#### Sidecar Environment Variables set in values.yaml
-
-| Environment Variable    | Default                             |
-| ----------------------- | ----------------------------------- |
-| ingress_use_tls         | 'true'                              |
-| ingress_ca_cert_path    | "/etc/proxy/tls/sidecar/ca.crt"     |
-| ingress_cert_path       | "/etc/proxy/tls/sidecar/server.crt" |
-| ingress_key_path        | "/etc/proxy/tls/sidecar/server.key" |
-| metrics_port            | "8081"                              |
-| port                    | "8080"                              |
-| proxy_dynamic           | 'true'                              |
-| service_host            | '127.0.0.1'                         |
-| service_port            | 1337                                |
-| osb_enabled             | 'false'                             |
-| obs_enforce             | 'false'                             |
-| kafka_zk_discover       | 'false'                             |
-| kafka_server_connection | 'kafka:9091,kafka2:9091'            |
-| kafka_enabled           | 'false'                             |
-| kafka_topic             | 'gm-slo'                            |
+### Sidecar Environment Variable Configuration
+| Environment Variable | Default |
+| -------------------- | ------- |
+| port                 | 8080    |
+| service_port         | 1337    |
+| kafka_topic          | gm-slo  |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
