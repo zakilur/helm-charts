@@ -16,11 +16,4 @@ data:
     {{- include "shared_rules" . | indent 4 }}
   route.json: |
     {{- include "route" . | indent 4 }}
-  {{- /* route-{{.serviceName}}-2.json: |
-  {{- $a := list (dir .route) (base .route)}}
-  {{$a}} 
-    {{- $b := dict "route"  (dir .route) }}
-    {{- $c := merge $b .  }}
-    {{- include "route" $c | indent 4 }}
-    */}}
 {{- end }}

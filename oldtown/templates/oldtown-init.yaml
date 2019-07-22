@@ -19,8 +19,8 @@ spec:
             - name: mesh-config-volume-{{$service.serviceName}}
               mountPath: /etc/config/mesh/{{$service.serviceName}}
           {{- end }}
-            - name: mesh-config-volume-domain
-              mountPath: /etc/config/mesh/domain
+            # - name: mesh-config-volume-domain
+            #   mountPath: /etc/config/mesh/domain
             - name: bootstrap-script-volume
               mountPath: /tmp/bootstrap
       volumes:
@@ -29,9 +29,9 @@ spec:
           configMap:
             name: {{ $service.serviceName }}-mesh-config
         {{- end }}
-        - name: mesh-config-volume-domain
-          configMap:
-            name: domain-mesh-config
+        # - name: mesh-config-volume-domain
+        #   configMap:
+        #     name: domain-mesh-config
         - name: bootstrap-script-volume
           configMap:
             name: bootstrap-script
