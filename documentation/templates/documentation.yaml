@@ -35,7 +35,7 @@ spec:
           {{- end }}
       {{- end  }} 
           ports:
-            - containerPort: 8080
+            - containerPort: 8090
               name: http
 
 
@@ -51,12 +51,12 @@ spec:
 
           ports:
             - containerPort: 8080
-              name: http-port
+              name: http
               protocol: TCP
             - containerPort: 8443
               name: https-port
               protocol: TCP
-            - containerPort: 8081
+            - containerPort: 8001
               name: metrics
               protocol: TCP
           resources: {}
