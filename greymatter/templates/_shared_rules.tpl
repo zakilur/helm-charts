@@ -1,4 +1,4 @@
-{{- define "shared-rules" }}
+{{- define "shared_rules" }}
 {
   "shared_rules_key": "shared-rules-{{.serviceName}}",
   "name": "{{.serviceName}}",

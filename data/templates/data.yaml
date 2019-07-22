@@ -80,9 +80,8 @@ spec:
             {{- if .Values.data.deploy.xds.address }}
             value: {{ .Values.data.deploy.xds.cluster }}
             {{- end }}
-            {{- else }}
-            value: {{ .Values.global.xds.cluster | quote }}
             {{- end }}
+            # XDS_CLUSTER should be set in values.yaml for regular (non-standalone) deployments
           - name: XDS_HOST
             {{- if .Values.data.deploy.standalone }}
             {{- if .Values.data.deploy.xds.address }}
@@ -93,26 +92,26 @@ spec:
             {{- end }}
           - name: XDS_PORT
             value: {{ .Values.global.xds.port | quote }}
-          - name: ZK_ADDRS
-            {{- if .Values.data.deploy.standalone }}
-            {{- if .Values.data.deploy.exhibitor_address }}
-            value: {{ .Values.data.deploy.exhibitor_address }}
-            {{- else }}
-            value: {{ template "greymatter.exhibitor.address" . }}
-            {{- end }}
-            {{- else }}
-            value: {{ template "greymatter.exhibitor.address" . }}
-            {{- end }}
-          - name: ZK_ANNOUNCE_PATH
-            {{- if .Values.data.deploy.standalone }}
-            {{- if .Values.data.deploy.base_path }}
-            value: {{ tpl .Values.data.deploy.base_path $ | quote }}
-            {{- end }}
-            {{- else }}
-            value: {{ tpl .Values.data.base_path $ | quote }}
-            {{- end }}
-          - name: TIMEOUT
-            value: {{ .Values.sidecar.timeout | quote  }}
+          # - name: ZK_ADDRS
+          #   {{- if .Values.data.deploy.standalone }}
+          #   {{- if .Values.data.deploy.exhibitor_address }}
+          #   value: {{ .Values.data.deploy.exhibitor_address }}
+          #   {{- else }}
+          #   value: {{ template "greymatter.exhibitor.address" . }}
+          #   {{- end }}
+          #   {{- else }}
+          #   value: {{ template "greymatter.exhibitor.address" . }}
+          #   {{- end }}
+          # - name: ZK_ANNOUNCE_PATH
+          #   {{- if .Values.data.deploy.standalone }}
+          #   {{- if .Values.data.deploy.base_path }}
+          #   value: {{ tpl .Values.data.deploy.base_path $ | quote }}
+          #   {{- end }}
+          #   {{- else }}
+          #   value: {{ tpl .Values.data.base_path $ | quote }}
+          #   {{- end }}
+          # - name: TIMEOUT
+          #   value: {{ .Values.sidecar.timeout | quote  }}
 
 
         imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}

@@ -49,10 +49,10 @@ spec:
           containerPort: 8081
         env:
         {{- include "greymatter.envvars" . | indent 8 }}
-        - name: ZK_ADDRS
-          value: {{ template "greymatter.exhibitor.address" . }}
-        - name: ZK_ANNOUNCE_PATH
-          value: '{{ .Values.dashboard.base_path }}'
+        # - name: ZK_ADDRS
+        #   value: {{ template "greymatter.exhibitor.address" . }}
+        # - name: ZK_ANNOUNCE_PATH
+        #   value: '{{ .Values.dashboard.base_path }}'
         volumeMounts:
         - name: sidecar
           mountPath: /etc/proxy/tls/sidecar

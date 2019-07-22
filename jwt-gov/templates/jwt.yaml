@@ -70,10 +70,10 @@ spec:
       - name: sidecar
         env:
         {{- include "greymatter.envvars" . | indent 8 }}
-        - name: ZK_ADDRS
-          value: {{ template "greymatter.exhibitor.address" . }}
-        - name: ZK_ANNOUNCE_PATH
-          value: "/services/jwt-security/{{ .Values.jwt.version }}"
+        # - name: ZK_ADDRS
+        #   value: {{ template "greymatter.exhibitor.address" . }}
+        # - name: ZK_ANNOUNCE_PATH
+        #   value: "/services/jwt-security/{{ .Values.jwt.version }}"
         image: {{ .Values.sidecar.image | quote }}
         imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
         ports:
