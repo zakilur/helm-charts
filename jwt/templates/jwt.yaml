@@ -59,7 +59,7 @@ spec:
               key: password
         ports:
         - containerPort: 3000
-          name: internal
+          name: http
           protocol: TCP
         volumeMounts:
         - name: jwt-users
@@ -79,7 +79,7 @@ spec:
         {{- end }}
         ports:
         - containerPort: 8080
-          name: http
+          name: proxy
           protocol: TCP
         - containerPort: 8081
           name: metrics

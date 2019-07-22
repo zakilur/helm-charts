@@ -60,7 +60,7 @@ spec:
           value: {{ .Values.jwt.use_aac | default false | quote }}
         ports:
         - containerPort: 3000
-          name: internal
+          name: http
           protocol: TCP
         {{- if not .Values.jwt.use_aac }}
         volumeMounts:
@@ -78,7 +78,7 @@ spec:
         imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
         ports:
         - containerPort: 8080
-          name: http
+          name: proxy
           protocol: TCP
         - containerPort: 8081
           name: metrics
