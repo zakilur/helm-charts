@@ -54,8 +54,8 @@ edge:
       -----END RSA PRIVATE KEY-----
 
 sidecar:
-  version: 0.7.1
-  image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1'
+  version: '{{- $.Values.global.edge.sidecar.version | default "0.8.0" }}'
+  image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:{{ tpl $.Values.sidecar.version $ }}'
   metrics_key_function: depth
   imagePullPolicy: Always
   resources:
@@ -66,51 +66,48 @@ sidecar:
       cpu: 100m
       memory: 128Mi
   envvars:
-    - name: egress_use_tls
-      type: 'value'
+    egress_use_tls:
+      type: value
       value: '{{ .Values.edge.egress_use_tls }}'
-    - name: egress_ca_cert_path
+    egress_ca_cert_path:
       type: 'value'
       value: '/etc/proxy/tls/sidecar/ca.crt'
-    - name: egress_cert_path
+    egress_cert_path:
       type: 'value'
       value: '/etc/proxy/tls/sidecar/server.crt'
-    - name: egress_key_path
+    egress_key_path:
       type: 'value'
       value: '/etc/proxy/tls/sidecar/server.key'
-    - name: ingress_use_tls
+    ingress_use_tls:
       type: 'value'
       value: 'true'
-    - name: ingress_ca_cert_path
+    ingress_ca_cert_path:
       type: 'value'
       value: '/etc/proxy/tls/edge/ca.crt'
-    - name: ingress_cert_path
+    ingress_cert_path:
       type: 'value'
       value: '/etc/proxy/tls/edge/server.crt'
-    - name: ingress_key_path
+    ingress_key_path:
       type: 'value'
       value: '/etc/proxy/tls/edge/server.key'
-    - name: inheaders_enabled
+    inheaders_enabled:
       type: 'value'
       value: '{{ .Values.edge.inheaders_enabled }}'
-    - name: obs_enabled
+    obs_enabled:
       type: 'value'
       value: '{{ .Values.edge.obs_enabled }}'
-    - name: obs_full_response
+    obs_full_response:
       type: 'value'
       value: '{{ .Values.edge.obs_full_response }}'
-    - name: port
+    port:
       type: 'value'
       value: '8443'
-    - name: proxy_dynamic
+    proxy_dynamic:
       type: 'value'
       value: 'true'
-    - name: acl_enabled
+    acl_enabled:
       type: 'value'
       value: '{{ .Values.edge.acl_enabled }}'
-    - name: timeout
-      type: 'value'
-      value: '{{ .Values.sidecar.timeout }}'
 
   # Set this to true if you are attempting to deploy Catalog by itself.
   # Ideally, catalog is deployed as a dependency to Grey Matter, which creates the
