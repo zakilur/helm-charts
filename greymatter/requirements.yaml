@@ -31,9 +31,9 @@ dependencies:
     repository: 'file://../control'
     version: '0.1.0'
 
-  - name: exhibitor
-    repository: 'file://../exhibitor'
-    version: '1.0.1'
+  # - name: exhibitor
+  #   repository: 'file://../exhibitor'
+  #   version: '1.0.1'
 
   - name: jwt
     repository: 'file://../jwt'

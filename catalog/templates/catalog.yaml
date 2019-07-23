@@ -35,9 +35,13 @@ spec:
               value: '9080'
             - name: XDS_SERVER_ADDRESS
               value: 'xds.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.global.xds.port }}'
-            # - name: ZK_HOST
-            #   value: {{template "greymatter.exhibitor.address" .}}
-            
+            - name: XDS_SERVER_0_ADDRESS
+              value: 'xds.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.global.xds.port }}'
+            - name: 'XDS_SERVER_0_MESH_ID'
+              value: 'default-zone'
+            - name: 'XDS_SERVER_0_REQUEST_CLUSTER'
+              value: 'edge'
+
             {{- range $index, $service := .Values.catalog.services }}
             {{- range $key, $val := $service }}
             - name: "{{ $index | upper }}_{{ $key | upper}}"
@@ -59,6 +63,12 @@ spec:
               containerPort: 8081
           env:
           {{- include "greymatter.envvars" . | indent 10 }}
+          - name: XDS_CLUSTER
+            value: {{ .Values.global.xds.cluster | quote }}
+          - name: XDS_HOST
+            value: 'xds.{{ .Release.Namespace }}.svc.cluster.local'
+          - name: XDS_PORT
+            value: '18000'
           # - name: ZK_ADDRS
           #   value: {{ template "greymatter.exhibitor.address" . }}
           # - name: ZK_ANNOUNCE_PATH
@@ -68,6 +78,7 @@ spec:
               mountPath: /etc/proxy/tls/sidecar
       imagePullSecrets:
         - name: docker.secret
+        - name: dev.docker.secret
       volumes:
         - name: sidecar
           secret:

@@ -36,6 +36,7 @@ spec:
       backend:
         serviceName: edge
         servicePort: 8080
+  - tcp:
       port: '443'
       backend:
         serviceName: edge
