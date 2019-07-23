@@ -20,14 +20,11 @@ dependencies:
 - name: control
   repository: file://../control
   version: 0.1.0
-- name: exhibitor
-  repository: file://../exhibitor
-  version: 1.0.1
 - name: jwt
   repository: file://../jwt
   version: 1.0.1
 - name: slo
   repository: file://../slo
   version: 1.0.2
-digest: sha256:9d045d8dbf52047455c34459b5aca31ee36e9dc751adcad7809a68c297bfc124
-generated: "2019-07-22T11:05:05.53979-04:00"
+digest: sha256:e6dea3f7946a67559ef839707b02dbed5ff05f1e12921718024a50df21e6eb65
+generated: "2019-07-23T14:31:19.165549-04:00"

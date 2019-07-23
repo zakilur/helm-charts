@@ -26,7 +26,7 @@ global:
     version: 0.2.6
 
 catalog:
-  image: docker.production.deciphernow.com/deciphernow/gm-catalog:{{ $.Values.global.catalog.version }}
+  image: registry.gitlab.com/alexkreidler/gm-catalog:gm-control-integration # docker.production.deciphernow.com/deciphernow/gm-catalog:{{ $.Values.global.catalog.version }}
   source: xds
   debug: 'false'
   imagePullPolicy: Always
@@ -42,14 +42,21 @@ catalog:
 
   services:
     service_0:
+      mesh_id: default-zone
+      cluster_id: catalog
+      enable_instance_metrics: "true"
+      metrics_port: "8001"
       capability: 'Grey Matter'
       documentation: '/services/catalog/{{ $.Values.global.catalog.version }}/'
       name: 'Grey Matter Catalog'
       owner: 'Decipher'
       version: '{{ $.Values.global.catalog.version | trunc 3 }}'
-      zookeeper_announcement_point: '/services/catalog/{{ $.Values.global.catalog.version }}/metrics'
 
     service_1:
+      # mesh_id: default-zone
+      # cluster_id: control
+      # enable_instance_metrics: "true"
+      # metrics_port: "8001"
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter Control'
@@ -58,6 +65,10 @@ catalog:
       zookeeper_announcement_point: '/services/xds/{{ $.Values.global.xds.version }}/metrics'
 
     service_2:
+      mesh_id: default-zone
+      cluster_id: dashboard
+      enable_instance_metrics: "true"
+      metrics_port: "8001"
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter Dashboard'
@@ -66,6 +77,10 @@ catalog:
       zookeeper_announcement_point: '/services/dashboard/latest/metrics'
 
     service_3:
+      mesh_id: default-zone
+      cluster_id: data
+      enable_instance_metrics: "true"
+      metrics_port: "8001"
       capability: 'Grey Matter'
       documentation: '/services/data/{{ .Values.global.data.version }}/static/ui/index.html'
       name: 'Grey Matter Data'
@@ -74,6 +89,10 @@ catalog:
       zookeeper_announcement_point: '/services/data/{{ $.Values.global.data.version }}/metrics'
 
     service_4:
+      mesh_id: default-zone
+      cluster_id: jwt-security
+      enable_instance_metrics: "true"
+      metrics_port: "8001"
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter JWT Security'
@@ -82,6 +101,10 @@ catalog:
       zookeeper_announcement_point: '/services/jwt-security/{{ $.Values.global.jwt.version }}/metrics'
 
     service_5:
+      mesh_id: default-zone
+      cluster_id: edge
+      enable_instance_metrics: "true"
+      metrics_port: "8001"
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter Edge'
@@ -90,6 +113,10 @@ catalog:
       zookeeper_announcement_point: '/services/edge/{{ $.Values.global.edge.version }}/metrics'
 
     service_6:
+      mesh_id: default-zone
+      cluster_id: slo
+      enable_instance_metrics: "true"
+      metrics_port: "8001"
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter Service Level Objectives'
@@ -98,6 +125,10 @@ catalog:
       zookeeper_announcement_point: '/services/slo/{{ $.Values.global.slo.version }}/metrics'
 
     service_7:
+      mesh_id: default-zone
+      cluster_id: documentation
+      enable_instance_metrics: "true"
+      metrics_port: "8001"
       capability: 'Grey Matter'
       documentation: '/services/documentation/{{ $.Values.global.documentation.version }}/'
       name: 'Grey Matter Documentation'

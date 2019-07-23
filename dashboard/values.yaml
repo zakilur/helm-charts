@@ -11,6 +11,8 @@ global:
 
 dashboard:
   image: 'docker.production.deciphernow.com/deciphernow/gm-dashboard:{{ $.Values.global.dashboard.version }}'
+  
+  # TODO: make these URLs dynamic based on the globally specified version
   fabric_server: '/services/catalog/0.3.6/'
   use_prometheus: 'true'
   objectives_server: '/services/slo/0.4.0/'

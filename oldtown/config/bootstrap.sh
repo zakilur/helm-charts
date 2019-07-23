@@ -46,13 +46,13 @@ for d in */; do
     for name in $names; do
         echo "Creating mesh object: $name."
         greymatter create $name <$name.json
-        sleep 0.01
+        sleep 0.2
     done
 
     for file in route-*.json; do
         echo "Creating mesh object: $name."
         greymatter create route <$file
-        sleep 0.01
+        sleep 0.2
     done
 
     cd $MESH_CONFIG_DIR

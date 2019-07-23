@@ -68,7 +68,7 @@ oldtown:
 
     jwt:
       name: 'Grey Matter JWT Security'
-      serviceName: 'jwt'
+      serviceName: 'jwt-security'
       routes:
         - '/services/jwt-security/{{ $.Values.global.jwt.version }}'
         - '/services/jwt-security/{{ $.Values.global.jwt.version }}/'
