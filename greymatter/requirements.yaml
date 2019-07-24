@@ -1,7 +1,6 @@
 ## Diff: No Voyager, No jwt, no data, redirects to local charts, not Nexus
 
 dependencies:
-<<<<<<< HEAD
   - name: catalog
     repository: 'file://../catalog'
     version: '1.0.3'
@@ -45,7 +44,6 @@ dependencies:
   - name: slo
     repository: 'file://../slo'
     version: '1.0.2'
-=======
 - name: catalog
   version: "1.0.3"
   repository: "file://../catalog"
@@ -73,4 +71,3 @@ dependencies:
 - name: slo
   version: "1.0.2"
   repository: "file://../slo"
->>>>>>> removing PV claims and jwt
