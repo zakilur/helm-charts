@@ -9,7 +9,7 @@ dependencies:
 
 - name: dashboard
   version: "1.0.4"
-  repository: ""https://nexus.production.deciphernow.com/repository/helm-hosted"
+  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
 
 - name: documentation
   version: "1.0.3"
@@ -21,7 +21,7 @@ dependencies:
 
 - name: xds
   version: "1.0.4"
-  repository: ""https://nexus.production.deciphernow.com/repository/helm-hosted"
+  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
 
 - name: exhibitor
   version: "1.0.1"

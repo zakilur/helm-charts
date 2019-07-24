@@ -1,30 +1,30 @@
 dependencies:
 - name: catalog
-  repository: file://../catalog
+  repository: https://nexus.production.deciphernow.com/repository/helm-hosted
   version: 1.0.5
 - name: data
-  repository: file://../data
+  repository: https://nexus.production.deciphernow.com/repository/helm-hosted
   version: 1.0.5
 - name: dashboard
-  repository: file://../dashboard
+  repository: https://nexus.production.deciphernow.com/repository/helm-hosted
   version: 1.0.4
 - name: documentation
-  repository: file://../documentation
+  repository: https://nexus.production.deciphernow.com/repository/helm-hosted
   version: 1.0.3
 - name: edge
-  repository: file://../edge
+  repository: https://nexus.production.deciphernow.com/repository/helm-hosted
   version: 1.0.6
 - name: xds
-  repository: file://../xds
+  repository: https://nexus.production.deciphernow.com/repository/helm-hosted
   version: 1.0.4
 - name: exhibitor
-  repository: file://../exhibitor
+  repository: https://nexus.production.deciphernow.com/repository/helm-hosted
   version: 1.0.1
 - name: jwt
-  repository: file://../jwt
+  repository: https://nexus.production.deciphernow.com/repository/helm-hosted
   version: 1.0.2
 - name: slo
-  repository: file://../slo
+  repository: https://nexus.production.deciphernow.com/repository/helm-hosted
   version: 1.0.3
 - name: voyager
   repository: https://charts.appscode.com/stable/
