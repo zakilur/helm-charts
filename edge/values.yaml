@@ -66,46 +66,46 @@ sidecar:
       cpu: 100m
       memory: 128Mi
   envvars:
-    egress_use_tls:
+    - name: egress_use_tls
       type: value
       value: '{{ .Values.edge.egress_use_tls }}'
-    egress_ca_cert_path:
+    - name: egress_ca_cert_path
       type: 'value'
       value: '/etc/proxy/tls/sidecar/ca.crt'
-    egress_cert_path:
+    - name: egress_cert_path
       type: 'value'
       value: '/etc/proxy/tls/sidecar/server.crt'
-    egress_key_path:
+    - name: egress_key_path
       type: 'value'
       value: '/etc/proxy/tls/sidecar/server.key'
-    ingress_use_tls:
+    - name: ingress_use_tls
       type: 'value'
       value: 'true'
-    ingress_ca_cert_path:
+    - name: ingress_ca_cert_path
       type: 'value'
       value: '/etc/proxy/tls/edge/ca.crt'
-    ingress_cert_path:
+    - name: ingress_cert_path
       type: 'value'
       value: '/etc/proxy/tls/edge/server.crt'
-    ingress_key_path:
+    - name: ingress_key_path
       type: 'value'
       value: '/etc/proxy/tls/edge/server.key'
-    inheaders_enabled:
+    - name: inheaders_enabled
       type: 'value'
       value: '{{ .Values.edge.inheaders_enabled }}'
-    obs_enabled:
+    - name: obs_enabled
       type: 'value'
       value: '{{ .Values.edge.obs_enabled }}'
-    obs_full_response:
+    - name: obs_full_response
       type: 'value'
       value: '{{ .Values.edge.obs_full_response }}'
-    port:
+    - name: port
       type: 'value'
       value: '8443'
-    proxy_dynamic:
+    - name: proxy_dynamic
       type: 'value'
       value: 'true'
-    acl_enabled:
+    - name: acl_enabled
       type: 'value'
       value: '{{ .Values.edge.acl_enabled }}'
 
