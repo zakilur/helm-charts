@@ -27,7 +27,7 @@ edge:
   base_path: /services/edge/0.7.1
   acl_enabled: 'false'
   imagePullPolicy: Always
-  ingress_use_tls: true
+  ingress_use_tls: false
   resources:
     limits:
       cpu: 1

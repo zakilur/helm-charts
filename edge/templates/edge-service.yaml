@@ -6,8 +6,12 @@ metadata:
   labels:
     app: edge
 spec:
+  type: NodePort
   ports:
-    - name: proxy
+    - name: http
+      port: 8443
+      nodePort: 30443
+    - name: metrics
       port: 8080
     - name: metrics
       port: 8001

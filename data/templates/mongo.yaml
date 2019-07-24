@@ -32,9 +32,9 @@ spec:
           value: {{ $envvar.value | quote }}
         {{- end }}
       {{- end  }}
-        {{- if .Values.data.deploy.standalone }}
+        {{- if .Values.mongo.standalone_image }}
         image: {{ tpl .Values.mongo.standalone_image $ | quote }}
-        {{- else }} 
+        {{- else }}
         image: {{ tpl .Values.mongo.image $ | quote }}
         {{- end }}
         imagePullPolicy: {{ .Values.mongo.imagePullPolicy }}
