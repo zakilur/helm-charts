@@ -6,13 +6,13 @@ metadata:
   name: edge
   namespace: {{ .Release.Namespace }}
 spec:
-  host: 
+  host:
   {{- if .Values.global.remove_namespace_from_url }}
     {{ tpl .Values.ingress_config.custom_url . }}
   {{- else }}
     {{ tpl .Values.ingress_config.default_url . }}
   {{- end }}
-  port: 
+  port:
     targetPort: http
   tls:
     termination: passthrough
@@ -21,24 +21,5 @@ spec:
     name: edge
     weight: 100
   wildcardPolicy: None
-
 {{- else }}
-
-apiVersion: voyager.appscode.com/v1beta1
-kind: Ingress
-metadata:
-  name: edge
-  namespace: {{ .Release.Namespace }}
-spec:
-  rules:
-  - tcp:
-      port: '80'
-      backend:
-        serviceName: edge
-        servicePort: 8080
-  - tcp:
-      port: '443'
-      backend:
-        serviceName: edge
-        servicePort: 8080
 {{- end }}

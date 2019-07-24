@@ -5,10 +5,6 @@ dependencies:
     repository: 'file://../catalog'
     version: '1.0.3'
 
-  - name: data
-    repository: 'file://../data'
-    version: '1.0.3'
-
   - name: dashboard
     repository: 'file://../dashboard'
     version: '1.0.3'
@@ -21,10 +17,6 @@ dependencies:
     repository: 'file://../edge'
     version: '1.0.5'
 
-  # - name: xds
-  #   repository: 'file://../xds'
-  #   version: '1.0.2'
-
   - name: oldtown
     repository: 'file://../oldtown'
     version: '0.1.0'
@@ -33,10 +25,6 @@ dependencies:
     repository: 'file://../control'
     version: '0.1.0'
 
-  # - name: exhibitor
-  #   repository: 'file://../exhibitor'
-  #   version: '1.0.1'
-
   - name: jwt
     repository: 'file://../jwt'
     version: '1.0.1'
@@ -44,30 +32,3 @@ dependencies:
   - name: slo
     repository: 'file://../slo'
     version: '1.0.2'
-- name: catalog
-  version: "1.0.3"
-  repository: "file://../catalog"
-
-- name: dashboard
-  version: "1.0.3"
-  repository: "file://../dashboard"
-
-- name: documentation
-  version: "1.0.2"
-  repository: "file://../documentation"
-
-- name: edge
-  version: "1.0.5"
-  repository: "file://../edge"
-
-- name: xds
-  version: "1.0.2"
-  repository: "file://../xds"
-
-- name: exhibitor
-  version: "1.0.1"
-  repository: "file://../exhibitor"
-
-- name: slo
-  version: "1.0.2"
-  repository: "file://../slo"
