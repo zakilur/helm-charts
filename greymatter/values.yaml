@@ -6,7 +6,7 @@ global:
   catalog:
     version: 0.3.6
   dashboard:
-    version: latest
+    version: 2.5.0
   data:
     version: 0.2.3
   documentation:
