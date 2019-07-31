@@ -9,6 +9,14 @@
   "listener_keys": [
       "listener-{{.serviceName}}"
   ],
-  "listeners": []
+  "listeners": [],
+  "secret": {
+    "secret_key": "secret-{{.serviceName}}-secret",
+    "secret_name": "spiffe://deciphernow.com/{{.serviceName}}/mTLS",
+    "secret_validation_name": "spiffe://deciphernow.com",
+    "ecdh_curves": [
+        "X25519:P-256:P-521:P-384"
+    ]
+  }
 }
 {{- end }}

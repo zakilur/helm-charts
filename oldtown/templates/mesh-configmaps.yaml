@@ -1,6 +1,6 @@
 # hi test
 {{- $top := . }}
-{{- range $name, $service := .Values.oldtown.services }}
+{{- range $name, $service := .Values.global.services }}
 ---
 {{- $serviceConfig := dict "serviceName" $service.serviceName "routes" $service.routes "port" $top.Values.oldtown.proxyPort "zone" $top.Values.oldtown.zone "top" $top }}
 {{- include "mesh_svc_config" $serviceConfig }}

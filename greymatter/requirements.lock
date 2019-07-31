@@ -20,11 +20,14 @@ dependencies:
 - name: control
   repository: file://../control
   version: 0.1.0
+- name: spire
+  repository: file://../spire
+  version: 0.1.0
 - name: jwt
   repository: file://../jwt
   version: 1.0.1
 - name: slo
   repository: file://../slo
   version: 1.0.2
-digest: sha256:e6dea3f7946a67559ef839707b02dbed5ff05f1e12921718024a50df21e6eb65
-generated: "2019-07-23T14:31:19.165549-04:00"
+digest: sha256:4001611281826122c28810d98b8f5bf326d0be44d235502f44195b674a06d909
+generated: "2019-07-30T10:54:29.957103-04:00"

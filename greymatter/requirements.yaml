@@ -34,6 +34,10 @@ dependencies:
   # - name: exhibitor
   #   repository: 'file://../exhibitor'
   #   version: '1.0.1'
+  
+  - name: spire
+    repository: 'file://../spire'
+    version: '0.1.0'
 
   - name: jwt
     repository: 'file://../jwt'

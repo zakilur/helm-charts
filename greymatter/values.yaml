@@ -25,6 +25,64 @@ global:
     cluster: greymatter
     port: 18000
     version: 0.2.6
+  services:
+    catalog:
+      name: 'Grey Matter Catalog'
+      serviceName: 'catalog'
+      routes:
+        - '/services/catalog/{{ $.Values.global.catalog.version }}'
+        - '/services/catalog/{{ $.Values.global.catalog.version }}/'
+
+    # control:
+    #   name: 'Grey Matter Control'
+    #   serviceName: 'control'
+    #   routes:
+        # - '/services/xds/{{ $.Values.global.xds.version }}'
+        # - '/services/xds/{{ $.Values.global.xds.version }}'
+
+    dashboard:
+      name: 'Grey Matter Dashboard'
+      serviceName: 'dashboard'
+      routes:
+        - '/services/dashboard/latest'
+        - '/services/dashboard/latest/'
+
+    data:
+      name: 'Grey Matter Data'
+      serviceName: 'data'
+      routes:
+        - '/services/data/{{ $.Values.global.data.version }}'
+        - '/services/data/{{ $.Values.global.data.version }}/'
+
+    jwt:
+      name: 'Grey Matter JWT Security'
+      serviceName: 'jwt-security'
+      routes:
+        - '/services/jwt-security/{{ $.Values.global.jwt.version }}'
+        - '/services/jwt-security/{{ $.Values.global.jwt.version }}/'
+
+    edge:
+      name: 'Grey Matter Edge'
+      serviceName: 'edge'
+      routes:
+        - '/' #/services/edge/{{ $.Values.global.edge.version }}
+        # - '/' #/services/edge/{{ $.Values.global.edge.version }}
+    # TODO: multiple routes
+
+    slo:
+      name: 'Grey Matter Service Level Objectives'
+      serviceName: 'slo'
+      routes:
+        - '/services/slo/{{ $.Values.global.slo.version }}'
+        - '/services/slo/{{ $.Values.global.slo.version }}/'
+
+    documentation:
+      name: 'Grey Matter Documentation'
+      serviceName: 'documentation'
+      routes:
+        - '/services/documentation/{{ $.Values.global.documentation.version }}'
+        - '/services/documentation/{{ $.Values.global.documentation.version }}/'
+
   # sidecar:
   #   envvars:
   # All of the mesh-wide environment variables should be set in your `custom.yaml` file
