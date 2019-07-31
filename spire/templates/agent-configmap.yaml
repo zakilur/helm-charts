@@ -31,7 +31,9 @@ data:
 
       WorkloadAttestor "k8s" {
         plugin_data {
-          kubelet_read_only_port = "10250"
+          # Does not use Kubelet readonly port
+          # Uses service account authenticated + authorized for full cluster read-only access
+          # skip_kubelet_verification = true
         }
       }
 

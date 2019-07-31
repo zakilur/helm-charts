@@ -28,7 +28,7 @@ spire:
     configFilePath: /run/spire/config/server.conf
     configFileDir: /run/spire/config
   agent:
-    image: 
+    image: gcr.io/spiffe-io/spire-agent:0.8.1
 
   certs:
     # This certificate must match the trust domain specified above

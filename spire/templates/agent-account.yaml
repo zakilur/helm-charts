@@ -3,3 +3,47 @@ kind: ServiceAccount
 metadata:
   name: spire-agent
   namespace: {{ .Release.Namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+  labels:
+  name: full-read-only
+  namespace: default
+rules:
+- apiGroups:
+  - ""
+  resources: ["*"]
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - extensions
+  resources: ["*"]
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apps
+  resources: ["*"]
+  verbs:
+  - get
+  - list
+  - watch
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: spire-agent
+subjects:
+- kind: ServiceAccount
+  name: spire-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: full-read-only
+  apiGroup: rbac.authorization.k8s.io

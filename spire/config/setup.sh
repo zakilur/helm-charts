@@ -8,7 +8,10 @@ echo "k8s Namespace: $KUBERNETES_NAMESPACE"
 services=$(cat $SERVICE_LIST_FILE)
 echo "Got: $services"
 
-delay=10
+services="$services spire-client"
+echo "Final service list: $services"
+
+delay=5
 echo "Waiting $delay seconds for SPIRE registration API to be enabled"
 sleep $delay
 
@@ -25,7 +28,7 @@ echo "Creating entry for nodes ..."
         -spiffeID spiffe://deciphernow.com/nodes \
         -selector k8s_sat:cluster:$CLUSTER_NAME \
         -selector k8s_sat:agent_ns:$AGENT_NAMESPACE \
-        -selector k8s_sat:agent_sa$AGENT_SERVICEACCOUNT \
+        -selector k8s_sat:agent_sa:$AGENT_SERVICEACCOUNT \
         -registrationUDSPath $REGISTRATION_API_PATH &&
     echo "Done with nodes"
 } || { # catch
@@ -45,8 +48,7 @@ else
                 -parentID spiffe://deciphernow.com/nodes \
                 -spiffeID spiffe://deciphernow.com/$service \
                 -ttl 30 \
-                -selector k8s:pod-name:$service \
-                -selector k8s:pod-label:app=$service \
+                -selector k8s:pod-label:app:$service \
                 -selector k8s:ns:$KUBERNETES_NAMESPACE \
                 -registrationUDSPath $REGISTRATION_API_PATH &&
             /opt/spire/bin/spire-server \
@@ -54,8 +56,7 @@ else
                 -parentID spiffe://deciphernow.com/$service \
                 -spiffeID spiffe://deciphernow.com/$service/mTLS \
                 -ttl 30 \
-                -selector k8s:pod-name:$service \
-                -selector k8s:pod-label:app=$service \
+                -selector k8s:pod-label:app:$service \
                 -selector k8s:ns:$KUBERNETES_NAMESPACE \
                 -registrationUDSPath $REGISTRATION_API_PATH &&
             echo "Done with service: $service"
