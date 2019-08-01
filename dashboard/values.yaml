@@ -17,7 +17,7 @@ dashboard:
   use_prometheus: 'true'
   objectives_server: '/services/slo/{{ .Values.global.slo.version }}/'
   prometheus_server: '/services/prometheus/2.7.1/api/v1/'
-  base_path: '/services/dashboard/latest/'
+  base_url: '/services/dashboard/{{ $.Values.global.dashboard.version }}/'
   version: latest
   imagePullPolicy: Always
   resources:

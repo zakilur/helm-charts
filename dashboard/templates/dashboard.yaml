@@ -33,8 +33,8 @@ spec:
           value: '{{ tpl .Values.dashboard.objectives_server . }}'
         - name: PROMETHEUS_SERVER
           value: '{{ .Values.dashboard.prometheus_server }}'
-        - name: BASE_PATH
-          value: '{{ .Values.dashboard.base_path }}'
+        - name: BASE_URL
+          value: '{{ tpl .Values.dashboard.base_url . }}'
       - name: sidecar
         image: '{{ tpl .Values.sidecar.image $ }}'
         imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
