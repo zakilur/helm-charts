@@ -6,19 +6,8 @@ echo "Configuring mesh from config directory: $MESH_CONFIG_DIR"
 
 cd $MESH_CONFIG_DIR
 
-# In a real environment, we won't just be able to install curl, it will need to be installed beforehand
-command -v curl >/dev/null 2>&1 || { echo "This script requires curl to run. Installing..."; apk add curl; echo "done"; }
-
-echo "Waiting for oldtown to come up"
-
-until $(curl --max-time 3 --output /dev/null \
-  --silent --head --fail -X GET \
-  http://oldtown:5555/v1.0/cluster \
-  -H 'Authorization: Bearer xxx'); do
-  echo "Waiting ..."
-done
-
-echo "Got good response from oldtown"
+# This script expects oldtown to be up and available to serve requests
+# Currently, this is handled in a fairly good idiomatic way using Readiness Probes and `k8s-waiter`
 
 echo "Starting mesh configuration ..."
 
@@ -44,13 +33,13 @@ for d in */; do
     for name in $names; do
         echo "Creating mesh object: $name."
         greymatter create $name <$name.json
-        sleep 0.2
+        # sleep 0.1
     done
 
     for file in route-*.json; do
         echo "Creating mesh object: $name."
         greymatter create route <$file
-        sleep 0.2
+        # sleep 0.1
     done
 
     cd $MESH_CONFIG_DIR
