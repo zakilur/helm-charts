@@ -1,3 +1,18 @@
+#!groovy
+import groovy.transform.Field
+
+@Library('slack-notifications') import jenkins.Slack
+
+@Field def slackNotificationChannel = 'decipher-sres'
+@Field def branch
+@Field def commitId
+@Field def author
+@Field def commitMessage
+@Field def gitTag
+
+// define warning list
+@Field def warnings =[]
+
 node('ubuntu-18.04'){
     try{
       
@@ -9,23 +24,33 @@ node('ubuntu-18.04'){
             checkout scm
         }
         
-        def branch = sh(returnStdout: true, script: "git rev-parse HEAD | git branch -a --contains | grep remotes | sed s/.*remotes.origin.//").trim()
+        branch = sh(returnStdout: true, script: "git rev-parse HEAD | git branch -a --contains | grep remotes | sed s/.*remotes.origin.//").trim()
         echo "branch = ${branch}"
+        commitId = sh(script: 'git rev-parse HEAD', returnStdout: true)
+        echo "commitId = ${commitId}" 
+        author = sh(returnStdout: true, script: "git --no-pager show -s --format='%an' ${commitId }").trim()
+        echo "author = ${author}"
+        commitMessage = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim().replace('(','').replace(')','')
+        echo "commitMessage = ${commitMessage}"
 
-        // Do some git and bash magic to find the charts that were updated in this pull request and ignore the ci folder
+
+        // If skipTerms is populated defaults in parseCommit() will be replaced
+        def skipTerms = []
+        def commitFlags = parseCommit(commitMessage, skipTerms)
+        //leave build if skipTerms found in commit message
+        if ( commitFlags.get('ciSkip') ){
+            currentBuild.result = 'SUCCESS'
+            return
+        }
         
+        // Do some git and bash magic to find the charts that were updated in this pull request and ignore the ci folder
         stage ('Find Charts'){ 
             sh '''#!/bin/bash
                 # check to see if the chart.txt file exists.  If so, remove it first to ensure we're using a clean file
                 [[ -e charts.txt ]] && rm -f charts.txt
 
-                # get a list of all directories (ignoring the .git, ci and . directories)
-                charts=$(find . -type d \\( ! -name .git \\)  \\( ! -name ci \\) \\( ! -name . \\) \\( ! -name greymatter \\) \\( ! -name examples \\) -maxdepth 1)
-
-                # the charts are returned looking like "./dashboard", so we want to strip off the first two characters of each listing
-                for chart in $charts; do
-                    echo ${chart:2} >> charts.txt
-                done
+                # get a list of directories with chart.yaml and populate a file charts.txt with that list
+                python ./ci/find_charts.py
             '''
         }
         
@@ -61,11 +86,19 @@ node('ubuntu-18.04'){
                 }
                 // Loop over the charts that be packaged
                 for (chart in charts.split()) {
-                    sh """
-                        echo "Packaging: ${chart}"
-                        ./helm/helm dependency update ${chart}
-                        ./helm/helm package ${chart}
-                    """
+                    try{
+                        sh """
+                            echo "Packaging: ${chart}"
+                            ./helm/helm dependency update ${chart}
+                            ./helm/helm package ${chart}
+                        """
+                    }
+                    catch (e) {
+                        errMessage = "WARN: ${chart} failed to package subcharts [Stage- Pachage Helm Charts]"
+                        warnings.add(errMessage)
+                        currentBuild.result = 'UNSTABLE'
+                    }
+
                 }
             }
         }
@@ -77,8 +110,9 @@ node('ubuntu-18.04'){
             
         if ( branch == 'master' ){
             stage ('Publish Charts') { 
-                // Find all of the charts that were created, known by the *.tgz file extension.  Then upload them to Nexus
-                withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                try{
+                    // Find all of the charts that were created, known by the *.tgz file extension.  Then upload them to Nexus
+                    withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         sh '''#!/bin/bash
                             toPublish=($(ls *.tgz))
                             for pubChart in ${toPublish[@]}; do
@@ -86,62 +120,227 @@ node('ubuntu-18.04'){
                             done
                             rm -f *.tgz
                         '''
+                    }
+                }
+                catch (e){
+                    errMessage = "WARN: failed to publish some or all subcharts [Stage- Publish Charts (master)]"
+                    warnings.add(errMessage)
+                    currentBuild.result = 'UNSTABLE'
                 }
             }
 
             stage ('Package Grey Matter') {
+                try{
                     sh """
+                        echo "List charts in decipher"
+                        ./helm/helm search decipher
+                        
                         echo "Packaging: Grey Matter"
                         ./helm/helm dependency update greymatter
                         ./helm/helm package greymatter
                     """
+                }
+                catch (e){
+                    errMessage = "WARN: Greymatter failed to package [Stage- Pachage Grey Matter]"
+                    warnings.add(errMessage)
+                    currentBuild.result = 'UNSTABLE'
+                }
             }
 
             stage ('Publish Grey Matter') {
-                withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh '''#!/bin/bash
-                        toPublish=($(ls greymatter*.tgz))
-                        for pubChart in ${toPublish[@]}; do
-                            curl -u ${USERNAME}:${PASSWORD} https://nexus.production.deciphernow.com/repository/helm-hosted/ -T $pubChart
-                        done
-                        rm -f *.tgz
-                    '''
+                try{
+                    withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        sh '''#!/bin/bash
+                            toPublish=($(ls greymatter*.tgz))
+                            for pubChart in ${toPublish[@]}; do
+                                curl -u ${USERNAME}:${PASSWORD} https://nexus.production.deciphernow.com/repository/helm-hosted/ -T $pubChart
+                            done
+                            rm -f *.tgz
+                        '''
+                    }
+                }
+                catch (e){
+                    errMessage = "WARN: failed to publish Greymatter [Stage- Publish Grey Matter (master)]"
+                    warnings.add(errMessage)
+                    currentBuild.result = 'UNSTABLE'
                 }
             }
         }
         else {
             stage ('Publish Charts to Staging') {
-                // Find all of the charts that were created, known by the *.tgz file extension.  Then upload them to Nexus
-                withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        sh '''#!/bin/bash
-                            toPublish=($(ls *.tgz))
-                            for pubChart in ${toPublish[@]}; do
-                                curl -u ${USERNAME}:${PASSWORD} https://nexus.production.deciphernow.com/repository/helm-staging/ -T $pubChart
-                            done
-                            rm -f *.tgz
-                        '''
+                try{
+                    // Find all of the charts that were created, known by the *.tgz file extension.  Then upload them to Nexus
+                    withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            sh '''#!/bin/bash
+                                toPublish=($(ls *.tgz))
+                                for pubChart in ${toPublish[@]}; do
+                                    curl -u ${USERNAME}:${PASSWORD} https://nexus.production.deciphernow.com/repository/helm-staging/ -T $pubChart
+                                done
+                                rm -f *.tgz
+                            '''
+                    }
+                }
+                catch (e){
+                    errMessage = "WARN: failed to publish some or all sub charts [Stage- Publish Charts to Staging]"
+                    warnings.add(errMessage)
+                    currentBuild.result = 'UNSTABLE'
                 }
             }
 
             stage ('Package Grey Matter from Staging') {
-                // Need to point the Grey Matter requirements to the staging environment then package
-                withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                sh """
-                    ./helm/helm repo add decipher-staging https://nexus.production.deciphernow.com/repository/helm-staging/ --username ${USERNAME} --password ${PASSWORD}
-                """
+                try{
+                    // Need to point the Grey Matter requirements to the staging environment then package
+                    withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh """
+                        ./helm/helm repo add decipher-staging https://nexus.production.deciphernow.com/repository/helm-staging/ --username ${USERNAME} --password ${PASSWORD}
+                    """
+                    }
+                    sh """
+                        sed -i "s/helm-hosted/helm-staging/g" greymatter/requirements.yaml
+                        echo "List charts in decipher-staging"
+                        ./helm/helm search decipher-staging
+
+                        echo "Packaging: Grey Matter"
+                        ./helm/helm dependency update greymatter
+                        ./helm/helm package greymatter
+                    """
                 }
-                sh """
-                    sed -i "s/helm-hosted/helm-staging/g" greymatter/requirements.yaml
-                    echo "Packaging: Grey Matter"
-                    ./helm/helm dependency update greymatter
-                    ./helm/helm package greymatter
-                """
+                catch (e){
+                    errMessage = "WARN: failed to package Grey Matter [Stage- Package Grey Matter from Staging]"
+                    warnings.add(errMessage)
+                    currentBuild.result = 'UNSTABLE'
+                }
             }
+        }
+        if (warnings.size() > 0) {
+            String warnMessage = warnings.join("\n")
+            sendWarning(warnMessage)
+        }
+        else{
+            println "Successfully completed the jenkins pipeline"
+            // sendSuccess("Successfully Packaged Helm Charts")
         }
     }
     catch (e) {
         echo "Caught: ${e}"
         currentBuild.result = 'FAILURE'
+        sendFailure("Error caught: ${e}")
         throw e
-    }     
+    } 
+}
+
+/////// Notify slack about build status
+// customing implementation of slack library
+def sendSuccess(successMessage) {
+    stage("Notify Slack") {
+        def slack = new Slack(this, env)
+        slack.notifySuccess(slackNotificationChannel, author,
+                [
+                        [
+                                title: "Helm Charts",
+                                value: "${successMessage}",
+                                short: false
+                        ],
+                        [
+                                title: "Branch",
+                                value: "${branch}",
+                                short: false
+                        ],
+                        [
+                                title: "Last Commit Message",
+                                value: "${commitMessage}",
+                                short: false
+                        ],
+                        [
+                                title: "Summary",
+                                value: "TODO Build Summary",
+                                short: false
+                        ]
+                ]
+        )
+    }
+}
+
+def sendWarning(warnMessage) {
+    stage("Notify Slack") {
+        def slack = new Slack(this, env)
+        slack.notifyWarning(slackNotificationChannel, author,
+                [
+                        [
+                                title: "Reason",
+                                value: "${warnMessage}",
+                                short: false
+                        ],
+                        [
+                                title: "Branch",
+                                value: "${branch}",
+                                short: false
+                        ],
+                        [
+                                title: "Last Commit Message",
+                                value: "${commitMessage}",
+                                short: false
+                        ]
+                ]
+        )
+    }
+}
+
+def sendFailure(errMessage) {
+    stage("Notify Slack") {
+        def slack = new Slack(this, env)
+        slack.notifyFailure(slackNotificationChannel, author,
+                [
+                        [
+                                title: "Reason",
+                                value: "${errMessage}",
+                                short: false
+                        ],
+                        [
+                                title: "Branch",
+                                value: "${branch}",
+                                short: false
+                        ],
+                        [
+                                title: "Last Commit Message",
+                                value: "${commitMessage}",
+                                short: false
+                        ],
+                        [
+                                title: "Summary",
+                                value: "TODO- build summary",
+                                short: false
+                        ]
+                ]
+        )
+    }
+}
+
+// Default skipTerm array: ["ci skip", "skip ci", "ci-skip", "skip-ci"]
+// If skipTerm array is added it will take the place of the default
+// Return will be map with ciSkip key to skip
+// Return map can be expanded
+def parseCommit(String commitMessage, skipTerms ){
+    if (skipTerms.size()==0){
+        skipTerms = ["ci skip", "skip ci", "ci-skip", "skip-ci"]
+    }
+    try{
+        def commitFlags = [:]
+        
+            for( int i = 0; i < skipTerms.size(); i++){
+                def compareString = "(.*)(\\b" + skipTerms.get(i) + "\\b)(.*)"
+                println compareString
+            
+                def skipCiFlag = commitMessage ==~ compareString
+                assert skipCiFlag instanceof Boolean
+                commitFlags.ciSkip=skipCiFlag
+                if (skipCiFlag) break
+            }
+
+        return commitFlags
+    } 
+    catch (e){
+        println e.getMessage()
+        throw new Exception("Warning- Issue parsing commit message for flags.")
+    }
 }

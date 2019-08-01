@@ -1,48 +1,40 @@
 dependencies:
-  - name: catalog
-    repository: 'file://../catalog'
-    version: '1.0.3'
+- name: catalog
+  version: "1.0.5"
+  repository: "file://../catalog"
 
-  - name: data
-    repository: 'file://../data'
-    version: '1.0.3'
+- name: data
+  version: "1.0.5"
+  repository: "file://../data"
 
-  - name: dashboard
-    repository: 'file://../dashboard'
-    version: '1.0.3'
+- name: dashboard
+  version: "1.0.4"
+  repository: "file://../dashboard"
 
-  - name: documentation
-    repository: 'file://../documentation'
-    version: '1.0.2'
+- name: documentation
+  version: "1.0.3"
+  repository: "file://../documentation"
 
-  - name: edge
-    repository: 'file://../edge'
-    version: '1.0.5'
+- name: edge
+  version: "1.0.6"
+  repository: "file://../edge"
 
-  # - name: xds
-  #   repository: 'file://../xds'
-  #   version: '1.0.2'
+- name: jwt
+  version: "1.0.2"
+  repository: "file://../jwt"
 
-  - name: oldtown
-    repository: 'file://../oldtown'
-    version: '0.1.0'
+- name: slo
+  version: "1.0.3"
+  repository: "file://../slo"
 
-  - name: control
-    repository: 'file://../control'
-    version: '0.1.0'
+- name: oldtown
+  repository: 'file://../oldtown'
+  version: '0.1.0'
 
-  # - name: exhibitor
-  #   repository: 'file://../exhibitor'
-  #   version: '1.0.1'
+- name: control
+  repository: 'file://../control'
+  version: '0.1.0'
   
-  - name: spire
-    repository: 'file://../spire'
-    version: '0.1.0'
-
-  - name: jwt
-    repository: 'file://../jwt'
-    version: '1.0.1'
-
-  - name: slo
-    repository: 'file://../slo'
-    version: '1.0.2'
+- name: spire
+  repository: 'file://../spire'
+  version: '0.1.0'

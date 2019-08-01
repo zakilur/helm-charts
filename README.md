@@ -1,11 +1,12 @@
 # Helm Charts for Grey Matter
 
 ## Overview
-This repository provides helm charts for easily configuring and deploying every component in the Grey Matter service mesh to both Openshift and Kubernetes environments. 
+
+This repository provides helm charts for easily configuring and deploying every component in the Grey Matter service mesh to both Openshift and Kubernetes environments.
 
 ## Getting Started
 
-Each step is important  so that helm has all the information it needs to finally deploy Grey Matter.
+Each step is important so that helm has all the information it needs to finally deploy Grey Matter.
 
 1. Setup the prerequisites (helm, openshift, kubernetes, AWS S3, and docker)
 2. Setup your custom values (domain, environment, S3 creds)
@@ -35,7 +36,7 @@ You must obtain an API token by visiting https://development.deciphernow.com:844
 ```
 
 Follow the link provided and use the provided comand to login. The command will look something like:
-  `oc login --token=<some_crazy_long_and_random_string> --server=https://development.deciphernow.com:8443`
+`oc login --token=<some_crazy_long_and_random_string> --server=https://development.deciphernow.com:8443`
 
 ### AWS
 
@@ -52,7 +53,7 @@ Make sure you have an:
 
 You need valid Docker credentials which have access to the Decipher repository in order to pull all the Grey Matter images.
 
-- The URL of the docker registry containing GM images 
+- The URL of the docker registry containing GM images
 - Access to the images in that registry
 - Account Email
 - Account Username/pass
@@ -61,23 +62,24 @@ You need valid Docker credentials which have access to the Decipher repository i
 
 Each Helm chart has a `values.yaml` file which specifies the default values used to generate/template the final Kubernetes resource files with YAML.
 
-These values can be overwritten by you, the user, and in fact, several of them **MUST** be configured for Grey Matter to deploy sucessfully. 
+These values can be overwritten by you, the user, and in fact, several of them **MUST** be configured for Grey Matter to deploy sucessfully.
 
 We've provided an `example-custom.yaml` file that showcases the general structure of a Helm values file and shows how top-level keys are passed down to dependency subcharts. Most of these keys you don't need to worry about.
 
 However, you **need** to configure the:
- 1. Basic values
- 2. Voyager `cloudProvider`
- 3. and AWS + Docker credentials
 
+1.  Basic values
+2.  Voyager `cloudProvider`
+3.  and AWS + Docker credentials
 
 #### Basics
+
 Firstly, setup the basic information about your deployment by editing the following:
 
 ```yaml
 global:
   environment: # openshift or kubernetes
-  domain: 
+  domain:
   route_url_name:
 ```
 
@@ -92,9 +94,10 @@ route_url_name: greymatter
 namespace: default
 ```
 
-The URL would be `greymatter.default.deciphernow.com`. 
+The URL would be `greymatter.default.deciphernow.com`.
 
 #### Voyager
+
 Next, you need to set the type of environment you are in and pass it to the Voyager edge proxy.
 Edit `cloudProvider` in the following to be one of the [supported providers](https://appscode.com/products/voyager/7.1.1/setup/install/#using-script)
 
@@ -107,12 +110,13 @@ voyager:
 More details on Voyager are in [`edge/README.md`](edge#setting-up-the-ingress).
 
 #### Credentials
+
 Finally, you need to set the values for all the AWS and Docker credentials you located above. Fill out all the values for the following top-level keys:
 
 ```yaml
 dockerCredentials: ...
 exhibitor: ...
- 
+
 # Optionally:
 data: ...
 ```
@@ -123,7 +127,7 @@ You may notice a huge section of the file which is just various TLS certificates
 
 To actually access the Grey Matter Dashboard or any other service in the cluster, your request will pass through the edge service, which performs mTLS or Mutual TLS. This means that both the client and the server must authenticate themselves, and that your browser (or other HTTPS client e.g. `curl`) will need to have the appropriate certificates loaded.
 
-To keep things simple, the `example-custom.yaml` uses the same certificates as those from `common/certificates/user/quickstart.p12` in the [DecipherNow/grey-matter-quickstart](https://github.com/DecipherNow/grey-matter-quickstarts) repository. 
+To keep things simple, the `example-custom.yaml` uses the same certificates as those from `common/certificates/user/quickstart.p12` in the [DecipherNow/grey-matter-quickstart](https://github.com/DecipherNow/grey-matter-quickstarts) repository.
 
 If you load `quickstart.p12` into your browser, when you access the GM Dashboard, you'll be prompted to use that certificate to verify yourself, which you should do to gain access.
 
@@ -141,7 +145,6 @@ helm repo add decipher https://nexus.production.deciphernow.com/repository/helm-
 
 This allows you to install the dependency charts of Grey Matter.
 
-
 ## 4. Install Dependencies
 
 If you are deploying a chart like `greymatter` with dependencies defined in `requirements.yaml`, you need to run:
@@ -156,23 +159,24 @@ By default the greymatter dependencies will be pulled from a repository as defin
 
 ```yaml
 dependencies:
-- name: dashboard
-  version: "1.0.0"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
+  - name: dashboard
+    version: '1.0.0'
+    repository: 'https://nexus.production.deciphernow.com/repository/helm-hosted'
 ```
 
 If you want to make changes to charts you will need to change the requirements.yaml file to point to the appropriate directory:
 
 ```yaml
 dependencies:
-- name: dashboard
-  version: "1.0.0"
-  repository: "file://../dashboard"
+  - name: dashboard
+    version: '1.0.0'
+    repository: 'file://../dashboard'
 ```
 
 ## 5. Install Charts
 
 To deploy a chart use the helm install command:
+
 ```bash
 helm install --name <release_name> --namespace <my_namespace> --debug -f custom.yaml <chart_to_deploy>
 ```
@@ -211,34 +215,16 @@ The most important keys for a barebones deployment are described in Step #2: Con
 ### Jenkins pipeline:
 
 - To change the branch jenkins builds from use `./change-build-branch.sh`. The script will ask if you want to change to master, then your current branch, then a manual entry. You must be logged in openshift for this to work.
+- The CI pipeline can be skipped by including any of skip term ("ci skip", "skip ci", "ci-skip", "skip-ci").
 
 ### Troubleshooting:
 
 - Keep in mind that helm will not tear down any resources that it did not create in the firstplace. Therefore the best practice is to manage everything inside a project/namespace with helm or nothing at all.
 
-
 ### Additional Readme Files
 
 Each subchart has a `README.md` which describes
- - details about the service
- - Helm configuration values
- - Helm tests/other testing options
 
-
- ## Grey Matter 2.0 Considerations
-
- We use the `app:` metadata tag on all of our deployemensts and pods to signify to the `gm-control` kuberntes service discovery backend that it each pod is a certain cluster.
-
- We use the `XDS_CLUSTER` (currently in the process of being renamed to `GM_CONTROL_CLUSTER`) to tell `gm-proxy` which cluster they are a part of.
-
- The Kubernetes backend collector API also uses a named port on a pod called `http` to act as the service port of the proxy. The proxy will then point to this port, but serve on any `Listener` host/port combination you have specified through the oldtown API.
-
- Currently, all of our proxies listen on the interface and port `0.0.0.0:8080` on every pod which they are deployed in. When connecting externally to a service, or even using service-to-service communication inside the mesh, always connect to the port `8080` or the named port `proxy`, so that all traffic goes through the proxy. Never use the named port `http`, which can change based on the service.
-
-### Caveats
-
-For the Grey Matter 2.0 Helm Charts effort, some significant changes were made to the Helm charts.
- 
- - We added significant templating helper functions to generate the appropriate Oldtown service mesh configuration.
- - We removed the XDS service (replaced by gm-control XDS API) and the exhibitor service (replaced by gm-control Kubernetes instance collector/service discovery API)
- - We also disabled all TLS externally and inside the mesh. Internally, this is due to the shift to a SPIFFE/SPIRE model of dynamic certificate deployment and rotation. We also will want to re-enable TLS on the edge at some future point, after more testing is completed.
+- details about the service
+- Helm configuration values
+- Helm tests/other testing options
