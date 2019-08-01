@@ -24,7 +24,7 @@ spec:
           env:
             {{- include "envvars" (dict "envvar" .Values.control.envvars "top" $) | indent 12 }}
           ports:
-            - name: http
+            - name: grpc
               containerPort: 50000
               protocol: TCP
           # TODO:

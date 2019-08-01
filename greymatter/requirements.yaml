@@ -1,44 +1,36 @@
 dependencies:
 - name: catalog
   version: "1.0.5"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
+  repository: "file://../catalog"
 
 - name: data
   version: "1.0.5"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
+  repository: "file://../data"
 
 - name: dashboard
   version: "1.0.4"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
+  repository: "file://../dashboard"
 
 - name: documentation
   version: "1.0.3"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
+  repository: "file://../documentation"
 
 - name: edge
   version: "1.0.6"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
-
-- name: xds
-  version: "1.0.4"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
-
-  - name: oldtown
-    repository: 'file://../oldtown'
-    version: '0.1.0'
+  repository: "file://../edge"
 
 - name: jwt
   version: "1.0.2"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
+  repository: "file://../jwt"
 
 - name: slo
   version: "1.0.3"
-  repository: "https://nexus.production.deciphernow.com/repository/helm-hosted"
+  repository: "file://../slo"
 
-  - name: jwt
-    repository: 'file://../jwt'
-    version: '1.0.1'
+- name: oldtown
+  repository: 'file://../oldtown'
+  version: '0.1.0'
 
-  - name: slo
-    repository: 'file://../slo'
-    version: '1.0.2'
+- name: control
+  repository: 'file://../control'
+  version: '0.1.0'
