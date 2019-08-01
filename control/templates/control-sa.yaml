@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 rules:
 - apiGroups: [""]
-  resources: ["pods"]
+  resources: ["pods", "endpoints"]
   verbs: ["get", "list", "watch"]
 ---
 apiVersion: v1

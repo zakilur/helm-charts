@@ -25,15 +25,32 @@ spec:
             - name: http
               containerPort: {{ .Values.oldtown.containerPort }}
               protocol: TCP
-          # TODO:
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
+          
+          # We don't want to kill the container if it's taking a while to start up, we'll just remove it from the service
+          readinessProbe:
+            httpGet:
+              path: /v1.0/cluster
+              port: http
+              httpHeaders:
+                # For production we'll need a valid authentication credential here
+                # We may want to create a separate healthcheck endpoint to remove this issue
+                - name: Authorization
+                  value: Bearer xxx
+            # Pods are considered to be in a Failure state before the initialDelaySeconds has passed, meaning they won't be backends for a service
+            initialDelaySeconds: 5
+            periodSeconds: 2
+          # We want to restart the container if it's failed 3 requests spaced 3 seconds apart after we've given it quite enough time to start up and be initialized
+          # We give a full minute before we start health-checking for failures
+          livenessProbe:
+            httpGet:
+              path: /v1.0/cluster
+              port: http
+              httpHeaders:
+                - name: Authorization
+                  value: Bearer xxx
+            initialDelaySeconds: 60
+            periodSeconds: 3
+          
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
