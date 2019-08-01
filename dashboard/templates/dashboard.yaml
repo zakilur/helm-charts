@@ -26,11 +26,11 @@ spec:
           containerPort: 1337
         env:
         - name: FABRIC_SERVER
-          value: '{{ .Values.dashboard.fabric_server }}'
+          value: '{{ tpl .Values.dashboard.fabric_server . }}'
         - name: USE_PROMETHEUS
           value: '{{ .Values.dashboard.use_prometheus }}'
         - name: OBJECTIVES_SERVER
-          value: '{{ .Values.dashboard.objectives_server }}'
+          value: '{{ tpl .Values.dashboard.objectives_server . }}'
         - name: PROMETHEUS_SERVER
           value: '{{ .Values.dashboard.prometheus_server }}'
         - name: BASE_PATH
