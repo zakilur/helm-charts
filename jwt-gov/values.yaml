@@ -17,7 +17,8 @@ jwt:
   args:
     [
       '-c',
-      'if [[ ! -d ./certs ]]; then mkdir -p ./certs; fi && if [[ ! -d ./etc ]]; then mkdir -p ./certs; fi && /gm-jwt-security-gov/gm-jwt-security-gov',
+      'if [[ ! -d ./certs ]]; then mkdir -p ./certs; fi && if [[ ! -d ./certs/aac ]]; then mkdir -p ./certs/aac; fi && if [[ ! -d ./etc ]]; then mkdir -p ./certs; fi && /app/gm-jwt-security-gov.linux',
+
     ]
   #redis_host: redis.greymatter.svc.cluster.local
   redis_db: '0'
@@ -194,7 +195,8 @@ redis:
   #private_image: false
 
 sidecar:
-  image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1'
+  version: '{{- $.Values.global.jwt.sidecar.version | default "0.8.0" }}'
+  image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:{{ tpl $.Values.sidecar.version $ }}'
   imagePullPolicy: Always
   envvars:
     egress_use_tls:
