@@ -62,9 +62,8 @@ spec:
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-          volumeMounts:
-            - name: sidecar
-              mountPath: /etc/proxy/tls/sidecar
+          {{- include "sidecar_volume_mounts" . | indent 10 }}
+      {{- include "sidecar_volumes" . | indent 6 }}
       dnsPolicy: ClusterFirst
       imagePullSecrets:
         - name: docker.secret
@@ -72,7 +71,3 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
-      volumes:
-        - name: sidecar
-          secret:
-            secretName: sidecar

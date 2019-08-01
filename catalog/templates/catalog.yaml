@@ -33,8 +33,6 @@ spec:
               value: {{ .Values.catalog.debug | quote }}
             - name: PORT
               value: '9080'
-            # - name: XDS_SERVER_ADDRESS
-            #   value: 'xds.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.global.xds.port }}'
             - name: XDS_SERVER_0_ADDRESS
               value: '{{ .Values.global.control.name }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.global.control.port }}'
             - name: 'XDS_SERVER_0_MESH_ID'
@@ -63,23 +61,8 @@ spec:
               containerPort: 8081
           env:
           {{- include "greymatter.envvars" . | indent 10 }}
-          - name: XDS_CLUSTER
-            value: {{ .Values.global.xds.cluster | quote }}
-          - name: XDS_HOST
-            value: 'xds.{{ .Release.Namespace }}.svc.cluster.local'
-          - name: XDS_PORT
-            value: '18000'
-          # - name: ZK_ADDRS
-          #   value: {{ template "greymatter.exhibitor.address" . }}
-          # - name: ZK_ANNOUNCE_PATH
-          #   value: '/services/catalog/{{ .Values.global.catalog.version }}'
-          volumeMounts:
-            - name: sidecar
-              mountPath: /etc/proxy/tls/sidecar
+          {{- include "sidecar_volume_mounts" . | indent 10 }}
+      {{- include "sidecar_volumes" . | indent 6 }}
       imagePullSecrets:
         - name: docker.secret
         - name: dev.docker.secret
-      volumes:
-        - name: sidecar
-          secret:
-            secretName: sidecar

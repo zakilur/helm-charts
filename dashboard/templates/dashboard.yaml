@@ -49,16 +49,7 @@ spec:
           containerPort: 8081
         env:
         {{- include "greymatter.envvars" . | indent 8 }}
-        # - name: ZK_ADDRS
-        #   value: {{ template "greymatter.exhibitor.address" . }}
-        # - name: ZK_ANNOUNCE_PATH
-        #   value: '{{ .Values.dashboard.base_path }}'
-        volumeMounts:
-        - name: sidecar
-          mountPath: /etc/proxy/tls/sidecar
+        {{- include "sidecar_volume_mounts" . | indent 8 }}
+      {{- include "sidecar_volumes" . | indent 6 }}
       imagePullSecrets:
         - name: docker.secret
-      volumes:
-        - name: sidecar
-          secret:
-            secretName: sidecar

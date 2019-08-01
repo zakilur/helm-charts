@@ -25,14 +25,14 @@ spec:
           env:
           {{- include "envvars" (dict "envvar" .Values.oldtown.init.envvars "top" $) | indent 12 }}
           volumeMounts:
-          {{- range $name, $service := .Values.oldtown.services }}
+          {{- range $name, $service := .Values.global.services }}
             - name: mesh-config-volume-{{$service.serviceName}}
               mountPath: /etc/config/mesh/{{$service.serviceName}}
           {{- end }}
             - name: bootstrap-script-volume
               mountPath: /tmp/bootstrap
       volumes:
-        {{- range $name, $service := .Values.oldtown.services }}
+        {{- range $name, $service := .Values.global.services }}
         - name: mesh-config-volume-{{ $service.serviceName }}
           configMap:
             name: {{ $service.serviceName }}-mesh-config

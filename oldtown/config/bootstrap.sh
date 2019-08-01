@@ -6,6 +6,9 @@ echo "Configuring mesh from config directory: $MESH_CONFIG_DIR"
 
 cd $MESH_CONFIG_DIR
 
+echo "Config dir services:"
+ls
+
 # This script expects oldtown to be up and available to serve requests
 # Currently, this is handled in a fairly good idiomatic way using Readiness Probes and `k8s-waiter`
 
