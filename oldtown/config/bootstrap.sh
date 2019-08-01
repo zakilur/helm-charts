@@ -6,23 +6,21 @@ echo "Configuring mesh from config directory: $MESH_CONFIG_DIR"
 
 cd $MESH_CONFIG_DIR
 
-# echo "Listing environment ... "
-# env
+# In a real environment, we won't just be able to install curl, it will need to be installed beforehand
+command -v curl >/dev/null 2>&1 || { echo "This script requires curl to run. Installing..."; apk add curl; echo "done"; }
 
 echo "Waiting for oldtown to come up"
 
-until nslookup oldtown; do
-    echo "Waiting for oldtown"
-    sleep 2
+until $(curl --max-time 3 --output /dev/null \
+  --silent --head --fail -X GET \
+  http://oldtown:5555/v1.0/cluster \
+  -H 'Authorization: Bearer xxx'); do
+  echo "Waiting ..."
 done
 
-echo "Oldtown has been found"
+echo "Got good response from oldtown"
 
-wait=8
-echo "Waiting for $wait seconds"
-sleep $wait
-
-echo "Done. Starting mesh configuration ..."
+echo "Starting mesh configuration ..."
 
 for d in */; do
     echo "Found service: $d"
