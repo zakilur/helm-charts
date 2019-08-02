@@ -33,10 +33,10 @@ spec:
               value: {{ .Values.catalog.debug | quote }}
             - name: PORT
               value: '9080'
-            - name: XDS_SERVER_ADDRESS
-              value: 'xds.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.global.xds.port }}'
+            # - name: XDS_SERVER_ADDRESS
+            #   value: 'xds.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.global.xds.port }}'
             - name: XDS_SERVER_0_ADDRESS
-              value: 'xds.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.global.xds.port }}'
+              value: '{{ .Values.global.control.name }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.global.control.port }}'
             - name: 'XDS_SERVER_0_MESH_ID'
               value: 'default-zone'
             - name: 'XDS_SERVER_0_REQUEST_CLUSTER'

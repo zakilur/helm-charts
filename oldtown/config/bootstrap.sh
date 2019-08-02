@@ -6,23 +6,10 @@ echo "Configuring mesh from config directory: $MESH_CONFIG_DIR"
 
 cd $MESH_CONFIG_DIR
 
-# echo "Listing environment ... "
-# env
+# This script expects oldtown to be up and available to serve requests
+# Currently, this is handled in a fairly good idiomatic way using Readiness Probes and `k8s-waiter`
 
-echo "Waiting for oldtown to come up"
-
-until nslookup oldtown; do
-    echo "Waiting for oldtown"
-    sleep 2
-done
-
-echo "Oldtown has been found"
-
-wait=8
-echo "Waiting for $wait seconds"
-sleep $wait
-
-echo "Done. Starting mesh configuration ..."
+echo "Starting mesh configuration ..."
 
 for d in */; do
     echo "Found service: $d"
@@ -46,13 +33,13 @@ for d in */; do
     for name in $names; do
         echo "Creating mesh object: $name."
         greymatter create $name <$name.json
-        sleep 0.2
+        # sleep 0.1
     done
 
     for file in route-*.json; do
         echo "Creating mesh object: $name."
         greymatter create route <$file
-        sleep 0.2
+        # sleep 0.1
     done
 
     cd $MESH_CONFIG_DIR

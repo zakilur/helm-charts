@@ -24,29 +24,24 @@ spec:
           env:
             {{- include "envvars" (dict "envvar" .Values.control.envvars "top" $) | indent 12 }}
           ports:
-            - name: http
+            - name: grpc
               containerPort: 50000
               protocol: TCP
-          # TODO:
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
+          livenessProbe:
+            tcpSocket:
+              port: grpc
+            initialDelaySeconds: 2
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       initContainers:
         - name: ensure-oldtown
-          image: busybox:1.28
-          command: ['sh', '-c', 'env; until nslookup oldtown; do echo "Waiting for oldtown ..."; sleep 2; done; echo "Waiting 20 seconds"; sleep 20;'] #'for i in {1..100}; do sleep 1; if dig myservice; then exit 0; fi; done; exit 1']
-          envvars:
-            {{- include "envvars" (dict "envvar" .Values.control.envvars "top" $) | indent 12 }}
+          image: alexkreidler/k8s-waiter
+          env:
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: SERVICE
+              value: oldtown
+            - name: POST_DELAY
+              value: "10"
       imagePullSecrets:
         - name: docker.secret
-      # volumes:
-      #   - name: "config"
-      #     configMap:
-      #       name: "config"

@@ -1,30 +1,34 @@
 ## Diff: No Voyager, No jwt, no data, redirects to local charts, not Nexus
 
 dependencies:
-  - name: catalog
-    repository: 'file://../catalog'
-    version: '1.0.3'
+- name: catalog
+  version: "1.0.5"
+  repository: "file://../catalog"
 
   - name: dashboard
     repository: 'file://../dashboard'
     version: '1.0.3'
 
-  - name: documentation
-    repository: 'file://../documentation'
-    version: '1.0.2'
+- name: documentation
+  version: "1.0.3"
+  repository: "file://../documentation"
 
-  - name: edge
-    repository: 'file://../edge'
-    version: '1.0.5'
+- name: edge
+  version: "1.0.6"
+  repository: "file://../edge"
 
-  - name: oldtown
-    repository: 'file://../oldtown'
-    version: '0.1.0'
+- name: jwt
+  version: "1.0.2"
+  repository: "file://../jwt"
 
-  - name: control
-    repository: 'file://../control'
-    version: '0.1.0'
+- name: slo
+  version: "1.0.3"
+  repository: "file://../slo"
 
-  - name: slo
-    repository: 'file://../slo'
-    version: '1.0.2'
+- name: oldtown
+  repository: 'file://../oldtown'
+  version: '0.1.0'
+
+- name: control
+  repository: 'file://../control'
+  version: '0.1.0'

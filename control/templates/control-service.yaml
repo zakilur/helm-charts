@@ -3,13 +3,13 @@ kind: Service
 metadata:
   labels:
     run: {{ .Values.control.name }}
-  name: xds #{{ .Values.control.name }}
+  name: {{ .Values.control.name }}
   namespace: {{ .Release.Namespace }}
 spec:
   ports:
   - port: 50000
     protocol: TCP
-    targetPort: 50000
+    targetPort: grpc
   selector:
     run: {{ .Values.control.name }}
   type: ClusterIP
