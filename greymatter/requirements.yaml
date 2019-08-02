@@ -5,9 +5,9 @@ dependencies:
   version: "1.0.5"
   repository: "file://../catalog"
 
-  - name: dashboard
-    repository: 'file://../dashboard'
-    version: '1.0.3'
+- name: dashboard
+  repository: 'file://../dashboard'
+  version: '1.0.4'
 
 - name: documentation
   version: "1.0.3"
