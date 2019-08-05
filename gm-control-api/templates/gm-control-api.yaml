@@ -1,29 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.oldtown.name }}
+  name: {{ .Values.gmControlApi.name }}
   namespace: {{ .Release.Namespace }}
 spec:
-  replicas: {{ .Values.oldtown.replicas }}
+  replicas: {{ .Values.gmControlApi.replicas }}
   selector:
     matchLabels:
-      app: {{ .Values.oldtown.name }}
-      deployment: {{ .Values.oldtown.name }}
+      app: {{ .Values.gmControlApi.name }}
+      deployment: {{ .Values.gmControlApi.name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.oldtown.name }}
-        deployment: {{ .Values.oldtown.name }}
+        app: {{ .Values.gmControlApi.name }}
+        deployment: {{ .Values.gmControlApi.name }}
     spec:
       containers:
-        - name: {{ .Values.oldtown.name }}
-          image: {{ tpl .Values.oldtown.image $ }}
-          imagePullPolicy: {{ .Values.oldtown.imagePullPolicy }}
+        - name: {{ .Values.gmControlApi.name }}
+          image: {{ tpl .Values.gmControlApi.image $ }}
+          imagePullPolicy: {{ .Values.gmControlApi.imagePullPolicy }}
           env:
-            {{- include "envvars" (dict "envvar" .Values.oldtown.envvars "top" $) | indent 12 }}
+            {{- include "envvars" (dict "envvar" .Values.gmControlApi.envvars "top" $) | indent 12 }}
           ports:
             - name: http
-              containerPort: {{ .Values.oldtown.containerPort }}
+              containerPort: {{ .Values.gmControlApi.containerPort }}
               protocol: TCP
           
           # We don't want to kill the container if it's taking a while to start up, we'll just remove it from the service
@@ -54,13 +54,13 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-          - name: oldtown-config-volume
-            mountPath: {{ .Values.oldtown.envvars.oldtown_persister_path.value }}
-            subPath: oldtown_backend.json
+          - name: gm-control-api-config-volume
+            mountPath: {{ .Values.gmControlApi.envvars.gm_control_api_persister_path.value }}
+            subPath: backend.json
       volumes:
-        - name: oldtown-config-volume
+        - name: gm-control-api-config-volume
           configMap:
-            name: oldtown-config
+            name: {{ .Values.gmControlApi.name }}
       imagePullSecrets:
         - name: docker.secret
       # volumes:

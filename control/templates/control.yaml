@@ -34,13 +34,14 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       initContainers:
-        - name: ensure-oldtown
-          image: alexkreidler/k8s-waiter
+        - name: ensure-gm-control-api
+          gm-control: hi
+          image: deciphernow/k8s-waiter
           env:
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: SERVICE
-              value: oldtown
+              value: gm-control-api
             - name: POST_DELAY
               value: "10"
       imagePullSecrets:

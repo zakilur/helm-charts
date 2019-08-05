@@ -15,8 +15,8 @@ dependencies:
   version: "1.0.6"
   repository: "file://../edge"
 
-- name: oldtown
-  repository: 'file://../oldtown'
+- name: gm-control-api
+  repository: 'file://../gm-control-api'
   version: '0.1.0'
 
 - name: control

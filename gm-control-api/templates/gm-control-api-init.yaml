@@ -1,29 +1,29 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{.Values.oldtown.name}}-init
+  name: {{.Values.gmControlApi.name}}-init
 spec:
   template:
     metadata:
-      name: {{.Values.oldtown.name}}-init
+      name: {{.Values.gmControlApi.name}}-init
     spec:
       restartPolicy: "OnFailure"
       # We need a SA with read access to the `Endpoints` resource
       serviceAccountName: control-sa
       initContainers:
-        - name: ensure-oldtown
-          image: alexkreidler/k8s-waiter
+        - name: ensure-gm-control-api
+          image: deciphernow/k8s-waiter
           env:
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: SERVICE
-              value: oldtown
+              value: {{ .Values.gmControlApi.name }}
       containers:
         - image: registry.gitlab.com/alexkreidler/gm-cli-docker:latest
-          name: {{ .Values.oldtown.name }}-init
+          name: {{ .Values.gmControlApi.name }}-init
           command: ["/tmp/bootstrap/bootstrap.sh"]
           env:
-          {{- include "envvars" (dict "envvar" .Values.oldtown.init.envvars "top" $) | indent 12 }}
+          {{- include "envvars" (dict "envvar" .Values.gmControlApi.init.envvars "top" $) | indent 12 }}
           volumeMounts:
           {{- range $name, $service := .Values.global.services }}
             - name: mesh-config-volume-{{$service.serviceName}}
@@ -42,4 +42,4 @@ spec:
             name: bootstrap-script
             defaultMode: 0777
       imagePullSecrets:
-        - name: dev.docker.secret
+        - name: dev.docker.secrethelm

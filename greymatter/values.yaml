@@ -5,7 +5,7 @@ global:
   remove_namespace_from_url: false
   zone: default-zone
   catalog:
-    version: 0.3.6
+    version: 1.0.0
     sidecar:
       version: # 0.7.1
   dashboard:

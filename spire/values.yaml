@@ -1,4 +1,4 @@
-# Default values for oldtown.
+# Default values for gm-control-api.
 global:
   environment: kubernetes
   domain:
@@ -6,11 +6,11 @@ global:
   remove_namespace_from_url: ''
   exhibitor:
     replicas: 1
-  # XDS will be replaced with oldtown eventually
+  # XDS will be replaced with gm-control-api eventually
   xds:
     port: 18000
     cluster: greymatter
-  oldtown:
+  gmControlApi:
     version: latest
 
 spire:

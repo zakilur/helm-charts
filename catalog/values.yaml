@@ -26,7 +26,7 @@ global:
     version: 0.2.6
 
 catalog:
-  image: registry.gitlab.com/alexkreidler/gm-catalog:gm-control-integration # docker.production.deciphernow.com/deciphernow/gm-catalog:{{ $.Values.global.catalog.version }}
+  image: docker.production.deciphernow.com/deciphernow/gm-catalog:{{ $.Values.global.catalog.version }}
   source: xds
   debug: 'false'
   imagePullPolicy: Always

@@ -1,4 +1,4 @@
-# Default values for oldtown.
+# Default values for gm-control-api.
 global:
   environment: kubernetes
   domain:
@@ -6,20 +6,20 @@ global:
   remove_namespace_from_url: ''
   exhibitor:
     replicas: 1
-  # XDS will be replaced with oldtown eventually
+  # XDS will be replaced with gm-control
   xds:
     port: 18000
     cluster: greymatter
-  oldtown:
+  gmControlApi:
     version: latest
 
-oldtown:
-  name: oldtown
-  displayName: oldtown
+gmControlApi:
+  name: gm-control-api
+  displayName: gm-control-api
   replicas: 1
-  image: 'docker.production.deciphernow.com/deciphernow/oldtown:{{ $.Values.global.oldtown.version }}'
+  image: 'docker.production.deciphernow.com/deciphernow/gm-control-api:{{ $.Values.global.gmControlApi.version }}'
   imagePullPolicy: IfNotPresent
-  initialConfigPath: 'config/oldtown_backend.json'
+  initialConfigPath: 'config/backend.json'
   containerPort: 5555
   zone: default-zone
   proxyPort: 8080
@@ -29,7 +29,7 @@ oldtown:
           value: 'debug'
           type: 'value'
       greymatter_api_host:
-          value: '{{ .Values.oldtown.name }}:{{ .Values.oldtown.containerPort }}'
+          value: '{{ .Values.gmControlApi.name }}:{{ .Values.gmControlApi.containerPort }}'
           type: 'value'
       greymatter_api_key:
           value: 'xxx'
@@ -39,21 +39,21 @@ oldtown:
           type: 'value'
 
   envvars:
-    oldtown_log_level:
+    gm_control_api_log_level:
       type: 'value'
       value: 'debug'
-    oldtown_address:
+    gm_control_api_address:
       type: 'value'
       value: '0.0.0.0:5555'
-    oldtown_org_key:
+    gm_control_api_org_key:
       type: 'value'
       value: 'deciphernow'
-    oldtown_persister_type:
+    gm_control_api_persister_type:
       type: 'value'
       value: 'file'
-    oldtown_persister_path:
+    gm_control_api_persister_path:
       type: 'value'
-      value: '/control-plane/oldtown_backend.json'
+      value: '/control-plane/gm_control_api_backend.json'
   resources:
     {}
     # We usually recommend not to specify default resources and to leave this as a conscious

@@ -1,4 +1,4 @@
-# Default values for oldtown.
+# Default values for gm-control
 global:
   environment: kubernetes
   domain:
@@ -6,7 +6,7 @@ global:
   remove_namespace_from_url: ''
   exhibitor:
     replicas: 1
-  # XDS will be replaced with oldtown eventually
+  # XDS will be replaced with gm-control
   xds:
     port: 18000
     cluster: greymatter
@@ -19,7 +19,7 @@ control:
   replicas: 1
   image: 'docker.production.deciphernow.com/deciphernow/gm-control:{{ $.Values.global.control.version }}'
   imagePullPolicy: IfNotPresent
-  # initialConfigPath: './oldtown_backend.json'
+  
   envvars:
     gm_control_console_level:
       type: 'value'
@@ -35,7 +35,7 @@ control:
       value: 'false'
     gm_control_api_host:
       type: 'value'
-      value: 'oldtown:5555'
+      value: 'gm-control-api:5555'
     gm_control_cmd:
       type: 'value'
       value: 'kubernetes'
