@@ -1,8 +1,7 @@
-{{- define "shared_rules" }}
 {
   "shared_rules_key": "shared-rules-{{.serviceName}}",
   "name": "{{.serviceName}}",
-  "zone_key": "zone-{{.zone}}",
+  "zone_key": "{{.zone}}",
   "default": {
     "light": [
       {
@@ -23,4 +22,3 @@
   "properties": null,
   "retry_policy": null
 }
-{{- end }}

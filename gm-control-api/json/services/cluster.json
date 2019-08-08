@@ -1,7 +1,6 @@
-{{- define "cluster" }}
 {
   "cluster_key": "cluster-{{.serviceName}}",
-  "zone_key": "zone-{{.zone}}",
+  "zone_key": "{{.zone}}",
   "name": "{{.serviceName}}",
   "instances": [],
   "circuit_breakers": null,
@@ -17,4 +16,3 @@
     ]
   }
 }
-{{- end }}

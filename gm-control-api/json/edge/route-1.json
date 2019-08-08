@@ -1,0 +1,13 @@
+{
+    "route_key": "edge-{{.serviceName}}-route",
+    "domain_key": "edge",
+    "zone_key": "{{.zone}}",
+    "path": "/services/{{.serviceName}}/latest/",
+    "prefix_rewrite": "/",
+    "redirects": null,
+    "shared_rules_key": "edge-jwt-shared-rules",
+    "rules": null,
+    "response_data": {},
+    "cohort_seed": null,
+    "retry_policy": null
+}

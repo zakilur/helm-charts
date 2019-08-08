@@ -1,6 +1,6 @@
 {
-    "domain_key": "main-domain",
-    "zone_key": "zone-default-zone",
+    "domain_key": "domain-{{.serviceName}}",
+    "zone_key": "{{.zone}}",
     "name": "*",
     "port": 8080,
     "redirects": null,
