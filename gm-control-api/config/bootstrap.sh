@@ -65,4 +65,6 @@ for d in */; do
         greymatter create route <$file
         sleep $delay
     done
+
+    cd $MESH_CONFIG_DIR/edge
 done
