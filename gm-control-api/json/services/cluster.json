@@ -1,8 +1,13 @@
 {
   "cluster_key": "cluster-{{.service.serviceName}}",
   "zone_key": "{{.service.zone}}",
-  "name": "{{.service.serviceName}}",
-  "instances": [],
+  "name": "service",
+  "instances": [
+    {
+        "host": "localhost",
+        "port": {{ .service.port | default 8080 }}
+    }
+  ],
   "circuit_breakers": null,
   "outlier_detection": null,
   "health_checks": [],

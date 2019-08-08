@@ -33,7 +33,7 @@ spec:
         - name: http
           containerPort: 8080
         - name: metrics
-          containerPort: 8001
+          containerPort: 8081
         volumeMounts:
         - name: edge
           mountPath: /etc/proxy/tls/edge

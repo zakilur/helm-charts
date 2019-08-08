@@ -21,9 +21,6 @@ spec:
         resources:
 {{ toYaml .Values.dashboard.resources | indent 10 }}
         {{- end }}
-        ports:
-        - name: http
-          containerPort: 1337
         env:
         - name: FABRIC_SERVER
           value: '{{ tpl .Values.dashboard.fabric_server . }}'
@@ -43,7 +40,7 @@ spec:
 {{ toYaml .Values.sidecar.resources | indent 10 }}
         {{- end }}
         ports:
-        - name: proxy
+        - name: http
           containerPort: 8080
         - name: metrics
           containerPort: 8081

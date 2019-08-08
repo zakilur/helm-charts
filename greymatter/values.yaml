@@ -43,12 +43,15 @@ global:
     cluster: greymatter
     port: 18000
     version: 0.2.6
+  control:
+   name: 
   spire:
     trustDomain: "deciphernow.com"
   services:
     catalog:
       name: 'Grey Matter Catalog'
       serviceName: 'catalog'
+      port: 9080
       routes:
         - '/services/catalog/{{ $.Values.global.catalog.version }}'
         - '/services/catalog/{{ $.Values.global.catalog.version }}/'
@@ -63,6 +66,7 @@ global:
     dashboard:
       name: 'Grey Matter Dashboard'
       serviceName: 'dashboard'
+      port: 1337
       routes:
         - '/services/dashboard/latest'
         - '/services/dashboard/latest/'
@@ -70,6 +74,7 @@ global:
     data:
       name: 'Grey Matter Data'
       serviceName: 'data'
+      port: 8181
       routes:
         - '/services/data/{{ $.Values.global.data.version }}'
         - '/services/data/{{ $.Values.global.data.version }}/'
@@ -77,23 +82,26 @@ global:
     jwt:
       name: 'Grey Matter JWT Security'
       serviceName: 'jwt-security'
+      port: 3000
       routes:
         - '/services/jwt-security/{{ $.Values.global.jwt.version }}'
         - '/services/jwt-security/{{ $.Values.global.jwt.version }}/'
 
-    edge:
-      name: 'Grey Matter Edge'
-      serviceName: 'edge'
-      # We use a static cert on the edge listener
-      removeListenerSecret: true
-      routes:
-        - '/' #/services/edge/{{ $.Values.global.edge.version }}
-        # - '/' #/services/edge/{{ $.Values.global.edge.version }}
-    # TODO: multiple routes
+    # edge:
+    #   name: 'Grey Matter Edge'
+    #   serviceName: 'edge'
+    #   port: 8080
+    #   # We use a static cert on the edge listener
+    #   removeListenerSecret: true
+    #   routes:
+    #     - '/' #/services/edge/{{ $.Values.global.edge.version }}
+    #     # - '/' #/services/edge/{{ $.Values.global.edge.version }}
+    # # TODO: multiple routes
 
     slo:
       name: 'Grey Matter Service Level Objectives'
       serviceName: 'slo'
+      port: 1337
       routes:
         - '/services/slo/{{ $.Values.global.slo.version }}'
         - '/services/slo/{{ $.Values.global.slo.version }}/'
@@ -101,6 +109,7 @@ global:
     documentation:
       name: 'Grey Matter Documentation'
       serviceName: 'documentation'
+      port: 8090
       routes:
         - '/services/documentation/{{ $.Values.global.documentation.version }}'
         - '/services/documentation/{{ $.Values.global.documentation.version }}/'
