@@ -19,7 +19,7 @@ spec:
             - name: SERVICE
               value: {{ .Values.gmControlApi.name }}
       containers:
-        - image: registry.gitlab.com/alexkreidler/gm-cli-docker:latest
+        - image: {{ tpl .Values.gmControlApi.init.image . }}
           name: {{ .Values.gmControlApi.name }}-init
           command: ["/tmp/bootstrap/bootstrap.sh"]
           env:
@@ -31,10 +31,10 @@ spec:
             - name: edge-config-volume-{{$service.serviceName}}
               mountPath: /etc/config/mesh/edge/{{$service.serviceName}}
           {{- end }}
-            - name: bootstrap-script-volume
-              mountPath: /tmp/bootstrap
             - name: domain-config-volume
               mountPath: /etc/config/mesh/domain
+            - name: bootstrap-script-volume
+              mountPath: /tmp/bootstrap
       volumes:
         {{- range $name, $service := .Values.global.services }}
         - name: service-config-volume-{{ $service.serviceName }}
@@ -52,4 +52,4 @@ spec:
           configMap:
             name: domain-mesh-config
       imagePullSecrets:
-        - name: dev.docker.secret
+        - name: docker.secret

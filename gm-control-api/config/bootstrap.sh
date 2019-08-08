@@ -16,7 +16,9 @@ echo "Starting mesh configuration ..."
 
 echo "Creating service configuration objects..."
 
-cd services
+delay=0.01
+
+cd $MESH_CONFIG_DIR/services
 # Each service should be able to be created all by itself. This means it needs to contain a domain
 for d in */; do
     echo "Found service: $d"
@@ -31,21 +33,20 @@ for d in */; do
     for name in $names; do
         echo "Creating mesh object: $name."
         greymatter create $name <$name.json
+        sleep $delay
     done
 
+    cd $MESH_CONFIG_DIR/services
 done
-cd $MESH_CONFIG_DIR
 
 # The edge service is created last as it links to the clusters of every other service.
-
 # The edge domain must be created before it can be referenced
-
-cd domain
-
+cd $MESH_CONFIG_DIR/domain
+echo "Creating domain configuration object"
 greymatter create domain < domain.json
 
-cd $MESH_CONFIG_DIR
-cd edge
+cd $MESH_CONFIG_DIR/edge
+echo "Creating edge configuration objects"
 
 # All the following services reference the `edge` domain key
 for d in */; do
@@ -56,10 +57,12 @@ for d in */; do
     for name in $names; do
         echo "Creating mesh object: $name."
         greymatter create $name <$name.json
+        sleep $delay
     done
 
     for file in route-*.json; do
         echo "Creating mesh object: $name."
         greymatter create route <$file
+        sleep $delay
     done
 done

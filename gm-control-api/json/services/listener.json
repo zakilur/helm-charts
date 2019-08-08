@@ -3,7 +3,7 @@
   "zone_key": "{{.service.zone}}",
   "name": "{{.service.serviceName}}",
   "ip": "0.0.0.0",
-  "port": "{{ .port | default 8080 }}",
+  "port": {{ .service.port | default 8080 }},
   "protocol": "http_auto",
   "domain_keys": ["domain-{{.service.serviceName}}"],
   "tracing_config": null

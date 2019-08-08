@@ -7,7 +7,7 @@
 {{- range $name, $service := .Values.global.services }}
 ---
 {{/* {{- $lSecret := (default $service.removeListenerSecret false) }} */}}
-{{- $serviceExtras := (dict "top" $top "authorizedSvids" $svidList "svidList" (toJson $svidList)) }}
+{{- $serviceExtras := (dict "top" $top "authorizedSvids" $svidList "zone" $top.Values.gmControlApi.zone "svidList" (toJson $svidList)) }}
 {{- $svc := merge $service $serviceExtras }}
 {{- $scope := set $top "service" $svc }}
 apiVersion: v1
@@ -28,6 +28,7 @@ data:
 {{- range $name, $service := .Values.global.services }}
 ---
 {{- $scope := set $top "service" $service }}
+{{- $scope = set $scope "zone" $top.Values.gmControlApi.zone }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

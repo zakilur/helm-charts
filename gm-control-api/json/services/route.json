@@ -1,5 +1,5 @@
 {
-  "route_key": "route-{{ .route }}",
+  "route_key": "route-{{.service.serviceName}}",
   "domain_key": "domain-{{.service.serviceName}}",
   "zone_key": "{{.service.zone}}",
   "path": "/",

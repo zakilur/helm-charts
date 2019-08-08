@@ -21,9 +21,10 @@ gmControlApi:
   imagePullPolicy: Always # IfNotPresent
   initialConfigPath: 'config/backend.json'
   containerPort: 5555
-  zone: default-zone
+  zone: zone-default-zone
   proxyPort: 8080
   init:
+    image: 'docker.production.deciphernow.com/deciphernow/greymatter:latest'
     envvars:
       greymatter_console_level:
           value: 'debug'
