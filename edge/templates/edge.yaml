@@ -37,14 +37,16 @@ spec:
         volumeMounts:
         - name: edge
           mountPath: /etc/proxy/tls/edge
-        - name: sidecar
-          mountPath: /etc/proxy/tls/sidecar
+        - name: spire-agent-socket
+          mountPath: /run/spire/sockets
+          readOnly: true
       imagePullSecrets:
       - name: docker.secret
       volumes:
       - name: edge
         secret:
           secretName: edge
-      - name: sidecar
-        secret:
-          secretName: sidecar
+      - name: spire-agent-socket
+        hostPath:
+          path: /run/spire/sockets
+          type: Directory

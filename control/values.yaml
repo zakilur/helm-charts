@@ -18,7 +18,7 @@ control:
   displayName: 'Control'
   replicas: 1
   image: 'docker.production.deciphernow.com/deciphernow/gm-control:{{ $.Values.global.control.version }}'
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
   
   envvars:
     gm_control_console_level:
@@ -57,6 +57,9 @@ control:
     gm_control_kubernetes_namespace:
       type: 'value'
       value: '{{ .Release.Namespace }}'
+    # gm_control_diff_dry_run:
+    #   type: 'value'
+    #   value: 'true'
   resources:
     {}
     # We usually recommend not to specify default resources and to leave this as a conscious

@@ -96,30 +96,7 @@ sidecar:
     # metrics_key_function:
     #   type: 'value'
     #   value: ''
-    egress_use_tls:
-      type: value
-      value: 'true'
-    egress_ca_cert_path:
-      type: value
-      value: '/etc/proxy/tls/sidecar/ca.crt'
-    egress_cert_path:
-      type: value
-      value: '/etc/proxy/tls/sidecar/server.crt'
-    egress_key_path:
-      type: value
-      value: '/etc/proxy/tls/sidecar/server.key'
-    ingress_use_tls:
-      type: value
-      value: 'false'
-    ingress_ca_cert_path:
-      type: value
-      value: '/etc/proxy/tls/edge/ca.crt'
-    ingress_cert_path:
-      type: value
-      value: '/etc/proxy/tls/edge/server.crt'
-    ingress_key_path:
-      type: value
-      value: '/etc/proxy/tls/edge/server.key'
+    # All TLS options are now configured through gm-control-api
     xds_cluster:
       type: value
       value: 'edge'
@@ -127,12 +104,6 @@ sidecar:
       type: value
       value: 'false'
     kafka_zk_discover:
-      type: value
-      value: 'false'
-    ingress_use_tls:
-      type: value
-      value: 'false'
-    envoy_admin_log_path:
       type: value
       value: 'false'
 
