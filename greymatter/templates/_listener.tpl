@@ -6,7 +6,7 @@
   "ip": "0.0.0.0",
   "port": {{ .port | default 8080 }},
   "protocol": "http_auto",
-  "domain_keys": ["domain-*"],
+  "domain_keys": ["edge"],
   "tracing_config": null
 }
 {{- end }}

@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: gm-control-api
-  namespace: {{ .Release.Namespace }}
-data:
-  backend.json: |
-{{ .Files.Get .Values.gmControlApi.initialConfigPath | indent 4 }}

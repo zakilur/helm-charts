@@ -1,9 +1,0 @@
-# hi test
-{{- $top := . }}
-{{- range $name, $service := .Values.global.services }}
----
-{{- $serviceConfig := dict "serviceName" $service.serviceName "routes" $service.routes "port" $top.Values.gmControlApi.proxyPort "zone" $top.Values.gmControlApi.zone "top" $top }}
-{{- $service := merge $serviceConfig (dict "spiffe" "h") }}
-{{- include "mesh_svc_config" $serviceConfig }}
-...
-{{- end}}

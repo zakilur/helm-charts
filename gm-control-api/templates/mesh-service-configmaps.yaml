@@ -1,0 +1,12 @@
+{{- $top := . }}
+{{- $svidList := list }}
+{{- range $name, $service := .Values.global.services }}
+    {{- $svidList = append $svidList (print "spiffe://" $top.Values.global.spire.trustDomain "/" $service.serviceName "/mTLS") }}
+{{- end }}
+{{- range $name, $service := .Values.global.services }}
+---
+{{- $lSecret := (default $service.removeListenerSecret false) }}
+{{- $serviceConfig := dict "serviceName" $service.serviceName "routes" $service.routes "port" $top.Values.gmControlApi.proxyPort "zone" $top.Values.gmControlApi.zone "top" $top "removeListenerSecret" $lSecret "authorizedSvids" $svidList }}
+{{- include "mesh_svc_config" $serviceConfig }}
+...
+{{- end}}

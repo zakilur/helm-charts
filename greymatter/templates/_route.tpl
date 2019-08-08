@@ -1,10 +1,9 @@
 {{- define "route" }}
 {
   "route_key": "route-{{ .route }}",
-  "domain_key": "domain-*",
+  "domain_key": "edge",
   "zone_key": "zone-default-zone",
-  "path": {{ .route | quote }},
-  "prefix_rewrite": "/",
+  "path": "/",
   "shared_rules_key": "shared-rules-{{ .serviceName }}",
   "rules": null,
   "response_data": {},

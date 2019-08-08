@@ -50,17 +50,8 @@ spec:
                   value: Bearer xxx
             initialDelaySeconds: 60
             periodSeconds: 3
-          
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          volumeMounts:
-          - name: gm-control-api-config-volume
-            mountPath: {{ .Values.gmControlApi.envvars.gm_control_api_persister_path.value }}
-            subPath: backend.json
-      volumes:
-        - name: gm-control-api-config-volume
-          configMap:
-            name: {{ .Values.gmControlApi.name }}
       imagePullSecrets:
         - name: docker.secret
       # volumes:

@@ -18,7 +18,7 @@ gmControlApi:
   displayName: gm-control-api
   replicas: 1
   image: 'docker.production.deciphernow.com/deciphernow/gm-control-api:{{ $.Values.global.gmControlApi.version }}'
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always # IfNotPresent
   initialConfigPath: 'config/backend.json'
   containerPort: 5555
   zone: default-zone
@@ -37,6 +37,43 @@ gmControlApi:
       greymatter_api_ssl:
           value: 'false'
           type: 'value'
+      basic_object_path:
+          value: '/tmp/mesh/basic_objects'
+          type: 'value'
+    objects:
+      # we generate all the objects for the services first
+      servicesTemplate:
+        #  each mesh object for a specific service will be mounted into a directory for that service
+        - type: proxy
+          filename: proxy.json
+          values: 
+            proxy_key: proxy-{{.serviceName}}
+            zone_key: zone-{{.zone}}
+            name: "{{.serviceName}}"
+            domain_keys:
+            - edge
+            listener_keys:
+            - listener-{{.serviceName}}
+            listeners: []
+            secret:
+              secret_key: secret-{{.serviceName}}-secret
+              secret_name: spiffe://deciphernow.com/{{.serviceName}}/mTLS
+              secret_validation_name: spiffe://deciphernow.com
+              subject_names: "{{ toJson .authorizedSvids }}"
+              ecdh_curves:
+              - X25519:P-256:P-521:P-384
+              forward_client_cert_details: SANITIZE_SET
+              set_current_client_cert_details:
+                uri: true
+      #  Then we generate the basics/overall objects for the edge, and then the routes to each service
+      edge:
+        edge:
+          - domain, etc
+        # Each mesh object for the routes of the specific service is mounted into a directory for that service
+        servicesTemplate:
+          - type: route
+      extras: 
+      # Then we generate any additional custom mesh objects
 
   envvars:
     gm_control_api_log_level:
@@ -50,10 +87,7 @@ gmControlApi:
       value: 'deciphernow'
     gm_control_api_persister_type:
       type: 'value'
-      value: 'file'
-    gm_control_api_persister_path:
-      type: 'value'
-      value: '/control-plane/gm_control_api_backend.json'
+      value: 'null'
   resources:
     {}
     # We usually recommend not to specify default resources and to leave this as a conscious

@@ -14,6 +14,23 @@ ls
 
 echo "Starting mesh configuration ..."
 
+echo "Creating basic objects, using path: $BASIC_OBJECT_PATH"
+
+cd $BASIC_OBJECT_PATH
+
+for objtype in */; do
+    echo "Found basic object type: $objtype"
+    echo "Creating basic objects in directory"
+    for obj in *.json; do
+        echo "Found $obj"
+        greymatter create $objtype < $obj
+    done
+done
+
+echo "Creating service configuration objects..."
+
+greymatter create domain <$DOMAIN_FILE_PATH
+
 for d in */; do
     echo "Found service: $d"
     cd $d
@@ -22,15 +39,6 @@ for d in */; do
     # All objects referenced by keys must be created before being referenced or will result in an error.
     # So we add a delay of 0.1 seconds between each request to hopefully streamline this
     # A better option is probably to hardcode the order of items
-
-    # for fullfile in *.json; do
-    #     filename=$(basename -- "$fullfile")
-    #     extension="${filename##*.}"
-    #     filename="${filename%.*}"
-
-    #     echo "Creating mesh object: $filename."
-    #     greymatter create $filename <$fullfile
-    # done
 
     names="cluster listener proxy shared_rules"
     for name in $names; do
