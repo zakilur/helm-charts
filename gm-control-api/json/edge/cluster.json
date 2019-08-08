@@ -1,9 +1,9 @@
 {
-    "zone_key": "{{.zone}}",
-    "cluster_key": "edge-to-{{.serviceName}}-cluster",
-    "name": "{{.serviceName}}",
-    "instances": [],
-    "circuit_breakers": null,
-    "outlier_detection": null,
-    "health_checks": []
+  "zone_key": "{{.service.zone}}",
+  "cluster_key": "edge-to-{{.service.serviceName}}-cluster",
+  "name": "{{.service.serviceName}}",
+  "instances": [],
+  "circuit_breakers": null,
+  "outlier_detection": null,
+  "health_checks": []
 }

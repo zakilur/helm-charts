@@ -1,11 +1,11 @@
 {
-    "domain_key": "domain-{{.serviceName}}",
-    "zone_key": "{{.zone}}",
-    "name": "*",
-    "port": 8080,
-    "redirects": null,
-    "gzip_enabled": false,
-    "cors_config": null,
-    "aliases": null,
-    "force_https": false
+  "domain_key": "domain-{{.service.serviceName}}",
+  "zone_key": "{{.service.zone}}",
+  "name": "*",
+  "port": 8080,
+  "redirects": null,
+  "gzip_enabled": false,
+  "cors_config": null,
+  "aliases": null,
+  "force_https": false
 }

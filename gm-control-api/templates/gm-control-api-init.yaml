@@ -26,18 +26,23 @@ spec:
           {{- include "envvars" (dict "envvar" .Values.gmControlApi.init.envvars "top" $) | indent 12 }}
           volumeMounts:
           {{- range $name, $service := .Values.global.services }}
-            - name: mesh-config-volume-{{$service.serviceName}}
-              mountPath: /etc/config/mesh/{{$service.serviceName}}
+            - name: service-config-volume-{{$service.serviceName}}
+              mountPath: /etc/config/mesh/services/{{$service.serviceName}}
+            - name: edge-config-volume-{{$service.serviceName}}
+              mountPath: /etc/config/mesh/edge/{{$service.serviceName}}
           {{- end }}
             - name: bootstrap-script-volume
               mountPath: /tmp/bootstrap
             - name: domain-config-volume
-              mountPath: {{ .Values.gmControlApi.init.envvars.basic_object_path.value }}/domain
+              mountPath: /etc/config/mesh/domain
       volumes:
         {{- range $name, $service := .Values.global.services }}
-        - name: mesh-config-volume-{{ $service.serviceName }}
+        - name: service-config-volume-{{ $service.serviceName }}
           configMap:
-            name: {{ $service.serviceName }}-mesh-config
+            name: service-{{ $service.serviceName }}-mesh-config
+        - name: edge-config-volume-{{ $service.serviceName }}
+          configMap:
+            name: edge-{{ $service.serviceName }}-mesh-config
         {{- end }}
         - name: bootstrap-script-volume
           configMap:
@@ -45,6 +50,6 @@ spec:
             defaultMode: 0777
         - name: domain-config-volume
           configMap:
-            name: domain-config
+            name: domain-mesh-config
       imagePullSecrets:
         - name: dev.docker.secret

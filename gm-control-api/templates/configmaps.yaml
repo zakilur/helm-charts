@@ -3,8 +3,7 @@
 {{- range $name, $service := .Values.global.services }}
     {{- $svidList = append $svidList (print "spiffe://" $top.Values.global.spire.trustDomain "/" $service.serviceName "/mTLS") }}
 {{- end }}
-
-{{/* We loop over all the services to create the individual service objects */}}
+{{- /* We loop over all the services to create the individual service objects */}}
 {{- range $name, $service := .Values.global.services }}
 ---
 {{/* {{- $lSecret := (default $service.removeListenerSecret false) }} */}}
@@ -25,5 +24,31 @@ data:
 {{- end }}
 ...
 {{- end}}
-
-{{/* Then we loop over the services again in order to create the edge objects */}}
+{{- /* Then we loop over the services again in order to create the edge objects */}}
+{{- range $name, $service := .Values.global.services }}
+---
+{{- $scope := set $top "service" $service }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: edge-{{.serviceName}}-mesh-config
+  namespace: default
+  mesh-config: {{.serviceName}}
+  mesh-config-type: edge
+data:
+{{- range $path, $bytes := $top.Files.Glob "json/edge/**.json" }}
+  {{ base $path }}: |-
+{{ tpl ($top.Files.Get $path) $scope | indent 4 }}
+{{- end }}
+...
+{{- end}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: domain-mesh-config
+  namespace: default
+  mesh-config-type: domain
+data:
+  domain.json: |-
+{{ tpl ($top.Files.Get "json/domain/domain.json") . | indent 4 }}

@@ -1,12 +1,12 @@
 {
-  "shared_rules_key": "shared-rules-{{.serviceName}}",
-  "name": "{{.serviceName}}",
-  "zone_key": "{{.zone}}",
+  "shared_rules_key": "shared-rules-{{.service.serviceName}}",
+  "name": "{{.service.serviceName}}",
+  "zone_key": "{{.service.zone}}",
   "default": {
     "light": [
       {
         "constraint_key": "",
-        "cluster_key": "cluster-{{.serviceName}}",
+        "cluster_key": "cluster-{{.service.serviceName}}",
         "metadata": null,
         "properties": null,
         "response_data": {},

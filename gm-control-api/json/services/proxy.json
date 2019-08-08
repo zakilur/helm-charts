@@ -1,12 +1,12 @@
 {
-  "proxy_key": "proxy-{{.serviceName}}",
-  "zone_key": "{{.zone}}",
-  "name": "{{.serviceName}}",
+  "proxy_key": "proxy-{{.service.serviceName}}",
+  "zone_key": "{{.service.zone}}",
+  "name": "{{.service.serviceName}}",
   "domain_keys": [
-    "domain-{{.serviceName}}"
+    "domain-{{.service.serviceName}}"
   ],
   "listener_keys": [
-      "listener-{{.serviceName}}"
+      "listener-{{.service.serviceName}}"
   ],
   "listeners": [],
   "active_proxy_filters": ["gm.metrics"],
@@ -22,10 +22,10 @@
       }
   },
   "secret": {
-    "secret_key": "secret-{{.serviceName}}-secret",
-    "secret_name": "spiffe://deciphernow.com/{{.serviceName}}/mTLS",
+    "secret_key": "secret-{{.service.serviceName}}-secret",
+    "secret_name": "spiffe://deciphernow.com/{{.service.serviceName}}/mTLS",
     "secret_validation_name": "spiffe://deciphernow.com",
-    "subject_names": {{ toJson .authorizedSvids }},
+    "subject_names": {{ toJson .service.authorizedSvids }},
     "ecdh_curves": [
         "X25519:P-256:P-521:P-384"
     ],
