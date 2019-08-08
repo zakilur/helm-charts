@@ -12,7 +12,7 @@ data:
       server_port = "8081"
       socket_path = "/run/spire/sockets/agent.sock"
       trust_bundle_path = "/run/spire/config/bootstrap.crt"
-      trust_domain = "{{ .Values.spire.trustDomain }}"
+      trust_domain = "{{ .Values.global.spire.trustDomain }}"
       enable_sds = true
     }
 

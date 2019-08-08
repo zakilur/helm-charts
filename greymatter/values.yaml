@@ -43,6 +43,8 @@ global:
     cluster: greymatter
     port: 18000
     version: 0.2.6
+  spire:
+    trustDomain: "deciphernow.com"
   services:
     catalog:
       name: 'Grey Matter Catalog'
@@ -82,6 +84,8 @@ global:
     edge:
       name: 'Grey Matter Edge'
       serviceName: 'edge'
+      # We use a static cert on the edge listener
+      removeListenerSecret: true
       routes:
         - '/' #/services/edge/{{ $.Values.global.edge.version }}
         # - '/' #/services/edge/{{ $.Values.global.edge.version }}

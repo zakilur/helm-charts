@@ -12,9 +12,10 @@ global:
     cluster: greymatter
   gmControlApi:
     version: latest
+  spire:
+    trustDomain: deciphernow.com
 
 spire:
-  trustDomain: deciphernow.com
   clusterName: k8s
   server:
     name: spire-server
