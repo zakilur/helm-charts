@@ -46,6 +46,7 @@ echo "Creating special configuration objects (domain, edge listener + proxy)"
 greymatter create domain < domain.json
 greymatter create listener <listener.json
 greymatter create proxy < proxy.json
+greymatter create cluster < cluster.json
 
 cd $MESH_CONFIG_DIR/edge
 echo "Creating edge configuration objects"

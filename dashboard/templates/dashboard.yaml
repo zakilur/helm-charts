@@ -24,6 +24,8 @@ spec:
         env:
         - name: FABRIC_SERVER
           value: '{{ tpl .Values.dashboard.fabric_server . }}'
+        - name: CONFIG_SERVER
+          value: '{{ tpl .Values.dashboard.config_server . }}'
         - name: USE_PROMETHEUS
           value: '{{ .Values.dashboard.use_prometheus }}'
         - name: OBJECTIVES_SERVER

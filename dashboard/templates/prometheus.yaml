@@ -15,6 +15,7 @@ spec:
         app: prometheus
         deployment: prometheus
     spec:
+      serviceAccountName: control-sa
       {{- if and .Values.global.environment (ne .Values.global.environment "openshift") }}
       securityContext:
         fsGroup: 65534
@@ -60,23 +61,7 @@ spec:
         - name: metrics
           containerPort: 8081
         env:
-    {{- range $envvar := .Values.sidecar_prometheus.envvars }}
-        {{- $envName := $envvar.name | upper | replace "." "_" | replace "-" "_" }}
-        {{- if eq $envvar.type "secret" }}
-        - name: {{ $envName }}
-          valueFrom:
-            secretKeyRef:
-              name: {{ $envvar.secret }}
-              key: {{ $envvar.key }}
-        {{- else if eq $envvar.type "value" }}
-        - name: {{ $envName }}
-          value: {{ tpl $envvar.value $ | quote }}
-        {{- end }}
-    {{- end  }}
-        # - name: ZK_ADDRS
-        #   value:  {{ template "greymatter.exhibitor.address" . }}
-        # - name: ZK_ANNOUNCE_PATH
-        #   value: "/services/prometheus/{{ .Values.prometheus.version }}"
+{{- include "generic.envvars" (dict "envvars" .Values.sidecar_prometheus.envvars "top" .) | indent 10 }}
         volumeMounts:
         - name: sidecar
           mountPath: /etc/proxy/tls/sidecar

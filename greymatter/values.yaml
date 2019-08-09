@@ -70,6 +70,11 @@ global:
       routes:
         - '/services/dashboard/latest'
         - '/services/dashboard/latest/'
+    
+    prometheus:
+      name: 'Prometheus'
+      serviceName: 'prometheus'
+      port: 9090
 
     data:
       name: 'Grey Matter Data'

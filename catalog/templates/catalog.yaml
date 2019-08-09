@@ -45,7 +45,7 @@ spec:
               value: '{{ .Values.global.control.name }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.global.control.port }}'
             - name: 'CONTROL_SERVER_0_ZONE_NAME'
               value: 'default-zone'
-            - name: 'CONTROL_SERVER_0_REQUEST_CLUSTER'
+            - name: 'CONTROL_SERVER_0_REQUEST_CLUSTER_NAME'
               value: 'edge'
 
             {{- range $index, $service := .Values.catalog.services }}

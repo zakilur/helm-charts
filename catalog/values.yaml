@@ -45,7 +45,7 @@ catalog:
       
       cluster_name: catalog
       enable_instance_metrics: "true"
-      metrics_port: "8001"
+      
       capability: 'Grey Matter'
       documentation: '/services/catalog/{{ $.Values.global.catalog.version }}/'
       name: 'Grey Matter Catalog'
@@ -56,7 +56,7 @@ catalog:
       # 
       # cluster_name: control
       # enable_instance_metrics: "true"
-      # metrics_port: "8001"
+      # 
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter Control'
@@ -68,7 +68,7 @@ catalog:
       
       cluster_name: dashboard
       enable_instance_metrics: "true"
-      metrics_port: "8001"
+      
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter Dashboard'
@@ -80,7 +80,7 @@ catalog:
       
       cluster_name: data
       enable_instance_metrics: "true"
-      metrics_port: "8001"
+      
       capability: 'Grey Matter'
       documentation: '/services/data/{{ .Values.global.data.version }}/static/ui/index.html'
       name: 'Grey Matter Data'
@@ -92,7 +92,7 @@ catalog:
       
       cluster_name: jwt-security
       enable_instance_metrics: "true"
-      metrics_port: "8001"
+      
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter JWT Security'
@@ -104,7 +104,7 @@ catalog:
       
       cluster_name: edge
       enable_instance_metrics: "true"
-      metrics_port: "8001"
+      
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter Edge'
@@ -116,7 +116,7 @@ catalog:
       
       cluster_name: slo
       enable_instance_metrics: "true"
-      metrics_port: "8001"
+      
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter Service Level Objectives'
@@ -128,7 +128,7 @@ catalog:
       
       cluster_name: documentation
       enable_instance_metrics: "true"
-      metrics_port: "8001"
+      
       capability: 'Grey Matter'
       documentation: '/services/documentation/{{ $.Values.global.documentation.version }}/'
       name: 'Grey Matter Documentation'
