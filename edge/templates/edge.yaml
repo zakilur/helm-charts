@@ -36,7 +36,7 @@ spec:
           containerPort: 8081
         volumeMounts:
         - name: edge
-          mountPath: /etc/proxy/tls/edge
+          mountPath: {{ .Values.global.edge.certPath }}
         - name: spire-agent-socket
           mountPath: /run/spire/sockets
           readOnly: true

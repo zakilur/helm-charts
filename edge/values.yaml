@@ -14,6 +14,8 @@ global:
   xds:
     port: 18000
     cluster: greymatter
+  edge:
+    certPath: /etc/proxy/tls/edge
 
 ingress_config:
   default_url: '{{ .Values.global.route_url_name }}.{{ .Release.Namespace }}.{{ .Values.global.domain }}'
