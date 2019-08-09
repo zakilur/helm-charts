@@ -3,6 +3,8 @@
   "domain_key": "domain-{{.service.serviceName}}",
   "zone_key": "{{.service.zone}}",
   "path": "/",
+  "prefix_rewrite": null,
+  "redirects": null,
   "shared_rules_key": "shared-rules-{{ .service.serviceName }}",
   "rules": null,
   "response_data": {},

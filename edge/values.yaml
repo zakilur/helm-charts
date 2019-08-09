@@ -66,46 +66,9 @@ sidecar:
       cpu: 100m
       memory: 128Mi
   envvars:
-    inheaders_enabled:
-      type: 'value'
-      value: '{{ .Values.edge.inheaders_enabled }}'
-    obs_enabled:
-      type: 'value'
-      value: '{{ .Values.edge.obs_enabled }}'
-    obs_full_response:
-      type: 'value'
-      value: '{{ .Values.edge.obs_full_response }}'
-    # port:
-    #   type: 'value'
-    #   value: '8443'
-    proxy_dynamic:
-      type: 'value'
-      value: 'true'
-    # acl_enabled:
-    #   type: 'value'
-    #   value: '{{ .Values.edge.acl_enabled }}'
-    # timeout:
-    #   type: 'value'
-    #   value: '{{ .Values.sidecar.timeout }}'
-    # service_host:
-    #   type: 'value'
-    #   value: ''
-    # metrics_port:
-    #   type: 'value'
-    #   value: ''
-    # metrics_key_function:
-    #   type: 'value'
-    #   value: ''
-    # All TLS options are now configured through gm-control-api
     xds_cluster:
       type: value
       value: 'edge'
-    kafka_enabled:
-      type: value
-      value: 'false'
-    kafka_zk_discover:
-      type: value
-      value: 'false'
 
   # Set this to true if you are attempting to deploy Catalog by itself.
   # Ideally, catalog is deployed as a dependency to Grey Matter, which creates the

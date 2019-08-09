@@ -41,9 +41,11 @@ done
 
 # The edge service is created last as it links to the clusters of every other service.
 # The edge domain must be created before it can be referenced
-cd $MESH_CONFIG_DIR/domain
-echo "Creating domain configuration object"
+cd $MESH_CONFIG_DIR/special
+echo "Creating special configuration objects (domain, edge listener + proxy)"
 greymatter create domain < domain.json
+greymatter create listener <listener.json
+greymatter create proxy < proxy.json
 
 cd $MESH_CONFIG_DIR/edge
 echo "Creating edge configuration objects"

@@ -8,7 +8,7 @@ echo "k8s Namespace: $KUBERNETES_NAMESPACE"
 services=$(cat $SERVICE_LIST_FILE)
 echo "Got: $services"
 
-services="$services spire-client"
+services="$services edge spire-client"
 echo "Final service list: $services"
 
 delay=5
@@ -47,7 +47,6 @@ else
                 entry create \
                 -parentID spiffe://deciphernow.com/nodes \
                 -spiffeID spiffe://deciphernow.com/$service \
-                -ttl 30 \
                 -selector k8s:pod-label:app:$service \
                 -selector k8s:ns:$KUBERNETES_NAMESPACE \
                 -registrationUDSPath $REGISTRATION_API_PATH &&
@@ -55,7 +54,6 @@ else
                 entry create \
                 -parentID spiffe://deciphernow.com/$service \
                 -spiffeID spiffe://deciphernow.com/$service/mTLS \
-                -ttl 30 \
                 -selector k8s:pod-label:app:$service \
                 -selector k8s:ns:$KUBERNETES_NAMESPACE \
                 -registrationUDSPath $REGISTRATION_API_PATH &&

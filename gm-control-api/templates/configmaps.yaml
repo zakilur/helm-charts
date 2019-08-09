@@ -3,11 +3,13 @@
 {{- range $name, $service := .Values.global.services }}
     {{- $svidList = append $svidList (print "spiffe://" $top.Values.global.spire.trustDomain "/" $service.serviceName "/mTLS") }}
 {{- end }}
+{{- $svidList = append $svidList (print "spiffe://" $top.Values.global.spire.trustDomain "/edge/mTLS") }}
+{{- $svidList = append $svidList (print "spiffe://" $top.Values.global.spire.trustDomain "/spire-client/mTLS") }}
 {{- /* We loop over all the services to create the individual service objects */}}
 {{- range $name, $service := .Values.global.services }}
 ---
 {{/* {{- $lSecret := (default $service.removeListenerSecret false) }} */}}
-{{- $serviceExtras := (dict "top" $top "authorizedSvids" $svidList "zone" $top.Values.gmControlApi.zone "svidList" (toJson $svidList)) }}
+{{- $serviceExtras := (dict "top" $top "authorizedSvids" $svidList "mTLS" $top.Values.global.spire.enabled "zone" $top.Values.gmControlApi.zone "svidList" (toJson $svidList)) }}
 {{- $svc := merge $service $serviceExtras }}
 {{- $scope := set $top "service" $svc }}
 apiVersion: v1
@@ -29,6 +31,7 @@ data:
 ---
 {{- $scope := set $top "service" $service }}
 {{- $scope = set $scope "zone" $top.Values.gmControlApi.zone }}
+{{- $scope = set $scope "mTLS" $top.Values.global.spire.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -47,9 +50,11 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: domain-mesh-config
+  name: special-mesh-config
   namespace: default
-  mesh-config-type: domain
+  mesh-config-type: special
 data:
-  domain.json: |-
-{{ tpl ($top.Files.Get "json/domain/domain.json") . | indent 4 }}
+{{- range $path, $bytes := $top.Files.Glob "json/special/**.json" }}
+  {{ base $path }}: |-
+{{ tpl ($top.Files.Get $path) $top | indent 4 }}
+{{- end }}

@@ -37,26 +37,16 @@ spec:
           ports:
             - containerPort: 8090
               name: http
-
-
         - name: sidecar
           image: {{ tpl .Values.sidecar.image $ | quote }}
           imagePullPolicy: Always
           env:
           {{- include "greymatter.envvars" . | indent 10 }}
-          # - name: ZK_ADDRS
-          #   value: {{ template "greymatter.exhibitor.address" . }}
-          # - name: ZK_ANNOUNCE_PATH
-          #   value: {{ .Values.documentation.base_path | quote }}
-
           ports:
             - containerPort: 8080
               name: proxy
               protocol: TCP
-            - containerPort: 8443
-              name: https-port
-              protocol: TCP
-            - containerPort: 8001
+            - containerPort: 8081
               name: metrics
               protocol: TCP
           resources: {}

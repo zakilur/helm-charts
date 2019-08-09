@@ -8,7 +8,7 @@
   "listener_keys": [
       "listener-{{.service.serviceName}}"
   ],
-  "listeners": [],
+  "listeners": null,
   "active_proxy_filters": ["gm.metrics"],
   "proxy_filters": {
       "gm_metrics": {
@@ -20,12 +20,11 @@
           "prometheus_system_metrics_interval_seconds": 15,
           "metrics_key_function": "none"
       }
-  },
+  }{{- if .service.mTLS }},
   "secret": {
     "secret_key": "secret-{{.service.serviceName}}-secret",
     "secret_name": "spiffe://deciphernow.com/{{.service.serviceName}}/mTLS",
     "secret_validation_name": "spiffe://deciphernow.com",
-    "subject_names": {{ toJson .service.authorizedSvids }},
     "ecdh_curves": [
         "X25519:P-256:P-521:P-384"
     ],
@@ -34,4 +33,5 @@
         "uri": true
     }
   }
+  {{- end }}
 }

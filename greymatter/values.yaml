@@ -114,8 +114,6 @@ global:
         - '/services/documentation/{{ $.Values.global.documentation.version }}'
         - '/services/documentation/{{ $.Values.global.documentation.version }}/'
 
-  # sidecar:
-  #   envvars:
   # All of the mesh-wide environment variables should be set in your `custom.yaml` file
 
 sidecar:

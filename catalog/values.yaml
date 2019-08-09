@@ -148,12 +148,9 @@ sidecar:
       cpu: 100m
       memory: 128Mi
   envvars:
-    port:
-      type: 'value'
-      value: '8080'
-    service_port:
-      type: 'value'
-      value: '9080'
+    xds_cluster:
+      type: value
+      value: 'catalog'
     kafka_topic:
       type: value
       value: 'gm-catalog'

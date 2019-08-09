@@ -57,10 +57,6 @@ spec:
             secretKeyRef:
               name: {{ .Values.redis.secret_name }}
               key: password
-        ports:
-        - containerPort: 3000
-          name: http
-          protocol: TCP
         volumeMounts:
         - name: jwt-users
           mountPath: {{ .Values.jwt.users_mount_point }}

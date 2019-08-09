@@ -31,8 +31,8 @@ spec:
             - name: edge-config-volume-{{$service.serviceName}}
               mountPath: /etc/config/mesh/edge/{{$service.serviceName}}
           {{- end }}
-            - name: domain-config-volume
-              mountPath: /etc/config/mesh/domain
+            - name: special-config-volume
+              mountPath: /etc/config/mesh/special
             - name: bootstrap-script-volume
               mountPath: /tmp/bootstrap
       volumes:
@@ -48,8 +48,8 @@ spec:
           configMap:
             name: bootstrap-script
             defaultMode: 0777
-        - name: domain-config-volume
+        - name: special-config-volume
           configMap:
-            name: domain-mesh-config
+            name: special-mesh-config
       imagePullSecrets:
         - name: docker.secret

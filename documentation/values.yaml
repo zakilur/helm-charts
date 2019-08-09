@@ -38,18 +38,6 @@ sidecar:
       cpu: 100m
       memory: 128Mi
   envvars:
-    service_port:
-      type: value
-      value: '8090'
-    service_host:
-      type: value
-      value: '127.0.0.1'
-    # kafka_topic:
-    #   type: value
-    #   value: 'gm-documentation'
-    # port:
-    #   type: value
-    #   value: '9080'
     xds_cluster:
       type: value
       value: 'documentation'

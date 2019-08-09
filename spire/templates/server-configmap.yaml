@@ -17,7 +17,7 @@ data:
       ca_subject = {
         Country = ["US"],
         Organization = ["SPIFFE"],
-        CommonName = "",
+        CommonName = "Grey Matter SPIFFE CA",
       }
     }
 

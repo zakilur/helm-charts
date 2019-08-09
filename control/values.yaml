@@ -54,6 +54,9 @@ control:
     gm_control_kubernetes_cluster_label:
       type: 'value'
       value: 'app'
+    gm_control_kubernetes_port_name:
+      type: 'value'
+      value: 'proxy'
     gm_control_kubernetes_namespace:
       type: 'value'
       value: '{{ .Release.Namespace }}'

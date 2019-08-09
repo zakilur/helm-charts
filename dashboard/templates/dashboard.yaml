@@ -40,7 +40,7 @@ spec:
 {{ toYaml .Values.sidecar.resources | indent 10 }}
         {{- end }}
         ports:
-        - name: http
+        - name: proxy
           containerPort: 8080
         - name: metrics
           containerPort: 8081
