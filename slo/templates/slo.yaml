@@ -15,6 +15,17 @@ spec:
         app: slo
         deployment: slo
     spec:
+      serviceAccountName: control-sa
+      initContainers:
+        - name: ensure-postgres
+          image: deciphernow/k8s-waiter
+          env:
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: SERVICE
+              value: postgres-slo
+            - name: POST_DELAY
+              value: "3"
       containers:
       - name: slo
         image: {{ .Values.slo.image | quote }}

@@ -51,6 +51,12 @@ spec:
           - name: certificates
             mountPath: {{ .Values.postgres.ssl.mount_path }}
         {{- end }}
+        readinessProbe:
+          tcpSocket:
+            port: postgres
+          # Pods are considered to be in a Failure state before the initialDelaySeconds has passed, meaning they won't be backends for a service
+          initialDelaySeconds: 5
+          periodSeconds: 2
       {{- if .Values.postgres.private_image }}
       imagePullSecrets:
       - name: docker.secret
