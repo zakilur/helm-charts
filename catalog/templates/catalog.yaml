@@ -15,6 +15,17 @@ spec:
         app: catalog
         deployment: catalog
     spec:
+      serviceAccountName: control-sa
+      initContainers:
+        - name: ensure-gm-control
+          image: deciphernow/k8s-waiter
+          env:
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: SERVICE
+              value: control
+            - name: POST_DELAY
+              value: "10"
       containers:
         - name: catalog
           image: {{ tpl .Values.catalog.image $ }}
@@ -30,14 +41,20 @@ spec:
               value: {{ .Values.catalog.debug | quote }}
             - name: PORT
               value: '9080'
-            - name: XDS_SERVER_0_ADDRESS
+            - name: CONTROL_SERVER_0_ADDRESS
               value: '{{ .Values.global.control.name }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.global.control.port }}'
-            - name: 'XDS_SERVER_0_MESH_ID'
+            - name: 'CONTROL_SERVER_0_ZONE_NAME'
               value: 'default-zone'
-            - name: 'XDS_SERVER_0_REQUEST_CLUSTER'
+            - name: 'CONTROL_SERVER_0_REQUEST_CLUSTER'
               value: 'edge'
 
             {{- range $index, $service := .Values.catalog.services }}
+            - name: "{{ $index | upper }}_ZONE_NAME"
+              value: "default-zone"
+            - name: "{{ $index | upper }}_METRICS_PORT"
+              value: "8081"
+            - name: "{{ $index | upper }}_ENABLE_HISTORICAL_METRICS"
+              value: "true"
             {{- range $key, $val := $service }}
             - name: "{{ $index | upper }}_{{ $key | upper}}"
               value: "{{ tpl $val $ }}"
