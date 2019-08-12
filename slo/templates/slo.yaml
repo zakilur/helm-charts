@@ -89,14 +89,11 @@ spec:
         # - name: ZK_ANNOUNCE_PATH
         #   value: "/services/slo/{{ .Values.slo.version }}"
         volumeMounts:
-        - name: sidecar
-          mountPath: /etc/proxy/tls/sidecar
+        {{- include "sidecar_volume_mounts" . | indent 8 }}
       imagePullSecrets:
         - name: docker.secret
       volumes:
-        - name: sidecar
-          secret:
-            secretName: sidecar
+      {{- include "sidecar_volumes" . | indent 6 }}
         {{- if .Values.postgres.ssl.enabled }}
         - name: certs
           secret:

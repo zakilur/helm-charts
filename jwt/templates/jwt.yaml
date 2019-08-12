@@ -78,17 +78,14 @@ spec:
           name: metrics
           protocol: TCP
         volumeMounts:
-        - name: sidecar
-          mountPath: /etc/proxy/tls/sidecar
+        {{- include "sidecar_volume_mounts" . | indent 8 }}
       imagePullSecrets:
         - name: docker.secret
       volumes:
-        - name: sidecar
-          secret:
-            secretName: sidecar
-        - name: jwt-security
-          secret:
-            secretName: jwt-security
-        - name: jwt-users
-          configMap:
-            name: jwt-users
+      {{- include "sidecar_volumes" . | indent 6 }}
+      - name: jwt-security
+        secret:
+          secretName: jwt-security
+      - name: jwt-users
+        configMap:
+          name: jwt-users

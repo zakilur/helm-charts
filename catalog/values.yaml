@@ -47,7 +47,7 @@ catalog:
       enable_instance_metrics: "true"
       
       capability: 'Grey Matter'
-      documentation: '/services/catalog/{{ $.Values.global.catalog.version }}/'
+      documentation: '/services/catalog/latest/'
       name: 'Grey Matter Catalog'
       owner: 'Decipher'
       version: '{{ $.Values.global.catalog.version | trunc 3 }}'
@@ -82,7 +82,7 @@ catalog:
       enable_instance_metrics: "true"
       
       capability: 'Grey Matter'
-      documentation: '/services/data/{{ .Values.global.data.version }}/static/ui/index.html'
+      documentation: '/services/data/latest/static/ui/index.html'
       name: 'Grey Matter Data'
       owner: 'Decipher'
       version: '{{ $.Values.global.data.version | trunc 3 }}'
@@ -130,7 +130,7 @@ catalog:
       enable_instance_metrics: "true"
       
       capability: 'Grey Matter'
-      documentation: '/services/documentation/{{ $.Values.global.documentation.version }}/'
+      documentation: '/services/documentation/latest/'
       name: 'Grey Matter Documentation'
       owner: 'Decipher'
       version: '{{ $.Values.global.documentation.version | trunc 3 }}'
