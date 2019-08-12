@@ -17,8 +17,6 @@ kind: ConfigMap
 metadata:
   name: service-{{.serviceName}}-mesh-config
   namespace: default
-  mesh-config: {{.serviceName}}
-  mesh-config-type: service
 data:
 {{- range $path, $bytes := $top.Files.Glob "json/services/**.json" }}
   {{ base $path }}: |-
@@ -37,8 +35,6 @@ kind: ConfigMap
 metadata:
   name: edge-{{.serviceName}}-mesh-config
   namespace: default
-  mesh-config: {{.serviceName}}
-  mesh-config-type: edge
 data:
 {{- range $path, $bytes := $top.Files.Glob "json/edge/**.json" }}
   {{ base $path }}: |-
@@ -52,7 +48,6 @@ kind: ConfigMap
 metadata:
   name: special-mesh-config
   namespace: default
-  mesh-config-type: special
 data:
 {{- range $path, $bytes := $top.Files.Glob "json/special/**.json" }}
   {{ base $path }}: |-
