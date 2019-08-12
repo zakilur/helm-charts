@@ -47,6 +47,8 @@ greymatter create domain < domain.json
 greymatter create listener <listener.json
 greymatter create proxy < proxy.json
 greymatter create cluster < cluster.json
+greymatter create shared_rules < shared_rules.json
+greymatter create route < route.json
 
 cd $MESH_CONFIG_DIR/edge
 echo "Creating edge configuration objects"
