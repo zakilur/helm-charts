@@ -18,7 +18,7 @@ documentation:
   envvars:
     - type: value
       name: base_path
-      value: '/services/documentation/3.0.0/'
+      value: '/services/documentation/latest/'
     - type: value
       name: hidden_content_titles
       value: 'Setup,FAQ'

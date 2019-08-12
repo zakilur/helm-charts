@@ -48,7 +48,9 @@ spec:
           containerPort: 8081
         env:
         {{- include "greymatter.envvars" . | indent 8 }}
+        volumeMounts:
         {{- include "sidecar_volume_mounts" . | indent 8 }}
+      volumes:
       {{- include "sidecar_volumes" . | indent 6 }}
       imagePullSecrets:
         - name: docker.secret

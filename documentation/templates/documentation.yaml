@@ -52,7 +52,9 @@ spec:
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
+          volumeMounts:
           {{- include "sidecar_volume_mounts" . | indent 10 }}
+      volumes:
       {{- include "sidecar_volumes" . | indent 6 }}
       dnsPolicy: ClusterFirst
       imagePullSecrets:

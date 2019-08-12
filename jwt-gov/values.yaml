@@ -201,7 +201,7 @@ sidecar:
   envvars:
     xds_cluster:
       type: value
-      value: 'jwt'
+      value: 'jwt-security'
 
   # Set this to true if you are attempting to deploy xDS by itself.
   # Ideally, xDS is deployed as a dependency to Grey Matter, which creates the

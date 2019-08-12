@@ -40,7 +40,7 @@ spec:
         - "--web.console.libraries=/usr/share/prometheus/console_libraries"
         - "--web.console.templates=/usr/share/prometheus/consoles"
         - "--web.enable-admin-api"
-        - "--web.external-url=https://{{ .Values.route_url_name }}.{{ .Release.Namespace }}.{{ .Values.DOMAIN }}/services/prometheus/{{ .Values.prometheus.version }}"
+        - "--web.external-url=http://anything/services/prometheus/latest"
         - "--web.route-prefix=/"
         volumeMounts:
         - name: prometheus-configuration
@@ -55,6 +55,8 @@ spec:
         resources:
 {{ toYaml .Values.sidecar_prometheus.resources | indent 10 }}
         {{- end }}
+        volumeMounts:
+        {{- include "sidecar_volume_mounts" . | indent 8 }}
         ports:
         - name: proxy
           containerPort: 8080
@@ -62,18 +64,13 @@ spec:
           containerPort: 8081
         env:
 {{- include "generic.envvars" (dict "envvars" .Values.sidecar_prometheus.envvars "top" .) | indent 10 }}
-        volumeMounts:
-        - name: sidecar
-          mountPath: /etc/proxy/tls/sidecar
       imagePullSecrets:
       - name: docker.secret
       volumes:
+      {{- include "sidecar_volumes" . | indent 6 }}
       - name: prometheus-configuration
         configMap:
           name: prometheus
       - name: prometheus-data
         persistentVolumeClaim:
           claimName: prometheus
-      - name: sidecar
-        secret:
-          secretName: sidecar

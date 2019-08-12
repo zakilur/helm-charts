@@ -23,64 +23,17 @@ The command deploys greymatter on the cluster in the default configuration. The 
 ## Making the cluster accessible from the internet
 
 Take a look at the `edge` chart documentation for details on how Grey Matter is exposed to the internet in both OpenShift and Kubernetes environments.
-For Kubernetes, you need to take some additional steps to install Voyager, the ingress controller we use.
+For Kubernetes, you need to take some additional steps to install Voyager, the ingress controller we use. For OpenShift, we use their `Route`s, which are effectively the same as Kubernetes ingresses.
 
 ## Configuration
 
 The following table lists the configurable parameters of the edge chart and their default values.
 
-### Global Configuration
+## Routing
 
-| Parameter                        | Description       | Default    |
-| -------------------------------- | ----------------- | ---------- |
-| global.environment               |                   | kubernetes |
-| global.domain                    | edge-ingress.yaml |            |
-| global.route_url_name            | edge-ingress.yaml |            |
-| global.remove_namespace_from_url | edge-ingress.yaml | false      |
-| global.catalog.version           |                   | 0.3.6      |
-| global.dashboard.version         |                   | latest     |
-| global.data.version              |                   | 0.2.3      |
-| global.documentation.version     |                   | 3.0.0      |
-| global.edge.version              |                   | 0.7.1      |
-| global.exhibitor.replicas        |                   | 1          |
-| global.exhibitor.version         |                   |            |
-| global.jwt.version               |                   | 0.2.0      |
-| global.slo.version               |                   | 0.4.0      |
-| global.xds.cluster               |                   | greymatter |
-| global.xds.port                  |                   | 18000      |
-| global.xds.version               |                   | 0.2.6      |
+All routing configuration is defined by the `helm-charts/gm-control-api/json` folder, which specifies all of the mesh objects to create for each service both for its own proxy (service) and for routing from the edge node to its proxy (edge), along with any special mesh objects needed (aka the domain, edge cluster, etc).
 
-### Sidecar Configuration
-
-Grey Matter supports defining default values for sidecar environment variables to help quickly change properties of the service mesh instantly across every component. These are set in the `global.sidecar` key. However, we also support overwriting default sidecar environment variables at the subchart/service level for flexibility and customization.
-
-In the table below we outline all of the supported sidecar environment variables along with their default global values. For this documentation, we will simply use the key used to configure that variable, which is accessible and configurable at both `global.sidecar.envvars.<key>` or `sidecar.envvars.<key>`.
-
-| Environment Variable    | Description                       | Default |
-| ----------------------- | --------------------------------- | ------- |
-| ingress_use_tls         | true                              |         |
-| ingress_ca_cert_path    | /etc/proxy/tls/sidecar/ca.crt     |         |
-| ingress_cert_path       | /etc/proxy/tls/sidecar/server.crt |         |
-| ingress_key_path        | /etc/proxy/tls/sidecar/server.key |         |
-| metrics_key_function    | depth                             |         |
-| metrics_port            | 8081                              |         |
-| proxy_dynamic           | true                              |         |
-| service_host            | 127.0.0.1                         |         |
-| obs_enabled             | false                             |         |
-| obs_enforce             | false                             |         |
-| obs_full_response       | false                             |         |
-| kafka_enabled           | false                             |         |
-| kafka_zk_discover       | false                             |         |
-| kafka_server_connection | kafka:9091,kafka2:9091            |         |
-| port                    |                                   |         |
-| service_port            |                                   |         |
-| kafka_topic             |                                   |         |
-| zk_addrs                |                                   |         |
-| zk_announce_path        |                                   |         |
-| egress_use_tls          |                                   |         |
-| egress_ca_cert_path     |                                   |         |
-| egress_cert_path        |                                   |         |
-| egress_key_path         |                                   |         |
+Currently, each service is served at `/services/dashboard/latest/`. Previously, we had served each route at a URL containing the version of the service (e.g. `/services/dashboard/3.0.0/`) However, in order to provide better flexibility, the GM 2.0 deployment will only provide the first one for now.
 
 #### Caveats
 This is implemented by a helper template (in  `templates/_helpers.tpl`) which loops over the global envvars and uses local ones if they are available. This means that to use a sidecar environment variable at the local level, its name and type must already be defined at the global level, however, a global default does not need to be set.
