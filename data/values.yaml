@@ -7,9 +7,6 @@ global:
   remove_namespace_from_url: ''
   exhibitor:
     replicas: 1
-  xds:
-    port: 18000
-    cluster: greymatter
 
 data:
   # The name of this installation of GM Data.  Used in the zookeeper address.  Allow to be unique to support multiple installations of Data
@@ -30,7 +27,7 @@ data:
     standalone: false
     exhibitor_address:
     base_path: /services/{{ .Release.Namespace | lower }}-{{ $.Values.data.name | lower }}/{{ $.Values.data.version }}
-    xds:
+    control:
       cluster:
       address:
     secrets:
@@ -120,7 +117,7 @@ data:
       key: database
     - type: value
       name: gmdata_use_tls
-      value: 'true'
+      value: 'false'
     - type: secret
       name: gmdata_cert
       secret: jwt-certs

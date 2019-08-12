@@ -71,44 +71,18 @@ spec:
         {{- end }}
         env:
           {{- include "greymatter.envvars" . | indent 10 }}
-          - name: XDS_CLUSTER
-            {{- if .Values.data.deploy.standalone }}
-            {{- if .Values.data.deploy.xds.address }}
-            value: {{ .Values.data.deploy.xds.cluster }}
-            {{- end }}
-            {{- end }}
             # XDS_CLUSTER should be set in values.yaml for regular (non-standalone) deployments
-          - name: XDS_HOST
+            # The rest of the values will automatically be populated by the envvars template
             {{- if .Values.data.deploy.standalone }}
             {{- if .Values.data.deploy.xds.address }}
+          - name: XDS_CLUSTER
+            value: {{ .Values.data.deploy.xds.cluster }}
+          - name: XDS_HOST
             value: {{ .Values.data.deploy.xds.address }}
-            {{- end }}
-            {{- else }}
-            value: "xds.{{ .Release.Namespace }}.svc.cluster.local"
             {{- end }}
           - name: XDS_PORT
             value: {{ .Values.global.xds.port | quote }}
-          # - name: ZK_ADDRS
-          #   {{- if .Values.data.deploy.standalone }}
-          #   {{- if .Values.data.deploy.exhibitor_address }}
-          #   value: {{ .Values.data.deploy.exhibitor_address }}
-          #   {{- else }}
-          #   value: {{ template "greymatter.exhibitor.address" . }}
-          #   {{- end }}
-          #   {{- else }}
-          #   value: {{ template "greymatter.exhibitor.address" . }}
-          #   {{- end }}
-          # - name: ZK_ANNOUNCE_PATH
-          #   {{- if .Values.data.deploy.standalone }}
-          #   {{- if .Values.data.deploy.base_path }}
-          #   value: {{ tpl .Values.data.deploy.base_path $ | quote }}
-          #   {{- end }}
-          #   {{- else }}
-          #   value: {{ tpl .Values.data.base_path $ | quote }}
-          #   {{- end }}
-          # - name: TIMEOUT
-          #   value: {{ .Values.sidecar.timeout | quote  }}
-
+            {{- end }}
 
         imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
         {{- if .Values.sidecar.resources }}
