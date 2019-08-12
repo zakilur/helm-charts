@@ -4,4 +4,4 @@ metadata:
   name: service-list
 data:
   services.txt: |
-    {{ range $name, $service := .Values.global.services }}{{$name}} {{ end }}
+    {{ range $name, $service := .Values.global.services }}{{$service.serviceName}} {{ end }}

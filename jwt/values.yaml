@@ -36,7 +36,7 @@ jwt:
 
   envvars:
     - type: value
-      name: HTTPS_PORT
+      name: HTTP_PORT
       value: '3000'
     - type: secret
       name: PRIVATE_KEY
@@ -48,19 +48,7 @@ jwt:
       key: jwt.api_key
     - type: value
       name: ENABLE_TLS
-      value: true
-    - type: secret
-      name: SERVER_TRUST
-      secret: jwt-certs
-      key: jwt.trust.pem
-    - type: secret
-      name: SERVER_CERT
-      secret: jwt-certs
-      key: jwt.cert.pem
-    - type: secret
-      name: SERVER_KEY
-      secret: jwt-certs
-      key: jwt.key.pem
+      value: false
 
   secrets:
     - name: jwt-certs
