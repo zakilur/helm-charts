@@ -94,10 +94,8 @@ spec:
         - name: docker.secret
       volumes:
       {{- include "sidecar_volumes" . | indent 6 }}
-        {{- if .Values.postgres.ssl.enabled }}
-        - name: certs
-          secret:
-            secretName: {{ .Values.postgres.ssl.name }}
-        {{- end }}
-
-
+      {{- if .Values.postgres.ssl.enabled }}
+      - name: certs
+        secret:
+          secretName: {{ .Values.postgres.ssl.name }}
+      {{- end }}

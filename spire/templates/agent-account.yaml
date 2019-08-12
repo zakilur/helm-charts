@@ -11,7 +11,7 @@ metadata:
     rbac.authorization.kubernetes.io/autoupdate: "true"
   labels:
   name: full-read-only
-  namespace: default
+  namespace: {{ .Release.Namespace }}
 rules:
 - apiGroups:
   - ""
@@ -42,7 +42,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: spire-agent
-  namespace: default
+  namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: full-read-only
