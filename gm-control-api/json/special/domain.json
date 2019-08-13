@@ -1,6 +1,6 @@
 {
     "domain_key": "edge",
-    "zone_key": "zone-default-zone",
+    "zone_key": "{{ .Values.gmControlApi.zone }}",
     "name": "*",
     "port": 8080,
     "redirects": null,

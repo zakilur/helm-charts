@@ -21,6 +21,7 @@ spec:
       containers:
         - image: {{ tpl .Values.gmControlApi.init.image . }}
           name: {{ .Values.gmControlApi.name }}-init
+          imagePullPolicy: {{ .Values.gmControlApi.init.imagePullPolicy }}
           command: ["/tmp/bootstrap/bootstrap.sh"]
           env:
           {{- include "envvars" (dict "envvar" .Values.gmControlApi.init.envvars "top" $) | indent 12 }}

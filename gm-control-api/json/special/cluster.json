@@ -1,6 +1,6 @@
 {
     "cluster_key": "cluster-edge",
-    "zone_key": "zone-default-zone",
+    "zone_key": "{{ .Values.gmControlApi.zone }}",
     "name": "edge",
     "instances": [
       {

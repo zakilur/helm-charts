@@ -18,13 +18,13 @@ gmControlApi:
   displayName: gm-control-api
   replicas: 1
   image: 'docker.production.deciphernow.com/deciphernow/gm-control-api:{{ $.Values.global.gmControlApi.version }}'
-  imagePullPolicy: Always # IfNotPresent
-  initialConfigPath: 'config/backend.json'
+  imagePullPolicy: Always
   containerPort: 5555
   zone: zone-default-zone
   proxyPort: 8080
   init:
     image: 'docker.production.deciphernow.com/deciphernow/greymatter:latest'
+    imagePullPolicy: Always
     envvars:
       greymatter_console_level:
           value: 'debug'
@@ -54,6 +54,9 @@ gmControlApi:
     gm_control_api_persister_type:
       type: 'value'
       value: 'null'
+    gm_control_api_zone_key:
+      type: 'value'
+      value: '{{ .Values.gmControlApi.zone }}'
   resources:
     {}
     # We usually recommend not to specify default resources and to leave this as a conscious
