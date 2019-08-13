@@ -11,7 +11,7 @@ global:
     port: 18000
     cluster: greymatter
   control:
-    version: latest
+    version: 0.2.1
 
 control:
   name: 'control'
