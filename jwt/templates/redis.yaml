@@ -13,14 +13,14 @@ spec:
       app: redis
       deployment: redis
   strategy:
-    activeDeadlineSeconds: 21600
-    resources: {}
-    rollingParams:
-      intervalSeconds: 1
+#    activeDeadlineSeconds: 21600
+#    resources: {}
+    rollingUpdate:
+#      intervalSeconds: 1
       maxSurge: 25%
       maxUnavailable: 25%
-      timeoutSeconds: 600
-      updatePeriodSeconds: 1
+#      timeoutSeconds: 600
+#      updatePeriodSeconds: 1
     type: RollingUpdate
   template:
     metadata:
@@ -61,6 +61,6 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
-  test: false
-  triggers:
-    - type: ConfigChange
+#  test: false
+#  triggers:
+#    - type: ConfigChange
