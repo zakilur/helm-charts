@@ -28,8 +28,16 @@ spire:
     # Spire server config file location
     configFilePath: /run/spire/config/server.conf
     configFileDir: /run/spire/config
+    # The spire server ServiceAccount is used to validate Kubernetes tokens using the Token Review API
+    serviceAccount:
+      create: true
+      name: spire-server-sa
   agent:
     image: gcr.io/spiffe-io/spire-agent:0.8.1
+    # The spire agent ServiceAccount is used by the spire agent to read all the properties of pods to create Kubernetes selectors used for attesting the identity of workloads
+    serviceAccount:
+      create: true
+      name: spire-agent-sa
 
   certs:
     # This certificate must match the trust domain specified above

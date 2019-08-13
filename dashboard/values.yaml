@@ -74,6 +74,9 @@ prometheus:
   config_mount_point: /etc/prometheus
   #private_image: false
   start_cmd: /bin/prometheus
+  serviceAccount:
+    create: true
+    name: prometheus-sa
   resources:
     limits:
       cpu: 1

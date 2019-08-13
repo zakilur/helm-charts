@@ -34,7 +34,7 @@ data:
           clusters = {
             # NOTE: Change this to your cluster name
             "{{ .Values.spire.clusterName }}" = {
-              service_account_whitelist = ["{{ .Release.Namespace }}:spire-agent"]
+              service_account_whitelist = ["{{ .Release.Namespace }}:{{ .Values.spire.agent.serviceAccount.name }}"]
               use_token_review_api_validation = true
             }
           }

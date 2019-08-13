@@ -17,7 +17,7 @@ spec:
       labels:
         app: {{ .Values.spire.server.name }}
     spec:
-      serviceAccountName: {{ .Values.spire.server.name }}
+      serviceAccountName: {{ .Values.spire.server.serviceAccount.name }}
       containers:
         - name: {{ .Values.spire.server.name }}
           image: {{ .Values.spire.server.image }}
@@ -46,6 +46,7 @@ spec:
             - name: bootstrap-script-volume
               mountPath: /tmp/bootstrap
           env:
+            # The following environment variables are used by the spire bootstrap script to properly create registration entries
             - name: SERVICE_LIST_FILE
               value: /etc/config/services.txt
             - name: KUBERNETES_NAMESPACE
@@ -59,7 +60,7 @@ spec:
             - name: AGENT_NAMESPACE
               value: {{.Release.Namespace}}
             - name: AGENT_SERVICEACCOUNT
-              value: spire-agent
+              value: {{ .Values.spire.agent.serviceAccount.name }}
             
           livenessProbe:
             tcpSocket:

@@ -15,7 +15,7 @@ spec:
         app: catalog
         deployment: catalog
     spec:
-      serviceAccountName: control-sa
+      serviceAccountName: {{ .Values.global.waiter.serviceAccount.name }}
       initContainers:
         - name: ensure-gm-control
           image: deciphernow/k8s-waiter

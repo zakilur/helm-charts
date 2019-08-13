@@ -19,7 +19,9 @@ control:
   replicas: 1
   image: 'docker.production.deciphernow.com/deciphernow/gm-control:{{ $.Values.global.control.version }}'
   imagePullPolicy: Always
-  
+  serviceAccount:
+    create: true
+    name: control-sa
   envvars:
     gm_control_console_level:
       type: 'value'

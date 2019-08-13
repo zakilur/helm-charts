@@ -47,6 +47,11 @@ global:
    name: 
   spire:
     trustDomain: "deciphernow.com"
+  # The waiter serviceaccount is used by multiple services to wait on other services. It uses the readiness checks and kubernetes API
+  waiter:
+    serviceAccount:
+      create: true
+      name: waiter-sa
   services:
     catalog:
       name: 'Grey Matter Catalog'
