@@ -37,16 +37,20 @@ spec:
         volumeMounts:
         - name: edge
           mountPath: {{ .Values.global.edge.certPath }}
+        {{- if .Values.global.spire.enabled }}
         - name: spire-agent-socket
           mountPath: /run/spire/sockets
           readOnly: true
+        {{- end }}
       imagePullSecrets:
       - name: docker.secret
       volumes:
       - name: edge
         secret:
           secretName: edge
+      {{- if .Values.global.spire.enabled }}
       - name: spire-agent-socket
         hostPath:
           path: /run/spire/sockets
           type: Directory
+      {{- end }}

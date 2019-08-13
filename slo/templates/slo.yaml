@@ -84,16 +84,16 @@ spec:
           containerPort: 8081
         env:
         {{- include "greymatter.envvars" . | indent 8 }}
-        # - name: ZK_ADDRS
-        #   value: {{ template "greymatter.exhibitor.address" . }}
-        # - name: ZK_ANNOUNCE_PATH
-        #   value: "/services/slo/{{ .Values.slo.version }}"
+        {{- if .Values.global.spire.enabled }}
         volumeMounts:
         {{- include "sidecar_volume_mounts" . | indent 8 }}
+        {{- end }}
       imagePullSecrets:
         - name: docker.secret
       volumes:
+      {{- if .Values.global.spire.enabled }}
       {{- include "sidecar_volumes" . | indent 6 }}
+      {{- end }}
       {{- if .Values.postgres.ssl.enabled }}
       - name: certs
         secret:

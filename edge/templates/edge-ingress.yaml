@@ -13,7 +13,7 @@ spec:
     {{ tpl .Values.ingress_config.default_url . }}
   {{- end }}
   port: 
-    targetPort: http
+    targetPort: proxy
   tls:
     termination: passthrough
   to:

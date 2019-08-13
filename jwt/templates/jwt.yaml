@@ -77,12 +77,16 @@ spec:
         - containerPort: 8081
           name: metrics
           protocol: TCP
+        {{- if .Values.global.spire.enabled }}
         volumeMounts:
         {{- include "sidecar_volume_mounts" . | indent 8 }}
+        {{- end }}
       imagePullSecrets:
         - name: docker.secret
       volumes:
+      {{- if .Values.global.spire.enabled }}
       {{- include "sidecar_volumes" . | indent 6 }}
+      {{- end }}
       - name: jwt-security
         secret:
           secretName: jwt-security
