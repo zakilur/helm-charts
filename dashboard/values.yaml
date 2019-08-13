@@ -19,7 +19,7 @@ dashboard:
   config_server: '{{ .Values.global.control.name }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.global.control.port }}'
   prometheus_server: '/services/prometheus/latest/api/v1/'
   base_url: '/services/dashboard/{{ $.Values.global.dashboard.version }}/'
-  version: latest
+  version: 3.0.0
   imagePullPolicy: Always
   resources:
     limits:

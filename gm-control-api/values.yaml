@@ -11,7 +11,7 @@ global:
     port: 18000
     cluster: greymatter
   gmControlApi:
-    version: latest
+    version: 0.6.0
 
 gmControlApi:
   name: gm-control-api
