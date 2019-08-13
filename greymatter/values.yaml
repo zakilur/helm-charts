@@ -116,13 +116,13 @@ global:
         - '/services/slo/{{ $.Values.global.slo.version }}'
         - '/services/slo/{{ $.Values.global.slo.version }}/'
 
-    documentation:
-      name: 'Grey Matter Documentation'
-      serviceName: 'documentation'
-      port: 8090
-      routes:
-        - '/services/documentation/{{ $.Values.global.documentation.version }}'
-        - '/services/documentation/{{ $.Values.global.documentation.version }}/'
+    # documentation:
+    #   name: 'Grey Matter Documentation'
+    #   serviceName: 'documentation'
+    #   port: 8090
+    #   routes:
+    #     - '/services/documentation/{{ $.Values.global.documentation.version }}'
+    #     - '/services/documentation/{{ $.Values.global.documentation.version }}/'
 
   # All of the mesh-wide environment variables should be set in your `custom.yaml` file
 
