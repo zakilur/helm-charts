@@ -15,7 +15,6 @@ spec:
         app: catalog
         deployment: catalog
     spec:
-      serviceAccountName: {{ .Values.global.waiter.serviceAccount.name }}
       initContainers:
         - name: ensure-gm-control
           image: deciphernow/k8s-waiter
@@ -26,7 +25,37 @@ spec:
               value: control
             - name: POST_DELAY
               value: "10"
+        - name: ensure-spire-server
+          image: deciphernow/k8s-waiter
+          env:
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: SERVICE
+              value: spire-server
+            - name: POST_DELAY
+              value: "2"
+      serviceAccountName: {{ .Values.global.spire.agent.serviceAccount.name }}
       containers:
+        - name: spire-agent
+          image: {{ .Values.global.spire.agent.image }}
+          args: ["-config", "/run/spire/config/agent.conf"]
+          volumeMounts:
+            - name: spire-config
+              mountPath: /run/spire/config
+              readOnly: true
+            - name: spire-agent-socket
+              mountPath: /run/spire/sockets
+              readOnly: false
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "/opt/spire/bin/spire-agent api fetch -socketPath /run/spire/sockets/agent.sock 2>&1 | grep -vqE 'connection refused|no such file or directory'"
+            failureThreshold: 2
+            initialDelaySeconds: 15
+            periodSeconds: 60
+            timeoutSeconds: 3
         - name: catalog
           image: {{ tpl .Values.catalog.image $ }}
           imagePullPolicy: {{ .Values.catalog.imagePullPolicy }}

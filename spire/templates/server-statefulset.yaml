@@ -23,7 +23,8 @@ spec:
           image: {{ .Values.spire.server.image }}
           command: ["/tmp/bootstrap/bootstrap.sh"]
           ports:
-            - containerPort: 8081
+            - name: grpc
+              containerPort: 8081
           volumeMounts:
             - name: spire-config
               mountPath: {{ .Values.spire.server.configFileDir }}
@@ -45,6 +46,10 @@ spec:
               mountPath: /etc/config
             - name: bootstrap-script-volume
               mountPath: /tmp/bootstrap
+          livenessProbe:
+            tcpSocket:
+              port: grpc
+            initialDelaySeconds: 2
           env:
             # The following environment variables are used by the spire bootstrap script to properly create registration entries
             - name: SERVICE_LIST_FILE

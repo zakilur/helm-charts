@@ -1,0 +1,157 @@
+global:
+  environment: kubernetes
+  domain:
+  route_url_name:
+  remove_namespace_from_url: false
+  zone: default-zone
+  catalog:
+    version: 1.0.0
+    sidecar:
+      version: # 0.7.1
+  dashboard:
+    version: 2.5.0
+    sidecar:
+      version:
+    prometheus_sidecar:
+      version: 0.8.0
+  data:
+    version: 0.2.3
+    sidecar:
+      version:
+  documentation:
+    version: 3.0.0
+    sidecar:
+      version:
+  edge:
+    version: 0.7.1
+    sidecar:
+      version:
+  exhibitor:
+    replicas: 1
+    version: 
+    sidecar:
+      version:
+  jwt:
+    version: 0.2.0
+    sidecar:
+      version:
+  slo:
+    version: 0.4.0
+    sidecar:
+      version:
+  xds:
+    cluster: greymatter
+    port: 18000
+    version: 0.2.6
+  control:
+   name: 
+  spire:
+    enabled: true
+    trustDomain: "deciphernow.com"
+    # The spire agent needs to be a global value because it will be referenced by every service
+    agent:
+      image: gcr.io/spiffe-io/spire-agent:0.8.1
+      # The spire agent ServiceAccount is used by the spire agent to read all the properties of pods to create Kubernetes selectors used for attesting the identity of workloads
+      serviceAccount:
+        create: true
+        name: spire-agent-sa
+
+  # The waiter serviceaccount is used by multiple services to wait on other services. It uses the readiness checks and kubernetes API
+  waiter:
+    serviceAccount:
+      create: true
+      name: waiter-sa
+  services:
+    catalog:
+      name: 'Grey Matter Catalog'
+      serviceName: 'catalog'
+      port: 9080
+      routes:
+        - '/services/catalog/{{ $.Values.global.catalog.version }}'
+        - '/services/catalog/{{ $.Values.global.catalog.version }}/'
+
+    # control:
+    #   name: 'Grey Matter Control'
+    #   serviceName: 'control'
+    #   routes:
+        # - '/services/xds/{{ $.Values.global.xds.version }}'
+        # - '/services/xds/{{ $.Values.global.xds.version }}'
+
+    dashboard:
+      name: 'Grey Matter Dashboard'
+      serviceName: 'dashboard'
+      port: 1337
+      routes:
+        - '/services/dashboard/latest'
+        - '/services/dashboard/latest/'
+    
+    prometheus:
+      name: 'Prometheus'
+      serviceName: 'prometheus'
+      port: 9090
+
+    data:
+      name: 'Grey Matter Data'
+      serviceName: 'data'
+      port: 8181
+      routes:
+        - '/services/data/{{ $.Values.global.data.version }}'
+        - '/services/data/{{ $.Values.global.data.version }}/'
+
+    jwt:
+      name: 'Grey Matter JWT Security'
+      serviceName: 'jwt-security'
+      port: 3000
+      routes:
+        - '/services/jwt-security/{{ $.Values.global.jwt.version }}'
+        - '/services/jwt-security/{{ $.Values.global.jwt.version }}/'
+
+    # edge:
+    #   name: 'Grey Matter Edge'
+    #   serviceName: 'edge'
+    #   port: 8080
+    #   # We use a static cert on the edge listener
+    #   removeListenerSecret: true
+    #   routes:
+    #     - '/' #/services/edge/{{ $.Values.global.edge.version }}
+    #     # - '/' #/services/edge/{{ $.Values.global.edge.version }}
+    # # TODO: multiple routes
+
+    slo:
+      name: 'Grey Matter Service Level Objectives'
+      serviceName: 'slo'
+      port: 1337
+      routes:
+        - '/services/slo/{{ $.Values.global.slo.version }}'
+        - '/services/slo/{{ $.Values.global.slo.version }}/'
+
+    # documentation:
+    #   name: 'Grey Matter Documentation'
+    #   serviceName: 'documentation'
+    #   port: 8090
+    #   routes:
+    #     - '/services/documentation/{{ $.Values.global.documentation.version }}'
+    #     - '/services/documentation/{{ $.Values.global.documentation.version }}/'
+
+  # All of the mesh-wide environment variables should be set in your `custom.yaml` file
+
+sidecar:
+  # Set this to true if you are attempting to deploy Catalog by itself.
+  # Ideally, catalog is deployed as a dependency to Grey Matter, which creates the
+  # sidecar secret, but if individual testing is being done, the sidecar secret will
+  # need to be created.
+  create_sidecar_secret: true
+  certificates:
+    name: sidecar
+    ca: |-
+      -----BEGIN CERTIFICATE-----
+      ...
+      -----END CERTIFICATE-----
+    cert: |-
+      -----BEGIN CERTIFICATE-----
+      ...
+      -----END CERTIFICATE-----
+    key: |-
+      -----BEGIN RSA PRIVATE KEY-----
+      ...
+      -----END RSA PRIVATE KEY-----

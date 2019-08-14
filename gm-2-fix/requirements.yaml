@@ -1,0 +1,24 @@
+dependencies:
+- name: catalog
+  version: "1.0.5"
+  repository: "file://../catalog"
+
+- name: dashboard
+  version: "1.0.4"
+  repository: "file://../dashboard"
+
+- name: edge
+  version: "1.0.6"
+  repository: "file://../edge"
+
+- name: gm-control-api
+  repository: 'file://../gm-control-api'
+  version: '0.1.0'
+
+- name: control
+  repository: 'file://../control'
+  version: '0.1.0'
+  
+- name: spire
+  repository: 'file://../spire'
+  version: '0.1.0'
