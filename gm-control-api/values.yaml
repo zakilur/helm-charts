@@ -23,7 +23,7 @@ gmControlApi:
   zone: zone-default-zone
   proxyPort: 8080
   init:
-    image: 'docker.production.deciphernow.com/deciphernow/greymatter:latest'
+    image: 'docker.production.deciphernow.com/deciphernow/greymatter:0.3.0'
     imagePullPolicy: Always
     envvars:
       greymatter_console_level:
