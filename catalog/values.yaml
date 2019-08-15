@@ -124,7 +124,7 @@ catalog:
       version: '{{ $.Values.global.slo.version | trunc 3 }}'
 
 sidecar:
-  version: '{{- $.Values.global.catalog.sidecar.version | default "0.8.0" }}'
+  version: '{{- $.Values.global.catalog.sidecar.version | default $.Values.global.sidecar.version }}'
   image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:{{ tpl $.Values.sidecar.version $ }}'
   imagePullPolicy: Always
   resources:

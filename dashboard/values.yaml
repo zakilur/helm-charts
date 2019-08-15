@@ -30,7 +30,7 @@ dashboard:
       memory: 128Mi
 
 sidecar:
-  version: '{{- $.Values.global.dashboard.sidecar.version | default "0.8.0" }}'
+  version: '{{- $.Values.global.dashboard.sidecar.version | default $.Values.global.sidecar.version }}'
   image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:{{ tpl $.Values.sidecar.version $ }}'
   imagePullPolicy: Always
   resources:
@@ -86,7 +86,7 @@ prometheus:
       memory: 256Mi
 
 sidecar_prometheus:
-  version: '{{- $.Values.global.dashboard.prometheus_sidecar.version | default "0.8.0" }}'
+  version: '{{- $.Values.global.dashboard.prometheus_sidecar.version | default $.Values.global.sidecar.version }}'
   image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:{{ tpl $.Values.sidecar_prometheus.version $ }}'
   imagePullPolicy: Always
   resources:

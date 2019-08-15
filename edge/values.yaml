@@ -56,7 +56,7 @@ edge:
       -----END RSA PRIVATE KEY-----
 
 sidecar:
-  version: '{{- $.Values.global.edge.sidecar.version | default "0.8.0" }}'
+  version: '{{- $.Values.global.edge.version | default $.Values.global.sidecar.version }}'
   image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:{{ tpl $.Values.sidecar.version $ }}'
   metrics_key_function: depth
   imagePullPolicy: Always

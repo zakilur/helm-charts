@@ -229,7 +229,7 @@ mongo:
           -----END RSA PRIVATE KEY-----
 
 sidecar:
-  version: '{{- $.Values.global.data.sidecar.version | default "0.8.0" }}'
+  version: '{{- $.Values.global.data.sidecar.version | default $.Values.global.sidecar.version }}'
   image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:{{ tpl $.Values.sidecar.version $ }}'
   standalone_image:
   imagePullPolicy: Always

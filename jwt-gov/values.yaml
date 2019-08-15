@@ -195,7 +195,7 @@ redis:
   #private_image: false
 
 sidecar:
-  version: '{{- $.Values.global.jwt.sidecar.version | default "0.8.0" }}'
+  version: '{{- $.Values.global.jwt.sidecar.version | default $.Values.global.sidecar.version }}'
   image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:{{ tpl $.Values.sidecar.version $ }}'
   imagePullPolicy: Always
   envvars:

@@ -23,9 +23,10 @@ global:
     sidecar:
       version:
   edge:
-    version: 0.7.1
-    sidecar:
-      version:
+    # Will just use the default sidecar version from below 
+    version: 
+  sidecar: 
+    version: 0.8.1
   exhibitor:
     replicas: 1
     version: 
@@ -39,10 +40,6 @@ global:
     version: 0.4.0
     sidecar:
       version:
-  xds:
-    cluster: greymatter
-    port: 18000
-    version: 0.2.6
   control:
    name: 
   spire:
