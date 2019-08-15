@@ -6,5 +6,18 @@
   "port": 8080,
   "protocol": "http_auto",
   "domain_keys": ["domain-{{.service.serviceName}}"],
-  "tracing_config": null
+  "tracing_config": null{{- if .service.mTLS }},
+  "secret": {
+    "secret_key": "secret-{{.service.serviceName}}-secret",
+    "secret_name": "spiffe://deciphernow.com/{{.service.serviceName}}/mTLS",
+    "secret_validation_name": "spiffe://deciphernow.com",
+    "ecdh_curves": [
+        "X25519:P-256:P-521:P-384"
+    ],
+    "forward_client_cert_details": "SANITIZE_SET",
+    "set_current_client_cert_details": {
+        "uri": true
+    }
+  }
+  {{- end }}
 }

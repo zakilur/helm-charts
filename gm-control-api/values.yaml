@@ -11,7 +11,9 @@ global:
     port: 18000
     cluster: greymatter
   gmControlApi:
-    version: 0.6.0
+    version: 0.7.0
+    cli:
+      version: 0.4.0
 
 gmControlApi:
   name: gm-control-api
@@ -23,7 +25,7 @@ gmControlApi:
   zone: zone-default-zone
   proxyPort: 8080
   init:
-    image: 'docker.production.deciphernow.com/deciphernow/greymatter:0.3.0'
+    image: 'docker.production.deciphernow.com/deciphernow/greymatter:{{ $.Values.global.gmControlApi.cli.version }}'
     imagePullPolicy: Always
     envvars:
       greymatter_console_level:

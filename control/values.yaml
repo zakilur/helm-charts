@@ -6,12 +6,8 @@ global:
   remove_namespace_from_url: ''
   exhibitor:
     replicas: 1
-  # XDS will be replaced with gm-control
-  xds:
-    port: 18000
-    cluster: greymatter
   control:
-    version: 0.2.1
+    version: 0.3.0
 
 control:
   name: 'control'
