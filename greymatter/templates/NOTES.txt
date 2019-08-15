@@ -12,11 +12,7 @@ NOTE: It may take a few minutes for the installation to become stable.
 
 {{- if .Values.global }}
 Once the environment has spun up you will be able to view Grey Matter's Dashboard at:
-    {{- if .Values.global.remove_namespace_from_url  }}
-        https://{{ .Values.global.route_url_name }}.{{ .Values.global.domain }}/services/dashboard/latest/
-    {{- else }}
-        https://{{ .Values.global.route_url_name }}.{{ .Release.Namespace }}.{{ .Values.global.domain }}/services/dashboard/latest/
-    {{- end }}
+    https://{{ include "greymatter.domain" . }}/services/dashboard/latest/
 {{- end }}
         
         

@@ -6,12 +6,7 @@ metadata:
   name: edge
   namespace: {{ .Release.Namespace }}
 spec:
-  host: 
-  {{- if .Values.global.remove_namespace_from_url }}
-    {{ tpl .Values.ingress_config.custom_url . }}
-  {{- else }}
-    {{ tpl .Values.ingress_config.default_url . }}
-  {{- end }}
+  host: {{ include "greymatter.domain" . }}
   port: 
     targetPort: proxy
   tls:
