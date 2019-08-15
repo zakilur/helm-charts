@@ -14,13 +14,22 @@ spec:
       namespace: {{ .Release.Namespace }}
       labels:
         app: spire-agent
+        # openshift.io/scc=spire-scc
     spec:
       hostPID: true
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       serviceAccountName: {{ .Values.spire.agent.serviceAccount.name }}
       initContainers:
-        - name: init
+      # We use this workaround to fix the issue that Kubernetes HostPath volumes are by default root only: https://github.com/kubernetes/minikube/issues/1990#issuecomment-445033074
+        # - name: setup-mountpath
+        #   image: alpine:latest
+        #   command: ['sh', '-c', 'echo "UID: $(id -u)"; id; mkdir -p /run/spire/sockets; stat /run/spire/sockets; chown 20000 /run/spire/sockets' ]
+        #   volumeMounts:
+        #     - name: spire-agent-socket
+        #       mountPath: /run/spire
+        #       readOnly: false
+        - name: wait-for-spire
           # This is a small image with wait-for-it, choose whatever image
           # you prefer that waits for a service to be up. This image is built
           # from https://github.com/lqhl/wait-for-it
@@ -37,6 +46,11 @@ spec:
             - name: spire-agent-socket
               mountPath: /run/spire/sockets
               readOnly: false
+          # We need to set these so that OpenShift can work
+          securityContext:
+            # fsGroup: 20000
+            # fsGroup: 0?
+            # runAsUser: 20000
           livenessProbe:
             exec:
               command:
