@@ -1,0 +1,19 @@
+{
+  "zone_key": "{{.service.zone}}",
+  "cluster_key": "sidecar-to-edge-cluster-{{.service.serviceName}}",
+  "name": "edge",
+  "instances": [],
+  "circuit_breakers": null,
+  "outlier_detection": null,
+  "health_checks": []{{- if .service.mTLS }},
+  "require_tls": true,
+  "secret": {
+    "secret_key": "secret-{{.service.serviceName}}-secret",
+    "secret_name": "spiffe://deciphernow.com/{{.service.serviceName}}/mTLS",
+    "secret_validation_name": "spiffe://deciphernow.com",
+    "ecdh_curves": [
+        "X25519:P-256:P-521:P-384"
+    ],
+  }
+  {{- end }}
+}

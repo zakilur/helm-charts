@@ -1,0 +1,10 @@
+{
+  "listener_key": "local-listener-{{.service.serviceName}}",
+  "zone_key": "{{.service.zone}}",
+  "name": "{{.service.serviceName}}",
+  "ip": "127.0.0.1",
+  "port": {{ .service.proxy.localPort }},
+  "protocol": "http_auto",
+  "domain_keys": ["local-domain-{{.service.serviceName}}"],
+  "tracing_config": null
+}

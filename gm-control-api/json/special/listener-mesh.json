@@ -1,12 +1,12 @@
 {
-  "listener_key": "listener-{{.service.serviceName}}",
+  "listener_key": "mesh-listener-{{.service.serviceName}}",
   "zone_key": "{{.service.zone}}",
   "name": "{{.service.serviceName}}",
   "ip": "0.0.0.0",
-  "port": 8080,
+  "port": 5000,
   "protocol": "http_auto",
-  "domain_keys": ["domain-{{.service.serviceName}}"],
-  "tracing_config": null{{- if .service.mTLS }},
+  "domain_keys": ["mesh-domain-{{.service.serviceName}}"],
+  "tracing_config": null{{- if .Values.global.spire.enabled }},
   "secret": {
     "secret_key": "secret-{{.service.serviceName}}-secret",
     "secret_name": "spiffe://deciphernow.com/{{.service.serviceName}}/mTLS",

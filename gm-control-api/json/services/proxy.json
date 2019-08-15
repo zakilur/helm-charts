@@ -3,10 +3,12 @@
   "zone_key": "{{.service.zone}}",
   "name": "{{.service.serviceName}}",
   "domain_keys": [
-    "domain-{{.service.serviceName}}"
+    "mesh-domain-{{.service.serviceName}}",
+    "local-domain-{{.service.serviceName}}"
   ],
   "listener_keys": [
-      "listener-{{.service.serviceName}}"
+      "mesh-listener-{{.service.serviceName}}",
+      "local-listener-{{.service.serviceName}}"
   ],
   "listeners": null,
   "active_proxy_filters": ["gm.metrics"],

@@ -1,8 +1,8 @@
 {
-  "domain_key": "domain-{{.service.serviceName}}",
+  "domain_key": "local-domain-{{.service.serviceName}}",
   "zone_key": "{{.service.zone}}",
   "name": "*",
-  "port": 8080,
+  "port": {{ .service.proxy.localPort }},
   "redirects": null,
   "gzip_enabled": false,
   "cors_config": null,

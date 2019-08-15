@@ -1,0 +1,23 @@
+{
+  "listener_key": "mesh-listener-{{.service.serviceName}}",
+  "zone_key": "{{.service.zone}}",
+  "name": "{{.service.serviceName}}",
+  "ip": "0.0.0.0",
+  "port": {{ .service.proxy.meshPort }},
+  "protocol": "http_auto",
+  "domain_keys": ["mesh-domain-{{.service.serviceName}}"],
+  "tracing_config": null{{- if .service.mTLS }},
+  "secret": {
+    "secret_key": "secret-{{.service.serviceName}}-secret",
+    "secret_name": "spiffe://deciphernow.com/{{.service.serviceName}}/mTLS",
+    "secret_validation_name": "spiffe://deciphernow.com",
+    "ecdh_curves": [
+        "X25519:P-256:P-521:P-384"
+    ],
+    "forward_client_cert_details": "SANITIZE_SET",
+    "set_current_client_cert_details": {
+        "uri": true
+    }
+  }
+  {{- end }}
+}

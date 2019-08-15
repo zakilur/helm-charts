@@ -18,6 +18,16 @@ echo "Creating service configuration objects..."
 
 delay=0.01
 
+# Create edge objects first so we can reference them from service routes
+cd $MESH_CONFIG_DIR/special
+echo "Creating special configuration objects (domain, edge listener + proxy)"
+greymatter create domain < domain.json
+greymatter create listener <listener.json
+greymatter create proxy < proxy.json
+greymatter create cluster < cluster.json
+greymatter create shared_rules < shared_rules.json
+greymatter create route < route.json
+
 cd $MESH_CONFIG_DIR/services
 # Each service should be able to be created all by itself. This means it needs to contain a domain
 for d in */; do
@@ -31,24 +41,15 @@ for d in */; do
 
     names="domain cluster listener proxy shared_rules route"
     for name in $names; do
-        echo "Creating mesh object: $name."
-        greymatter create $name <$name.json
-        sleep $delay
+        for file in $name*.json; do
+            echo "Creating, service: $d, object: $name, file: $file."
+            greymatter create $name <$file
+            sleep $delay
+        done
     done
 
     cd $MESH_CONFIG_DIR/services
 done
-
-# The edge service is created last as it links to the clusters of every other service.
-# The edge domain must be created before it can be referenced
-cd $MESH_CONFIG_DIR/special
-echo "Creating special configuration objects (domain, edge listener + proxy)"
-greymatter create domain < domain.json
-greymatter create listener <listener.json
-greymatter create proxy < proxy.json
-greymatter create cluster < cluster.json
-greymatter create shared_rules < shared_rules.json
-greymatter create route < route.json
 
 cd $MESH_CONFIG_DIR/edge
 echo "Creating edge configuration objects"

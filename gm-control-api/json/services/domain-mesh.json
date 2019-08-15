@@ -1,0 +1,11 @@
+{
+  "domain_key": "mesh-domain-{{.service.serviceName}}",
+  "zone_key": "{{.service.zone}}",
+  "name": "*",
+  "port": {{ .service.proxy.meshPort }},
+  "redirects": null,
+  "gzip_enabled": false,
+  "cors_config": null,
+  "aliases": null,
+  "force_https": false
+}
