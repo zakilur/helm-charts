@@ -25,10 +25,6 @@ spec:
         {{- end }}
         env:
         {{- include "greymatter.envvars" . | indent 8 }}
-        # - name: ZK_ADDRS
-        #   value: {{ template "greymatter.exhibitor.address" . }}
-        # - name: ZK_ANNOUNCE_PATH
-        #   value: {{ .Values.edge.base_path | quote }}
         ports:
         - name: proxy
           containerPort: 8080
@@ -41,7 +37,9 @@ spec:
         - name: spire-agent-socket
           mountPath: /run/spire/sockets
           readOnly: true
-        {{- end }}
+        {{- else if and (not .Values.global.spire.enabled) (.Values.global.mesh_tls.use_provided_certs) }}
+        {{- include "sidecar_volume_certs_mount" . | indent 8 }}
+        {{- end}}
       imagePullSecrets:
       - name: docker.secret
       volumes:
@@ -53,4 +51,6 @@ spec:
         hostPath:
           path: /run/spire/sockets
           type: Directory
+      {{- else if and (not .Values.global.spire.enabled) (.Values.global.mesh_tls.use_provided_certs) }}
+      {{- include "sidecar_certs_volumes" . | indent 6 }}
       {{- end }}

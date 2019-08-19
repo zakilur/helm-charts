@@ -50,6 +50,10 @@ greymatter create cluster < cluster.json
 greymatter create shared_rules < shared_rules.json
 greymatter create route < route.json
 
+# for file in $(ls route*.json); do 
+#     greymatter create route < $file
+# done
+
 cd $MESH_CONFIG_DIR/edge
 echo "Creating edge configuration objects"
 
@@ -73,3 +77,12 @@ for d in */; do
 
     cd $MESH_CONFIG_DIR/edge
 done
+
+cd $MESH_CONFIG_DIR/special
+echo "Adding additional Special Routes"
+for rte in $(ls route-*.json); do
+    greymatter create route < $rte
+done
+# greymatter create route < route-data-jwt-slash.json
+# greymatter create route < route-data-jwt.json
+# greymatter create route < route-dashboard-slash.json

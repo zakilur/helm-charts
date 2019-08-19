@@ -4,32 +4,26 @@ global:
   route_url_name:
   remove_namespace_from_url: false
   zone: default-zone
+  mesh_tls:
+    use_provided_certs: false
   catalog:
-    version: 1.0.0
+    version: 1.0.1
     sidecar:
-      version: # 0.7.1
+      version:
   dashboard:
-    version: 2.5.0
+    version: 3.0.0
     sidecar:
       version:
     prometheus_sidecar:
       version: 0.8.0
   data:
-    version: 0.2.3
-    sidecar:
-      version:
-  documentation:
-    version: 3.0.0
+    version: 0.2.7
     sidecar:
       version:
   edge:
-    # Will just use the default sidecar version from below 
-    version: 
-  sidecar: 
-    version: 0.8.1
-  exhibitor:
-    replicas: 1
-    version: 
+    # This enables mTLS on the edge proxy (ingress mTLS)
+    enableTLS: true
+    version: 0.8.0
     sidecar:
       version:
   jwt:
@@ -37,13 +31,23 @@ global:
     sidecar:
       version:
   slo:
-    version: 0.4.0
+    version: 0.5.0
     sidecar:
       version:
   control:
-   name: 
+    version: 0.3.0
+    # This specifies the service name that all XDS clients will try to connect to
+    name: control
+    port: 50000
+  gmControlApi:
+    version: 0.7.0
+    cli:
+      version: 0.4.0
+  sidecar:
+    version: 0.8.1
   spire:
-    trustDomain: "deciphernow.com"
+    enabled: false
+    trustDomain: deciphernow.com
   # The waiter serviceaccount is used by multiple services to wait on other services. It uses the readiness checks and kubernetes API
   waiter:
     serviceAccount:
@@ -54,6 +58,7 @@ global:
       name: 'Grey Matter Catalog'
       serviceName: 'catalog'
       port: 9080
+      # egressTLS: 'false'
       routes:
         - '/services/catalog/{{ $.Values.global.catalog.version }}'
         - '/services/catalog/{{ $.Values.global.catalog.version }}/'
@@ -69,6 +74,7 @@ global:
       name: 'Grey Matter Dashboard'
       serviceName: 'dashboard'
       port: 1337
+      # egressTLS: 'false'
       routes:
         - '/services/dashboard/latest'
         - '/services/dashboard/latest/'
@@ -77,11 +83,13 @@ global:
       name: 'Prometheus'
       serviceName: 'prometheus'
       port: 9090
+      # egressTLS: 'false'
 
     data:
       name: 'Grey Matter Data'
       serviceName: 'data'
       port: 8181
+      # egressTLS: 'true'
       routes:
         - '/services/data/{{ $.Values.global.data.version }}'
         - '/services/data/{{ $.Values.global.data.version }}/'
@@ -90,9 +98,18 @@ global:
       name: 'Grey Matter JWT Security'
       serviceName: 'jwt-security'
       port: 3000
+      # egressTLS: 'true'
       routes:
         - '/services/jwt-security/{{ $.Values.global.jwt.version }}'
         - '/services/jwt-security/{{ $.Values.global.jwt.version }}/'
+
+    control:
+      name: 'Grey Matter Control API'
+      serviceName: 'gm-control-api'
+      port: 5555
+      routes:
+        - '/services/control-api/{{ $.Values.global.control.version }}'
+        - '/services/control-api/{{ $.Values.global.control.version }}/'
 
     # edge:
     #   name: 'Grey Matter Edge'
@@ -109,6 +126,7 @@ global:
       name: 'Grey Matter Service Level Objectives'
       serviceName: 'slo'
       port: 1337
+      # egressTLS: 'false'
       routes:
         - '/services/slo/{{ $.Values.global.slo.version }}'
         - '/services/slo/{{ $.Values.global.slo.version }}/'
