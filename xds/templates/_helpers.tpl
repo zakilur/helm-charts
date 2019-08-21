@@ -37,7 +37,7 @@ Define the exhibitor host.
         - name: ZK_ADDRS
             value: {{ template "greymatter.exhibitor.address" . }}
         - name: ZK_ANNOUNCE_PATH
-            value: "/services/xds/{{ .Values.xds.version }}"
+            value: "/services/xds/{{ .Values.xds.version | trunc 3 }}"
         volumeMounts:
         - name: sidecar
             mountPath: /etc/proxy/tls/sidecar

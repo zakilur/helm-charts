@@ -106,10 +106,10 @@ spec:
           - name: ZK_ANNOUNCE_PATH
             {{- if .Values.data.deploy.standalone }}
             {{- if .Values.data.deploy.base_path }}
-            value: {{ tpl .Values.data.deploy.base_path $ | quote }}
+            value: {{ tpl .Values.data.deploy.base_path $ | trunc 3 | quote }}
             {{- end }}
             {{- else }}
-            value: {{ tpl .Values.data.base_path $ | quote }}
+            value: {{ tpl .Values.data.base_path $ | trunc 3 | quote }}
             {{- end }}
           - name: TIMEOUT
             value: {{ .Values.sidecar.timeout | quote  }}

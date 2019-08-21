@@ -82,7 +82,7 @@ spec:
         - name: ZK_ADDRS
           value:  {{ template "greymatter.exhibitor.address" . }}
         - name: ZK_ANNOUNCE_PATH
-          value: "/services/prometheus/{{ .Values.prometheus.version }}"
+          value: "/services/prometheus/{{ .Values.prometheus.version | trunc 3 }}"
         volumeMounts:
         - name: sidecar
           mountPath: /etc/proxy/tls/sidecar
