@@ -79,7 +79,7 @@ gmControlApi:
     #   memory: 256Mi
   pvc:
     #  We  default the PVC to 1Gi, but if more is desired, uncomment this line and update the size
-    # size: 10Gi
+    size: # 10Gi
 
 sidecar:
   version: '{{- $.Values.global.catalog.sidecar.version | default "0.8.0" }}'

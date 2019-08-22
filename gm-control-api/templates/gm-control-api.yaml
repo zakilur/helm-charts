@@ -56,7 +56,7 @@ spec:
           {{- end }}
           volumeMounts:
             - name: gm-control-api-backup
-              mountPath: {{ .Values.gmControlApi.pvcMountPoint }}
+              mountPath: {{ dir .Values.gmControlApi.pvcMountPoint }}
         - name: sidecar   
           image: {{ tpl .Values.sidecar.image $ | quote }}
           imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
