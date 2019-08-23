@@ -1,6 +1,6 @@
 # SPIRE
 
-This Helm chart deploys the spire server and agent following the guidelines of the `spire-tutorials` example kubernetes template.
+This Helm chart deploys the spire server and agent following the guidelines of the `spire-tutorials` example Kubernetes template.
 
 ### Spire Helm Charts implementation details/configuration overview
 
