@@ -60,13 +60,7 @@ The command removes all components associated with the chart and deletes the rel
 
 ## Configuration
 
-The following table lists the configurable parameters of the greymatter chart and their default values.
-
-| Parameter                     | Description  | Default                               |
-| ----------------------------- | ------------ | ------------------------------------- |
-|                               |              |                                       |
-| sidecar.create_sidecar_secret | Create Certs | false                                 |
-| sidecar.certificates          |              | {name:{ca: ... , cert: ..., key ...}} |
+All configuration options and their default values are listed in [configuration.md](configuration.md).
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

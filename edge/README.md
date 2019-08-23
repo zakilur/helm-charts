@@ -32,55 +32,7 @@ The command removes all components associated with the chart and deletes the rel
 
 ## Configuration
 
-The following tables list the configurable parameters of the edge chart and their default values.
-
-### Global Configuration
-
-| Parameter                        | Description       | Default                     |
-| -------------------------------- | ----------------- | --------------------------- |
-| global.environment               |                   | kubernetes                  |
-| global.domain                    | edge-ingress.yaml | development.deciphernow.com |
-| global.route_url_name            | edge-ingress.yaml | greymatter                  |
-| global.remove_namespace_from_url | edge-ingress.yaml | 'false'                     |
-| global.exhibitor.replicas        |                   | 1                           |
-| global.xds.port                  |                   | 18000                       |
-| global.xds.cluster               |                   | greymatter                  |
-
-### Service Configuration
-
-| Parameter                      | Description | Default              |
-| ------------------------------ | ----------- | -------------------- |
-| edge.egress_use_tls            |             | 'true'               |
-| edge.inheaders_enabled         |             | 'true'               |
-| edge.obs_enabled               |             | 'false'              |
-| edge.obs_full_response         |             | 'false'              |
-| edge.base_path                 |             | /services/edge/0.7.1 |
-| edge.acl_enabled               |             | 'false'              |
-| edge.imagePullPolicy           |             | Always               |
-| edge.ingress_use_tls           |             | true                 |
-| edge.resources.limits.cpu      |             | 1                    |
-| edge.resources.limits.memory   |             | 1Gi                  |
-| edge.resources.requests.cpu    |             | 100m                 |
-| edge.resources.requests.memory |             | 128Mi                |
-| edge.create_edge_secret        |             | false                |
-
-### Sidecar Configuration
-
-| Parameter                         | Description       | Default                                                        |
-| --------------------------------- | ----------------- | -------------------------------------------------------------- |
-| sidecar.version                   | Proxy Version     | 0.7.1                                                          |
-| sidecar.image                     | Proxy Image       | 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.7.1' |
-| sidecar.proxy_dynamic             |                   | 'true'                                                         |
-| sidecar.metrics_key_function      |                   | depth                                                          |
-| sidecar.ingress_use_tls           | Enable TLS        | 'true'                                                         |
-| sidecar.imagePullPolicy           | Image pull policy | Always                                                         |
-| sidecar.create_sidecar_secret     | Create Certs      | false                                                          |
-| sidecar.certificates              |                   | {name:{ca: ... , cert: ... , key ...}}                         |
-| sidecar.resources.limits.cpu      |                   | 200m                                                           |
-| sidecar.resources.limits.memory   |                   | 512Mi                                                          |
-| sidecar.resources.requests.cpu    |                   | 100m                                                           |
-| sidecar.resources.requests.memory |                   | 128Mi                                                          |
-|                                   |                   |                                                                |
+All configuration options and their default values are listed in [configuration.md](configuration.md).
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
