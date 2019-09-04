@@ -79,7 +79,7 @@ spec:
         - name: ZK_ADDRS
           value: {{ template "greymatter.exhibitor.address" . }}
         - name: ZK_ANNOUNCE_PATH
-          value: "/services/jwt-security/{{ .Values.jwt.version }}"
+          value: "/services/jwt-security/{{ .Values.jwt.version | trunc 3 }}"
         {{- if .Values.sidecar.resources }}
         resources:
 {{ toYaml .Values.sidecar.resources | indent 10 }}

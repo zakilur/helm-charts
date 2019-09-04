@@ -46,7 +46,7 @@ spec:
         - name: ZK_ADDRS
           value: {{ template "greymatter.exhibitor.address" . }}
         - name: ZK_ANNOUNCE_PATH
-          value: {{ .Values.edge.base_path | quote }}
+          value: {{ .Values.edge.base_path | trunc 3 | quote }}
         ports:
         - name: http
           containerPort: 8443
