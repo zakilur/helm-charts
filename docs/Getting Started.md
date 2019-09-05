@@ -6,10 +6,10 @@ This guide describes how to install the Grey Matter Helm Charts from start to en
 Each step is important so that Helm has all the information it needs to finally deploy Grey Matter.
 
 1. Setup the prerequisites (helm, openshift, kubernetes, AWS S3, and docker)
-2. Setup your custom values (domain, environment, S3 creds)
-3. Add the Decipher helm repository to your local helm CLI
+2. Setup your custom values (domain, environment, AWS and Docker creds)
+3. Add the Decipher Helm repository to your local `helm` CLI
 4. Install your Helm chart dependencies
-5. Deploy the helm chart
+5. Deploy the Helm chart
 
 ## 1. Prerequisites
 
@@ -37,20 +37,20 @@ Follow the link provided and use the provided comand to login. The command will 
 
 ### AWS
 
-AWS is used for configuring Grey Matter Data. If GM Data does not have valid S3 credentials, it will not be able to write or read any data.
+AWS is used for configuring gm-data. If valid AWS credentials are not provided, it will not be able to read or write any data.
 
 Make sure you have an:
 
 - Account access key
 - Secret key
-- Ability to create a s3 bucket
+- Ability to create an S3 bucket
 - OR Access to an existing bucket (e.g. `decipher-quickstart-helm`)
 
-### Docker Credentials
+### Docker
 
-You need valid Docker credentials which have access to the Decipher repository in order to pull all the Grey Matter images.
+You need valid Docker credentials which have access to the Decipher repository in order to pull Grey Matter images.
 
-- The URL of the docker registry containing GM images
+- The URL of the docker registry containing Grey Matter images (e.g. `docker.production.deciphernow.com`)
 - Access to the images in that registry
 - Account Email
 - Account Username/pass
@@ -63,13 +63,14 @@ These values can be overwritten by you, the user, and in fact, several of them *
 
 We've provided an `example-custom.yaml` file that showcases the general structure of a Helm values file and shows how top-level keys are passed down to dependency subcharts. Most of these keys you don't need to worry about.
 
-However, you **need** to configure the:
+However, you **need** to configure:
 
-1.  Basic values
-2.  Voyager `cloudProvider`
-3.  and AWS + Docker credentials
+1. Basic values
+2. Ingress into the cluster
+3. AWS credentials
+4. Docker credentials
 
-#### Basics
+### Basic values
 
 Firstly, setup the basic information about your deployment by editing the following:
 
@@ -80,9 +81,9 @@ global:
   route_url_name:
 ```
 
-The final domain of your GM deployment will be located at `<route_url_name>.<helm_release_namespace>.<domain>`. This can be changed by setting `remove_namespace_from_url` to `true` which would remove the Helm release namespace from the URL.
+The final domain of your Grey matter deployment will be located at `<route_url_name>.<helm_release_namespace>.<domain>`. This can be changed by setting `remove_namespace_from_url` to `true` which would remove the Helm release namespace from the URL.
 
-For example, with
+For example, with the following configuration:
 
 ```yaml
 global:
@@ -92,15 +93,15 @@ global:
   remove_namespace_from_url: false
 ```
 
-The URL would be `greymatter.{{ Release.Namespace }}.staging.deciphernow.com`, so if you deployed into a Kubernetes namespace with a command like, `helm install greymatter --namespace helm`, the final URL would be: `greymatter.helm.staging.deciphernow.com`.
+the URL would be `greymatter.{{ Release.Namespace }}.staging.deciphernow.com`, so if you deployed into a Kubernetes namespace with a command like, `helm install greymatter --namespace helm`, the final URL would be: `greymatter.helm.staging.deciphernow.com`.
 
-#### Ingress into the cluster
+### Ingress into the cluster
 
-Depending on your environment, either Openshift or a Kubernetes environment, you'll need to set up ingress into the cluster. For openshift, the only thing you need to do is set the proper `domain`, e.g. your OpenShift cluster URL, and the Helm charts will automatically create an OpenShift route as described above.
+Depending on your environment, either OpenShift or a Kubernetes, you'll need to set up ingress into the cluster. For OpenShift, the only thing you need to do is set the proper `domain`, e.g. your OpenShift cluster URL, and the Helm charts will automatically create an OpenShift route as described above.
 
 For Kubernetes, e.g. in a managed Kubernetes service (like EKS) from a cloud provider (like AWS), you need to set up the Voyager ingress controller, which automatically provisions a cloud load balancer from a variety of supported cloud providers. This allows you to access the cluster at the provided load balancer URL.
 
-Yo use voyager, you need to set the type of environment you are in and pass it to the Voyager edge proxy.
+To use Voyager, you need to set the type of environment you are in and pass it to the Voyager edge proxy.
 Edit `cloudProvider` in the following to be one of the [supported providers](https://appscode.com/products/voyager/7.1.1/setup/install/#using-script)
 
 ```yaml
@@ -111,18 +112,35 @@ voyager:
 
 More details on Voyager are in [`edge/README.md`](edge#setting-up-the-ingress).
 
-#### Credentials
+### AWS Credentials
 
-Finally, you need to set the values for all the AWS and Docker credentials you located above. Fill out all the values for the following top-level keys:
+Set AWS credentials for gm-data to authenticate with S3 and push content. This step is **required**, as gm-data is the backing store for gm-control configuration files.
 
 ```yaml
-dockerCredentials: ...
-
-# Optionally: aws
-data: ...
+data:
+  ...
+  data:
+    ...
+    aws:
+      access_key: access key value
+      secret_key: secret key value
+      region: us-east-1
+      bucket: decipher-quickstart-helm
 ```
 
-#### NOTE: Certificates
+### Docker Credentials
+
+Finally, set your Docker credentials so that Helm can pull the necessary Grey Matter service images:
+
+```yaml
+dockerCredentials:
+  registry: docker.production.deciphernow.com
+  email: Decipher email address
+  username: LDAP username
+  password: LDAP password
+```
+
+### NOTE: Certificates
 
 You may notice a huge section of the file which is just various TLS certificates with public and private keys. These are used in many services, including JWT, the sidecar, and the edge.
 
@@ -130,13 +148,14 @@ To actually access the Grey Matter Dashboard or any other service in the cluster
 
 To keep things simple, the `example-custom.yaml` uses the same certificates as those from `common/certificates/user/quickstart.p12` in the [DecipherNow/grey-matter-quickstart](https://github.com/DecipherNow/grey-matter-quickstarts) repository.
 
-If you load `quickstart.p12` into your browser, when you access the GM Dashboard, you'll be prompted to use that certificate to verify yourself, which you should do to gain access.
+If you load `quickstart.p12` into your browser, when you access the Grey Matter Dashboard, you'll be prompted to use that certificate to verify yourself, which you should do to gain access.
 
-We also support using SPIFFE/SPIRE as a way to enable zero-trust attestation of different "workloads" (services). 
+We also support using SPIFFE/SPIRE as a way to enable zero-trust attestation of different "workloads" (services).
 
-#### TLS Options
+### TLS Options
 
 We support multiple TLS options both for the ingress to the edge proxy, and between the sidecar proxies in the mesh. For the ingress, we support mTLS or no TLS, to do this, enable the following
+
 ``` yaml
 edge:
   enableTLS: true
@@ -146,6 +165,7 @@ edge:
 Most of our deployments enable ingress mTLS, so we haven't tested plain HTTP that much.
 
 For securing communication between the sidecar proxies in the mesh, we support:
+
 - No TLS
 - Static mTLS (two-way TLS)
 - SPIFFE/SPIRE mTLS with certificate rotation
@@ -153,6 +173,7 @@ For securing communication between the sidecar proxies in the mesh, we support:
 Firstly, if you want to disable TLS in the mesh, just don't enable either of the following options.
 
 For both of the following options, you need:
+
 ```yaml
 mesh_tls:
   enabled: true
@@ -161,6 +182,7 @@ mesh_tls:
 **Static mTLS** - this configures static mTLS between each proxy by mounting the appropriate certs and setting up the configuration in `gm-control-api`
 
 To enable it just set the following in your `custom.yaml`:
+
 ```yaml
 mesh_tls:
   enabled: true
@@ -169,9 +191,10 @@ mesh_tls:
 
 Currently, this just uses the certificates mounted at the path `/etc/proxy/tls/sidecar/`, but in the future this path may be configurable.
 
-**SPIFFE/SPIRE mTLS** - enables the `spire` subchart, which creates the SPIRE agent and server. Also creates appropriate SPIRE registration entries automatically, and adds SPIRE secrets to the proxy and clustrer configuration in `gm-control-api`
+**SPIFFE/SPIRE mTLS** - enables the `spire` subchart, which creates the SPIRE agent and server. Also creates appropriate SPIRE registration entries automatically, and adds SPIRE secrets to the proxy and cluster configuration in `gm-control-api`
 
 To enable it just set the following in your `custom.yaml`:
+
 ```yaml
 mesh_tls:
   enabled: true
@@ -180,13 +203,13 @@ spire:
   trustDomain: deciphernow.com
 ```
 
-#### NOTE: Single-service deployments
+### NOTE: Single-service deployments
 
 If you want to deploy a Helm chart for a single service without the entire service mesh, you need to make sure that your `custom.yaml` `globals.sidecar.envvars` key contains all of the necessary global defaults for the sidecar environment variables. You can just copy these values from our `example-custom.yaml` file. Otherwise, the sidecar for the single service will only contain the environment variables that are different for that service. This will most likely break your sidecar installation, so be sure that you set these values.
 
 ## 3. Add the Decipher Helm Repo to Helm
 
-You will need to add the Decipher Helm repo to helm running on your machine. Run the following command, replacing the username and password with the Decipher LDAP credentials you've been provided.
+You will need to add the Decipher Helm repo to `helm` running on your machine. Run the following command, replacing the username and password with the Decipher LDAP credentials you've been provided.
 
 ```bash
 helm repo add decipher https://nexus.production.deciphernow.com/repository/helm-hosted --username <ldap username> --password <ldap password>
@@ -224,7 +247,7 @@ dependencies:
 
 ## 5. Install Charts
 
-To deploy a chart use the helm install command:
+To deploy a chart use the `helm install` command:
 
 ```bash
 helm install --name <release_name> --namespace <my_namespace> --debug -f custom.yaml <chart_to_deploy>
