@@ -73,7 +73,7 @@ global:
   route_url_name:
 ```
 
-The final domain of your Grey matter deployment will be located at `<route_url_name>.<helm_release_namespace>.<domain>`. This can be changed by setting `remove_namespace_from_url` to `true` which would remove the Helm release namespace from the URL.
+The final domain of your Grey Matter deployment will be located at `<route_url_name>.<helm_release_namespace>.<domain>`. This can be changed by setting `remove_namespace_from_url` to `true` which would remove the Helm release namespace from the URL.
 
 For example, with the following configuration:
 
