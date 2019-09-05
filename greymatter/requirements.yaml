@@ -22,7 +22,7 @@ dependencies:
   - name:  jwt
     version: '1.0.2'
     repository: 'file://../jwt'
-    alias: gm-jwt
+    alias: internal-jwt
 
   - name: slo
     version: '1.0.4'

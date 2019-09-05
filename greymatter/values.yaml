@@ -1,5 +1,5 @@
 global:
-  environment: kubernetes
+  environment: openshift
   domain:
   route_url_name:
   remove_namespace_from_url: false
@@ -93,7 +93,6 @@ global:
       enableInstanceMetrics: "true" 
       capability: 'Grey Matter'
       documentation: ''
-      name: 'Grey Matter Dashboard'
       owner: 'Decipher'
       version: 3.1.0
       # egressTLS: 'false'
@@ -119,7 +118,6 @@ global:
       enableInstanceMetrics: "true" 
       capability: 'Grey Matter'
       documentation: '/services/data/latest/static/ui/index.html'
-      name: 'Grey Matter Data'
       owner: 'Decipher'
       version: 0.2.7   
       # egressTLS: 'true'
@@ -138,7 +136,6 @@ global:
       enableInstanceMetrics: 'true'
       capability: 'Grey Matter'
       documentation: ''
-      name: 'Grey Matter JWT Security'
       owner: 'Decipher'
       version: '0.2.0'
       routes:
@@ -156,7 +153,6 @@ global:
       enableInstanceMetrics: 'true'
       capability: 'Grey Matter'
       documentation: ''
-      name: 'Grey Matter JWT Security Internal'
       owner: 'Decipher'
       version: '0.2.0'
 
@@ -171,7 +167,6 @@ global:
       enableInstanceMetrics: 'true'
       capability: 'Grey Matter'
       documentation:
-      name: 'Grey Matter Control API'
       owner: 'Decipher'
       version: '0.3.1'
       routes:
@@ -190,7 +185,6 @@ global:
       enableInstanceMetrics: 'true'
       capability: 'Grey Matter'
       documentatio: ''
-      name: "Grey Matter Edge"
       owner: 'Decipher'
       version: '0.8.1'
 
@@ -205,7 +199,6 @@ global:
       enableInstanceMetrics: 'true'
       capability: 'Grey Matter'
       documentation:
-      name: 'Grey Matter Service Level Objectives'
       owner: 'Decipher'
       version: '0.5.0'
       routes:
