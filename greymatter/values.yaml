@@ -235,10 +235,3 @@ sidecar:
       -----BEGIN RSA PRIVATE KEY-----
       ...
       -----END RSA PRIVATE KEY-----
-
-voyager:
-  enabled: false
-  cloudProvider: aws
-  # This disables Voyager's default setting of sending data to Google Analytics
-  # Don't change this -- you're never going to want to send analytics data
-  enableAnalytics: false
