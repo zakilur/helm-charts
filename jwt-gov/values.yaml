@@ -10,9 +10,9 @@ global:
     cluster: greymatter
 
 jwt:
-  version: 0.2.0
+  version: 0.2.4
   use_aac: true # when deploying the jwt-gov version, this should be set to 'true' if you want jwt to use aac for auth control
-  image: 'docker.production.deciphernow.com/deciphernow/gm-jwt-security-gov:0.2.0'
+  image: 'docker.production.deciphernow.com/deciphernow/gm-jwt-security-gov:0.2.4'
   command: ['/bin/sh']
   args:
     [
