@@ -24,6 +24,9 @@ kind: Ingress
 metadata:
   name: edge
   namespace: {{ .Release.Namespace }}
+  annotations:
+    ingress.appscode.com/type: NodePort
+    kubernetes.io/ingress.class: voyager
 spec:
   rules:
   - tcp:
