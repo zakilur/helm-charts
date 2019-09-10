@@ -27,7 +27,7 @@ global:
   imagePullPolicy: IfNotPresent
   namespace: default
   mesh_tls:
-    use_provided_certs: false
+    use_provided_certs: true
   catalog:
     imagePullPolicy: IfNotPresent
     version: 1.0.1
@@ -42,7 +42,7 @@ global:
     version: 3.0.0
   edge:
     imagePullPolicy: IfNotPresent
-    enableTLS: false
+    enableTLS: true
     certPath: /etc/proxy/tls/edge
     version: 0.9.1
   exhibitor:
@@ -56,8 +56,8 @@ global:
     imagePullPolicy: IfNotPresent
     version: 0.5.0
   spire:
-    imagePullPolicy: IfNotPresent
-    enabled: true
+    imagePullPolicy: IfNot3Present
+    enabled: false
   control:
     imagePullPolicy: IfNotPresent
     # This specifies the service name that all XDS clients will try to connect to
