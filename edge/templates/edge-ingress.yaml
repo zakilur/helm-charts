@@ -26,6 +26,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     ingress.appscode.com/type: NodePort
+    ingress.appscode.com/use-node-port: 'true'
     kubernetes.io/ingress.class: voyager
 spec:
   rules:

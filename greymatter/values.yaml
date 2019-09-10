@@ -26,7 +26,7 @@ global:
   edge:
     # This enables mTLS on the edge proxy (ingress mTLS)
     enableTLS: true
-    version: 0.8.0
+    version: 0.9.1
     sidecar:
       version:
   jwt:
@@ -38,16 +38,16 @@ global:
     sidecar:
       version:
   control:
-    version: 0.3.0
+    version: 0.5.0
     # This specifies the service name that all XDS clients will try to connect to
     name: control
     port: 50000
   gmControlApi:
-    version: 0.7.0
-    cli:
-      version: 0.4.0
-  sidecar:
     version: 0.8.1
+    cli:
+      version: 0.5.1
+  sidecar:
+    version: 0.9.1
   spire:
     enabled: false
     trustDomain: deciphernow.com
@@ -80,8 +80,8 @@ global:
     #   name: 'Grey Matter Control'
     #   serviceName: 'control'
     #   routes:
-        # - '/services/xds/{{ $.Values.global.xds.version }}'
-        # - '/services/xds/{{ $.Values.global.xds.version }}'
+    # - '/services/xds/{{ $.Values.global.xds.version }}'
+    # - '/services/xds/{{ $.Values.global.xds.version }}'
 
     dashboard:
       catalogEnabled: true
@@ -90,7 +90,7 @@ global:
       serviceName: 'dashboard'
       zone: zone-default-zone
       port: 1337
-      enableInstanceMetrics: "true" 
+      enableInstanceMetrics: 'true'
       capability: 'Grey Matter'
       documentation: ''
       owner: 'Decipher'
@@ -99,7 +99,7 @@ global:
       routes:
         - '/services/dashboard/latest'
         - '/services/dashboard/latest/'
-    
+
     prometheus:
       catalogEnabled: false
       controlEnabled: true
@@ -115,11 +115,11 @@ global:
       zone: zone-default-zone
       serviceName: 'data'
       port: 8181
-      enableInstanceMetrics: "true" 
+      enableInstanceMetrics: 'true'
       capability: 'Grey Matter'
       documentation: '/services/data/latest/static/ui/index.html'
       owner: 'Decipher'
-      version: 0.2.7   
+      version: 0.2.7
       # egressTLS: 'true'
       routes:
         - '/services/data/{{ $.Values.global.data.version }}'
@@ -156,7 +156,6 @@ global:
       owner: 'Decipher'
       version: '0.2.0'
 
-
     controlApi:
       catalogEnabled: true
       controlEnabled: true
@@ -168,7 +167,7 @@ global:
       capability: 'Grey Matter'
       documentation:
       owner: 'Decipher'
-      version: '0.3.1'
+      version: '0.8.1'
       routes:
         - '/services/control-api/{{ $.Values.global.control.version }}'
         - '/services/control-api/{{ $.Values.global.control.version }}/'
@@ -186,7 +185,7 @@ global:
       capability: 'Grey Matter'
       documentatio: ''
       owner: 'Decipher'
-      version: '0.8.1'
+      version: '0.9.1'
 
     slo:
       catalogEnabled: true
