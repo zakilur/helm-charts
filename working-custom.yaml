@@ -21,9 +21,9 @@ global:
   # domain: development.deciphernow.com
   # route_url_name: greymatter
   environment: kubernetes
-  domain:
+  domain: '*'
   route_url_name:
-  remove_namespace_from_url: false
+  remove_namespace_from_url: true
   imagePullPolicy: IfNotPresent
   namespace: default
   mesh_tls:
@@ -117,10 +117,10 @@ data:
   sidecar:
     envvars:
       ingress_use_tls:
-        value: 'false'
+        value: 'true'
         type: 'value'
       egress_use_tls:
-        value: 'false'
+        value: 'true'
         type: 'value'
   enabled: false
   data:

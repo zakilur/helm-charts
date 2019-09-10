@@ -3,7 +3,7 @@
     "zone_key": "{{ .Values.gmControlApi.zone }}",
     {{- if .Values.global }}
     {{- if .Values.global.remove_namespace_from_url  }}
-    "name": "{{ .Values.global.route_url_name }}.{{ .Values.global.domain }}",
+    "name": "{{ .Values.global.domain }}",
     {{- else }}
     "name": "{{ .Values.global.route_url_name }}.{{ .Release.Namespace }}.{{ .Values.global.domain }}",
     {{- end }}
