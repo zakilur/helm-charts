@@ -33,7 +33,7 @@ You should see the following output:
 
 ## Setup Helm
 
-Before runningn helm commands, we need to configure our helm tiller. This is the server which runs on our kubernetes cluster and acts as a endpoint for our command line `helm` commands.
+Before running helm commands, we need to configure our helm tiller. This is the server which runs on our kubernetes cluster and acts as a endpoint for our command line `helm` commands.
 
 ```console
 $ helm init
@@ -45,6 +45,13 @@ Please note: by default, Tiller is deployed with an insecure 'allow unauthentica
 To prevent this, run `helm init` with the --tiller-tls-verify flag.
 For more information on securing your installation see: https://docs.helm.sh/using_helm/#securing-your-helm-installation
 ```
+
+Then add the decipher repo to Helm using your LDAP credentials:
+
+```sh
+helm repo add decipher https://nexus.production.deciphernow.com/repository/helm-hosted --username <ldap username> --password <ldap password>
+```
+
 Now we need to load our charts into our helm server. This is done with `helm dep up`, which loads our charts and the dependencies of our charts into the helm server. We specify the folder `greymatter` to load all the needed charts in the `greymatter/requirements.yaml` file.
 
 ```console
