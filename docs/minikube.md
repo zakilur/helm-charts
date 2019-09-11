@@ -97,6 +97,12 @@ You should see that the voyager-operator is now running in the namespace `kube-s
 
 Helm needs valid docker credentials to pull and run decipher docker containers. Enter in your docker creds into the secret `dockerCredentials` in `working-custom.yaml`.
 
+```yaml
+  email: firstname.lastname@deciphernow.com
+  username: firstname.lastname@deciphernow.com
+  password: yourNexusPassword
+```
+
 ## Install Greymatter
 
 With our dependencies loaded, we're now ready to install greymatter. The following command writes out all templated files with values from `working-custom.yaml` and the default `values.yaml` in each chart directory. `working-custom.yaml` takes precedence. Specifying --name will give our helm deployment the name `gm`.
