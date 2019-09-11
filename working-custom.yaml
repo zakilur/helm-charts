@@ -24,6 +24,7 @@ global:
   domain: '*'
   route_url_name:
   remove_namespace_from_url: true
+  use_domain_as_url: true
   namespace: default
   mesh_tls:
     use_provided_certs: true
@@ -108,9 +109,9 @@ voyager:
 
 dockerCredentials:
   registry: docker.production.deciphernow.com
-  email: firstname.lastname@deciphernow.com
-  username: firstname.lastname@deciphernow.com
-  password: nexusDockerPassword
+  email:
+  username:
+  password:
 
 data:
   sidecar:
