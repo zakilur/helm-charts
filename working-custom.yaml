@@ -109,9 +109,9 @@ voyager:
 
 dockerCredentials:
   registry: docker.production.deciphernow.com
-  email: kaitlin.moreno@deciphernow.com
-  username: kaitlin.moreno@deciphernow.com
-  password: 7*E8IcAawDr1
+  email: firstname.lastname@deciphernow.com
+  username: firstname.lastname@deciphernow.com
+  password: nexusDockerPassword
 
 data:
   sidecar:
