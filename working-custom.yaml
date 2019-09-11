@@ -64,7 +64,7 @@ global:
     name: control
     # cluster: greymatter-kg
     port: 50000
-    version: 0.5.0
+    version: 0.5.1
   sidecar:
     version: 0.9.1
     envvars:
