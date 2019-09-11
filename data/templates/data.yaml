@@ -115,6 +115,6 @@ spec:
       - name: data
         secret:
           secretName: data
-      - name: jwt-security
+      - name: internal-jwt-security-secret
         secret:
-          secretName: jwt-security
+          secretName: internal-jwt-security-secret

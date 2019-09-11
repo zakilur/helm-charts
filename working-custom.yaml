@@ -524,7 +524,7 @@ jwt:
           H1cz0921qGtG0iheOzWfonmvYKnhxcTTpg+fuiVdPWwdutjVl+HPc2yjw1Gdqw4h
           n4oFjG4KQO6zvZzGDFay9HazZyUKpgamy24u8XY7/BSWc1c95Gg=
           -----END CERTIFICATE-----
-      - name: jwt-security-1
+      - name: jwt-security
         jwt.key: |-
           -----BEGIN EC PRIVATE KEY-----
           MIHcAgEBBEIBP/QFVG7JCckRfjz2aQwkSiZnwclpWVg5QEXHrh+PMODJgg7XC3Es

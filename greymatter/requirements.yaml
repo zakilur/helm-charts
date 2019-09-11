@@ -3,9 +3,9 @@ dependencies:
     version: '1.0.6'
     repository: 'file://../catalog'
 
-  # - name: data
-  #   version: '1.0.5'
-  #   repository: 'file://../data'
+  - name: data
+    version: '1.0.5'
+    repository: 'file://../data'
 
   - name: dashboard
     version: '1.0.5'
@@ -15,9 +15,9 @@ dependencies:
     version: '1.0.6'
     repository: 'file://../edge'
 
-  # - name: jwt
-  #   version: '1.0.2'
-  #   repository: 'file://../jwt'
+  - name: jwt
+    version: '1.0.2'
+    repository: 'file://../jwt'
 
   - name: jwt
     version: '1.0.2'
