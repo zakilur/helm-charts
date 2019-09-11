@@ -132,3 +132,8 @@ $ minikube service voyager-edge
 ```
 
 Then open up https://192.168.99.102:31581 in your browser (notice the http**s**). You should be prompted for your Decipher localuser certificate and be taken to the dashboard. Once there, make sure all services are "green" and then pat yourself on the back-- you deployed Greymatter to minikube!!
+
+## Authors
+
+- David Goldstein
+- Kait Moreno
