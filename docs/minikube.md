@@ -49,7 +49,10 @@ For more information on securing your installation see: https://docs.helm.sh/usi
 Then add the decipher repo to Helm using your LDAP credentials:
 
 ```sh
-helm repo add decipher https://nexus.production.deciphernow.com/repository/helm-hosted --username <ldap username> --password <ldap password>
+helm repo add \
+  decipher https://nexus.production.deciphernow.com/repository/helm-hosted \
+  --username <ldap username>\
+  --password <ldap password>
 ```
 
 Now we need to load our charts into our helm server. This is done with `helm dep up`, which loads our charts and the dependencies of our charts into the helm server. We specify the folder `greymatter` to load all the needed charts in the `greymatter/requirements.yaml` file.
@@ -83,9 +86,12 @@ helm install appscode/voyager --name voyager-operator --version 10.0.0 \
   --namespace kube-system \
   --set cloudProvider=$PROVIDER \
   --set enableAnalytics=false
+...
+NOTES:
+Set cloudProvider for installing Voyager
 ```
 
-See `docs/Ingress.md` for more information.
+You should see that the voyager-operator is now running in the namespace `kube-system`. See `docs/Ingress.md` for more information.
 
 ## Configure Docker Secrets
 
