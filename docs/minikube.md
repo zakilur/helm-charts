@@ -67,7 +67,7 @@ Saving 11 charts
 Downloading voyager from repo https://charts.appscode.com/stable/
 Deleting outdated charts
 ```
-Notice that helm has edit the directory `greymatter/charts` which is untracked by git. After installing dependencies it should have a bunch of tarballs.
+Notice that helm has added the directory `greymatter/charts` which is untracked by git. After installing dependencies it should have a bunch of tarballs.
 
 *note: if you make any changes to files other than `working-custom.yaml` you will need to run `helm dep up greymatter` again to update these charts in the cluster.*
 
@@ -118,8 +118,8 @@ We can run `helm ls` to see all our current deployments and `helm delete --purge
 
 ## Ingress
 
-There are two pods which control our ingress: 
-	- `edge` validates client-facing certificates, gets routing rules from gm-control-api
+There are two pods which control our ingress:
+  - `edge` validates client-facing certificates, gets routing rules from gm-control-api
 	- `voyager-edge` our ingress controller. Edge isn't exposed to the outside world, and in a real deployment we need to tie our cluster ingress to an IP address. This points to `edge`.
 	
 Voyager operator also creates a service:
