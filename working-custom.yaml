@@ -108,9 +108,9 @@ voyager:
 
 dockerCredentials:
   registry: docker.production.deciphernow.com
-  email:
-  username:
-  password:
+  email: firstname.lastname@deciphernow.com
+  username: firstname.lastname@deciphernow.com
+  password: nexusDockerPassword
 
 data:
   sidecar:
