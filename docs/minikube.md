@@ -66,7 +66,7 @@ Notice that helm has edit the directory `greymatter/charts` which is untracked b
 
 ## Configure Voyager Ingress
 
-At this writing there is [an issue](https://github.com/appscode/voyager/issues/1415) specifying voyager ingress as a dependency, so we need to manually configure voyager ingress locally before launching our cluster to the kubernetes cluster `kube-system`. This can be done with following commands:
+At this writing there is [an issue](https://github.com/appscode/voyager/issues/1415) specifying voyager ingress as a dependency, so we need to manually configure voyager ingress locally before launching our greymatter cluster. This can be done with following commands:
 
 ```sh
 export PROVIDER=minikube
@@ -86,7 +86,7 @@ Helm needs valid docker credentials to pull and run decipher docker containers. 
 
 ## Install Greymatter
 
-With our dependencies loaded, we're now ready to install greymatter. The following command writes out all templated files with values from `working-custom.yaml` and the default `values.yaml` in each chart directory. `workgin-custom.yaml` takes precedence. Specifying --name will give our helm deployment the name `gm`.
+With our dependencies loaded, we're now ready to install greymatter. The following command writes out all templated files with values from `working-custom.yaml` and the default `values.yaml` in each chart directory. `working-custom.yaml` takes precedence. Specifying --name will give our helm deployment the name `gm`.
 
 ```console
 $ helm install greymatter -f working-custom.yaml --name gm
@@ -107,20 +107,21 @@ We also have the option to specify:
   - "--replace" will replace an existing deployment
   - "--dry-run" will print all kubernetes configs to stdout
 
-We can run `helm ls` to see all our current deployments and `helm delete $DEPLOYMENT` to delete deployments. Note that we haven't figured out a way to apply configs without completely deleting a cluster.
-
-Also note we can see the status of our kubernetes configs with `minikube dashboard`
+We can run `helm ls` to see all our current deployments and `helm delete --purge $DEPLOYMENT` to delete deployments. If you need to make changes, you can run `helm upgrade gm greymatter -f working-custom.yaml` to update your release in place.
 
 ## Ingress
 
 There are two pods which control our ingress: 
-	- `edge` validate client-facing certificates, gets routing rules from gm-control-api
+	- `edge` validates client-facing certificates, gets routing rules from gm-control-api
 	- `voyager-edge` our ingress controller. Edge isn't exposed to the outside world, and in a real deployment we need to tie our cluster ingress to an IP address. This points to `edge`.
-
+	
+Voyager operator also creates a service:
+  - `voyager-gm-deploy` exposes the above HAProxy pods to the internet
+ 
 To hit our cluster, we can access voyager-edge:
 
 ```console
-$ minikube service voyager-edge
+$ minikube service --https=true voyager-edge
 |-----------|--------------|--------------------------------|
 | NAMESPACE |     NAME     |              URL               |
 |-----------|--------------|--------------------------------|
@@ -131,7 +132,19 @@ $ minikube service voyager-edge
 🎉  Opening kubernetes service  default/voyager-edge in default browser...
 ```
 
-Then open up https://192.168.99.102:31581 in your browser (notice the http**s**). You should be prompted for your Decipher localuser certificate and be taken to the dashboard. Once there, make sure all services are "green" and then pat yourself on the back-- you deployed Greymatter to minikube!!
+Then open up https://192.168.99.102:31581 in your browser (notice the http**s**). You should be prompted for your Decipher localuser certificate and be taken to the dashboard. Once there, make sure all services are "green" and then pat yourself on the back -- you deployed Greymatter to minikube!!
+
+## Debugging
+
+To see the status of kubernetes configs, you can access the kubernetes dashboard running within the minikube cluster with `minikube dashboard`
+
+To debug the mesh, you can access the envoy admin ui for the edge proxy by running:
+
+```console
+kubectl port-forward $(kubectl get pods --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' | grep ^edge) 8088:8001
+```
+
+Then open http://localhost:8088
 
 ## Authors
 
