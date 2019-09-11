@@ -120,10 +120,10 @@ We can run `helm ls` to see all our current deployments and `helm delete --purge
 
 There are two pods which control our ingress:
   - `edge` validates client-facing certificates, gets routing rules from gm-control-api
-	- `voyager-edge` our ingress controller. Edge isn't exposed to the outside world, and in a real deployment we need to tie our cluster ingress to an IP address. This points to `edge`.
+- `voyager-edge` our ingress controller. Edge isn't exposed to the outside world, and in a real deployment we need to tie our cluster ingress to an IP address. This points to `edge`.
 	
 Voyager operator also creates a service:
-  - `voyager-gm-deploy` exposes the above HAProxy pods to the internet
+  - `voyager-gm` exposes the `voyager-edge` HAProxy pod to the internet
  
 To hit our cluster, we can access voyager-edge:
 
