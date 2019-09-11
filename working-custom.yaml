@@ -239,7 +239,7 @@ jwt:
   enabled: false
   jwt:
     secrets:
-      - name: jwt-certs-1
+      - name: jwt-certs
         jwt.cert.pem: |-
           -----BEGIN CERTIFICATE-----
           MIIGqDCCBJCgAwIBAgICEAAwDQYJKoZIhvcNAQELBQAwgcAxCzAJBgNVBAYTAlVT
