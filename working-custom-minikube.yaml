@@ -29,37 +29,27 @@ global:
   mesh_tls:
     use_provided_certs: true
   catalog:
-    imagePullPolicy: IfNotPresent
     version: 1.0.1
   dashboard:
-    imagePullPolicy: IfNotPresent
     version: 3.1.0
   data:
-    imagePullPolicy: IfNotPresent
     version: 0.2.3
   documentation:
-    imagePullPolicy: IfNotPresent
     version: 3.0.0
   edge:
-    imagePullPolicy: IfNotPresent
     enableTLS: true
     certPath: /etc/proxy/tls/edge
     version: 0.9.1
   exhibitor:
-    imagePullPolicy: IfNotPresent
     replicas: 1
     version:
   jwt:
-    imagePullPolicy: IfNotPresent
     version: 0.2.0
   slo:
-    imagePullPolicy: IfNotPresent
     version: 0.5.0
   spire:
-    imagePullPolicy: IfNotPresent
     enabled: false
   control:
-    imagePullPolicy: IfNotPresent
     # This specifies the service name that all XDS clients will try to connect to
     name: control
     # cluster: greymatter-kg
