@@ -169,6 +169,7 @@ internal-jwt:
     secret_name: internal-redis-password
     password: 'internalRedis'
 
+# JWT secret configuration
 jwt:
   enabled: false
   jwt:
@@ -476,6 +477,7 @@ jwt:
           -----END PUBLIC KEY-----
         jwt.api_key: c2tpcGphY2stc2x1bmstc3VzcGVjdC1pc3JhZWwtc2NyYXA=
 
+# Edge secret configuration
 edge:
   edge:
     create_edge_secret: true
