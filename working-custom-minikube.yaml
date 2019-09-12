@@ -22,8 +22,8 @@ global:
   # route_url_name: greymatter
   environment: kubernetes
   minikube: true
-  namespace: 
-  domain: '*'
+  namespace: default
+  domain: "*"
   mesh_tls:
     enabled : false
     use_provided_certs: false
@@ -99,7 +99,7 @@ voyager:
 dockerCredentials:
   registry: docker.production.deciphernow.com
   email:
-  username:
+  username: 
   password:
 
 
