@@ -47,6 +47,53 @@ brew cask reinstall minikube
 minikube version
 ```
 
+#### Ubuntu / Debian
+
+A common problem is minikube cannot connect to the server:
+
+```console
+$ minikube status
+host: 
+kubelet: 
+apiserver: 
+kubectl: 
+```
+If this is the case, it's likely something is mis-configured with communication between virtual box <-> minikube <-> docker. The `-p` has been know to cause these kinds of issues. Try deleting minikube and then restarting without `-p gm-deploy`, i.e. `minikube start --cpus 4 --memory 4096`
+
+If successful, you should see the output:
+
+```console
+$ minikube status
+host: Running
+kubelet: Running
+apiserver: Running
+kubectl: Correctly Configured: pointing to minikube-vm at 192.168.99.102
+```
+
+If that isn't working, try removing minikube cache and rebuild the minikube iso:
+
+```console
+minikube stop
+minikube delete -p gm-deploy
+sudo rm -rf ~/.minikube
+minikube start --memory 4096 --cpus 4 # start minikube with default project
+😄  [gm-deploy] minikube v1.3.1 on Ubuntu 18.04
+💿  Downloading VM boot image ...
+minikube-v1.3.0.iso.sha256: 65 B / 65 B [--------------------] 100.00% ? p/s 0s
+minikube-v1.3.0.iso: 131.07 MiB / 131.07 MiB [-------] 100.00% 2.21 MiB p/s 59s
+...
+```
+
+If you're still having issues, you may need to reinstall virtualbox. 
+```console
+sudo dpkg -l | grep virtualbox
+sudo dpkg --purge $virtualbox-version
+sudo rm ~/"VirtualBox VMs" -Rf
+sudo rm ~/.config/VirtualBox/ -Rf
+sudo apt-get update
+sudo apt-get install virtualbox-6.0
+```
+
 ## Setup Helm
 
 Before running Helm commands, we need to configure our Helm Tiller. This is the server which runs on our Kubernetes cluster and acts as a endpoint for our command line `helm` commands.
