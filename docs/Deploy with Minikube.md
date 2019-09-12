@@ -110,11 +110,11 @@ Deleting outdated charts
 
 Notice that Helm has added the directory `greymatter/charts` which is untracked by git. After installing dependencies it should have a bunch of tarballs.
 
-*Note: if you make any changes to files other than `working-custom.yaml` you will need to run `helm dep up greymatter` again to update these charts in the cluster. However, in most cases we want to override default chart values with custom files only.*
+*Note: if you make any changes to files other than `working-custom-minikube.yaml` you will need to run `helm dep up greymatter` again to update these charts in the cluster. However, in most cases we want to override default chart values with custom files only.*
 
 ## Configure Docker Secrets
 
-Helm needs valid docker credentials to pull and run decipher docker containers. Enter in your docker creds into the secret `dockerCredentials` in `working-custom.yaml`.
+Helm needs valid docker credentials to pull and run decipher docker containers. Enter in your docker creds into the secret `dockerCredentials` in `working-custom-minikube.yaml`.
 
 ```yaml
   registry: docker.production.deciphernow.com
@@ -125,10 +125,10 @@ Helm needs valid docker credentials to pull and run decipher docker containers. 
 
 ## Install Greymatter
 
-With our dependencies loaded, we're now ready to install Grey Matter. The following command writes out all templated files with values from `working-custom.yaml` and the default `values.yaml` in each chart directory. `working-custom.yaml` takes precedence. Specifying --name will give our Helm deployment the name `gm`.
+With our dependencies loaded, we're now ready to install Grey Matter. The following command writes out all templated files with values from `working-custom-minikube.yaml` and the default `values.yaml` in each chart directory. `working-custom-minikube.yaml` takes precedence. Specifying --name will give our Helm deployment the name `gm`.
 
 ```console
-$ helm install greymatter -f working-custom.yaml --name gm
+$ helm install greymatter -f working-custom-minikube.yaml --name gm
 ...
 NOTES:
 Grey Matter 2.0.0-dev has been installed.
@@ -147,7 +147,7 @@ We also have the option to specify:
 - "--replace" will replace an existing deployment
 - "--dry-run" will print all kubernetes configs to stdout
 
-We can run `helm ls` to see all our current deployments and `helm delete --purge $DEPLOYMENT` to delete deployments. If you need to make changes, you can run `helm upgrade gm greymatter -f working-custom.yaml` to update your release in place.
+We can run `helm ls` to see all our current deployments and `helm delete --purge $DEPLOYMENT` to delete deployments. If you need to make changes, you can run `helm upgrade gm greymatter -f working-custom-minikube.yaml` to update your release in place.
 
 ```
 NAME                    REVISION        UPDATED                         STATUS          CHART                   APP VERSION     NAMESPACE  
