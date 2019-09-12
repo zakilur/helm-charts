@@ -22,10 +22,6 @@ global:
   # route_url_name: greymatter
   environment: kubernetes
   domain: '*'
-  route_url_name:
-  remove_namespace_from_url: true
-  use_domain_as_url: true
-  namespace: default
   mesh_tls:
     use_provided_certs: true
   catalog:
