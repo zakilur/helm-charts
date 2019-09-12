@@ -21,9 +21,12 @@ global:
   # domain: development.deciphernow.com
   # route_url_name: greymatter
   environment: kubernetes
+  minikube: true
+  namespace: 
   domain: '*'
   mesh_tls:
-    use_provided_certs: true
+    enabled : false
+    use_provided_certs: false
   catalog:
     version: 1.0.1
   dashboard:
@@ -98,6 +101,7 @@ dockerCredentials:
   email:
   username:
   password:
+
 
 data:
   sidecar:
