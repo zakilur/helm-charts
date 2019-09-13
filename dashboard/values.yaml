@@ -84,7 +84,6 @@ prometheus:
       limits:
         memory: "12Gi"
         cpu: "2"
-  externalUrl: '{{ .Values.global.route_url_name }}.{{ .Values.global.helm_release_namespace }}.{{ .Values.global.domain }}/services/prometheus/2.7.1'
 
 sidecar_prometheus:
   version: '{{- $.Values.global.dashboard.prometheus_sidecar.version | default $.Values.global.sidecar.version }}'

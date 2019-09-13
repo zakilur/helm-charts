@@ -3,7 +3,6 @@ voyager:
 
 global:
   environment: openshift
-  helm_release_namespace: fabric
   domain: staging.deciphernow.com
   route_url_name: greymatter
   remove_namespace_from_url: false

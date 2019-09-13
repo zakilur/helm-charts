@@ -42,7 +42,7 @@ spec:
         - "--web.console.libraries=/usr/share/prometheus/console_libraries"
         - "--web.console.templates=/usr/share/prometheus/consoles"
         - "--web.enable-admin-api"
-        - "--web.external-url={{ .Values.prometheus.external_url }}"
+        - "--web.external-url=http://anything/services/prometheus/latest"
         - "--web.route-prefix=/"
         volumeMounts:
         - name: prometheus-configuration
