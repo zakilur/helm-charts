@@ -120,7 +120,7 @@ helm repo add \
 
 ## Configure Voyager Ingress
 
-At this writing there is [an issue](https://github.com/appscode/voyager/issues/1415) specifying voyager ingress as a dependency, so we need to manually configure voyager ingress locally before launching our Grey Matter cluster. This can be done with following commands:
+At this writing there is [an issue](https://github.com/appscode/voyager/issues/1415) specifying voyager ingress as a dependency, so we need to manually configure Voyager ingress locally before launching our Grey Matter cluster. This can be done with following commands:
 
 ```sh
 export PROVIDER=minikube
@@ -129,13 +129,18 @@ helm repo update
 helm install appscode/voyager --name voyager-operator --version 10.0.0 \
   --namespace kube-system \
   --set cloudProvider=$PROVIDER \
-  --set enableAnalytics=false
+  --set enableAnalytics=false \
+  --set apiserver.enableAdmissionWebhook=false
 ...
 NOTES:
 Set cloudProvider for installing Voyager
+
+To verify that Voyager has started, run:
+
+  kubectl --namespace=kube-system get deployments -l "release=voyager-operator, app=voyager"
 ```
 
-You should see that the voyager-operator is now running in the namespace `kube-system`. See `docs/Ingress.md` for more information.
+You should see that the voyager-operator is now running in the namespace `kube-system`. See `docs/Ingress.md` for more information. Note that running `kubectl get ingresses` will not list voyager because it uses its own custom resource definition. Instead, use `kubectl get ingress.voyager.appscode.com --all-namespaces` to find it with kubectl. Describe ingress is also a useful command for debugging: `kubectl describe ingress.voyager.appscode.com -n <namespace> <ingress-name>`.
 
 ## Load Grey Matter charts
 
@@ -151,17 +156,16 @@ Get http://127.0.0.1:8879/charts/index.yaml: dial tcp 127.0.0.1:8879: connect: c
 ...Successfully got an update from the "stable" chart repository
 Update Complete.
 Saving 11 charts
-Downloading voyager from repo https://charts.appscode.com/stable/
 Deleting outdated charts
 ```
 
 Notice that Helm has added the directory `greymatter/charts` which is untracked by git. After installing dependencies it should have a bunch of tarballs.
 
-*Note: if you make any changes to files other than `working-custom-minikube.yaml` you will need to run `helm dep up greymatter` again to update these charts in the cluster. However, in most cases we want to override default chart values with custom files only.*
+*Note: if you make any changes to files other than `greymatter-*.yaml` you will need to run `helm dep up greymatter` again to update these charts in the cluster. However, in most cases we want to override default chart values with custom files only.*
 
 ## Configure Docker Secrets
 
-Helm needs valid docker credentials to pull and run decipher docker containers. Enter in your docker creds into the secret `dockerCredentials` in `working-custom-minikube.yaml`.
+Helm needs valid docker credentials to pull and run decipher docker containers. Enter in your docker creds into the secret `dockerCredentials` in `greymatter-custom-secrets.yaml`.
 
 ```yaml
   registry: docker.production.deciphernow.com
@@ -172,10 +176,10 @@ Helm needs valid docker credentials to pull and run decipher docker containers. 
 
 ## Install Greymatter
 
-With our dependencies loaded, we're now ready to install Grey Matter. The following command writes out all templated files with values from `working-custom-minikube.yaml` and the default `values.yaml` in each chart directory. `working-custom-minikube.yaml` takes precedence. Specifying --name will give our Helm deployment the name `gm`.
+With our dependencies loaded, we're now ready to install Grey Matter. The following command writes out all templated files with values from `greymatter-custom.yaml`, `greymatter-custom-secrets.yaml`, `greymatter-custom-minikube.yaml`, and the default `values.yaml` in each chart directory. `greymatter-custom-minikube.yaml` takes precedence because it is included last in our helm install command. Specifying --name will give our Helm deployment the name `gm`.
 
 ```console
-$ helm install greymatter -f working-custom-minikube.yaml --name gm
+$ helm install greymatter -f greymatter-custom.yaml -f greymatter-custom-secrets.yaml -f greymatter-custom-minikube.yaml --name gm
 ...
 NOTES:
 Grey Matter 2.0.0-dev has been installed.
@@ -194,7 +198,7 @@ We also have the option to specify:
 - "--replace" will replace an existing deployment
 - "--dry-run" will print all kubernetes configs to stdout
 
-We can run `helm ls` to see all our current deployments and `helm delete --purge $DEPLOYMENT` to delete deployments. If you need to make changes, you can run `helm upgrade gm greymatter -f working-custom-minikube.yaml` to update your release in place.
+We can run `helm ls` to see all our current deployments and `helm delete --purge $DEPLOYMENT` to delete deployments. If you need to make changes, you can run `helm upgrade gm greymatter -f greymatter-custom.yaml -f greymatter-custom-secrets.yaml -f greymatter-custom-minikube.yaml` to update your release in place.
 
 ```
 NAME                    REVISION        UPDATED                         STATUS          CHART                   APP VERSION     NAMESPACE  
@@ -208,10 +212,6 @@ There are two pods which control our ingress:
 
 - `edge` validates client-facing certificates, gets routing rules from gm-control-api
 - `voyager-edge` is our ingress controller. Edge isn't exposed to the outside world, and in a real deployment we need to tie our cluster ingress to an IP address. This points to `edge`.
-
-Voyager operator also creates a service:
-
-- `voyager-gm` exposes the `voyager-edge` HAProxy pod to the internet
 
 To hit our cluster, we can access voyager-edge:
 
