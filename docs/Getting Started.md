@@ -237,6 +237,27 @@ dependencies:
     repository: 'file://../dashboard'
 ```
 
+### 4.a Install the ingress controller
+
+*Note: this step does not apply to Openshift deployments*
+
+At this writing there is [an issue](https://github.com/appscode/voyager/issues/1415) specifying Voyager as a dependency, so we need to manually configure Voyager ingress before launching our Grey Matter cluster. This can be done with following commands:
+
+```sh
+export PROVIDER=minikube
+helm repo add appscode https://charts.appscode.com/stable/
+helm repo update
+helm install appscode/voyager --name voyager-operator --version 10.0.0 \
+  --namespace kube-system \
+  --set cloudProvider=$PROVIDER \
+  --set enableAnalytics=false \
+  --set apiserver.enableAdmissionWebhook=false
+```
+
+Now you're all set. When you deploy the edge service, voyager-operator will create a custom `Ingress` resource which will provision a load balancer for you. You can run `kc get svc voyager-edge` to see the cluster ip and port.
+
+See `docs/Ingress.md` for more information.
+
 ## 5. Install Helm charts
 
 `helm install` will install a Helm chart.
