@@ -15,7 +15,7 @@ You will need the following tools, tested for both mac and linux for the followi
 
 To launch a minikube cluster, run:
 
-```console
+```sh
 minikube start -p gm-deploy --memory 4096 --cpus 4
 ```
 
@@ -23,7 +23,7 @@ We specify 4gb of memory and 4 processors because the 10+ containers needed for 
 
 You should see the following output:
 
-```console
+```sh
 😄  [gm-deploy] minikube v1.3.1 on Ubuntu 18.04
 🔥  Creating virtualbox VM (CPUs=4, Memory=4096MB, Disk=20000MB) ...
 🐳  Preparing Kubernetes v1.15.2 on Docker 18.09.8 ...
@@ -32,6 +32,25 @@ You should see the following output:
 ⌛  Waiting for: apiserver proxy etcd scheduler controller dns
 🏄  Done! kubectl is now configured to use "gm-deploy
 ```
+
+Going forward, when running minikube commands, you'll need to use the `-p` flag which runs commands against the appropriate VM profile being used.
+
+For example:
+
+```sh
+minikube status -p gm-deploy
+```
+
+You should receive something like:
+
+```sh
+host: Running
+kubelet: Running
+apiserver: Running
+kubectl: Correctly Configured: pointing to minikube-vm at 192.168.99.100
+```
+
+If you don't then double check that you're using the `-p` flag with the correct profile string.
 
 ### Troubleshooting Launch
 
@@ -47,58 +66,11 @@ brew cask reinstall minikube
 minikube version
 ```
 
-#### Ubuntu / Debian
-
-A common problem is minikube cannot connect to the server:
-
-```console
-$ minikube status
-host: 
-kubelet: 
-apiserver: 
-kubectl: 
-```
-If this is the case, it's likely something is mis-configured with communication between virtual box <-> minikube <-> docker. The `-p` has been know to cause these kinds of issues. Try deleting minikube and then restarting without `-p gm-deploy`, i.e. `minikube start --cpus 4 --memory 4096`
-
-If successful, you should see the output:
-
-```console
-$ minikube status
-host: Running
-kubelet: Running
-apiserver: Running
-kubectl: Correctly Configured: pointing to minikube-vm at 192.168.99.102
-```
-
-If that isn't working, try removing minikube cache and rebuild the minikube iso:
-
-```console
-minikube stop
-minikube delete -p gm-deploy
-sudo rm -rf ~/.minikube
-minikube start --memory 4096 --cpus 4 # start minikube with default project
-😄  [gm-deploy] minikube v1.3.1 on Ubuntu 18.04
-💿  Downloading VM boot image ...
-minikube-v1.3.0.iso.sha256: 65 B / 65 B [--------------------] 100.00% ? p/s 0s
-minikube-v1.3.0.iso: 131.07 MiB / 131.07 MiB [-------] 100.00% 2.21 MiB p/s 59s
-...
-```
-
-If you're still having issues, you may need to reinstall virtualbox. 
-```console
-sudo dpkg -l | grep virtualbox
-sudo dpkg --purge $virtualbox-version
-sudo rm ~/"VirtualBox VMs" -Rf
-sudo rm ~/.config/VirtualBox/ -Rf
-sudo apt-get update
-sudo apt-get install virtualbox-6.0
-```
-
 ## Setup Helm
 
 Before running Helm commands, we need to configure our Helm Tiller. This is the server which runs on our Kubernetes cluster and acts as a endpoint for our command line `helm` commands.
 
-```console
+```sh
 $ helm init
 $HELM_HOME has been configured at /home/$USER/.helm.
 
@@ -146,7 +118,7 @@ You should see that the voyager-operator is now running in the namespace `kube-s
 
 Now we need to load our charts into our Helm server. This is done with `helm dep up`, which loads our charts and the dependencies of our charts into the Helm server. We specify the folder `greymatter` to load all the needed charts in the `greymatter/requirements.yaml` file.
 
-```console
+```sh
 $ helm dep up greymatter
 Hang tight while we grab the latest from your chart repositories...
 ...Unable to get an update from the "local" chart repository (http://127.0.0.1:8879/charts):
@@ -174,35 +146,31 @@ Helm needs valid docker credentials to pull and run decipher docker containers. 
   password: yourNexusPassword
 ```
 
-## Install Greymatter
+## Install Grey Matter
 
 With our dependencies loaded, we're now ready to install Grey Matter. The following command writes out all templated files with values from `greymatter-custom.yaml`, `greymatter-custom-secrets.yaml`, `greymatter-custom-minikube.yaml`, and the default `values.yaml` in each chart directory. `greymatter-custom-minikube.yaml` takes precedence because it is included last in our helm install command. Specifying --name will give our Helm deployment the name `gm`.
 
-```console
+```sh
 $ helm install greymatter -f greymatter-custom.yaml -f greymatter-custom-secrets.yaml -f greymatter-custom-minikube.yaml --name gm
 ...
 NOTES:
 Grey Matter 2.0.0-dev has been installed.
 
 gm deployed to namespace "default" at 06:56:56 on 09/11/06
-
-
-NOTE: It may take a few minutes for the installation to become stable.
-    You can watch the status of the pods by running 'kubectl get pods -w -n default'
-Once the environment has spun up you will be able to view Grey Matter's Dashboard at:
-    https://.*/services/dashboard/latest/
 ```
+
+It may take a few minutes for the installation to become stable. You can watch the status of the pods by running `kubectl get pods -w -n default`. Before attempting to view the Grey Matter dashboard you'll need to setup ingress in the next section.
 
 We also have the option to specify:
 
 - "--replace" will replace an existing deployment
-- "--dry-run" will print all kubernetes configs to stdout
+- "--dry-run" will print all Kubernetes configs to stdout
 
 We can run `helm ls` to see all our current deployments and `helm delete --purge $DEPLOYMENT` to delete deployments. If you need to make changes, you can run `helm upgrade gm greymatter -f greymatter-custom.yaml -f greymatter-custom-secrets.yaml -f greymatter-custom-minikube.yaml` to update your release in place.
 
-```
+```sh
 NAME                    REVISION        UPDATED                         STATUS          CHART                   APP VERSION     NAMESPACE  
-gm                      1               Thu Sep 12 11:25:43 2019        DEPLOYED        greymatter-2.1.0-dev    1.0.2-dev       default    
+gm                      1               Thu Sep 12 11:25:43 2019        DEPLOYED        greymatter-2.1.0-dev    1.0.2-dev       default
 voyager-operator        1               Thu Sep 12 11:19:01 2019        DEPLOYED        voyager-10.0.0          10.0.0          kube-system
 ```
 
@@ -215,7 +183,7 @@ There are two pods which control our ingress:
 
 To hit our cluster, we can access voyager-edge:
 
-```console
+```sh
 $ minikube -p gm-deploy service --https=true voyager-edge
 |-----------|--------------|--------------------------------|
 | NAMESPACE   | NAME           | URL                              |
@@ -231,11 +199,11 @@ Then open up <https://192.168.99.102:31581> in your browser (notice the http**s*
 
 ## Debugging
 
-To see the status of kubernetes configs, you can access the kubernetes dashboard running within the Minikube cluster with `minikube dashboard`
+To see the status of Kubernetes configs, you can access the Kubernetes dashboard running within the Minikube cluster with `minikube dashboard`
 
-To debug the mesh, you can access the envoy admin ui for the edge proxy by running:
+To debug the mesh, you can access the Envoy admin UI for the edge proxy by running:
 
-```console
+```sh
 kubectl port-forward $(kubectl get pods --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' | grep ^edge) 8088:8001
 ```
 
