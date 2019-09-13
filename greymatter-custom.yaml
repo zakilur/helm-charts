@@ -34,7 +34,7 @@ global:
     # This specifies the service name that all XDS clients will try to connect to
     name: control
     port: 50000
-    version: 0.3.1
+    version: 0.5.1
   data:
     jwt_prefix: '/jwt'
   internal-data:
