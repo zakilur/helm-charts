@@ -6,6 +6,8 @@ echo "Configuring mesh from config directory: $MESH_CONFIG_DIR"
 
 cd $MESH_CONFIG_DIR
 
+greymatter version
+
 echo "Config dir contains:"
 ls
 
@@ -43,14 +45,14 @@ done
 # The edge domain must be created before it can be referenced
 cd $MESH_CONFIG_DIR/special
 echo "Creating special configuration objects (domain, edge listener + proxy)"
-greymatter create domain < domain.json
+greymatter create domain <domain.json
 greymatter create listener <listener.json
-greymatter create proxy < proxy.json
-greymatter create cluster < cluster.json
-greymatter create shared_rules < shared_rules.json
-greymatter create route < route.json
+greymatter create proxy <proxy.json
+greymatter create cluster <cluster.json
+greymatter create shared_rules <shared_rules.json
+greymatter create route <route.json
 
-# for file in $(ls route*.json); do 
+# for file in $(ls route*.json); do
 #     greymatter create route < $file
 # done
 
@@ -81,7 +83,7 @@ done
 cd $MESH_CONFIG_DIR/special
 echo "Adding additional Special Routes"
 for rte in $(ls route-*.json); do
-    greymatter create route < $rte
+    greymatter create route <$rte
 done
 # greymatter create route < route-data-jwt-slash.json
 # greymatter create route < route-data-jwt.json

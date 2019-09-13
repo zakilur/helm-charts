@@ -96,22 +96,36 @@ jwt:
   users: |-
     {
       "users": [
-      {
-      "label": "CN=quickstart,OU=Engineering,O=Decipher Technology Studios,=Alexandria,=Virginia,C=US",
-      "values": {
-          "email": [
+        {
+          "label": "CN=quickstart,OU=Engineering,O=Decipher Technology Studios,=Alexandria,=Virginia,C=US",
+          "values": {
+            "email": [
               "quickstart@deciphernow.com"
-          ],
-          "org": [
+            ],
+            "org": [
               "www.deciphernow.com"
-          ],
-          "privilege": [
+            ],
+            "privilege": [
               "root"
-          ]
+            ]
           }
-      }]
+        },
+        {
+          "label": "CN=localuser,OU=Engineering,O=Decipher Technology Studios,=Alexandria,=Virginia,C=US",
+          "values": {
+            "email": [
+              "localuser@deciphernow.com"
+            ],
+            "org": [
+              "www.deciphernow.com"
+            ],
+            "privilege": [
+              "root"
+            ]
+          }
+        }
+      ]
     }
-
 redis:
   # Sets the name of the redis components to be deployed. (deployment, service)
   name: redis

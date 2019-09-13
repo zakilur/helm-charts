@@ -11,9 +11,9 @@ global:
     port: 18000
     cluster: greymatter
   gmControlApi:
-    version: 0.7.0
+    version: 0.8.1
     cli:
-      version: 0.4.0
+      version: 0.5.1
   data:
     jwt_prefix: 
   waiter:
@@ -86,7 +86,7 @@ gmControlApi:
     size: 
 
 sidecar:
-  version: '{{- $.Values.global.catalog.sidecar.version | default "0.8.0" }}'
+  version: '{{- $.Values.global.catalog.sidecar.version | default "0.9.1" }}'
   image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:{{ tpl $.Values.sidecar.version $ }}'
   imagePullPolicy: IfNotPresent
   resources:

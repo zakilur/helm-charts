@@ -1,0 +1,4 @@
+global:
+  environment: kubernetes
+  domain: "*"
+  minikube: true

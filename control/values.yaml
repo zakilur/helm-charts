@@ -7,7 +7,7 @@ global:
   exhibitor:
     replicas: 1
   control:
-    version: 0.3.0
+    version: 0.5.1
   waiter:
     image: deciphernow/k8s-waiter:latest
 

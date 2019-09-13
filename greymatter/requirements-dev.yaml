@@ -34,9 +34,3 @@ dependencies:
   - name: slo
     repository: 'file://../slo'
     version: '1.0.3'
-
-  # This is the Kubernetes ingress controller
-  - name: voyager
-    repository: 'https://charts.appscode.com/stable/'
-    version: '10.0.0'
-    condition: voyager.enabled
