@@ -114,13 +114,6 @@ global:
       # However, to use an env var with the sidecar, even if it doesn't have a global default,
       # it needs to be set globally as either a value or a secret, but the value can be empty
 
-voyager:
-  enabled: false
-  cloudProvider: minikube
-  # This disables Voyager's default setting of sending data to Google Analytics
-  # Don't change this -- you're never going to want to send analytics data
-  enableAnalytics: false
-
 dockerCredentials:
   registry: docker.production.deciphernow.com
   email:

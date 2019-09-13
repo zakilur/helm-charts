@@ -45,10 +45,3 @@ dependencies:
     repository: 'file://../spire'
     version: '0.1.0'
     condition: global.spire.enabled
-
-  # This is the Kubernetes ingress controller
-  # If deploying to minikube, this 
-  - name: voyager
-    repository: 'https://charts.appscode.com/stable/'
-    version: '10.0.0'
-    condition: voyager.enabled

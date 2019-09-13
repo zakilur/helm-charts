@@ -1,6 +1,3 @@
-voyager:
-  enabled: false
-
 global:
   environment: openshift
   domain: staging.deciphernow.com
