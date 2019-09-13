@@ -1,0 +1,12 @@
+
+
+global:
+  environment: kubernetes
+  domain: "*"
+  minikube: true
+
+voyager:
+  enabled: true
+  cloudProvider: minikube
+  apiserver:
+    enableValidatingWebhook: false
