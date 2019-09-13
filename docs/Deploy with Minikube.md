@@ -87,7 +87,7 @@ Then add the decipher repo to Helm using your LDAP credentials:
 helm repo add \
   decipher https://nexus.production.deciphernow.com/repository/helm-hosted \
   --username <ldap username>\
-  --password <ldap password>
+  --password '<ldap password>'
 ```
 
 ## Configure Voyager Ingress
