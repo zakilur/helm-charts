@@ -78,12 +78,12 @@ prometheus:
     create: true
     name: prometheus-sa
   resources:
-    limits:
-      cpu: 1
-      memory: 2Gi
     requests:
-      cpu: 500m
-      memory: 256Mi
+      memory: "8Gi"
+      cpu: "1"
+    limits:
+      memory: "12Gi"
+      cpu: "2"
 
 sidecar_prometheus:
   version: '{{- $.Values.global.dashboard.prometheus_sidecar.version | default $.Values.global.sidecar.version }}'

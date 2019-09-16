@@ -39,36 +39,16 @@ data:
 
   # Copied from https://github.com/DecipherNow/gm-dashboard/blob/master/docker/prometheus/recording_rules.yml
   recording_rules.yaml: |-
-    # Dashboard version: 3.0.0
+    # Dashboard version: 3.1.0
     # time intervals:
     # ["1h", "4h", "12h"]
 
     groups:
-      - name: core
-        rules:
-          # number of requests = N requests - (N Requests 1 hour ago OR 0)
-          - record: numberOfRequests1h:sum
-            expr: http_request_duration_seconds_count{key!="all"} -
-                  (
-                    http_request_duration_seconds_count{key!="all"} offset 1h
-                    or http_request_duration_seconds_count{key!="all"} * 0
-                  )
-          - record: numberOfRequests4h:sum
-            expr: http_request_duration_seconds_count{key!="all"} -
-                  (
-                    http_request_duration_seconds_count{key!="all"} offset 4h
-                    or http_request_duration_seconds_count{key!="all"} * 0
-                  )
-          - record: numberOfRequests12h:sum
-            expr: http_request_duration_seconds_count{key!="all"} -
-                  (
-                    http_request_duration_seconds_count{key!="all"} offset 12h
-                    or http_request_duration_seconds_count{key!="all"} * 0
-                  )
-
       # queries for overall services
       - name: overviewQueries
         rules:
+          - record: overviewQueries:avgUpPercent:avg
+            expr: avg by (job) (up)
           # avgResponseTimeByRoute
           - record: overviewQueries:avgResponseTimeByRoute_1h:avg
             expr: avg(rate(http_request_duration_seconds_sum{key!="all"}[1h]) / rate(http_request_duration_seconds_count{key!="all"}[1h]) * 1000 > 0) by (job, key)
@@ -76,6 +56,13 @@ data:
             expr: avg(rate(http_request_duration_seconds_sum{key!="all"}[4h]) / rate(http_request_duration_seconds_count{key!="all"}[4h]) * 1000 > 0) by (job, key)
           - record: overviewQueries:avgResponseTimeByRoute_12h:avg
             expr: avg(rate(http_request_duration_seconds_sum{key!="all"}[12h]) / rate(http_request_duration_seconds_count{key!="all"}[12h]) * 1000 > 0) by (job, key)
+            # numberOfRequestsByRoute
+          - record: overviewQueries:numberOfRequestsByRoute_1h:sum
+            expr: sum(floor(increase(http_request_duration_seconds_count[1h])) >= 1) by (job, key)
+          - record: overviewQueries:numberOfRequestsByRoute_4h:sum
+            expr: sum(floor(increase(http_request_duration_seconds_count[4h])) >= 1) by (job, key)
+          - record: overviewQueries:numberOfRequestsByRoute_12h:sum
+            expr: sum(floor(increase(http_request_duration_seconds_count[12h])) >= 1) by (job, key)
             # latencyByRoute
           - record: overviewQueries:latencyByRoute_1h:sum
             expr: sum without(instance, status)(rate(http_request_duration_seconds_count{key!="all"}[1h])) > 0
@@ -85,22 +72,22 @@ data:
             expr: sum without(instance, status)(rate(http_request_duration_seconds_count{key!="all"}[12h])) > 0
             # error percent
           - record: overviewQueries:errorPercent_1h:sum
-            expr: (numberOfRequests1h:sum{status!~"2..|3.."} / numberOfRequests1h:sum) * 100
+            expr: sum(floor(increase(http_request_duration_seconds_count{status!~"2..|3..", key!="all"}[1h]) )) by (job) / sum(floor(increase(http_request_duration_seconds_count{key!="all"}[1h]) )) by (job) * 100
           - record: overviewQueries:errorPercent_4h:sum
-            expr: (numberOfRequests1h:sum{status!~"2..|3.."} / numberOfRequests1h:sum) * 100
+            expr: sum(floor(increase(http_request_duration_seconds_count{status!~"2..|3..", key!="all"}[4h]) )) by (job) / sum(floor(increase(http_request_duration_seconds_count{key!="all"}[4h]) )) by (job) * 100
           - record: overviewQueries:errorPercent_12h:sum
-            expr: (numberOfRequests1h:sum{status!~"2..|3.."} / numberOfRequests1h:sum) * 100
+            expr: sum(floor(increase(http_request_duration_seconds_count{status!~"2..|3..", key!="all"}[12h]) )) by (job) / sum(floor(increase(http_request_duration_seconds_count{key!="all"}[12h]) )) by (job) * 100
 
         # queries for each route
       - name: queriesByRoute
         rules:
-          # error percent = (N 200 or 300 requests / N total Requests) * 100
+          # error percent
           - record: queriesByRoute:errorPercent_1h:sum
-            expr: (numberOfRequests1h:sum{status!~"2..|3.."} / numberOfRequests1h:sum) * 100
+            expr: sum(floor(increase(http_request_duration_seconds_count{status!~"2..|3..", key!="all"}[1h]) )) by (job, key, method) / sum(floor(increase(http_request_duration_seconds_count{key!="all"}[1h]) )) by (job, key, method) * 100
           - record: queriesByRoute:errorPercent_4h:sum
-            expr: (numberOfRequests4h:sum{status!~"2..|3.."} / numberOfRequests4h:sum) * 100
+            expr: sum(floor(increase(http_request_duration_seconds_count{status!~"2..|3..", key!="all"}[4h]) )) by (job, key, method) / sum(floor(increase(http_request_duration_seconds_count{key!="all"}[4h]) )) by (job, key, method) * 100
           - record: queriesByRoute:errorPercent_12h:sum
-            expr: (numberOfRequests12h:sum{status!~"2..|3.."} / numberOfRequests12h:sum) * 100
+            expr: sum(floor(increase(http_request_duration_seconds_count{status!~"2..|3..", key!="all"}[12h]) )) by (job, key, method) / sum(floor(increase(http_request_duration_seconds_count{key!="all"}[12h]) )) by (job, key, method) * 100
             # p95Latency
           - record: queriesByRoute:p95Latency_1h:sum
             expr: round(histogram_quantile(0.95,avg without(instance, status)(rate(http_request_duration_seconds_bucket[1h]))) * 1000, 0.1)
@@ -115,6 +102,13 @@ data:
             expr: round(histogram_quantile(0.50,avg without(instance, status)(rate(http_request_duration_seconds_bucket[4h]))) * 1000, 0.1)
           - record: queriesByRoute:p50Latency_12h:sum
             expr: round(histogram_quantile(0.50,avg without(instance, status)(rate(http_request_duration_seconds_bucket[12h]))) * 1000, 0.1)
+            # request count for route
+          - record: queriesByRoute:requestCount_1h:sum
+            expr: sum(floor(increase(http_request_duration_seconds_count[1h])) >= 1) by (job, key, method)
+          - record: queriesByRoute:requestCount_4h:sum
+            expr: sum(floor(increase(http_request_duration_seconds_count[4h])) >= 1) by (job, key, method)
+          - record: queriesByRoute:requestCount_12h:sum
+            expr: sum(floor(increase(http_request_duration_seconds_count[12h])) >= 1) by (job, key, method)
 
         # range queries
       - name: rangeQueries
@@ -171,3 +165,4 @@ data:
             expr: histogram_quantile(0.999,avg without(instance, status)(rate(http_request_duration_seconds_bucket[10m])))
           - record: rangeQueries:routep9999LatencyViolations:sum
             expr: histogram_quantile(0.9999,avg without(instance, status)(rate(http_request_duration_seconds_bucket[10m])))
+            
