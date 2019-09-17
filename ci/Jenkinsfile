@@ -15,7 +15,7 @@ import groovy.transform.Field
 
 node('ubuntu-18.04'){
     try{
-      
+
         def helmVersion = "2.14.0"
 
         unique_charts=""
@@ -23,11 +23,11 @@ node('ubuntu-18.04'){
         stage ('Get Code') {
             checkout scm
         }
-        
+
         branch = sh(returnStdout: true, script: "git rev-parse HEAD | git branch -a --contains | grep remotes | sed s/.*remotes.origin.//").trim()
         echo "branch = ${branch}"
         commitId = sh(script: 'git rev-parse HEAD', returnStdout: true)
-        echo "commitId = ${commitId}" 
+        echo "commitId = ${commitId}"
         author = sh(returnStdout: true, script: "git --no-pager show -s --format='%an' ${commitId }").trim()
         echo "author = ${author}"
         commitMessage = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim().replace('(','').replace(')','')
@@ -42,19 +42,18 @@ node('ubuntu-18.04'){
             currentBuild.result = 'SUCCESS'
             return
         }
-        
+
         // Do some git and bash magic to find the charts that were updated in this pull request and ignore the ci folder
-        stage ('Find Charts'){ 
+        stage ('Find Charts'){
             sh '''#!/bin/bash
                 # check to see if the chart.txt file exists.  If so, remove it first to ensure we're using a clean file
                 [[ -e charts.txt ]] && rm -f charts.txt
-
                 # get a list of directories with chart.yaml and populate a file charts.txt with that list
                 python ./ci/find_charts.py
             '''
         }
-        
-  
+
+
         // We need to install Helm to be able to package the charts
          try {
             stage ('Install Helm') {
@@ -70,9 +69,9 @@ node('ubuntu-18.04'){
             currentBuild.result = 'UNSTABLE'
             throw err
         }
-        
+
         try {
-            stage ('Package Helm Charts'){                  
+            stage ('Package Helm Charts'){
                 charts = readFile('charts.txt').trim()
                 echo "Charts found to be packaged: " + charts
 
@@ -107,9 +106,9 @@ node('ubuntu-18.04'){
             currentBuild.result = 'UNSTABLE'
             throw err
         }
-            
-        if ( branch == 'master' ){
-            stage ('Publish Charts') { 
+
+        if (branch =~ /release-[0-9].[0-9]/) {
+            stage ('Publish Charts') {
                 try{
                     // Find all of the charts that were created, known by the *.tgz file extension.  Then upload them to Nexus
                     withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
@@ -123,7 +122,7 @@ node('ubuntu-18.04'){
                     }
                 }
                 catch (e){
-                    errMessage = "WARN: failed to publish some or all subcharts [Stage- Publish Charts (master)]"
+                    errMessage = "WARN: failed to publish some or all subcharts [Stage- Publish Charts (${branch})]"
                     warnings.add(errMessage)
                     currentBuild.result = 'UNSTABLE'
                 }
@@ -134,7 +133,7 @@ node('ubuntu-18.04'){
                     sh """
                         echo "List charts in decipher"
                         ./helm/helm search decipher
-                        
+
                         echo "Packaging: Grey Matter"
                         ./helm/helm dependency update greymatter
                         ./helm/helm package greymatter
@@ -160,7 +159,7 @@ node('ubuntu-18.04'){
                     }
                 }
                 catch (e){
-                    errMessage = "WARN: failed to publish Greymatter [Stage- Publish Grey Matter (master)]"
+                    errMessage = "WARN: failed to publish Greymatter [Stage- Publish Grey Matter (${branch})]"
                     warnings.add(errMessage)
                     currentBuild.result = 'UNSTABLE'
                 }
@@ -199,7 +198,6 @@ node('ubuntu-18.04'){
                         sed -i "s/helm-hosted/helm-staging/g" greymatter/requirements.yaml
                         echo "List charts in decipher-staging"
                         ./helm/helm search decipher-staging
-
                         echo "Packaging: Grey Matter"
                         ./helm/helm dependency update greymatter
                         ./helm/helm package greymatter
@@ -226,7 +224,7 @@ node('ubuntu-18.04'){
         currentBuild.result = 'FAILURE'
         sendFailure("Error caught: ${e}")
         throw e
-    } 
+    }
 }
 
 /////// Notify slack about build status
@@ -326,11 +324,11 @@ def parseCommit(String commitMessage, skipTerms ){
     }
     try{
         def commitFlags = [:]
-        
+
             for( int i = 0; i < skipTerms.size(); i++){
                 def compareString = "(.*)(\\b" + skipTerms.get(i) + "\\b)(.*)"
                 println compareString
-            
+
                 def skipCiFlag = commitMessage ==~ compareString
                 assert skipCiFlag instanceof Boolean
                 commitFlags.ciSkip=skipCiFlag
@@ -338,7 +336,7 @@ def parseCommit(String commitMessage, skipTerms ){
             }
 
         return commitFlags
-    } 
+    }
     catch (e){
         println e.getMessage()
         throw new Exception("Warning- Issue parsing commit message for flags.")

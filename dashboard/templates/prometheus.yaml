@@ -28,7 +28,7 @@ spec:
 {{ toYaml .Values.prometheus.resources | indent 10 }}
         {{- end }}
         ports:
-        - name: http
+        - name: internal # was http
           containerPort: 9090
         command:
         - {{ .Values.prometheus.start_cmd | quote }}
@@ -56,7 +56,7 @@ spec:
 {{ toYaml .Values.sidecar_prometheus.resources | indent 10 }}
         {{- end }}
         ports:
-        - name: proxy
+        - name: http # was proxy
           containerPort: 8080
         - name: metrics
           containerPort: 8081
@@ -74,6 +74,7 @@ spec:
           value: {{ tpl $envvar.value $ | quote }}
         {{- end }}
     {{- end  }}
+        # --MISSING A BUNCH OF XDS STUFF HERE AGAIN
         # - name: ZK_ADDRS
         #   value:  {{ template "greymatter.exhibitor.address" . }}
         # - name: ZK_ANNOUNCE_PATH

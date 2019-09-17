@@ -33,14 +33,14 @@ spec:
               value: {{ .Values.catalog.debug | quote }}
             - name: PORT
               value: '9080'
-            # - name: XDS_SERVER_ADDRESS
+            #- name: XDS_SERVER_ADDRESS
             #   value: 'xds.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.global.xds.port }}'
-            - name: XDS_SERVER_0_ADDRESS
-              value: '{{ .Values.global.control.name }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.global.control.port }}'
-            - name: 'XDS_SERVER_0_MESH_ID'
-              value: 'default-zone'
-            - name: 'XDS_SERVER_0_REQUEST_CLUSTER'
-              value: 'edge'
+            #- name: XDS_SERVER_0_ADDRESS
+            #  value: '{{ .Values.global.control.name }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.global.control.port }}'
+            #- name: 'XDS_SERVER_0_MESH_ID'
+            #  value: 'default-zone'
+            #- name: 'XDS_SERVER_0_REQUEST_CLUSTER'
+            #  value: 'edge'
 
             {{- range $index, $service := .Values.catalog.services }}
             {{- range $key, $val := $service }}
@@ -48,7 +48,7 @@ spec:
               value: "{{ tpl $val $ }}"
             {{- end }}
             {{- end }}
-            
+
         - name: sidecar
           image: {{ tpl $.Values.sidecar.image $ }}
           imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
@@ -57,7 +57,7 @@ spec:
 {{ toYaml .Values.sidecar.resources | indent 10 }}
           {{- end }}
           ports:
-            - name: proxy
+            - name: http  # formerly called 'port'
               containerPort: 8080
             - name: metrics
               containerPort: 8081

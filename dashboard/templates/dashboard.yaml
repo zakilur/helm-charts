@@ -24,17 +24,17 @@ spec:
         ports:
         - name: http
           containerPort: 1337
-        env:
+        env:  # removed tpl and . from some of these values
         - name: FABRIC_SERVER
-          value: '{{ tpl .Values.dashboard.fabric_server . }}'
+          value: '{{ .Values.dashboard.fabric_server }}'
         - name: USE_PROMETHEUS
           value: '{{ .Values.dashboard.use_prometheus }}'
         - name: OBJECTIVES_SERVER
-          value: '{{ tpl .Values.dashboard.objectives_server . }}'
+          value: '{{ .Values.dashboard.objectives_server }}'
         - name: PROMETHEUS_SERVER
           value: '{{ .Values.dashboard.prometheus_server }}'
         - name: BASE_URL
-          value: '{{ tpl .Values.dashboard.base_url . }}'
+          value: '{{ .Values.dashboard.base_url }}'
       - name: sidecar
         image: '{{ tpl .Values.sidecar.image $ }}'
         imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
@@ -47,7 +47,7 @@ spec:
           containerPort: 8080
         - name: metrics
           containerPort: 8081
-        env:
+        env: # we're missing a bunch of stuff involving XDS
         {{- include "greymatter.envvars" . | indent 8 }}
         # - name: ZK_ADDRS
         #   value: {{ template "greymatter.exhibitor.address" . }}

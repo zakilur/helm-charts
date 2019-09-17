@@ -40,101 +40,71 @@ catalog:
 
   port: 9080
 
+  # Replaced through to sidecar: with latest from master
   services:
     service_0:
-      mesh_id: default-zone
-      cluster_id: catalog
-      enable_instance_metrics: "true"
-      metrics_port: "8001"
       capability: 'Grey Matter'
-      documentation: '/services/catalog/{{ $.Values.global.catalog.version }}/'
+      documentation: '/services/catalog/{{ $.Values.global.catalog.version | trunc 3 }}/'
       name: 'Grey Matter Catalog'
       owner: 'Decipher'
       version: '{{ $.Values.global.catalog.version | trunc 3 }}'
+      zookeeper_announcement_point: '/services/catalog/{{ $.Values.global.catalog.version | trunc 3 }}/metrics'
 
     service_1:
-      # mesh_id: default-zone
-      # cluster_id: control
-      # enable_instance_metrics: "true"
-      # metrics_port: "8001"
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter Control'
       owner: 'Decipher'
       version: '{{ $.Values.global.xds.version | trunc 3 }}'
-      zookeeper_announcement_point: '/services/xds/{{ $.Values.global.xds.version }}/metrics'
+      zookeeper_announcement_point: '/services/xds/{{ $.Values.global.xds.version | trunc 3 }}/metrics'
 
     service_2:
-      mesh_id: default-zone
-      cluster_id: dashboard
-      enable_instance_metrics: "true"
-      metrics_port: "8001"
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter Dashboard'
       owner: 'Decipher'
       version: '{{ $.Values.global.dashboard.version | trunc 3 }}'
-      zookeeper_announcement_point: '/services/dashboard/{{ $.Values.global.dashboard.version }}/metrics'
+      zookeeper_announcement_point: '/services/dashboard/latest/metrics'
 
     service_3:
-      mesh_id: default-zone
-      cluster_id: data
-      enable_instance_metrics: "true"
-      metrics_port: "8001"
       capability: 'Grey Matter'
-      documentation: '/services/data/{{ .Values.global.data.version }}/static/ui/index.html'
+      documentation: '/services/data/{{ .Values.global.data.version | trunc 3 }}/static/ui/index.html'
       name: 'Grey Matter Data'
       owner: 'Decipher'
       version: '{{ $.Values.global.data.version | trunc 3 }}'
-      zookeeper_announcement_point: '/services/data/{{ $.Values.global.data.version }}/metrics'
+      zookeeper_announcement_point: '/services/data/{{ $.Values.global.data.version | trunc 3 }}/metrics'
 
     service_4:
-      mesh_id: default-zone
-      cluster_id: jwt-security
-      enable_instance_metrics: "true"
-      metrics_port: "8001"
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter JWT Security'
       owner: 'Decipher'
       version: '{{ $.Values.global.jwt.version | trunc 3 }}'
-      zookeeper_announcement_point: '/services/jwt-security/{{ $.Values.global.jwt.version }}/metrics'
+      zookeeper_announcement_point: '/services/jwt-security/{{ $.Values.global.jwt.version | trunc 3 }}/metrics'
 
     service_5:
-      mesh_id: default-zone
-      cluster_id: edge
-      enable_instance_metrics: "true"
-      metrics_port: "8001"
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter Edge'
       owner: 'Decipher'
       version: '{{ $.Values.global.edge.version | trunc 3 }}'
-      zookeeper_announcement_point: '/services/edge/{{ $.Values.global.edge.version }}/metrics'
+      zookeeper_announcement_point: '/services/edge/{{ $.Values.global.edge.version | trunc 3 }}/metrics'
 
     service_6:
-      mesh_id: default-zone
-      cluster_id: slo
-      enable_instance_metrics: "true"
-      metrics_port: "8001"
       capability: 'Grey Matter'
       documentation: ''
       name: 'Grey Matter Service Level Objectives'
       owner: 'Decipher'
       version: '{{ $.Values.global.slo.version | trunc 3 }}'
-      zookeeper_announcement_point: '/services/slo/{{ $.Values.global.slo.version }}/metrics'
+      zookeeper_announcement_point: '/services/slo/{{ $.Values.global.slo.version | trunc 3 }}/metrics'
 
     service_7:
-      mesh_id: default-zone
-      cluster_id: documentation
-      enable_instance_metrics: "true"
-      metrics_port: "8001"
       capability: 'Grey Matter'
-      documentation: '/services/documentation/{{ $.Values.global.documentation.version }}/'
+      documentation: '/services/documentation/{{ $.Values.global.documentation.version | trunc 3 }}/'
       name: 'Grey Matter Documentation'
       owner: 'Decipher'
       version: '{{ $.Values.global.documentation.version | trunc 3 }}'
-      zookeeper_announcement_point: '/services/documentation/{{ $.Values.global.documentation.version }}/metrics'
+      zookeeper_announcement_point: '/services/documentation/{{ $.Values.global.documentation.version | trunc 3 }}/metrics'
 
 sidecar:
   version: '{{- $.Values.global.catalog.sidecar.version | default "0.8.0" }}'
