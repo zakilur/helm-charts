@@ -230,7 +230,7 @@ See `docs/Ingress.md` for more information.
 To install Helm charts representing the latest version of Grey Matter, you'll need to add Decipher's hosted Helm repository to your local `helm` CLI. Run the following command, replacing username/password with your Decipher LDAP credentials.
 
 ```bash
-helm repo add decipher https://nexus.production.deciphernow.com/repository/helm-hosted --username <ldap username> --password <ldap password>
+helm repo add decipher https://nexus.production.deciphernow.com/repository/helm-hosted --username <ldap username> --password `<ldap password>`
 ```
 
 Using the example custom values files from section 2, you will be able to deploy Grey Matter to an OpenShift environment from the hosted repository with these commands.
