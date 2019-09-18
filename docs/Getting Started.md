@@ -219,7 +219,7 @@ helm install appscode/voyager --name voyager-operator --version 10.0.0 \
   --set apiserver.enableAdmissionWebhook=false
 ```
 
-Now you're all set. When you deploy the edge service, voyager-operator will create a custom `Ingress` resource which will provision a load balancer for you. You can run `kc get svc voyager-edge` to see the cluster ip and port.
+Now you're all set. When you deploy the edge service, voyager-operator will create a custom `Ingress` resource which will provision a load balancer for you. You can run `kubectl get svc voyager-edge` to see the cluster ip and port.
 
 See `docs/Ingress.md` for more information.
 
