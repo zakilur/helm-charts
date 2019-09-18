@@ -63,7 +63,7 @@ sidecar:
 postgres:
   data_mount_point: /var/lib/pgsql/data
   openshift:
-    image: 'docker.io/centos/postgresql-95-centos7:9.5'
+    image: 'docker.io/centos/postgresql-10-centos7'
   k8s:
     image: 'postgres:9.5'
   imagePullPolicy: IfNotPresent
