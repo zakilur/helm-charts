@@ -65,7 +65,7 @@ Each Helm chart has a `values.yaml` file which specifies the default values used
 We've provided two examples:
 
 - [greymatter-custom.yaml](./greymatter-custom.yaml): showcases the general structure of a Helm values file and shows how top-level values are passed down to subcharts
-- [greymatter-custom-secrets.yaml](./greymatter-custom-secrets.yaml): a values file containing just passwords, secrets, and oher sensitive data
+- [greymatter-custom-secrets.yaml](./greymatter-custom-secrets.yaml): a values file containing just passwords, secrets, and other sensitive data
 
 ### Basic values
 
