@@ -280,7 +280,7 @@ The URL will be `greymatter.{{ Release.Namespace }}.development.deciphernow.com`
 
 ## 6. Additional information
 
-Here are some additional parameters we often use when running `helm-install`:
+Here are some additional parameters we often use when running `helm install`:
 
 - `-f` allows you to pass in a file with values that can override the chart's defaults (relative path)
 - `--name` the release version of the project, service, etc.
