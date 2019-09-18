@@ -199,7 +199,9 @@ spire:
 
 If you want to deploy a Helm chart for a single service without the entire service mesh, you need to make sure that your `custom.yaml` `globals.sidecar.envvars` key contains all of the necessary global defaults for the sidecar environment variables. You can just copy these values from our `example-custom.yaml` file. Otherwise, the sidecar for the single service will only contain the environment variables that are different for that service. This will most likely break your sidecar installation, so be sure that you set these values.
 
-## 3. Add the Decipher Helm repository to your local `helm` CLI
+## 3. Install Grey Matter from hosted chart repository
+
+### 3.a Add the Decipher Helm repository to your local `helm` CLI
 
 You'll need to add the Decipher Helm repository to your local `helm`. Run the following command, replacing username/password with your Decipher LDAP credentials.
 
@@ -209,12 +211,26 @@ helm repo add decipher https://nexus.production.deciphernow.com/repository/helm-
 
 This allows you to install Grey Matter charts that are versioned and published to Decipher's hosted helm repository.
 
-## 4. Install Helm chart dependencies
+### 3.b Install Grey Matter
+
+Once you have your custom values files populated, you will be able to deploy Grey Matter from the hosted repository with these commands
+
+```console
+helm repo update
+helm install decipher/greymatter --name <release_name> --namespace <my_namespace> -f greymatter-custom.yaml -f greymatter-custom-secrets.yaml greymatter --tiller-namespace <tiller_namespace> 
+```
+
+See section 5 for a detailed description on the parameters used above.
+
+## 4. Install Helm chart for development
+
+To deploy Grey Matter for development purposes, you will first need to clone this repository.  When running `helm` commands, there is no need to supply the remote repository name before the chart name.
 
 If you are deploying a chart like `greymatter` with dependencies defined in `requirements.yaml`, you need to run:
 
 ```bash
 helm dep up greymatter
+helm install greymatter --name <release_name> --namespace <my_namespace> -f greymatter-custom.yaml -f greymatter-custom-secrets.yaml greymatter --tiller-namespace <tiller_namespace> 
 ```
 
 This command will create a `charts/` directory with tarballs of the child charts that the parent chart will use. After the charts directory is populated then you will be able to run a `helm install greymatter <options>`
@@ -272,10 +288,10 @@ Here are some additional parameters we often use:
 - `--dry-run` w/ debug will print out the deployment YAML without actually deploying to OpenShift/Kubernetes environment
 - `--replace` will create new deployments if they are undefined or replace old ones if they exist
 
-To install the entire Grey Matter service mesh, it's always pruden:wqt to do a dry-run first to ensure that your charts are configured correctly.
+To install the entire Grey Matter service mesh, it's always prudent to do a dry-run first to ensure that your charts are configured correctly.
 
 ```bash
-helm install greymatter -f custom.yaml --name gm-deploy --namespace fabric-development --tiller-namespace helm --debug --dry-run
+helm install decipher/greymatter -f custom.yaml --name gm-deploy --namespace fabric-development --tiller-namespace helm --debug --dry-run
 ```
 
 If the result of running the above command prints YAML to your terminal then your charts are configured correctly. Once you're ready, drop the `--dry-run` parameter and run the command again. At this point, `helm` has successfully instructed `tiller` to deploy Grey Matter to the Openshift/Kubernetes environment.
@@ -287,5 +303,5 @@ This repo contains two custom values files that will deploy Grey Matter with min
 To deploy with these files, you can issue this command
 
 ```bash
-helm install --name <release_name> --namespace <my_namespace> -f greymatter-custom.yaml -f greymatter-custom-secrets.yaml greymatter --tiller-namespace <tiller_namespace> 
+helm install --name <release_name> --namespace <my_namespace> -f greymatter-custom.yaml -f greymatter-custom-secrets.yaml decipher/greymatter --tiller-namespace <tiller_namespace> 
 ```
