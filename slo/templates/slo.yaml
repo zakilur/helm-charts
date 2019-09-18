@@ -60,14 +60,14 @@ spec:
         - name: "SSL_ENABLED"
           value: {{ .Values.postgres.ssl.enabled | quote }}
         - name: SSL_SERVER_CA
-          value: "{{ .Values.postgres.ssl.mount_path }}/ca.pem"
+          value: "{{ .Values.postgres.ssl.certsMountPoint }}/ca.pem"
         - name: SSL_SERVER_CERT
-          value: "{{ .Values.postgres.ssl.mount_path }}/postgres.crt"
+          value: "{{ .Values.postgres.ssl.certsMountPoint }}/server.crt"
         - name: SSL_SERVER_KEY
-          value: "{{ .Values.postgres.ssl.mount_path }}/postgres.key"
+          value: "{{ .Values.postgres.ssl.certsMountPoint }}/server.key"
         volumeMounts:
         - name: postgres-certs
-          mountPath: {{ .Values.postgres.ssl.mount_path | quote }}
+          mountPath: {{ .Values.postgres.ssl.certsMountPoint | quote }}
         {{- end }}
       
       - name: sidecar

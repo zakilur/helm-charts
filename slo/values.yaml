@@ -76,6 +76,7 @@ postgres:
     requests:
       cpu: 100m
       memory: 128Mi
+  confMountPoint: /conf
 
   credentials:
     secret_name: postgres-credentials

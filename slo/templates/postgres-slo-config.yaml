@@ -1,0 +1,9 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: postgres-slo-config
+  namespace: {{ .Release.Namespace }}
+data:
+  pg_hba.conf: |-
+    # TYPE DATABASE USER ADDRESS METHOD
+    hostssl all all 0.0.0.0/0 cert clientcert=1

@@ -32,6 +32,12 @@ spec:
           - name: postgres
             containerPort: 5432
         env:
+          - name: PGSSLCERT
+            value: "{{ .Values.postgres.ssl.certsMountPoint }}/postgres.crt"
+          - name: PGSSLKEY
+            value: "{{ .Values.postgres.ssl.certsMountPoint }}/postgres.key"
+          - name: PGSSLROOTCERT
+            value: "{{ .Values.postgres.ssl.certsMountPoint }}/ca.pem"
       {{- range $envvar := .Values.postgres.envvars }}
         {{- $envName := tpl $envvar.name $ | upper | replace "." "_" | replace "-" "_" }}
         {{- if eq $envvar.type "secret" }}
@@ -50,7 +56,9 @@ spec:
             mountPath: {{ .Values.postgres.data_mount_point }}
         {{- if .Values.postgres.ssl.enabled }}
           - name: certificates
-            mountPath: {{ .Values.postgres.ssl.mount_path }}
+            mountPath: {{ .Values.postgres.ssl.certsMountPoint }}
+          - name: postgres-slo-config
+            mountPath: {{ .Values.postgres.confMountPoint }}
         {{- end }}
         readinessProbe:
           tcpSocket:
@@ -66,6 +74,9 @@ spec:
       - name: postgres-slo
         persistentVolumeClaim:
           claimName: postgres-slo
+      - name: postgres-slo-config
+        configMap:
+          name: postgres-slo-config
       {{- if .Values.postgres.ssl.enabled }}
       - name: certificates
         secret:

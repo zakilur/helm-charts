@@ -470,7 +470,8 @@ slo:
     ssl:
       enabled: true
       name: postgres-ssl-certs
-      mount_path: /secret/cert
+      certsMountPoint: /secret/cert
+    confMountPoint: /opt/app-root/src/postgresql-cfg
 
     envvars:
       - type: secret
