@@ -1,47 +1,47 @@
 dependencies:
   - name: catalog
-    version: '1.0.8'
-    repository: 'file://../catalog'
+    version: '2.0.1'
+    repository: 'https://nexus.production.deciphernow.com/repository/helm-hosted'
 
   - name: data
-    version: '1.0.6'
-    repository: 'file://../data'
+    version: '2.0.1'
+    repository: 'https://nexus.production.deciphernow.com/repository/helm-hosted'
 
   - name: data
-    version: '1.0.6'
-    repository: 'file://../data'
+    version: '2.0.1'
+    repository: 'https://nexus.production.deciphernow.com/repository/helm-hosted'
     alias: internal-data
 
   - name: dashboard
-    version: '1.0.6'
-    repository: 'file://../dashboard'
+    version: '2.0.1'
+    repository: 'https://nexus.production.deciphernow.com/repository/helm-hosted'
 
   - name: edge
-    version: '1.0.7'
-    repository: 'file://../edge'
+    version: '2.0.1'
+    repository: 'https://nexus.production.deciphernow.com/repository/helm-hosted'
 
   - name: jwt
-    version: '1.0.3'
-    repository: 'file://../jwt'
+    version: '2.0.1'
+    repository: 'https://nexus.production.deciphernow.com/repository/helm-hosted'
 
   - name: jwt
-    version: '1.0.3'
-    repository: 'file://../jwt'
+    version: '2.0.1'
+    repository: 'https://nexus.production.deciphernow.com/repository/helm-hosted'
     alias: internal-jwt
 
   - name: slo
-    version: '1.0.5'
-    repository: 'file://../slo'
+    version: '2.0.1'
+    repository: 'https://nexus.production.deciphernow.com/repository/helm-hosted'
 
   - name: gm-control-api
-    repository: 'file://../gm-control-api'
-    version: '0.1.1'
+    repository: 'https://nexus.production.deciphernow.com/repository/helm-hosted'
+    version: '2.0.1'
 
   - name: control
-    repository: 'file://../control'
-    version: '0.1.2'
+    repository: 'https://nexus.production.deciphernow.com/repository/helm-hosted'
+    version: '2.0.1'
 
   - name: spire
-    repository: 'file://../spire'
-    version: '0.1.0'
+    repository: 'https://nexus.production.deciphernow.com/repository/helm-hosted'
+    version: '2.0.1'
     condition: global.spire.enabled
