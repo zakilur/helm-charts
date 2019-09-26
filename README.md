@@ -1,9 +1,11 @@
-# Helm Charts for Grey Matter
+# Grey Matter Helm Charts
 
-## Overview
+This repository provides Helm charts for configuring and deploying a Grey Matter service mesh into Kubernetes based platforms.
 
-This repository provides helm charts for easily configuring and deploying every component in the Grey Matter service mesh to both Openshift and Kubernetes environments.
+## Docs
 
-See the `docs/` folder for more information.
-
-The [Getting Started](docs/Getting%20Started.md) guide has everything you need to install the Grey Matter Helm Charts from scratch.
+[Getting Started](docs/Getting%20Started.md)  
+[Service Accounts](docs/Service%20Accounts.md)  
+[Ingress](docs/Ingress.md)  
+[Control API](docs/Control%20API.md)  
+[Caveats and Notes](docs/Caveats%20and%20Notes.md)  
