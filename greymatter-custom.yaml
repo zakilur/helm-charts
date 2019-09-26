@@ -65,6 +65,9 @@ global:
     control:
       egressTLS: false
       mTLS: true
+    passthrough:
+      egressTLS: true
+      mTLS: true
 
   sidecar:
     version: 0.9.1

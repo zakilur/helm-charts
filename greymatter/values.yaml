@@ -89,6 +89,18 @@ global:
     #   routes:
     # - '/services/xds/{{ $.Values.global.xds.version }}'
     # - '/services/xds/{{ $.Values.global.xds.version }}'
+    passthrough:
+      catalogEnabled: true
+      controlEnabled: true
+      name : "Passthrough --> multimesh"
+      serviceName: "passthrough"
+      zone: zone-default-zone
+      port: 3000
+      version: 0.0.1
+      enableInstanceMetrics: 'true'
+      routes:
+        - '/services/passthrough/latest'
+        - '/services/passthrough/latest/'
 
     dashboard:
       catalogEnabled: true
