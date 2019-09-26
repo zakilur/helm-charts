@@ -19,6 +19,10 @@ global:
       version:
     prometheus_sidecar:
       version: 0.8.0
+  passthrough:
+    version: 0.0.1
+    sidecar:
+      version:
   data:
     version: 0.2.7
     sidecar:
@@ -97,6 +101,9 @@ global:
       zone: zone-default-zone
       port: 3000
       version: 0.0.1
+      capability: 'Grey Matter'
+      documentation: 'services/passthrough/latest/get?url=http://google.com'
+      owner: 'Decipher'
       enableInstanceMetrics: 'true'
       routes:
         - '/services/passthrough/latest'
