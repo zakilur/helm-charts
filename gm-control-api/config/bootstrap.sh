@@ -81,6 +81,9 @@ for d in */; do
 done
 
 cd $MESH_CONFIG_DIR/special
+greymatter create cluster <cluster-mesh2.json
+greymatter create shared_rules <shared_rules-mesh2.json
+
 echo "Adding additional Special Routes"
 for rte in $(ls route-*.json); do
     greymatter create route <$rte
