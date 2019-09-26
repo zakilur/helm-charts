@@ -213,32 +213,65 @@ kubectl port-forward $(kubectl get pods --template '{{range .items}}{{.metadata.
 
 Then open <http://localhost:8088>
 
-## AWS
+## Install Grey Matter into MiniKube on an EC2
 
-`sudo apt-get update`
+To run the Grey Matter Minikube setup in AWS you will need to spin up a `t2.xlarge` EC2 instance. After ssh'ing into your instance, run the following commands to install dependencies:
 
-```
+```bash
+# Install kubectl
+sudo apt-get update
 curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.3/bin/linux/amd64/kubectl
 chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin/kubectl
+
+# Install Docker
 sudo apt-get install docker.io -y
 curl -Lo minikube https://storage.googleapis.com/minikube/releases/v1.3.1/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
 
+# Install Helm
 curl -LO https://git.io/get_helm.sh
 chmod 700 get_helm.sh
 ./get_helm.sh --version v2.14.3
-
-minikube start --vm-driver=none -p gm --memory 4096 --cpus 4 -p gm
-
-alias helm='sudo helm'
-
-helm install decipher/greymatter -f base.yaml -f secrets.yaml -f custom.yaml --name gm
-
-minikube service --https=true voyager-edge -p gm
 ```
 
-`sudo scp -i ec2minikube.pem ./localuser.p12 ubuntu@ec2-3-86-62-199.compute-1.amazonaws.com:/home/ubuntu`
+Next, start up minikube. Note that --vm-driver is set to none because AWS EC2 is a virtual machine. There is no need to install a hypervisor like VirtualBox.
+`sudo minikube start --vm-driver=none --memory 4096 --cpus 4 -p gm-deploy`
 
+*insert socat install instructions here*
+
+You should be able to follow the next few instructions as detailed in the above sections. Note you can skip the "Load Grey Matter charts" step since we'll be pulling charts from Decipher's production repo:
+
+- [Setup Helm](#setup-helm)
+- [Configure Voyager Ingress](#configure-voyager-ingress)
+- [Configure Docker Secrets](#configure-docker-secrets)
+
+
+Next we need to create a few custom yaml files. Make sure you are inside the `helm-charts` repo and run the following commands to copy over config files:
+
+```bash
+scp -i <path-to-keyfile> greymatter-custom-secrets.yaml greymatter-custom.yaml greymatter-custom-minikube.yaml ubuntu@<public-dns>:/home/ubuntu
+```
+
+The next few steps are the same as a local Minikube deployment:
+
+- [Configure Docker Secrets](#configure-docker-secrets)
+- [Install Grey Matter](#install-grey-matter)
+- [Ingress](#ingress)
+
+After running the last step where you expose the voyager-edge service, note one of the two ports. We need to expose our instance port to the internet. In your AWS console, navigate to:
+
+EC2 >> (Network & Security) Security Groups >> Minikube Security Group >> Ingress
+
+Select the security group you're using and edit the following:
+
+| Parameter      | Value                                                |
+| -------------- | ---------------------------------------------------- |
+| **Type**       | TCP                                                  |
+| **Protocol**   | 30263 (the voyager-edge port from the previous step) |
+| **Port Range** | Custom                                               |
+| **Source**     | 0.0.0.0/0  (Accessible via the internet)             |
+
+Select **Save**. Navigate back to the AWS instances dashboard and find the `IPv4 Public IP` column. You should be able to see the Grey Matter Dashboard at  `<public-ip>:<voyager-edge-port>`.
 
 ## Authors
 
