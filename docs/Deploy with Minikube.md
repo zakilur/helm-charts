@@ -116,7 +116,11 @@ You should see that the voyager-operator is now running in the namespace `kube-s
 
 ## Load Grey Matter charts
 
-Now we need to load our charts into our Helm server. This is done with `helm dep up`, which loads our charts and the dependencies of our charts into the Helm server. We specify the folder `greymatter` to load all the needed charts in the `greymatter/requirements.yaml` file.
+The local development versions of our charts can be found in `greymatter/requirements-dev.yaml`. We will need to rename this file to `requirements.yaml` so that Helm can find it. If you don't need to make changes to any subcharts and are ok using the charts hosted in Decipher's production repo, feel free to skip this next command:
+
+`cp greymatter/requirements.yaml greymatter/requirements.backup.yaml && cp greymatter/requirements-dev.yaml greymatter/requirements.yaml`
+
+Now we need to load our charts into our Helm server. This is done with `helm dep up`, which loads our charts and the dependencies of our charts into the Helm server. We specify the folder `greymatter` to load all the needed charts in the `greymatter/requirements.yaml` file. Helm looks for the specified charts and packages them into the `greymatter/charts` directory. Keep in mind that if you make any changes to subcharts, you will need to run `helm dep up` again.
 
 ```sh
 $ helm dep up greymatter
