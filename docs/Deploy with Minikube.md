@@ -215,7 +215,7 @@ Then open <http://localhost:8088>
 
 ## Install Grey Matter into MiniKube on an EC2
 
-To run the Grey Matter Minikube setup in AWS you will need to spin up a `t2.xlarge` EC2 instance. After ssh'ing into your instance, run the following commands to install dependencies:
+To run the Grey Matter Minikube setup in AWS you will need to spin up a ubuntu18 `t2.xlarge` EC2 instance. After ssh'ing into your instance, run the following commands to install dependencies:
 
 ```bash
 # Install kubectl
@@ -225,19 +225,26 @@ chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin/kubectl
 
 # Install Docker
-sudo apt-get install docker.io -y
+sudo apt-get update && sudo apt-get install docker.io -y
 curl -Lo minikube https://storage.googleapis.com/minikube/releases/v1.3.1/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
 
 # Install Helm
 curl -LO https://git.io/get_helm.sh
 chmod 700 get_helm.sh
 ./get_helm.sh --version v2.14.3
+
+# add helpful aliases
+alias minikube='sudo minikube'
+alias helm='sudo helm'
+alias kubectl='sudo kubectl'
 ```
 
 Next, start up minikube. Note that --vm-driver is set to none because AWS EC2 is a virtual machine. There is no need to install a hypervisor like VirtualBox.
-`sudo minikube start --vm-driver=none --memory 4096 --cpus 4 -p gm-deploy`
+`minikube start --vm-driver=none --memory 4096 --cpus 4 -p gm-deploy`
 
-*insert socat install instructions here*
+We will need `socat` as a dependency of helm:
+
+`sudo apt-get update && sudo apt-get install socat`
 
 You should be able to follow the next few instructions as detailed in the above sections. Note you can skip the "Load Grey Matter charts" step since we'll be pulling charts from Decipher's production repo:
 
@@ -271,7 +278,7 @@ Select the security group you're using and edit the following:
 | **Port Range** | Custom                                               |
 | **Source**     | 0.0.0.0/0  (Accessible via the internet)             |
 
-Select **Save**. Navigate back to the AWS instances dashboard and find the `IPv4 Public IP` column. You should be able to see the Grey Matter Dashboard at  `<public-ip>:<voyager-edge-port>`.
+Select **Save**. Navigate back to the AWS instances dashboard and find the `IPv4 Public IP` column. You should be able to see the Grey Matter Dashboard at  `https://<public-ip>:<voyager-edge-port>`.
 
 ## Authors
 
