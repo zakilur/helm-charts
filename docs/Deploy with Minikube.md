@@ -213,6 +213,33 @@ kubectl port-forward $(kubectl get pods --template '{{range .items}}{{.metadata.
 
 Then open <http://localhost:8088>
 
+## AWS
+
+`sudo apt-get update`
+
+```
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.3/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+sudo apt-get install docker.io -y
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/v1.3.1/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+
+curl -LO https://git.io/get_helm.sh
+chmod 700 get_helm.sh
+./get_helm.sh --version v2.14.3
+
+minikube start --vm-driver=none -p gm --memory 4096 --cpus 4 -p gm
+
+alias helm='sudo helm'
+
+helm install decipher/greymatter -f base.yaml -f secrets.yaml -f custom.yaml --name gm
+
+minikube service --https=true voyager-edge -p gm
+```
+
+`sudo scp -i ec2minikube.pem ./localuser.p12 ubuntu@ec2-3-86-62-199.compute-1.amazonaws.com:/home/ubuntu`
+
+
 ## Authors
 
 - David Goldstein
