@@ -8,6 +8,7 @@
       - [OS X](#os-x)
   - [AWS EC2 Deployment](#aws-ec2-deployment)
   - [Configuration](#configuration)
+    - [Copy Files to EC2](#copy-files-to-ec2)
     - [Docker Credentials](#docker-credentials)
   - [Setup Helm](#setup-helm)
     - [Configure Voyager Ingress](#configure-voyager-ingress)
@@ -87,9 +88,18 @@ minikube version
 
 ## AWS EC2 Deployment
 
-To run the Grey Matter Minikube setup in AWS you will need to spin up a ubuntu18 `t2.xlarge` EC2 instance. After ssh'ing into your instance, run the following commands to install dependencies:
+To run the Grey Matter Minikube setup in AWS you will need to spin up a ubuntu18 `t2.xlarge` EC2 instance.
+
+SSH into your EC2 instance:
 
 ```sh
+ssh -i <path-to-keyfile> ubuntu@<public-dns>
+```
+
+Then run the following commands to install dependencies:
+
+```sh
+
 # Install kubectl
 sudo apt-get update
 curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.3/bin/linux/amd64/kubectl
@@ -132,6 +142,14 @@ Our Helm charts can be overridden by custom YAML files that are chained together
 - [greymatter-minikube.yaml](../greymatter-minikube.yaml) provides Minikube specific configurations but requires no changes
   
 Copy these files to `custom-greymatter.yaml`, `custom-greymatter-secrets.yaml` and `custom-greymatter-minikube.yaml`.
+
+### Copy Files to EC2
+
+If deploying to EC2, secure copy these files into the instance.
+
+```sh
+scp -i <path-to-keyfile> custom-greymatter-secrets.yaml custom-greymatter.yaml custom-greymatter-minikube.yaml ubuntu@<public-dns>:/home/ubuntu
+```
 
 ### Docker Credentials
 
@@ -212,7 +230,7 @@ Once the repository has successfully been added to your `helm` CLI, you can inst
 **Note: Before installing Helm charts it's always prudent to do a dry-run first to ensure your custom YAML is correct. You can do this by adding the `--dry-run` flag to the below `helm install` command. If you receive no errors then you can confidently drop the `--dry-run` flag.**
 
 ```sh
-helm install decipher/greymatter -f custom-greymatter.yaml -f custom-greymatter-secrets.yaml -f custom-reymatter-minikube.yaml --name gm
+helm install decipher/greymatter -f custom-greymatter.yaml -f custom-greymatter-secrets.yaml -f custom-greymatter-minikube.yaml --name gm
 ```
 
 ### Local Helm charts
@@ -289,7 +307,7 @@ You should be prompted for your [Decipher localuser certificate](https://github.
 
 After running the last step where you expose the voyager-edge service, note one of the two ports. We need to expose our instance port to the internet. In your AWS console, navigate to:
 
-EC2 >> (Network & Security) Security Groups >> Minikube Security Group >> Ingress
+EC2 >> (Network & Security) Security Groups >> Your Minikube Security Group >> Inbound
 
 Select the security group you're using and edit the following:
 
