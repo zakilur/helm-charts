@@ -20,7 +20,7 @@
     - [Additional Helm install flags](#additional-helm-install-flags)
   - [Verification](#verification)
 
-This guide assumes that your target environment is a hosted Kubernetes based platform. If you want to test drive Grey Matter on your local machine, follow [Deploy with Minikube](./Deploy%20with%20Minikube).
+This guide assumes that your target environment is a hosted Kubernetes based platform. If you want to test drive Grey Matter on your local machine, follow [Deploy with Minikube](./Deploy%20with%20Minikube.md).
 
 ## Helm
 
