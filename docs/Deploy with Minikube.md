@@ -1,14 +1,14 @@
 # Minikube
 
 - [Minikube](#minikube)
-  - [Configuration](#configuration)
-    - [Docker Credentials](#docker-credentials)
   - [Local Minikube Deployment](#local-minikube-deployment)
-  - [Prerequisites](#prerequisites)
+    - [Prerequisites](#prerequisites)
     - [Start Minikube](#start-minikube)
       - [Troubleshooting Minikube start](#troubleshooting-minikube-start)
       - [OS X](#os-x)
   - [AWS EC2 Deployment](#aws-ec2-deployment)
+  - [Configuration](#configuration)
+    - [Docker Credentials](#docker-credentials)
   - [Setup Helm](#setup-helm)
     - [Configure Voyager Ingress](#configure-voyager-ingress)
   - [Install](#install)
@@ -21,31 +21,9 @@
 
 Minikube allows us to quicky setup a Kubernetes cluster and test drive Grey Matter before deploying to a production environment.
 
-## Configuration
-
-Our Helm charts can be overridden by custom YAML files that are chained together during install. We've provided three examples:
-
-- [greymatter.yaml](../greymatter.yaml) provides a primary set of overrides
-- [greymatter-secrets.yaml](../greymatter-secrets.yaml) provides a separate set of overrides specifically for passwords, secrets, and other sensitive data
-- [greymatter-minikube.yaml](../greymatter-minikube.yaml) provides Minikube specific configurations but requires no changes
-  
-Copy these files to `custom-greymatter.yaml`, `custom-greymatter-secrets.yaml` and `custom-greymatter-minikube.yaml`.
-
-### Docker Credentials
-
-Helm needs valid Docker credentials to pull and run Grey Matter containers. Add your Docker credentials to the `custom-greymatter-secrets.yaml` file. If you need credentials please contact [Grey Matter Support](https://support.deciphernow.com).
-
-```yaml
-dockerCredentials:
-  registry: docker.production.deciphernow.com
-  email:
-  username:
-  password:
-```
-
 ## Local Minikube Deployment
 
-## Prerequisites
+### Prerequisites
 
 You will need the following tools installed (tested on both Mac OS and Linux Ubuntu):
 
@@ -143,6 +121,28 @@ We will need `socat` as a dependency of Helm:
 
 ```sh
 sudo apt-get update && sudo apt-get install socat
+```
+
+## Configuration
+
+Our Helm charts can be overridden by custom YAML files that are chained together during install. We've provided three examples:
+
+- [greymatter.yaml](../greymatter.yaml) provides a primary set of overrides
+- [greymatter-secrets.yaml](../greymatter-secrets.yaml) provides a separate set of overrides specifically for passwords, secrets, and other sensitive data
+- [greymatter-minikube.yaml](../greymatter-minikube.yaml) provides Minikube specific configurations but requires no changes
+  
+Copy these files to `custom-greymatter.yaml`, `custom-greymatter-secrets.yaml` and `custom-greymatter-minikube.yaml`.
+
+### Docker Credentials
+
+Helm needs valid Docker credentials to pull and run Grey Matter containers. Add your Docker credentials to the `custom-greymatter-secrets.yaml` file. If you need credentials please contact [Grey Matter Support](https://support.deciphernow.com).
+
+```yaml
+dockerCredentials:
+  registry: docker.production.deciphernow.com
+  email:
+  username:
+  password:
 ```
 
 ## Setup Helm
