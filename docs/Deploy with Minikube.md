@@ -19,7 +19,7 @@
       - [EC2](#ec2)
     - [Debugging](#debugging)
 
-Minikube allows us to quicky setup a Kubernetes cluster and test drive Grey Matter before deploying to a production environment.
+Minikube allows us to quicky setup a Kubernetes cluster and test drive Grey Matter before deploying to a production environment. We've provided instructions for two scenarios, [Local Minikube Deployment](#local-minikube-deployment) or [AWS EC2 Deployment](#aws-ec2-deployment).
 
 ## Local Minikube Deployment
 
