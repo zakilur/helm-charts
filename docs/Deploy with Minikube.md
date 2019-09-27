@@ -212,7 +212,7 @@ Describe ingress is also a useful command for debugging:
 kubectl describe ingress.voyager.appscode.com -n <namespace> <ingress-name>
 ```
 
-See [Ingress](./docs/Ingress.md) for more details.
+See [Ingress](./Ingress.md) for more details.
 
 ## Install
 
