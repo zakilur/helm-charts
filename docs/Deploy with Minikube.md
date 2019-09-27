@@ -298,4 +298,14 @@ To debug the mesh, you can access the Envoy admin UI for the edge proxy by runni
 kubectl port-forward $(kubectl get pods --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' | grep ^edge) 8088:8001
 ```
 
-Then open <http://localhost:8088>
+Then curl the API to see a list of endpoints you can leverage:
+
+```sh
+curl localhost:8088/help
+```
+
+For example, if you want to see the status of upstream clusters in the mesh run the following command:
+
+```sh
+curl localhost:8088/clusters
+```
