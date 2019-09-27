@@ -122,7 +122,7 @@ data:
 
 You may notice a large section of your `custom-greymatter-secrets.yaml` file containing TLS certificates with public and private keys. These are used in various services like gm-jwt-security, the Grey Matter sidecar, and edge proxy.
 
-To access anything in the mesh, your request will pass through the edge proxy, which performs Mutual TLS (mTLS) authentication. Both the client and server must authenticate themselves and your browser (or other HTTPS client like `curl`) will need to have the appropriate certificates loaded.
+To access anything in the mesh, your request will pass through the edge proxy, which performs Mutual TLS (mTLS) authentication. Both the client and server must authenticate themselves and your browser (or other HTTPS client like `curl` or `wget`) will need to have the appropriate certificates loaded.
 
 To keep things simple, `greymatter-secrets.yaml` uses the same certificates as those from `common/certificates/user/quickstart.p12` in the [DecipherNow/grey-matter-quickstart](https://github.com/DecipherNow/grey-matter-quickstarts) repository. If you load `quickstart.p12` into your browser, when you access the Grey Matter Dashboard, you'll be prompted to use that certificate to verify yourself.
 
@@ -144,7 +144,7 @@ edge:
   certPath: /etc/proxy/tls/edge
 ```
 
-The `certPath` is volume mounted into the edge proxy Docker containers.
+Certs are volume mounted to the edge proxy Docker container at the location specified by `certPath`.
 
 For securing communication between the sidecar proxies in the mesh, we support:
 
@@ -193,7 +193,7 @@ If you want to deploy a Helm chart for a single service without the entire servi
 
 ### Prepare Tiller
 
-For production deployments of multi-tenant clusters we highly recommend that you setup Tiller following our [Multi-tenant Helm guide](./Multi-tenant%20Helm.md). If you're comfortable with providing Tiller with full cluster access then proceed onward. This would be the default when installing in a simple fashion with Minikube.
+For production deployments of multi-tenant clusters we highly recommend that you setup Tiller following our [Multi-tenant Helm guide](./Multi-tenant%20Helm.md). If you're comfortable with providing Tiller with full cluster access then proceed onward. Full Tiller access should be granted when installing with Minikube.
 
 ### Prepare Service Accounts
 

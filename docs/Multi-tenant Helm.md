@@ -91,6 +91,8 @@ oc process -f service-accounts.yaml | oc apply -f -
 
 Helm needs to be initialized to function, but unlike a typical initialization, we now need to provide the namespace and service account that Helm and Tiller will use. The following command initializes Helm in the `greymatter` namespace using the `tiller` service account.
 
+If you need to add the Grey Matter Helm repo, follow the "Latest Helm charts release" in the [Getting Started](./docs/Getting%20Started.md) guide.
+
 ```sh
 helm init --tiller-namespace greymatter --service-account tiller
 ```

@@ -12,7 +12,7 @@ Currently, each service is served at `/services/dashboard/latest/`. Previously, 
 
 ## Details
 
-All `gm-control-api` configuration is configured in YAML and then templated to JSON.
+All `gm-control-api` configurations are configured in YAML and then templated to JSON.
 
 The current `gm-control-api` configuration bootstrapping is just to show an example service mesh, but the true power of Grey Matter is the advanced configuration of each sidecar using the Grey Matter Control API + CLI, so be sure to think about customizing routes, etc. between services which talk to each other often.
 
@@ -31,7 +31,7 @@ Each service has a:
 - shared_rules
 - and route
 
-Which link a sidecar proxy to its service. Then, the edge proxy has the following:
+These link a sidecar proxy to its service. The edge proxy has the following:
 
 - all of the above, PLUS
 - a domain with TLS configured using your static client-facing certs
@@ -43,12 +43,12 @@ Which link a sidecar proxy to its service. Then, the edge proxy has the followin
 
  `gm-control` periodically queries the Kubernetes API to look for pods with the following two characteristics:
 
-1. The pod's has a label (by default `app`) has a value corresponding to the `name` key of the  `gm-control-api` `cluster` object which it should be associated with
-2. The pod has a named port (by default `proxy`) which corresponds to the port value which  `gm-control` will add to the `Instance` which it adds to the `cluster` mentioned above.
+1. The pods have a label (by default `app`) with a value corresponding to the `name` key of the `gm-control-api` cluster object which it should be associated with.
+2. The pod has a named port (by default `proxy`) with a defined port value which `gm-control` adds to the `Instance` and adds it to the cluster mentioned above.
 
 These two things: both the pod's label and the port name can be configured using two environment variables on  `gm-control`: `GM_CONTROL_KUBERNETES_CLUSTER_LABEL` and `GM_CONTROL_KUBERNETES_PORT_NAME`
 
-In our deployment, we have an architecture which only discovers services with a sidecar proxy (e.g. the `proxy` port). This makes sense for us so that we ensure that the edge and every proxy can talk to every other proxy using the configured TLS and authentication options (static mTLS, SPIFFE/SPIRE certs, etc) which have been set in `gm-control-api`.
+In our deployment, we have an architecture which only discovers services with a sidecar proxy (e.g. the `proxy` port). We ensure that the edge and every proxy can talk to every other proxy using the configured TLS and authentication options (static mTLS, SPIFFE/SPIRE certs, etc) which have been set in `gm-control-api`.
 
 Make sure that every service which you want to deploy and to be discovered has these two things.
 
