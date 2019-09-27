@@ -32,7 +32,7 @@ You will need the following tools installed (tested on both Mac OS and Linux Ubu
 
 ## Configuration
 
-Our Helm charts can be overridden by custom YAML files that are chained together during install. We've provided two examples:- [Minikube](#minikube)
+Our Helm charts can be overridden by custom YAML files that are chained together during install. We've provided three examples:
 
 - [greymatter.yaml](../greymatter.yaml) provides a primary set of overrides
 - [greymatter-secrets.yaml](../greymatter-secrets.yaml) provides a separate set of overrides specifically for passwords, secrets, and other sensitive data
