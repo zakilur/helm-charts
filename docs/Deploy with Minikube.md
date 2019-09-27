@@ -1,10 +1,10 @@
 # Minikube
 
 - [Minikube](#minikube)
-  - [Prerequisites](#prerequisites)
   - [Configuration](#configuration)
     - [Docker Credentials](#docker-credentials)
   - [Local Minikube Deployment](#local-minikube-deployment)
+  - [Prerequisites](#prerequisites)
     - [Start Minikube](#start-minikube)
       - [Troubleshooting Minikube start](#troubleshooting-minikube-start)
       - [OS X](#os-x)
@@ -20,15 +20,6 @@
     - [Debugging](#debugging)
 
 Minikube allows us to quicky setup a Kubernetes cluster and test drive Grey Matter before deploying to a production environment.
-
-## Prerequisites
-
-You will need the following tools installed (tested on both Mac OS and Linux Ubuntu):
-
-- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)@1.15.3
-- [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)@1.3.1
-- [helm](https://github.com/helm/helm/releases)@2.14.3
-- [virtualbox](https://www.virtualbox.org/wiki/Downloads)@6.0.12 (only required for local installation)
 
 ## Configuration
 
@@ -53,6 +44,15 @@ dockerCredentials:
 ```
 
 ## Local Minikube Deployment
+
+## Prerequisites
+
+You will need the following tools installed (tested on both Mac OS and Linux Ubuntu):
+
+- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)@1.15.3
+- [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)@1.3.1
+- [helm](https://github.com/helm/helm/releases)@2.14.3
+- [virtualbox](https://www.virtualbox.org/wiki/Downloads)@6.0.12
 
 ### Start Minikube
 
