@@ -9,15 +9,18 @@
     - [Docker credentials](#docker-credentials)
     - [AWS credentials (optional)](#aws-credentials-optional)
     - [Certificates](#certificates)
+    - [SPIRE](#spire)
     - [TLS Options](#tls-options)
     - [Single-service deployments](#single-service-deployments)
   - [Install](#install)
+    - [Prepare Tiller](#prepare-tiller)
+    - [Prepare Service Accounts](#prepare-service-accounts)
     - [Latest Helm charts release](#latest-helm-charts-release)
     - [Local Helm charts](#local-helm-charts)
     - [Additional Helm install flags](#additional-helm-install-flags)
-  - [Verify installation](#verify-installation)
+  - [Verification](#verification)
 
-This guide assumes that your target environment is a hosted Kubernetes based platform. If you want to test drive Grey Matter on your local machine, read [Deploy with Minikube](./Deploy%20with%20Minikube).
+This guide assumes that your target environment is a hosted Kubernetes based platform. If you want to test drive Grey Matter on your local machine, follow [Deploy with Minikube](./Deploy%20with%20Minikube).
 
 ## Helm
 
@@ -42,7 +45,7 @@ Our Helm charts can be overridden by custom YAML files that are chained together
 - [greymatter.yaml](../greymatter.yaml) provides a primary set of overrides
 - [greymatter-secrets.yaml](../greymatter-secrets.yaml) provides a separate set of overrides specifically for passwords, secrets, and other sensitive data
 
-Copy these examples into new files for yourself as we'll be making changes to them. Name them `custom-greymatter.yaml` and `custom-greymatter-secrets.yaml`.
+Copy these files to `custom-greymatter.yaml` and `custom-greymatter-secrets.yaml` as we'll be making changes to them. They will not be picked up by Git.
 
 At the top of `custom-greymatter.yaml`, set the following four values according to your needs.
 
@@ -63,7 +66,7 @@ global:
 
 ### Ingress
 
-If you're using OpenShift, you can skip to the next section because OpenShift will create a route using the `domain` you defined in your custom file. For Kubernetes, we recommend the [Voyager Ingress Controller](https://appscode.com/products/voyager/), which automatically provisions a load balancer from a variety of supported cloud providers like EKS in AWS. This allows you to access the cluster at the provided load balancer URL. Add the following Voyager configuration to your `custom-greymatter.yaml` file. Ensure that the value for `cloudProvider` is one of the [supported providers](https://appscode.com/products/voyager/7.1.1/setup/install/#using-script).
+If you're using OpenShift, you can skip to the next section because OpenShift will create a route using the `domain` value. For Kubernetes, we recommend the [Voyager Ingress Controller](https://appscode.com/products/voyager/), which automatically provisions a load balancer from a variety of supported cloud providers like EKS in AWS. This allows you to access the cluster at the provided load balancer URL. Add the following Voyager configuration to your `custom-greymatter.yaml` file. Ensure that the value for `cloudProvider` is one of the [supported providers](https://appscode.com/products/voyager/7.1.1/setup/install/#using-script).
 
 ```yaml
 voyager:
@@ -74,7 +77,8 @@ voyager:
 At present, there's [an issue](https://github.com/appscode/voyager/issues/1415) specifying Voyager as a dependency, so we need to manually configure Voyager ingress as a prerequisite. This can be done with following commands:
 
 ```sh
-export PROVIDER=minikube
+# PROVIDER should match `cloudProvider` value
+export PROVIDER=aws
 helm repo add appscode https://charts.appscode.com/stable/
 helm repo update
 helm install appscode/voyager --name voyager-operator --version 10.0.0 \
@@ -86,11 +90,11 @@ helm install appscode/voyager --name voyager-operator --version 10.0.0 \
 
 Once the edge proxy is deployed, voyager-operator will create a custom ingress resource which will provision a load balancer for you. You can run `kubectl get svc voyager-edge` to see the cluster IP and port.
 
-See `docs/Ingress.md` for further details.
+Read [Ingress](./Ingress.md) for further details.
 
 ### Docker credentials
 
-At the top of your `custom-greymatter-secrets.yaml` file set your Docker credentials so Helm can pull the necessary Grey Matter images. If you need credentials please add a [supprt ticket](https://support.deciphernow.com).
+At the top of your `custom-greymatter-secrets.yaml` file set your Docker credentials so Helm can pull the necessary Grey Matter images. If you need credentials please contact [Grey Matter Support](https://support.deciphernow.com).
 
 ```yaml
 dockerCredentials:
@@ -102,7 +106,7 @@ dockerCredentials:
 
 ### AWS credentials (optional)
 
-Set AWS credentials for gm-data to authenticate and push content to S3. This step is **optional** because gm-data stores files on the filestystem or S3. If you need credentials please add a [supprt ticket](https://support.deciphernow.com).
+Set AWS credentials for gm-data to authenticate and push content to S3. This step is **optional** because gm-data stores files on disk or in S3. If you need credentials please contact [Grey Matter Support](https://support.deciphernow.com).
   
 ```yaml
 data:
@@ -118,17 +122,21 @@ data:
 
 You may notice a large section of your `custom-greymatter-secrets.yaml` file containing TLS certificates with public and private keys. These are used in various services like gm-jwt-security, the Grey Matter sidecar, and edge proxy.
 
-To access the Grey Matter Dashboard or any other service in the cluster, your request will pass through the edge proxy, which performs Mutual TLS (mTLS) authentication. This means that both the client and server must authenticate themselves and that your browser (or other HTTPS client like `curl`) will need to have the appropriate certificates loaded.
+To access anything in the mesh, your request will pass through the edge proxy, which performs Mutual TLS (mTLS) authentication. Both the client and server must authenticate themselves and your browser (or other HTTPS client like `curl`) will need to have the appropriate certificates loaded.
 
-To keep things simple, `greymatter-secrets.yaml` uses the same certificates as those from `common/certificates/user/quickstart.p12` in the [DecipherNow/grey-matter-quickstart](https://github.com/DecipherNow/grey-matter-quickstarts) repository. If you load `quickstart.p12` into your browser, when you access the Grey Matter Dashboard, you'll be prompted to use that certificate to verify yourself, which you should do to gain access.
+To keep things simple, `greymatter-secrets.yaml` uses the same certificates as those from `common/certificates/user/quickstart.p12` in the [DecipherNow/grey-matter-quickstart](https://github.com/DecipherNow/grey-matter-quickstarts) repository. If you load `quickstart.p12` into your browser, when you access the Grey Matter Dashboard, you'll be prompted to use that certificate to verify yourself.
 
-For production deployments you will need to provide certificates generated from a secure Certificate Auhority (CA).
+For production deployments it's recommened to use certificates generated from a secure Certificate Auhority (CA).
+
+### SPIRE
 
 We also support using SPIFFE/SPIRE as a way to enable zero-trust attestation of different "workloads" (services).
 
+Read [SPIRE](./SPIRE.md) for further details.
+
 ### TLS Options
 
-We support multiple TLS options both for ingress to the edge proxy, and between the sidecar proxies in the mesh. For ingress, we support mTLS or non-TLS. To do this, enable the following:
+We support multiple TLS options both for ingress/egress (north/south traffic) to the edge proxy, and between the sidecar proxies (east/west traffic) within the mesh. For ingress, we support mTLS or non-TLS. To do this, enable the following:
 
 ``` yaml
 edge:
@@ -153,7 +161,7 @@ mesh_tls:
   enabled: true
 ```
 
-**Static mTLS** - this configures static mTLS between each proxy by mounting the appropriate certs and setting up the configuration in `gm-control-api`.
+**Static mTLS** - this configures static mTLS between each proxy by mounting the appropriate certs and setting up the configuration in `gm-control-api`. Read [Control API](./Control%20API.md) for further details.
 
 To enable it just set the following in your `custom-greymatter.yaml` file:
 
@@ -183,9 +191,17 @@ If you want to deploy a Helm chart for a single service without the entire servi
 
 ## Install
 
+### Prepare Tiller
+
+For production deployments of multi-tenant clusters we highly recommend that you setup Tiller following our [Multi-tenant Helm guide](./Multi-tenant%20Helm.md). If you're comfortable with providing Tiller with full cluster access then proceed onward. This would be the default when installing in a simple fashion with Minikube.
+
+### Prepare Service Accounts
+
+For production deployments, we recommend that an admin setup service accounts first following our [Service Accounts](./Service%20Accounts.md) guide because some of our services require cluster resources, such as read access to Kubernetes Pods. If Tiller has full cluster access then it will install the service accounts. This would be the default when installing in a simple fashion with Minikube.
+
 ### Latest Helm charts release
 
-To install Helm charts representing the latest version of Grey Matter, you'll need to add Decipher's Helm repository to your local `helm` CLI. Run the following command, replacing username/password with credentials previously provided to you. These are the same as your Docker credentials.
+To install Helm charts representing the latest version of Grey Matter, you'll need to add the Grey Matter Helm repository to your local `helm` CLI. Run the following command, replacing username/password with credentials previously provided to you. These are the same as your Docker credentials.
 
 ```sh
 helm repo add decipher https://nexus.production.deciphernow.com/repository/helm-hosted --username <username> --password '<password>'
@@ -232,7 +248,7 @@ Here are some additional parameters we often use when running `helm install`:
 - `--dry-run` w/ debug will print out the deployment YAML without actually deploying to OpenShift/Kubernetes environment
 - `--replace` will create new deployments if they are undefined or replace old ones if they exist
 
-## Verify installation
+## Verification
 
 Once all pods, containers, and services start successfully you can confirm that the Grey Matter service mesh is running by navigating to its dashboard. You'll need to construct the URL from your global values in `custom-greymatter.yaml`.
 
