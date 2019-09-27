@@ -34,7 +34,7 @@ https://$VOYAGER_EDGE_SERVICE/services/passthrough/latest/get?url=http://google.
 
 ## Create configs
 
-***Note: the order of these operations are important.***
+***Note: the order of these operations is important.***
 
 sidecar => mesh2 cluster, replace with your host and port of mesh2
 ```json
@@ -125,3 +125,23 @@ route for passthrough sidecar => mesh2 edge
   "retry_policy": null
 }
 ```
+
+Do the same for the mesh2 cluster, except the ips and ports are now for the voyager-edge location in mesh1.
+
+## deploy both minikube clusters
+...
+
+## making request from one passthrough to the other
+
+- change MESH_ID in mesh 2 to "mesh 2"
+
+`curl -k --cert server.crt --key server.key https://localhost:8080/get?url=https://localhost:8080/mesh2/services/passthrough/latest/ping`
+
+This goes from 
+
+passthrough sidecar mesh 1 -> passthrough service mesh 1 -> passthrough sidecar mesh 1 /mesh2 route -> mesh 2 edge -> passthrough sidecar mesh 2 -> passthrough mesh 2 service
+
+## starting a game
+
+- follow logs in both services
+- go to the endpoint: `https://192.168.99.107:31257/services/passthrough/latest/serve`

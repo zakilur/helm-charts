@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: passthrough
-        image: 'dgoldstein1/passthrough'
+        image: 'dgoldstein1/passthrough:0.0.3'
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
@@ -31,7 +31,17 @@ spec:
         - name: PORT
           value: "3000"
         - name: MESH_ID
-          value: "default mesh"
+          value: "mesh 2"
+        - name: USE_TLS
+          value: "true"
+        - name: SERVER_CERT
+          value: "server.crt"
+        - name: SERVER_KEY
+          value: "server.key"
+        - name: SERVER_CA
+          value: "ca.crt"
+        - name: PING_RESPONSE_URL
+          value: "https://localhost:8080/mesh1/services/passthrough/latest/ping?pause=1"
       - name: sidecar
         image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
         imagePullPolicy: IfNotPresent
@@ -46,6 +56,8 @@ spec:
         ports:
         - name: proxy
           containerPort: 8080
+        - name: http
+          containerPort: 443
         - name: metrics
           containerPort: 8081
         env:        
