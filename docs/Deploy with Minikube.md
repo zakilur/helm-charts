@@ -29,7 +29,7 @@ You will need the following tools installed (tested on both Mac OS and Linux Ubu
 
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)@1.15.3
 - [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)@1.3.1
-- [helm](https://github.com/helm/helm/releases)@2.14.3
+- [helm](https://github.com/helm/helm/releases/tag/v2.14.3)@2.14.3
 - [virtualbox](https://www.virtualbox.org/wiki/Downloads)@6.0.12
 
 ### Start Minikube
@@ -184,7 +184,15 @@ To verify that Voyager has started, run:
   kubectl --namespace=kube-system get deployments -l "release=voyager-operator, app=voyager"
 ```
 
-You should see that the voyager-operator is now running in the namespace `kube-system`. Note that running `kubectl get ingresses` will not list voyager because it uses its own custom resource definition. Instead, use `kubectl get ingress.voyager.appscode.com --all-namespaces` to find it with kubectl. Describe ingress is also a useful command for debugging: `kubectl describe ingress.voyager.appscode.com -n <namespace> <ingress-name>`.
+You should see that the voyager-operator is now running in the namespace `kube-system`.
+
+Note that running `kubectl get ingresses` will not list voyager because it uses its own custom resource definition. Instead, use `kubectl get ingress.voyager.appscode.com --all-namespaces` to find it with kubectl. It may take some time before voyager shows up in the result after the installation, so if you get `No resources found.` response, try again a few minutes later.
+
+Describe ingress is also a useful command for debugging:
+
+```sh
+kubectl describe ingress.voyager.appscode.com -n <namespace> <ingress-name>
+```
 
 See [Ingress](./docs/Ingress.md) for more details.
 
@@ -209,9 +217,15 @@ helm install decipher/greymatter -f custom-greymatter.yaml -f custom-greymatter-
 
 ### Local Helm charts
 
-If you've cloned this project and are changing charts locally, you'll need to modify the repository paths in `requirements.yaml` to point to the relative chart paths of this GitHub project.
+If you are modifying charts or want to run development versions of charts you'll need to clone this repository.
 
 **Note: if you're installing in EC2 you should follow the previous step to install from the hosted Grey Matter Helm repo.**
+
+```sh
+git clone git@github.com:DecipherNow/helm-charts.git
+```
+
+Then you'll need to modify the repository paths in `requirements.yaml` to point to the relative chart paths of this GitHub project.
 
 ```yaml
 dependencies:
@@ -267,9 +281,9 @@ $ minikube -p gm-deploy service --https=true voyager-edge
 🎉  Opening kubernetes service  default/voyager-edge in default browser...
 ```
 
-Then open up <https://192.168.99.102:31581> in your browser. You should be prompted for your Grey Matter `localuser` certificate and be taken to the dashboard. Once there, make sure all services are "green" and then pat yourself on the back -- you deployed Grey Matter to Minikube!!
+Change "`http`" of the URL in the console output to "`https`" (i.e. <https://192.168.99.102:31581> in the above example - the port number is probably different), then navigate to there in your browser.
 
-If you require a `localuser` certificate please follow the example in [Certifiable](https://github.com/DecipherNow/certifiable) to generate your certificate.
+You should be prompted for your [Decipher localuser certificate](https://github.com/DecipherNow/grey-matter-quickstarts/tree/master/common/certificates/user) and be taken to the dashboard. Once there, make sure all services are "green" and then pat yourself on the back -- you deployed Grey Matter to Minikube!!
 
 #### EC2
 
