@@ -27,7 +27,7 @@ testing requests. Before we deploy it, make sure you're in the first cluster by 
 
 In `examples/multimesh/`, you will find `passthrough.yaml`. The passthrough service has been configured with the name of the current mesh and the endpoint of the service in mesh #2 that we want it to hit. Run the following command to deploy the service:
 
-`kubectl apply -f passthrough.yaml`
+`kubectl apply -f examples/multimesh/passthrough.yaml`
 
 Before deploying it into mesh #2, open `examples/multimesh/passthrough.yaml` and change the `MESH_ID` on line 34 to `mesh 2` and `PING_RESPONSE_URL` on line 44 to `https://localhost:8080/mesh1/services/passthrough/latest/ping?pause=2`
 
@@ -102,5 +102,7 @@ We're ready to play some multi mesh ping pong! Follow logs for the passthrough s
 
 You can see a video demo here: https://drive.google.com/file/d/1p6Ww_NfEmyslCvWYJq2DSyW69Zq62G7m/view?usp=sharing
 
+## Deploying with an egress edge proxy
 
-## Adding an egress edge proxy to
+Now that we've got a game of ping pong from service to edge, let's look at the same setup using an egress edge proxy to handle cross-mesh communication.
+
