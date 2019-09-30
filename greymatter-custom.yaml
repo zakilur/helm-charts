@@ -68,6 +68,32 @@ global:
     passthrough:
       egressTLS: false
       mTLS: true
+      catalogEnabled: true
+      controlEnabled: true
+      name: 'Passthrough --> multimesh'
+      serviceName: 'passthrough'
+      zone: zone-default-zone
+      port: 3000
+      version: 0.0.1
+      capability: 'Grey Matter'
+      documentation: 'services/passthrough/latest/get?url=http://google.com'
+      owner: 'Decipher'
+      enableInstanceMetrics: 'true'
+      routes:
+        - '/services/passthrough/latest'
+        - '/services/passthrough/latest/'
+    egress-edge:
+      mTLS: true
+      catalogEnabled: true
+      controlEnabled: true
+      name: 'Egress Edge'
+      serviceName: 'egress-edge'
+      zone: zone-default-zone
+      port: 8080
+      version: 1.0.1
+      capability: 'Grey Matter'
+      owner: 'Decipher'
+      enableInstanceMetrics: 'true'
 
   sidecar:
     version: 0.9.1

@@ -1,0 +1,13 @@
+{
+  "route_key": "route-passthrough-to-mesh-1",
+  "domain_key": "domain-passthrough",
+  "zone_key": "zone-default-zone",
+  "path": "/mesh1/",
+  "prefix_rewrite": "/",
+  "redirects": null,
+  "shared_rules_key": "mesh-1-shared-rules",
+  "rules": null,
+  "response_data": {},
+  "cohort_seed": null,
+  "retry_policy": null
+}
