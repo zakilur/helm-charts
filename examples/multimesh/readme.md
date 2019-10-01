@@ -14,7 +14,25 @@ Before you start you will need:
 
 ## Deploy A Passthrough Service to Each Mesh
 
-To play our game of ping pong, we're going to deploy a [passthrough service](https://github.com/dgoldstein1/passthough-service) in both meshes which will volley requests back and forth. Start by [adding a new service one mesh](LINK TO ADDING A NEW SERVICE TO YOUR MESH WALKTHROUGH) called "passthrough." Feel free to use our [passthrough deployment](LINK) spec or create your own. _Note that `require_tls` should be `false`._
+To play our game of ping pong, we're going to deploy a [passthrough service](https://github.com/dgoldstein1/passthough-service) in both meshes which will volley requests back and forth. First, configure the mesh.
+
+[Create main service objects:](LINK)
+
+- domain-passthrough
+- listener-passthrough
+- proxy-passthrough
+- cluster-passthrough
+- shared-rules-passthrough
+- route-passthrough
+
+[Create edge <-> service objects:](LINK)
+
+- cluster-edge-to-passthrough
+- shared-rules-edge-passthrough
+- route-edge-passthrough
+- route-edge-passthrough-slash
+
+Now you can use our [passthrough deployment](LINK) spec to deploy the service, or write your own.
 
 Once you've added the first passthrough service to mesh 1, verify that it's working by going to the endpoints:
 
@@ -25,7 +43,7 @@ $EDGE_ENDPOINT/services/passthrough/latest/get?url=http://google.com
 $EDGE_ENDPOINT/services/passthrough/latest/get?url=$EDGE_ENDPOINT/services/passthrough/latest/ping
 ```
 
-If those requests don't return valid responses, you may want to look at [mesh debugging tips](https://notes.deciphernow.com/t/mesh-debugging-tips/751). Now we need to deploy our our service to our second mesh. In a kubernetes context, open `passthrough.yaml` and change the `MESH_ID` on line 34 to `mesh 2` and `PING_RESPONSE_URL` on line 44 to `https://localhost:8080/mesh1/services/passthrough/latest/ping?pause=2`. Save the file and deploy passthrough into the second mesh, using the same steps as before.
+If those requests don't return valid responses, you may want to look at [mesh debugging tips](https://notes.deciphernow.com/t/mesh-debugging-tips/751). Now we need to deploy our our service to our second mesh. In a kubernetes context, open `passthrough.yaml` and change the `MESH_ID` on line 34 to `mesh 2` and `PING_RESPONSE_URL` on line 44 to `https://localhost:8080/mesh1/services/passthrough/latest/ping?pause=1`. Save the file and deploy passthrough into the second mesh, using the same steps as before.
 
 ## Part I: Service to Ingress Edge Setup
 
@@ -101,7 +119,15 @@ The second configuration uses an egress edge proxy. Instead of pointing each ser
 
 Now that we've got a game of ping pong from service to edge, let's look at what it would take to use an egress edge proxy to handle cross-mesh communication. Instead of pointing routes from the service sidecar to the other mesh cluster, we're going to point them to the egress proxy.
 
-First we'll need to apply the deployment config `egress-edge.yaml` by running `kubectl apply -f egress-edge.yaml` and then create the necessary Grey Matter objects (domain, proxy, listener, cluster, shared_rules) to hook it into the mesh. Don't worry about creating any routes yet, we'll be setting those up next.
+First we'll need to apply the deployment config `egress-edge.yaml` by running `kubectl apply -f egress-edge.yaml`. Just like with passthrough, you'll also need to create the necessary Grey Matter objects to hook `egress-edge` into the mesh. You should have the following:
+
+- domain-egress-edge
+- listener-egress-edge
+- proxy-egress-edge
+- cluster-egress-edge
+- shared-rules-egress-edge
+
+Don't worry about creating any routes, we'll be setting those up next.
 
 Run `greymatter edit route route-passthrough-to-mesh-1-slash` and update the shared_rules_key to `shared-rules-egress-edge`. Do the same for `route-passthrough-to-mesh-1`.
 
