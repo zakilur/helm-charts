@@ -25,15 +25,13 @@ $EDGE_ENDPOINT/services/passthrough/latest/get?url=http://google.com
 $EDGE_ENDPOINT/services/passthrough/latest/get?url=$EDGE_ENDPOINT/services/passthrough/latest/ping
 ```
 
-If those requests don't return valid responses, you may want to look at [mesh debugging tips](https://notes.deciphernow.com/t/mesh-debugging-tips/751). Now we need to deploy our our service to our second mesh. In a kubernetes context, open `passthrough.yaml` and change the `MESH_ID` on line 34 to `mesh 2` and `PING_RESPONSE_URL` on line 44 to `https://localhost:8080/mesh1/services/passthrough/latest/ping?pause=2`.  Save the file and deploy passthrough into the second mesh, using the same steps as before.
+If those requests don't return valid responses, you may want to look at [mesh debugging tips](https://notes.deciphernow.com/t/mesh-debugging-tips/751). Now we need to deploy our our service to our second mesh. In a kubernetes context, open `passthrough.yaml` and change the `MESH_ID` on line 34 to `mesh 2` and `PING_RESPONSE_URL` on line 44 to `https://localhost:8080/mesh1/services/passthrough/latest/ping?pause=2`. Save the file and deploy passthrough into the second mesh, using the same steps as before.
 
 ## Part I: Service to Ingress Edge Setup
 
- For part one, our service will talk directly to the ingress edge of the second mesh:
+For part one, our service will talk directly to the ingress edge of the second mesh:
 
 ![image|690x233](https://user-images.githubusercontent.com/5482080/65241124-d8ecaf00-dab0-11e9-97d3-d0159f096091.png)
-
-
 
 After creating a passthrough service in both meshes, we are ready to configure the mesh so that our two services can play! To do this, we need to add routing from the passthrough service sidecar to the edge node in mesh 2. This requires a new `cluster`, `route`, and `shared_rules` object. In the folder you downloaded, there is a json folder with all the objects you'll need.
 
@@ -43,7 +41,7 @@ Open `cluster-mesh-2.json` and fill in the instances array with the host/port th
 greymatter create cluster < cluster-mesh-2.json
 ```
 
-Next, we'll create a shared_rules that points to the cluster we just made. You can think of shared_rules like traffic management configuration. Take a look at `shared-rule-mesh-2.json` and notice how it directs requests to the `cluster-mesh-2` we just created.
+Next, we'll create a shared_rule that points to the cluster we just made. You can think of shared_rules like traffic management configuration. Take a look at `shared-rule-mesh-2.json` and notice how it directs requests to the `cluster-mesh-2` we just created.
 
 ```sh
 greymatter create shared_rules < shared-rule-mesh-2.json
@@ -62,7 +60,7 @@ Check that the passthrough service is able to connect to the other mesh by makin
 ```
 $MESH_1_ENDPOINT/services/passthrough/latest/get?url=https://localhost:8080/mesh2/services/passthrough/latest/ping
 ...
-Pong. mesh=mesh 2 
+Pong. mesh=mesh 2
 ```
 
 You should also see the following in the passthrough logs for mesh 2:
@@ -103,7 +101,7 @@ The second configuration uses an egress edge proxy. Instead of pointing each ser
 
 Now that we've got a game of ping pong from service to edge, let's look at what it would take to use an egress edge proxy to handle cross-mesh communication. Instead of pointing routes from the service sidecar to the other mesh cluster, we're going to point them to the egress proxy.
 
-First we'll need to apply the deployment config  `egress-edge.yaml` by running `kubectl apply -f egress-edge.yaml` and then create the necessary Grey Matter objects (domain, proxy, listener, cluster, shared_rules) to hook it into the mesh. Don't worry about creating any routes yet, we'll be setting those up next.
+First we'll need to apply the deployment config `egress-edge.yaml` by running `kubectl apply -f egress-edge.yaml` and then create the necessary Grey Matter objects (domain, proxy, listener, cluster, shared_rules) to hook it into the mesh. Don't worry about creating any routes yet, we'll be setting those up next.
 
 Run `greymatter edit route route-passthrough-to-mesh-1-slash` and update the shared_rules_key to `shared-rules-egress-edge`. Do the same for `route-passthrough-to-mesh-1`.
 
@@ -115,4 +113,9 @@ greymatter create route < route-egress-to-mesh-2.json
 
 Repeat this section for the second mesh, substituting any `-mesh-2` objects with their `-mesh-1` counterpart.
 
-That's it! Follow logs for passthrough and egress-edge services in both meshes and hit the endpoint as described in [Playing ping pong](#playing-ping-pong). You should see the requests flow from the service a -> egress edge a -> service b -> egress edge b.
+That's it! Follow logs for passthrough and egress-edge services in both meshes and hit the endpoint as described [above](#playing-ping-pong). You should see the requests flow from the service a -> egress edge a -> service b -> egress edge b.
+
+## Authors
+
+- Kaitlin Moreno
+- David Goldstein
