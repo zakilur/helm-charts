@@ -10,7 +10,7 @@ The second configuration uses an egress edge proxy. Instead of pointing each ser
 
 ## Setup
 
-This tutorial assumes you have two Grey Matter meshes running concurrently. For more information on deploying a mesh, see [Deploy with Minikube](https://github.com/DecipherNow/helm-charts/blob/release-2.0/docs/Deploy%20with%20Minikube.md). You'll need to be able to hit the edge of both meshes and should note down the ip/ports of each.
+This tutorial assumes you have two Grey Matter meshes running concurrently and know how to deploy a service. For more information on deploying a mesh, see [Deploy with Minikube](https://github.com/DecipherNow/helm-charts/blob/release-2.0/docs/Deploy%20with%20Minikube.md). You'll need to be able to hit the edge of both meshes and should note down the ip/ports of each.
 
 ## Deploy the test services
 
@@ -20,24 +20,15 @@ We've created a basic deployment configuration for the ping pong service called 
 
 `kubectl apply -f passthrough.yaml`
 
+Next, create the necessary Grey Matter objects to add the new passthrough service to the mesh. [You can see an example here.](https://github.com/DecipherNow/openshift-development/tree/master/deployments/control/json/ascii) You'll also need to set up clusters, routes, and shared_rules from edge <-> passthrough service which you can [find an example of here.](https://github.com/DecipherNow/openshift-development/tree/master/deployments/control/json/edge)
+
 Before deploying it into mesh #2, open `passthrough.yaml` and change the `MESH_ID` on line 34 to `mesh 2` and `PING_RESPONSE_URL` on line 44 to `https://localhost:8080/mesh1/services/passthrough/latest/ping?pause=2`
 
-Save the file and deploy passthrough into the second mesh.
+Save the file and deploy passthrough into the second mesh, as well as the necessary grey matter objects.
 
-## Create Grey Matter objects
+## Create Grey Matter objects for cross-mesh
 
-Now we are ready to configure the mesh so that our two services can play. In the folder you downloaded, there is a json folder with all the objects you'll need. First, create the domain, cluster, and routes for passthrough. These commands set up the routing from edge <-> proxy and from proxy <-> passthrough:
-
-```sh
-greymatter create domain < domain-passthrough.json
-greymatter create cluster < cluster-passthrough.json
-greymatter create cluster < cluster-edge-passthrough.json
-greymatter create shared_rules < shared-rule-passthrough.json
-greymatter create shared_rules < shared-rule-edge-passthrough.json
-greymatter create route < route-passthrough-edge-slash.json
-greymatter create route < route-passthrough-edge.json
-greymatter create route < route-passthrough.json
-```
+Now we are ready to configure the mesh so that our two services can play. In the folder you downloaded, there is a json folder with all the objects you'll need.
 
 Open `cluster-mesh-2.json` and fill in the instances array with the host/port that you noted from mesh #2. Save the file and run:
 
@@ -55,21 +46,13 @@ Finally we can create the route objects. Look at `route-passthrough-to-mesh-2.js
 
 ```sh
 # It is very important to create routes in this order!
-greymatter create route < examples/multimesh/json/route-passthrough-to-mesh-2-slash.json
-greymatter create route < examples/multimesh/json/route-passthrough-to-mesh-2.json
+greymatter create route < route-passthrough-to-mesh-2-slash.json
+greymatter create route < route-passthrough-to-mesh-2.json
 ```
 
-It's not much of a game yet if our second mesh can't respond. For the second passthrough service to communicate back, we need to repeat this whole section again in the second mesh, using `-mesh-1` versions of the json objects. Just like we did earlier note the IP/ports for the ingress edge in mesh #1, and then run the following commands:
+It's not much of a game yet if our second mesh can't respond. For the second passthrough service to communicate back, we need to repeat these steps in the second mesh, using `-mesh-1` versions of the json objects. Just like we did earlier note the IP/ports for the ingress edge of mesh #1, and then run the following commands:
 
 ```sh
-greymatter create domain < domain-passthrough.json
-greymatter create cluster < cluster-passthrough.json
-greymatter create cluster < cluster-edge-passthrough.json
-greymatter create shared_rules < shared-rule-passthrough.json
-greymatter create shared_rules < shared-rule-edge-passthrough.json
-greymatter create route < route-passthrough-edge-slash.json
-greymatter create route < route-passthrough-edge.json
-greymatter create route < route-passthrough.json
 # Fill in cluster-mesh-1.json with IP ports and save
 greymatter create cluster < cluster-mesh-1.json
 # Create shared_rule and routes
