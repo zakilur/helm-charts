@@ -1,0 +1,14 @@
+{
+  "route_key": "edge-passthrough-route-slash",
+  "domain_key": "edge",
+  "zone_key": "zone-default-zone",
+  "path": "/services/passthrough/latest",
+  "prefix_rewrite": "/services/passthrough/latest/",
+  "redirects": null,
+  "shared_rules_key": "edge-passthrough-shared-rules",
+  "rules": null,
+  "response_data": {},
+  "cohort_seed": null,
+  "retry_policy": null,
+  "checksum": "d5dc1f0bc890af4e6155bdfc6d2d90c1f574516b51164e822b85831fed849555"
+}

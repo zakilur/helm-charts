@@ -1,0 +1,25 @@
+{
+  "shared_rules_key": "shared-rules-passthrough",
+  "name": "passthrough",
+  "zone_key": "zone-default-zone",
+  "default": {
+    "light": [
+      {
+        "constraint_key": "",
+        "cluster_key": "cluster-passthrough",
+        "metadata": null,
+        "properties": null,
+        "response_data": {},
+        "weight": 1
+      }
+    ],
+    "dark": null,
+    "tap": null
+  },
+  "rules": null,
+  "response_data": {},
+  "cohort_seed": null,
+  "properties": null,
+  "retry_policy": null,
+  "checksum": "38f3d17a1638f179bdfae3a4863f67c545b6a222932c4183384eb823d8055d3c"
+}

@@ -1,0 +1,33 @@
+{
+  "cluster_key": "edge-to-passthrough-cluster",
+  "zone_key": "zone-default-zone",
+  "name": "passthrough",
+  "require_tls": true,
+  "secret": {
+    "secret_key": "",
+    "secret_name": "",
+    "secret_validation_name": "",
+    "subject_names": null,
+    "ecdh_curves": null,
+    "set_current_client_cert_details": {
+      "uri": false
+    },
+    "checksum": ""
+  },
+  "ssl_config": {
+    "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+    "protocols": ["SSLv3", "SSLv2", "TLSv1", "TLSv1.1", "TLSv1.2"],
+    "cert_key_pairs": [
+      {
+        "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
+        "key_path": "/etc/proxy/tls/sidecar/server.key"
+      }
+    ],
+    "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
+    "sni": ""
+  },
+  "instances": [],
+  "circuit_breakers": null,
+  "outlier_detection": null,
+  "health_checks": []
+}
