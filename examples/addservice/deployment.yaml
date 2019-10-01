@@ -1,0 +1,72 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: newservice
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: newservice
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: newservice
+    spec:
+      containers:
+        - name: newservice
+          image: 'dgoldstein1/addnewservice' # change this to the image you pushed
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              cpu: 200m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+
+        - name: sidecar
+          image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 200m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+
+          ports:
+            - name: proxy
+              containerPort: 8080
+            - name: http
+              containerPort: 443
+            - name: metrics
+              containerPort: 8081
+          env:
+            - name: ENVOY_ADMIN_LOG_PATH
+              value: '/dev/stdout'
+            - name: PROXY_DYNAMIC
+              value: 'true'
+            - name: XDS_CLUSTER
+              value: 'newservice'
+              # change XDS_HOST if different catalog host
+            - name: XDS_HOST
+              value: 'control.default.svc.cluster.local'
+            - name: XDS_NODE_ID
+              value: 'default'
+            - name: XDS_PORT
+              value: '50000'
+          # relies on the secrets 'sidecar-certs'
+          volumeMounts:
+            - name: sidecar-certs
+              mountPath: /etc/proxy/tls/sidecar/
+              readOnly: true
+      volumes:
+        - name: sidecar-certs
+          secret:
+            secretName: sidecar-certs
+      imagePullSecrets:
+        - name: docker.secret

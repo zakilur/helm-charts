@@ -1,0 +1,23 @@
+{
+  "listener_key": "listener-newservice",
+  "zone_key": "zone-default-zone",
+  "name": "newservice",
+  "ip": "0.0.0.0",
+  "port": 8080,
+  "protocol": "http_auto",
+  "domain_keys": [
+    "domain-newservice"
+  ],
+  "tracing_config": null,
+  "secret": {
+    "secret_key": "",
+    "secret_name": "",
+    "secret_validation_name": "",
+    "subject_names": null,
+    "ecdh_curves": null,
+    "set_current_client_cert_details": {
+      "uri": false
+    },
+    "checksum": ""
+  }
+}
