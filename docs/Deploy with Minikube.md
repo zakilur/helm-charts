@@ -256,7 +256,7 @@ Then you can run the following commands to update the local charts and then inst
 
 ```sh
 helm dep up greymatter
-helm install greymatter -f custom-greymatter.yaml -f custom-greymatter-secrets.yaml -f custom-reymatter-minikube.yaml --name gm
+helm install greymatter -f greymatter.yaml -f greymatter-secrets.yaml -f greymatter-minikube.yaml --name gm-1 --replace
 ```
 
 The `helm dep up greymatter` command will create a `./greymatter/charts` directory with tarballs of each sub-chart that the parent `greymatter` chart will use to install Grey Matter.
