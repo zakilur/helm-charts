@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: passthrough
-          image: 'dgoldstein1/passthrough:0.0.5'
+          image: 'dgoldstein1/passthrough:latest'
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
