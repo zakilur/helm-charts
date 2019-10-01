@@ -1,34 +1,49 @@
 # Configuring multimesh: a ping-pong demo
 
-This guide demonstrates two common patterns for cross-mesh communication by configuring two services in different meshes to play a game of ping pong. The first setup is service sidecar to ingress edge, where the service sidecar is configured to talk directly to the ingress edge of the second mesh:
+This guide demonstrates two common patterns for cross-mesh communication by configuring two services in different meshes to play a game of ping pong.
 
-![image|690x233](https://user-images.githubusercontent.com/5482080/65241040-9e831200-dab0-11e9-9752-851ae951b6c9.png)
+## Requirements
+
+Before you start you will need:
+
+- Two running meshes. You'll need to be able to hit the edge of both meshes and should note down the ip/ports of each.
+- [docker](https://docs.docker.com/v17.09/engine/installation/)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) and working understanding of kubernetes
+- [greymatter](https://nexus.production.deciphernow.com/#browse/browse:raw-hosted:greymatter%2Fgm-cli%2Fgreymatter-0.5.1.tar.gz)
+- knowledge of [how to add a service to the mesh](LINK)
+
+## Architecture 
+
+
 
 The second configuration uses an egress edge proxy. Instead of pointing each service to the ingress edge of the other mesh, only the egress proxy knows about the second mesh and all services route to it instead. This can be beneficial for security and for monitoring cross-mesh traffic:
 
 ![image|690x229](https://user-images.githubusercontent.com/5482080/65241040-9e831200-dab0-11e9-9752-851ae951b6c9.png)
 
-## Setup
+## Deploy A Passthrough Service to Each Mesh
 
-This tutorial assumes you have two Grey Matter meshes running concurrently and know how to deploy a service. For more information on deploying a mesh, see [Deploy with Minikube](https://github.com/DecipherNow/helm-charts/blob/release-2.0/docs/Deploy%20with%20Minikube.md). You'll need to be able to hit the edge of both meshes and should note down the ip/ports of each.
+To play our game of ping pong, we're going to deploy a [passthrough service](https://github.com/dgoldstein1/passthough-service) in both meshes which will volley requests back and forth. Start by [adding a new service one mesh](LINK TO ADDING A NEW SERVICE TO YOUR MESH WALKTHROUGH) called "passthrough." Feel free to use our [passthrough deployment](LINK) spec or create your own. _Note that `require_tls` should be `false`._
 
-## Deploy the test services
+Once you've added the first passthrough service to mesh 1, verify that it's working by going to the endpoints:
 
-To play our game of ping pong, we're going to deploy a [passthrough service](https://github.com/dgoldstein1/passthough-service) in both meshes which will volley requests back and forth.
+```
+# non-tls request
+$EDGE_ENDPOINT/services/passthrough/latest/get?url=http://google.com
+# tls request back through edge of mesh1
+$EDGE_ENDPOINT/services/passthrough/latest/get?url=$EDGE_ENDPOINT/services/passthrough/latest/ping
+```
 
-We've created a basic deployment configuration for the ping pong service called `passthrough.yaml` which you can download here. The passthrough service has been configured with the name of the current mesh and the endpoint of the service in mesh #2 that we want it to hit. Run the following command to deploy:
-
-`kubectl apply -f passthrough.yaml`
-
-Next, create the necessary Grey Matter objects to add the new passthrough service to the mesh. [You can see an example here.](https://github.com/DecipherNow/openshift-development/tree/master/deployments/control/json/ascii) You'll also need to set up clusters, routes, and shared_rules from edge <-> passthrough service which you can [find an example of here.](https://github.com/DecipherNow/openshift-development/tree/master/deployments/control/json/edge)
-
-Before deploying it into mesh #2, open `passthrough.yaml` and change the `MESH_ID` on line 34 to `mesh 2` and `PING_RESPONSE_URL` on line 44 to `https://localhost:8080/mesh1/services/passthrough/latest/ping?pause=2`
-
-Save the file and deploy passthrough into the second mesh, as well as the necessary grey matter objects.
+If those requests don't return valid responses, you may want to look at [mesh debugging tips](https://notes.deciphernow.com/t/mesh-debugging-tips/751). Now we need to deploy our our service to our second mesh. In a kubernetes context, open `passthrough.yaml` and change the `MESH_ID` on line 34 to `mesh 2` and `PING_RESPONSE_URL` on line 44 to `https://localhost:8080/mesh1/services/passthrough/latest/ping?pause=2`.  Save the file and deploy passthrough into the second mesh, using the same steps as before.
 
 ## Part I: Service to Ingress Edge Setup
 
-Now we are ready to configure the mesh so that our two services can play. In the folder you downloaded, there is a json folder with all the objects you'll need.
+ For part one, our service will talk directly to the ingress edge of the second mesh:
+
+![image|690x233](https://user-images.githubusercontent.com/5482080/65241124-d8ecaf00-dab0-11e9-97d3-d0159f096091.png)
+
+
+
+After creating a passthrough service in both meshes, we are ready to configure the mesh so that our two services can play! In the folder you downloaded, there is a json folder with all the objects you'll need.
 
 Open `cluster-mesh-2.json` and fill in the instances array with the host/port that you noted from mesh #2. Save the file and run:
 
