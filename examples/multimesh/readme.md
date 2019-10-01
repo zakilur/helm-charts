@@ -26,7 +26,7 @@ Before deploying it into mesh #2, open `passthrough.yaml` and change the `MESH_I
 
 Save the file and deploy passthrough into the second mesh, as well as the necessary grey matter objects.
 
-## Create Grey Matter objects for cross-mesh
+## Part I: Service to Ingress Edge Setup
 
 Now we are ready to configure the mesh so that our two services can play. In the folder you downloaded, there is a json folder with all the objects you'll need.
 
@@ -69,6 +69,20 @@ We're ready to play some multimesh ping pong! Follow logs for the passthrough se
 
 You can see a video demo here: https://drive.google.com/file/d/1p6Ww_NfEmyslCvWYJq2DSyW69Zq62G7m/view?usp=sharing
 
-## Deploying with an egress edge proxy
+## Part II: Egress Edge Proxy Setup
 
-Now that we've got a game of ping pong from service to edge, let's look at the same setup using an egress edge proxy to handle cross-mesh communication.
+Now that we've got a game of ping pong from service to edge, let's look at what it would take to use an egress edge proxy to handle cross-mesh communication. Instead of pointing routes from the service sidecar to the other mesh cluster, we're going to point them to the egress proxy.
+
+First we'll need to apply the deployment config found in `egress-edge.yaml` by running `kubectl apply -f egress-edge.yaml` and then create the necessary Grey Matter objects (domain, proxy, listener, cluster, shared_rules) to hook it into the mesh. Don't worry about creating any routes yet, we'll be setting those up next.
+
+Run `greymatter edit route route-passthrough-to-mesh-1-slash` and update the shared_rules_key to `shared-rules-egress-edge`. Do the same for `route-passthrough-to-mesh-1`.
+
+Create a route for the egress cluster <-> mesh #2:
+
+```
+greymatter create route < route-egress-to-mesh-2.json
+```
+
+Repeat this section for the second mesh, substituting any `-mesh-2` objects with their `-mesh-1` counterpart.
+
+That's it! Follow logs for passthrough and egress-edge services in both meshes and hit the endpoint as described in [Playing ping pong](#playing-ping-pong). You should see the requests flow from the service a -> egress edge a -> service b -> egress edge b.
