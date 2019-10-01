@@ -26,7 +26,20 @@ Save the file and deploy passthrough into the second mesh.
 
 ## Create Grey Matter objects
 
-Now we are ready to configure the mesh so that our two services can play. Download and open `cluster-mesh-2.json` and fill in the instances array with the host/port that you noted from mesh #2. Save the file and run:
+Now we are ready to configure the mesh so that our two services can play. In the folder you downloaded, there is a json folder with all the objects you'll need. First, create the domain, cluster, and routes for passthrough. These commands set up the routing from edge <-> proxy and from proxy <-> passthrough:
+
+```sh
+greymatter create domain < domain-passthrough.json
+greymatter create cluster < cluster-passthrough.json
+greymatter create cluster < cluster-edge-passthrough.json
+greymatter create shared_rules < shared-rule-passthrough.json
+greymatter create shared_rules < shared-rule-edge-passthrough.json
+greymatter create route < route-passthrough-edge-slash.json
+greymatter create route < route-passthrough-edge.json
+greymatter create route < route-passthrough.json
+```
+
+Open `cluster-mesh-2.json` and fill in the instances array with the host/port that you noted from mesh #2. Save the file and run:
 
 ```sh
 greymatter create cluster < cluster-mesh-2.json
@@ -46,15 +59,23 @@ greymatter create route < examples/multimesh/json/route-passthrough-to-mesh-2-sl
 greymatter create route < examples/multimesh/json/route-passthrough-to-mesh-2.json
 ```
 
-It's not much of a game yet if our second mesh can't respond. For the second passthrough service to communicate back, we need to repeat this whole section again in the second mesh. Just like we did earlier note the IP/ports for the ingress edge in mesh #1, and then run the following commands:
+It's not much of a game yet if our second mesh can't respond. For the second passthrough service to communicate back, we need to repeat this whole section again in the second mesh, using `-mesh-1` versions of the json objects. Just like we did earlier note the IP/ports for the ingress edge in mesh #1, and then run the following commands:
 
 ```sh
+greymatter create domain < domain-passthrough.json
+greymatter create cluster < cluster-passthrough.json
+greymatter create cluster < cluster-edge-passthrough.json
+greymatter create shared_rules < shared-rule-passthrough.json
+greymatter create shared_rules < shared-rule-edge-passthrough.json
+greymatter create route < route-passthrough-edge-slash.json
+greymatter create route < route-passthrough-edge.json
+greymatter create route < route-passthrough.json
 # Fill in cluster-mesh-1.json with IP ports and save
-greymatter create cluster < examples/multimesh/json/cluster-mesh-1.json
+greymatter create cluster < cluster-mesh-1.json
 # Create shared_rule and routes
-greymatter create shared_rules < examples/multimesh/json/shared-rule-mesh-1.json
-greymatter create route < examples/multimesh/json/route-passthrough-to-mesh-1-slash.json
-greymatter create route < examples/multimesh/json/route-passthrough-to-mesh-1.json
+greymatter create shared_rules < shared-rule-mesh-1.json
+greymatter create route < route-passthrough-to-mesh-1-slash.json
+greymatter create route < route-passthrough-to-mesh-1.json
 ```
 
 ## Playing ping pong
