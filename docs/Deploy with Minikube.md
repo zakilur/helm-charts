@@ -322,6 +322,12 @@ Select **Save**. Navigate back to the AWS instances dashboard and find the `IPv4
 
 ### Debugging
 
+If you're not prompted for a certificate when navigating to voyager-edge, or you suspect something went wrong with the installation run the following command to see if there were any errors running pods:
+
+```sh
+kubectl get events -w | grep error
+```
+
 To see the status of Kubernetes configs, you can access the Kubernetes dashboard running within the Minikube cluster with `minikube dashboard`
 
 To debug the mesh, you can access the Envoy admin UI for the edge proxy by running:
