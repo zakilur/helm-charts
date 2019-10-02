@@ -554,7 +554,6 @@ jwt:
         key: jwt.key.pem
 
   redis:
-    openshift:
     private_image: true
 
 internal-jwt:

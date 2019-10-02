@@ -30,7 +30,13 @@ The following list gives the service that needs a service account along with the
 - `spire-agent` - spire subchart - `.Values.spire.agent.serviceAccount`
 - `spire-server` - spire subchart - `.Values.spire.server.serviceAccount`
 
-If you're deploying into an environment where Helm/Tiller doesn't have sufficient permissions to create service accounts, you'll need to apply the [greymatter-service-accounts.yaml](../greymatter-service-accounts.yaml) file first. Be sure to set the appropriate namespace you're deploying to throughout that file. The user to apply this file will need to have sufficient permissions to create accounts. The custom values file will also need to be updated to ensure Helm doesn't try to create the accounts.
+If you're deploying into an environment where Helm/Tiller doesn't have sufficient permissions to create service accounts, you'll need to apply the [greymatter-service-accounts.yaml](../greymatter-service-accounts.yaml) file first. Be sure to set the appropriate namespace you're deploying to throughout that file. The user to apply this file will need to have sufficient permissions to create accounts.
+
+```sh
+oc apply -f greymatter-service-accounts.yaml
+```
+
+The custom values file will also need to be updated to ensure Helm doesn't try to create the accounts.
 
 For example:
 
