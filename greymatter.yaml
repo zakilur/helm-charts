@@ -464,7 +464,6 @@ slo:
         value: 'slo'
 
   postgres:
-    openshift:
     private_image: true
     data_mount_point: /var/lib/pgsql/data
     ssl:
