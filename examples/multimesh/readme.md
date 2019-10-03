@@ -129,7 +129,7 @@ First we'll need to apply the deployment config `egress-edge.yaml` by running `k
 
 Don't worry about creating any routes, we'll be setting those up next.
 
-Run `greymatter edit route route-passthrough-to-mesh-1-slash` and update the shared_rules_key to `shared-rules-egress-edge`. Do the same for `route-passthrough-to-mesh-1`.
+Run `greymatter edit route route-passthrough-to-mesh-2-slash` and update the shared_rules_key to `shared-rules-egress-edge`. Do the same for `route-passthrough-to-mesh-2`.
 
 Create a route for the egress cluster <-> mesh #2:
 
