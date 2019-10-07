@@ -6,6 +6,7 @@
   "redirects": null,
   "gzip_enabled": false,
   "cors_config": null,
+  "ssl_config": {},
   "aliases": null{{- if .Values.global.mesh_tls.use_provided_certs }},
   "ssl_config": {
       "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",

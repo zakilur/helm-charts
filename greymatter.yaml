@@ -6,7 +6,7 @@ global:
   zone: zone-default-zone
   mesh_tls:
     enabled: true
-    use_provided_certs: true
+    use_provided_certs: false
   kafka:
     replicas: 3
   dashboard:
@@ -23,10 +23,10 @@ global:
     certPath: /etc/proxy/tls/edge
     version: 0.9.1
   spire:
-    enabled: false
+    enabled: true
   waiter:
     serviceAccount:
-      create: true
+      create: false
   control:
     # This specifies the service name that all XDS clients will try to connect to
     name: control
@@ -95,11 +95,19 @@ global:
       # There may be more sidecar environment variables, but we haven't added them here yet.
       # However, to use an env var with the sidecar, even if it doesn't have a global default,
       # it needs to be set globally as either a value or a secret
+spire:
+  spire:
+    server:
+      serviceAccount:
+        create: false
+    agent:
+      serviceAccount:
+        create: false
 
 control:
   control:
     serviceAccount:
-      create: true
+      create: false
     image: docker.production.deciphernow.com/deciphernow/gm-control:0.5.1
     envvars:
       gm_control_console_level:
