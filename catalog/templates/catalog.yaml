@@ -66,9 +66,9 @@ spec:
       volumes:
       {{- include "sidecar_volumes" . | indent 6 }}
         {{- if and $.Values.global.services.catalog.egressTLS }}
-        - name: certs
-          secret:
-            secretName: sidecar-certs
+      - name: certs
+        secret:
+          secretName: sidecar-certs
         {{- end }}
       {{- else if and (not .Values.global.spire.enabled) (.Values.global.mesh_tls.use_provided_certs) }}
       volumes:
@@ -80,9 +80,9 @@ spec:
         {{- end }}
       {{- else if and $.Values.global.services.catalog.egressTLS }}
       volumes:
-        - name: certs
-          secret:
-            secretName: sidecar-certs
+      - name: certs
+        secret:
+          secretName: sidecar-certs
       {{- end }}
       imagePullSecrets:
         - name: docker.secret
