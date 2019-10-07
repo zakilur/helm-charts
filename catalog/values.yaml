@@ -127,7 +127,6 @@ catalog:
       type: value
       value: 'gm-control@deciphernow.com'
 
-
   init:
     image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:{{ tpl $.Values.sidecar.version $ }}'
     imagePullPolicy: IfNotPresent
