@@ -24,9 +24,10 @@ global:
     version: 0.9.1
   spire:
     enabled: true
+    trustDomain: deciphernow.com
   waiter:
     serviceAccount:
-      create: false
+      create: true
   control:
     # This specifies the service name that all XDS clients will try to connect to
     name: control
@@ -74,6 +75,9 @@ global:
       # These are sorted by how different the values are for the sidecars running on different services. The options are "all the same", "all except XDS". and "different"
       # TODO: update each service to use default global values and only set the ones that are different.
       # All the same
+      spire_path:
+        type: 'value'
+        value: '/run/spire/sockets/agent.sock'
       proxy_dynamic:
         type: 'value'
         value: 'true'
@@ -99,15 +103,15 @@ spire:
   spire:
     server:
       serviceAccount:
-        create: false
+        create: true
     agent:
       serviceAccount:
-        create: false
+        create: true
 
 control:
   control:
     serviceAccount:
-      create: false
+      create: true
     image: docker.production.deciphernow.com/deciphernow/gm-control:0.5.1
     envvars:
       gm_control_console_level:
@@ -458,7 +462,7 @@ dashboard:
     image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
   prometheus:
     serviceAccount:
-      create: false
+      create: true
 
 slo:
   slo:

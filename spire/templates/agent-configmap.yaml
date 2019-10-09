@@ -33,7 +33,7 @@ data:
         plugin_data {
           # Does not use Kubelet readonly port
           # Uses service account authenticated + authorized for full cluster read-only access
-          # skip_kubelet_verification = true
+          skip_kubelet_verification = true
         }
       }
 
