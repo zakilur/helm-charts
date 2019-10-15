@@ -1,6 +1,6 @@
-[debug] Created tunnel using local port: '45731'
+[debug] Created tunnel using local port: '46415'
 
-[debug] SERVER: "127.0.0.1:45731"
+[debug] SERVER: "127.0.0.1:46415"
 
 [debug] Original chart version: "2.0.3"
 [debug] Fetched decipher/greymatter to /home/david/.helm/cache/archive/greymatter-2.0.3.tgz
@@ -9,7 +9,7 @@
 
 NAME:   gm-1
 REVISION: 1
-RELEASED: Tue Oct 15 13:13:19 2019
+RELEASED: Tue Oct 15 13:50:10 2019
 CHART: greymatter-2.0.3
 USER-SUPPLIED VALUES:
 catalog:
@@ -108,26 +108,26 @@ catalog:
         debug:
           type: value
           value: "true"
-      image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+      image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
   sidecar:
     create_sidecar_secret: false
     envvars:
       xds_cluster:
         type: value
         value: catalog
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
 control:
   control:
     envvars:
       gm_control_console_level:
         type: value
         value: debug
-    image: docker.production.deciphernow.com/deciphernow/gm-control:0.5.1
+    image: __DOCKER_IMAGE_REPO__/gm-control:0.5.1
     serviceAccount:
       create: true
 dashboard:
   dashboard:
-    image: docker.production.deciphernow.com/deciphernow/gm-dashboard:3.1.0
+    image: __DOCKER_IMAGE_REPO__/gm-dashboard:3.1.0
   prometheus:
     serviceAccount:
       create: false
@@ -137,9 +137,9 @@ dashboard:
       xds_cluster:
         type: value
         value: dashboard
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
   sidecar_prometheus:
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
 data:
   data:
     aws:
@@ -249,7 +249,7 @@ data:
       uses3:
         type: value
         value: "true"
-    image: docker.production.deciphernow.com/deciphernow/gm-data:0.2.7
+    image: __DOCKER_IMAGE_REPO__/gm-data:0.2.7
   mongo:
     envvars:
       mongo_client_dn:
@@ -492,7 +492,7 @@ data:
       xds_cluster:
         type: value
         value: data
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
 dockerCredentials:
   email: null
   password: null
@@ -651,7 +651,7 @@ edge:
       xds_cluster:
         type: value
         value: edge
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
     version: 0.9.1
 global:
   catalog:
@@ -701,6 +701,24 @@ global:
     data:
       egressTLS: true
       mTLS: true
+    intake:
+      capability: Payments
+      catalogEnabled: true
+      controlEnabled: true
+      documentation: ""
+      egressTLS: false
+      enableInstanceMetrics: "true"
+      mTLS: true
+      name: USCIS Intake Service
+      observablesEnabled: false
+      owner: USCIS
+      port: __INTAKE_PORT__
+      routes:
+      - /services/intake/latest
+      - /services/intake/latest/
+      serviceName: intake
+      version: __INTAKE_VERSION__
+      zone: zone-default-zone
     internal-data:
       egressTLS: true
       mTLS: true
@@ -710,6 +728,24 @@ global:
     jwt:
       egressTLS: true
       mTLS: true
+    payment:
+      capability: Payments
+      catalogEnabled: true
+      controlEnabled: true
+      documentation: ""
+      egressTLS: false
+      enableInstanceMetrics: "true"
+      mTLS: true
+      name: USCIS Payment Service
+      observablesEnabled: false
+      owner: USCIS
+      port: __PAYMENT_PORT__
+      routes:
+      - /services/payment/latest
+      - /services/payment/latest/
+      serviceName: payment
+      version: __PAYMENT_VERSION__
+      zone: zone-default-zone
     prometheus:
       egressTLS: false
       mTLS: true
@@ -745,12 +781,12 @@ global:
   zone: zone-default-zone
 gm-control-api:
   gmControlApi:
-    image: docker.production.deciphernow.com/deciphernow/gm-control-api:0.8.1
+    image: __DOCKER_IMAGE_REPO__/gm-control-api:0.8.1
     init:
-      image: docker.production.deciphernow.com/deciphernow/greymatter:0.5.1
+      image: __DOCKER_IMAGE_REPO__/greymatter:0.5.1
     zone: zone-default-zone
   sidecar:
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
 internal-data:
   data:
     aws:
@@ -786,7 +822,7 @@ internal-data:
       uses3:
         type: value
         value: "false"
-    image: docker.production.deciphernow.com/deciphernow/gm-data:0.2.7
+    image: __DOCKER_IMAGE_REPO__/gm-data:0.2.7
     name: data-internal
     pvc:
       mountPath: /buckets/{{ $.Values.data.aws.bucket}}/{{ $.Values.data.envvars.aws_s3_partition.value
@@ -1037,7 +1073,7 @@ internal-data:
       xds_cluster:
         type: value
         value: data-internal
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
 internal-jwt:
   jwt:
     certs_mount_point: /gm-jwt-security/certs
@@ -1068,7 +1104,7 @@ internal-jwt:
       name: SERVER_KEY
       secret: internal-jwt-certs
       type: secret
-    image: docker.production.deciphernow.com/deciphernow/gm-jwt-security:0.2.0
+    image: __DOCKER_IMAGE_REPO__/gm-jwt-security:0.2.0
     name: internal-jwt-security
     secrets:
     - jwt.api_key: dm9sY2Fuby1lcGlkZW1pYy10d2VsZnRoLXRhbWFsZQ==
@@ -1408,7 +1444,7 @@ internal-jwt:
     users_cg_name: internal-jwt-users
   redis:
     name: internal-redis
-    password: internalRedis
+    password: __REDIS_PASSWORD__
     secret_name: internal-redis-password
   sidecar:
     create_sidecar_secret: false
@@ -1416,7 +1452,7 @@ internal-jwt:
       xds_cluster:
         type: value
         value: internal-jwt-security
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
 jwt:
   jwt:
     envvars:
@@ -1464,7 +1500,7 @@ jwt:
       name: AAC_KEY
       secret: jwt-certs
       type: secret
-    image: docker.production.deciphernow.com/deciphernow/gm-jwt-security:0.2.0
+    image: __DOCKER_IMAGE_REPO__/gm-jwt-security:0.2.0
     secrets:
     - jwt.cert.pem: |-
         -----BEGIN CERTIFICATE-----
@@ -1778,7 +1814,7 @@ jwt:
       xds_cluster:
         type: value
         value: jwt-security
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
 sidecar:
   certificates:
     ca: |-
@@ -1924,7 +1960,7 @@ sidecar:
       zV4IjkhZcSD3x7rLHv63xsN0NU+/EZilO7VVa3RWro58+LJ/5SfOlK4=
       -----END RSA PRIVATE KEY-----
   create_sidecar_secret: true
-  image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+  image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
 slo:
   postgres:
     credentials:
@@ -2104,9 +2140,9 @@ slo:
       xds_cluster:
         type: value
         value: slo
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
   slo:
-    image: docker.production.deciphernow.com/deciphernow/gm-slo:0.5.0
+    image: __DOCKER_IMAGE_REPO__/gm-slo:0.5.0
 
 COMPUTED VALUES:
 catalog:
@@ -2215,7 +2251,7 @@ catalog:
         use_tls:
           type: value
           value: '{{ $.Values.global.services.catalog.egressTLS | default false }}'
-      image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+      image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
       imagePullPolicy: IfNotPresent
     name: catalog
     port: 9080
@@ -2372,6 +2408,24 @@ catalog:
         serviceName: edge
         version: 0.9.1
         zone: zone-default-zone
+      intake:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Intake Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __INTAKE_PORT__
+        routes:
+        - /services/intake/latest
+        - /services/intake/latest/
+        serviceName: intake
+        version: __INTAKE_VERSION__
+        zone: zone-default-zone
       internal-data:
         capability: Grey Matter
         catalogEnabled: false
@@ -2419,6 +2473,24 @@ catalog:
         - /services/jwt-security/{{ $.Values.global.jwt.version }}/
         serviceName: jwt-security
         version: 0.2.0
+        zone: zone-default-zone
+      payment:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Payment Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __PAYMENT_PORT__
+        routes:
+        - /services/payment/latest
+        - /services/payment/latest/
+        serviceName: payment
+        version: __PAYMENT_VERSION__
         zone: zone-default-zone
       prometheus:
         catalogEnabled: false
@@ -2507,7 +2579,7 @@ catalog:
       xds_cluster:
         type: value
         value: catalog
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
     imagePullPolicy: IfNotPresent
     resources:
       limits:
@@ -2555,7 +2627,7 @@ control:
       gm_control_xds_resolve_dns:
         type: value
         value: "true"
-    image: docker.production.deciphernow.com/deciphernow/gm-control:0.5.1
+    image: __DOCKER_IMAGE_REPO__/gm-control:0.5.1
     imagePullPolicy: IfNotPresent
     name: control
     port: 50000
@@ -2707,6 +2779,24 @@ control:
         serviceName: edge
         version: 0.9.1
         zone: zone-default-zone
+      intake:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Intake Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __INTAKE_PORT__
+        routes:
+        - /services/intake/latest
+        - /services/intake/latest/
+        serviceName: intake
+        version: __INTAKE_VERSION__
+        zone: zone-default-zone
       internal-data:
         capability: Grey Matter
         catalogEnabled: false
@@ -2754,6 +2844,24 @@ control:
         - /services/jwt-security/{{ $.Values.global.jwt.version }}/
         serviceName: jwt-security
         version: 0.2.0
+        zone: zone-default-zone
+      payment:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Payment Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __PAYMENT_PORT__
+        routes:
+        - /services/payment/latest
+        - /services/payment/latest/
+        serviceName: payment
+        version: __PAYMENT_VERSION__
         zone: zone-default-zone
       prometheus:
         catalogEnabled: false
@@ -2820,7 +2928,7 @@ dashboard:
     base_url: /services/dashboard/{{ $.Values.global.dashboard.version }}/
     config_server: /services/gm-control-api/latest/v1.0
     fabric_server: /services/catalog/latest/
-    image: docker.production.deciphernow.com/deciphernow/gm-dashboard:3.1.0
+    image: __DOCKER_IMAGE_REPO__/gm-dashboard:3.1.0
     imagePullPolicy: IfNotPresent
     objectives_server: /services/slo/latest/
     prometheus_server: /services/prometheus/latest/api/v1/
@@ -2976,6 +3084,24 @@ dashboard:
         serviceName: edge
         version: 0.9.1
         zone: zone-default-zone
+      intake:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Intake Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __INTAKE_PORT__
+        routes:
+        - /services/intake/latest
+        - /services/intake/latest/
+        serviceName: intake
+        version: __INTAKE_VERSION__
+        zone: zone-default-zone
       internal-data:
         capability: Grey Matter
         catalogEnabled: false
@@ -3023,6 +3149,24 @@ dashboard:
         - /services/jwt-security/{{ $.Values.global.jwt.version }}/
         serviceName: jwt-security
         version: 0.2.0
+        zone: zone-default-zone
+      payment:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Payment Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __PAYMENT_PORT__
+        routes:
+        - /services/payment/latest
+        - /services/payment/latest/
+        serviceName: payment
+        version: __PAYMENT_VERSION__
         zone: zone-default-zone
       prometheus:
         catalogEnabled: false
@@ -3126,7 +3270,7 @@ dashboard:
       xds_cluster:
         type: value
         value: dashboard
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
     imagePullPolicy: IfNotPresent
     resources:
       limits:
@@ -3175,7 +3319,7 @@ dashboard:
       xds_port:
         type: value
         value: '{{ .Values.global.control.port }}'
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
     imagePullPolicy: IfNotPresent
     resources:
       limits:
@@ -3314,7 +3458,7 @@ data:
       uses3:
         type: value
         value: "true"
-    image: docker.production.deciphernow.com/deciphernow/gm-data:0.2.7
+    image: __DOCKER_IMAGE_REPO__/gm-data:0.2.7
     imagePullPolicy: IfNotPresent
     master_key: ac8923[lkn43589vi23kl4rfgv0ws
     name: data
@@ -3473,6 +3617,24 @@ data:
         serviceName: edge
         version: 0.9.1
         zone: zone-default-zone
+      intake:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Intake Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __INTAKE_PORT__
+        routes:
+        - /services/intake/latest
+        - /services/intake/latest/
+        serviceName: intake
+        version: __INTAKE_VERSION__
+        zone: zone-default-zone
       internal-data:
         capability: Grey Matter
         catalogEnabled: false
@@ -3520,6 +3682,24 @@ data:
         - /services/jwt-security/{{ $.Values.global.jwt.version }}/
         serviceName: jwt-security
         version: 0.2.0
+        zone: zone-default-zone
+      payment:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Payment Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __PAYMENT_PORT__
+        routes:
+        - /services/payment/latest
+        - /services/payment/latest/
+        serviceName: payment
+        version: __PAYMENT_VERSION__
         zone: zone-default-zone
       prometheus:
         catalogEnabled: false
@@ -3868,7 +4048,7 @@ data:
       xds_cluster:
         type: value
         value: data
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
     imagePullPolicy: IfNotPresent
     resources:
       limits:
@@ -4189,6 +4369,24 @@ edge:
         serviceName: edge
         version: 0.9.1
         zone: zone-default-zone
+      intake:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Intake Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __INTAKE_PORT__
+        routes:
+        - /services/intake/latest
+        - /services/intake/latest/
+        serviceName: intake
+        version: __INTAKE_VERSION__
+        zone: zone-default-zone
       internal-data:
         capability: Grey Matter
         catalogEnabled: false
@@ -4236,6 +4434,24 @@ edge:
         - /services/jwt-security/{{ $.Values.global.jwt.version }}/
         serviceName: jwt-security
         version: 0.2.0
+        zone: zone-default-zone
+      payment:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Payment Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __PAYMENT_PORT__
+        routes:
+        - /services/payment/latest
+        - /services/payment/latest/
+        serviceName: payment
+        version: __PAYMENT_VERSION__
         zone: zone-default-zone
       prometheus:
         catalogEnabled: false
@@ -4321,7 +4537,7 @@ edge:
       xds_cluster:
         type: value
         value: edge
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
     imagePullPolicy: IfNotPresent
     metrics_key_function: depth
     resources:
@@ -4474,6 +4690,24 @@ global:
       serviceName: edge
       version: 0.9.1
       zone: zone-default-zone
+    intake:
+      capability: Payments
+      catalogEnabled: true
+      controlEnabled: true
+      documentation: ""
+      egressTLS: false
+      enableInstanceMetrics: "true"
+      mTLS: true
+      name: USCIS Intake Service
+      observablesEnabled: false
+      owner: USCIS
+      port: __INTAKE_PORT__
+      routes:
+      - /services/intake/latest
+      - /services/intake/latest/
+      serviceName: intake
+      version: __INTAKE_VERSION__
+      zone: zone-default-zone
     internal-data:
       capability: Grey Matter
       catalogEnabled: false
@@ -4521,6 +4755,24 @@ global:
       - /services/jwt-security/{{ $.Values.global.jwt.version }}/
       serviceName: jwt-security
       version: 0.2.0
+      zone: zone-default-zone
+    payment:
+      capability: Payments
+      catalogEnabled: true
+      controlEnabled: true
+      documentation: ""
+      egressTLS: false
+      enableInstanceMetrics: "true"
+      mTLS: true
+      name: USCIS Payment Service
+      observablesEnabled: false
+      owner: USCIS
+      port: __PAYMENT_PORT__
+      routes:
+      - /services/payment/latest
+      - /services/payment/latest/
+      serviceName: payment
+      version: __PAYMENT_VERSION__
       zone: zone-default-zone
     prometheus:
       catalogEnabled: false
@@ -4726,6 +4978,24 @@ gm-control-api:
         serviceName: edge
         version: 0.9.1
         zone: zone-default-zone
+      intake:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Intake Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __INTAKE_PORT__
+        routes:
+        - /services/intake/latest
+        - /services/intake/latest/
+        serviceName: intake
+        version: __INTAKE_VERSION__
+        zone: zone-default-zone
       internal-data:
         capability: Grey Matter
         catalogEnabled: false
@@ -4773,6 +5043,24 @@ gm-control-api:
         - /services/jwt-security/{{ $.Values.global.jwt.version }}/
         serviceName: jwt-security
         version: 0.2.0
+        zone: zone-default-zone
+      payment:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Payment Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __PAYMENT_PORT__
+        routes:
+        - /services/payment/latest
+        - /services/payment/latest/
+        serviceName: payment
+        version: __PAYMENT_VERSION__
         zone: zone-default-zone
       prometheus:
         catalogEnabled: false
@@ -4859,7 +5147,7 @@ gm-control-api:
       gm_control_api_zone_key:
         type: value
         value: '{{ .Values.gmControlApi.zone }}'
-    image: docker.production.deciphernow.com/deciphernow/gm-control-api:0.8.1
+    image: __DOCKER_IMAGE_REPO__/gm-control-api:0.8.1
     imagePullPolicy: IfNotPresent
     init:
       envvars:
@@ -4879,7 +5167,7 @@ gm-control-api:
         greymatter_console_level:
           type: value
           value: debug
-      image: docker.production.deciphernow.com/deciphernow/greymatter:0.5.1
+      image: __DOCKER_IMAGE_REPO__/greymatter:0.5.1
       imagePullPolicy: IfNotPresent
     name: gm-control-api
     proxyPort: 8080
@@ -4892,7 +5180,7 @@ gm-control-api:
       xds_cluster:
         type: value
         value: gm-control-api
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
     imagePullPolicy: IfNotPresent
     resources:
       limits:
@@ -5030,7 +5318,7 @@ internal-data:
       uses3:
         type: value
         value: "false"
-    image: docker.production.deciphernow.com/deciphernow/gm-data:0.2.7
+    image: __DOCKER_IMAGE_REPO__/gm-data:0.2.7
     imagePullPolicy: IfNotPresent
     master_key: ac8923[lkn43589vi23kl4rfgv0ws
     name: data-internal
@@ -5189,6 +5477,24 @@ internal-data:
         serviceName: edge
         version: 0.9.1
         zone: zone-default-zone
+      intake:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Intake Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __INTAKE_PORT__
+        routes:
+        - /services/intake/latest
+        - /services/intake/latest/
+        serviceName: intake
+        version: __INTAKE_VERSION__
+        zone: zone-default-zone
       internal-data:
         capability: Grey Matter
         catalogEnabled: false
@@ -5236,6 +5542,24 @@ internal-data:
         - /services/jwt-security/{{ $.Values.global.jwt.version }}/
         serviceName: jwt-security
         version: 0.2.0
+        zone: zone-default-zone
+      payment:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Payment Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __PAYMENT_PORT__
+        routes:
+        - /services/payment/latest
+        - /services/payment/latest/
+        serviceName: payment
+        version: __PAYMENT_VERSION__
         zone: zone-default-zone
       prometheus:
         catalogEnabled: false
@@ -5584,7 +5908,7 @@ internal-data:
       xds_cluster:
         type: value
         value: data-internal
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
     imagePullPolicy: IfNotPresent
     resources:
       limits:
@@ -5739,6 +6063,24 @@ internal-jwt:
         serviceName: edge
         version: 0.9.1
         zone: zone-default-zone
+      intake:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Intake Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __INTAKE_PORT__
+        routes:
+        - /services/intake/latest
+        - /services/intake/latest/
+        serviceName: intake
+        version: __INTAKE_VERSION__
+        zone: zone-default-zone
       internal-data:
         capability: Grey Matter
         catalogEnabled: false
@@ -5786,6 +6128,24 @@ internal-jwt:
         - /services/jwt-security/{{ $.Values.global.jwt.version }}/
         serviceName: jwt-security
         version: 0.2.0
+        zone: zone-default-zone
+      payment:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Payment Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __PAYMENT_PORT__
+        routes:
+        - /services/payment/latest
+        - /services/payment/latest/
+        serviceName: payment
+        version: __PAYMENT_VERSION__
         zone: zone-default-zone
       prometheus:
         catalogEnabled: false
@@ -5886,7 +6246,7 @@ internal-jwt:
       name: SERVER_KEY
       secret: internal-jwt-certs
       type: secret
-    image: docker.production.deciphernow.com/deciphernow/gm-jwt-security:0.2.0
+    image: __DOCKER_IMAGE_REPO__/gm-jwt-security:0.2.0
     imagePullPolicy: IfNotPresent
     name: internal-jwt-security
     redis_db: "0"
@@ -6243,7 +6603,7 @@ internal-jwt:
     name: internal-redis
     openshift:
       image: centos/redis-32-centos7
-    password: internalRedis
+    password: __REDIS_PASSWORD__
     replica_count: 1
     resources:
       limits:
@@ -6259,7 +6619,7 @@ internal-jwt:
       xds_cluster:
         type: value
         value: internal-jwt-security
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
     imagePullPolicy: IfNotPresent
     resources:
       limits:
@@ -6428,6 +6788,24 @@ jwt:
         serviceName: edge
         version: 0.9.1
         zone: zone-default-zone
+      intake:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Intake Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __INTAKE_PORT__
+        routes:
+        - /services/intake/latest
+        - /services/intake/latest/
+        serviceName: intake
+        version: __INTAKE_VERSION__
+        zone: zone-default-zone
       internal-data:
         capability: Grey Matter
         catalogEnabled: false
@@ -6475,6 +6853,24 @@ jwt:
         - /services/jwt-security/{{ $.Values.global.jwt.version }}/
         serviceName: jwt-security
         version: 0.2.0
+        zone: zone-default-zone
+      payment:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Payment Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __PAYMENT_PORT__
+        routes:
+        - /services/payment/latest
+        - /services/payment/latest/
+        serviceName: payment
+        version: __PAYMENT_VERSION__
         zone: zone-default-zone
       prometheus:
         catalogEnabled: false
@@ -6593,7 +6989,7 @@ jwt:
       name: AAC_KEY
       secret: jwt-certs
       type: secret
-    image: docker.production.deciphernow.com/deciphernow/gm-jwt-security:0.2.0
+    image: __DOCKER_IMAGE_REPO__/gm-jwt-security:0.2.0
     imagePullPolicy: IfNotPresent
     redis_db: "0"
     redis_pass: redis
@@ -6968,7 +7364,7 @@ jwt:
       xds_cluster:
         type: value
         value: jwt-security
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
     imagePullPolicy: IfNotPresent
     resources:
       limits:
@@ -7139,7 +7535,7 @@ sidecar:
       -----END RSA PRIVATE KEY-----
     name: sidecar
   create_sidecar_secret: true
-  image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+  image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
 slo:
   global:
     catalog:
@@ -7284,6 +7680,24 @@ slo:
         serviceName: edge
         version: 0.9.1
         zone: zone-default-zone
+      intake:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Intake Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __INTAKE_PORT__
+        routes:
+        - /services/intake/latest
+        - /services/intake/latest/
+        serviceName: intake
+        version: __INTAKE_VERSION__
+        zone: zone-default-zone
       internal-data:
         capability: Grey Matter
         catalogEnabled: false
@@ -7331,6 +7745,24 @@ slo:
         - /services/jwt-security/{{ $.Values.global.jwt.version }}/
         serviceName: jwt-security
         version: 0.2.0
+        zone: zone-default-zone
+      payment:
+        capability: Payments
+        catalogEnabled: true
+        controlEnabled: true
+        documentation: ""
+        egressTLS: false
+        enableInstanceMetrics: "true"
+        mTLS: true
+        name: USCIS Payment Service
+        observablesEnabled: false
+        owner: USCIS
+        port: __PAYMENT_PORT__
+        routes:
+        - /services/payment/latest
+        - /services/payment/latest/
+        serviceName: payment
+        version: __PAYMENT_VERSION__
         zone: zone-default-zone
       prometheus:
         catalogEnabled: false
@@ -7588,7 +8020,7 @@ slo:
       xds_cluster:
         type: value
         value: slo
-    image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+    image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
     imagePullPolicy: IfNotPresent
     metrics_key_function: depth
     resources:
@@ -7601,7 +8033,7 @@ slo:
     version: '{{- $.Values.global.slo.sidecar.version | default $.Values.global.sidecar.version
       }}'
   slo:
-    image: docker.production.deciphernow.com/deciphernow/gm-slo:0.5.0
+    image: __DOCKER_IMAGE_REPO__/gm-slo:0.5.0
     imagePullPolicy: IfNotPresent
     resources:
       limits:
@@ -7780,7 +8212,7 @@ metadata:
     heritage: "Tiller"
 type: Opaque
 stringData:
-  password: "internalRedis"
+  password: "__REDIS_PASSWORD__"
 ---
 # Source: greymatter/charts/jwt/templates/jwt-certs.yaml
 apiVersion: v1
@@ -7992,19 +8424,50 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: service-data-catalog-api-config
+  name: service-intake-catalog-api-config
   namespace: myproject
 data:
   service.json: |-
     {
-      "clusterName": "data",
+      "clusterName": "intake",
       "zoneName": "zone-default-zone",
-      "name": "Grey Matter Data",
-      "version": "0.2.7",
+      "name": "USCIS Intake Service",
+      "version": "__INTAKE_VERSION__",
+      "owner": "USCIS",
+      "capability": "Payments",
+      "runtime": "GO",
+      "documentation": "",
+      "prometheusJob": "",
+      "minInstances": 1,
+      "maxInstances": 1,
+      "authorized": true,
+      "clusterID": "",
+      "meshID": "",
+      "enableInstanceMetrics": true,
+      "enableHistoricalMetrics": true,
+      "metricsTemplate": "",
+      "metricsPort": 8081
+    }
+    
+...
+---
+# Source: greymatter/charts/catalog/templates/configmaps.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-jwt-security-catalog-api-config
+  namespace: myproject
+data:
+  service.json: |-
+    {
+      "clusterName": "jwt-security",
+      "zoneName": "zone-default-zone",
+      "name": "Grey Matter JWT Security",
+      "version": "0.2.0",
       "owner": "Decipher",
       "capability": "Grey Matter",
       "runtime": "GO",
-      "documentation": "/services/data/latest/static/ui/index.html",
+      "documentation": "",
       "prometheusJob": "",
       "minInstances": 1,
       "maxInstances": 1,
@@ -8032,37 +8495,6 @@ data:
       "zoneName": "zone-default-zone",
       "name": "Grey Matter Dashboard",
       "version": "3.1.0",
-      "owner": "Decipher",
-      "capability": "Grey Matter",
-      "runtime": "GO",
-      "documentation": "",
-      "prometheusJob": "",
-      "minInstances": 1,
-      "maxInstances": 1,
-      "authorized": true,
-      "clusterID": "",
-      "meshID": "",
-      "enableInstanceMetrics": true,
-      "enableHistoricalMetrics": true,
-      "metricsTemplate": "",
-      "metricsPort": 8081
-    }
-    
-...
----
-# Source: greymatter/charts/catalog/templates/configmaps.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: service-gm-control-api-catalog-api-config
-  namespace: myproject
-data:
-  service.json: |-
-    {
-      "clusterName": "gm-control-api",
-      "zoneName": "zone-default-zone",
-      "name": "Grey Matter Control API",
-      "version": "0.8.1",
       "owner": "Decipher",
       "capability": "Grey Matter",
       "runtime": "GO",
@@ -8116,15 +8548,15 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: service-edge-catalog-api-config
+  name: service-gm-control-api-catalog-api-config
   namespace: myproject
 data:
   service.json: |-
     {
-      "clusterName": "edge",
+      "clusterName": "gm-control-api",
       "zoneName": "zone-default-zone",
-      "name": "Grey Matter Edge",
-      "version": "0.9.1",
+      "name": "Grey Matter Control API",
+      "version": "0.8.1",
       "owner": "Decipher",
       "capability": "Grey Matter",
       "runtime": "GO",
@@ -8147,15 +8579,46 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: service-jwt-security-catalog-api-config
+  name: service-data-catalog-api-config
   namespace: myproject
 data:
   service.json: |-
     {
-      "clusterName": "jwt-security",
+      "clusterName": "data",
       "zoneName": "zone-default-zone",
-      "name": "Grey Matter JWT Security",
-      "version": "0.2.0",
+      "name": "Grey Matter Data",
+      "version": "0.2.7",
+      "owner": "Decipher",
+      "capability": "Grey Matter",
+      "runtime": "GO",
+      "documentation": "/services/data/latest/static/ui/index.html",
+      "prometheusJob": "",
+      "minInstances": 1,
+      "maxInstances": 1,
+      "authorized": true,
+      "clusterID": "",
+      "meshID": "",
+      "enableInstanceMetrics": true,
+      "enableHistoricalMetrics": true,
+      "metricsTemplate": "",
+      "metricsPort": 8081
+    }
+    
+...
+---
+# Source: greymatter/charts/catalog/templates/configmaps.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-edge-catalog-api-config
+  namespace: myproject
+data:
+  service.json: |-
+    {
+      "clusterName": "edge",
+      "zoneName": "zone-default-zone",
+      "name": "Grey Matter Edge",
+      "version": "0.9.1",
       "owner": "Decipher",
       "capability": "Grey Matter",
       "runtime": "GO",
@@ -8189,6 +8652,37 @@ data:
       "version": "0.5.0",
       "owner": "Decipher",
       "capability": "Grey Matter",
+      "runtime": "GO",
+      "documentation": "",
+      "prometheusJob": "",
+      "minInstances": 1,
+      "maxInstances": 1,
+      "authorized": true,
+      "clusterID": "",
+      "meshID": "",
+      "enableInstanceMetrics": true,
+      "enableHistoricalMetrics": true,
+      "metricsTemplate": "",
+      "metricsPort": 8081
+    }
+    
+...
+---
+# Source: greymatter/charts/catalog/templates/configmaps.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-payment-catalog-api-config
+  namespace: myproject
+data:
+  service.json: |-
+    {
+      "clusterName": "payment",
+      "zoneName": "zone-default-zone",
+      "name": "USCIS Payment Service",
+      "version": "__PAYMENT_VERSION__",
+      "owner": "USCIS",
+      "capability": "Payments",
       "runtime": "GO",
       "documentation": "",
       "prometheusJob": "",
@@ -8498,28 +8992,43 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: edge-data-mesh-config
+  name: service-intake-mesh-config
   namespace: myproject
 data:
   cluster.json: |-
     {
+      "cluster_key": "cluster-intake",
       "zone_key": "zone-default-zone",
-      "cluster_key": "edge-to-data-cluster",
-      "name": "data",
-      "instances": [],
+      "name": "service",
+      "instances": [
+        {
+            "host": "0.0.0.0",
+            "port": __INTAKE_PORT__
+        }
+      ],
       "circuit_breakers": null,
       "outlier_detection": null,
-      "health_checks": [],
-      "require_tls": true,
+      "health_checks": []
+    }
+  domain.json: |-
+    {
+      "domain_key": "domain-intake",
+      "zone_key": "zone-default-zone",
+      "name": "*",
+      "port": 8080,
+      "redirects": null,
+      "gzip_enabled": false,
+      "cors_config": null,
+      "aliases": null,
       "ssl_config": {
-        "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
-        "protocols": [
-          "SSLv3",
-          "SSLv2",
-          "TLSv1",
-          "TLSv1.1",
-          "TLSv1.2"
-        ],
+          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+          "protocols": [
+            "SSLv3",
+            "SSLv2",
+            "TLSv1",
+            "TLSv1.1",
+            "TLSv1.2"
+          ],
         "require_client_certs": true,
         "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
         "cert_key_pairs": [
@@ -8528,33 +9037,59 @@ data:
             "key_path": "/etc/proxy/tls/sidecar/server.key"
           }
         ]
+      },
+      "force_https": true
+    }
+    
+  listener.json: |-
+    {
+      "listener_key": "listener-intake",
+      "zone_key": "zone-default-zone",
+      "name": "intake",
+      "ip": "0.0.0.0",
+      "port": 8080,
+      "protocol": "http_auto",
+      "domain_keys": ["domain-intake"],
+      "tracing_config": null
+    }
+    
+  proxy.json: |-
+    {
+      "proxy_key": "proxy-intake",
+      "zone_key": "zone-default-zone",
+      "name": "intake",
+      "domain_keys": [
+        "domain-intake"
+      ],
+      "listener_keys": [
+          "listener-intake"
+      ],
+      "listeners": null,
+      "active_proxy_filters": [
+        "gm.metrics" 
+      ],
+      "proxy_filters": {
+        "gm_metrics": {
+          "metrics_port": 8081,
+          "metrics_host": "0.0.0.0",
+          "metrics_dashboard_uri_path": "/metrics",
+          "metrics_prometheus_uri_path": "/prometheus",
+          "prometheus_system_metrics_interval_seconds": 15,
+          "metrics_ring_buffer_size": 4096,
+          "metrics_key_function": "depth",
+          "metrics_key_depth": "1"
+        }
       }
     }
-    
-  route-1.json: |-
+  route.json: |-
     {
-      "route_key": "edge-data-route",
-      "domain_key": "edge",
+      "route_key": "route-intake",
+      "domain_key": "domain-intake",
       "zone_key": "zone-default-zone",
-      "path": "/services/data/latest/",
-      "prefix_rewrite": "/",
+      "path": "/",
+      "prefix_rewrite": null,
       "redirects": null,
-      "shared_rules_key": "edge-data-shared-rules",
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "retry_policy": null
-    }
-    
-  route-2.json: |-
-    {
-      "route_key": "edge-data-route-slash",
-      "domain_key": "edge",
-      "zone_key": "zone-default-zone",
-      "path": "/services/data/latest",
-      "prefix_rewrite": "/services/data/latest/",
-      "redirects": null,
-      "shared_rules_key": "edge-data-shared-rules",
+      "shared_rules_key": "shared-rules-intake",
       "rules": null,
       "response_data": {},
       "cohort_seed": null,
@@ -8563,14 +9098,14 @@ data:
     
   shared_rules.json: |-
     {
+      "shared_rules_key": "shared-rules-intake",
+      "name": "intake",
       "zone_key": "zone-default-zone",
-      "shared_rules_key": "edge-data-shared-rules",
-      "name": "data",
       "default": {
         "light": [
           {
             "constraint_key": "",
-            "cluster_key": "edge-to-data-cluster",
+            "cluster_key": "cluster-intake",
             "metadata": null,
             "properties": null,
             "response_data": {},
@@ -8593,14 +9128,305 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: edge-dashboard-mesh-config
+  name: service-dashboard-mesh-config
+  namespace: myproject
+data:
+  cluster.json: |-
+    {
+      "cluster_key": "cluster-dashboard",
+      "zone_key": "zone-default-zone",
+      "name": "service",
+      "instances": [
+        {
+            "host": "0.0.0.0",
+            "port": 1337
+        }
+      ],
+      "circuit_breakers": null,
+      "outlier_detection": null,
+      "health_checks": []
+    }
+  domain.json: |-
+    {
+      "domain_key": "domain-dashboard",
+      "zone_key": "zone-default-zone",
+      "name": "*",
+      "port": 8080,
+      "redirects": null,
+      "gzip_enabled": false,
+      "cors_config": null,
+      "aliases": null,
+      "ssl_config": {
+          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+          "protocols": [
+            "SSLv3",
+            "SSLv2",
+            "TLSv1",
+            "TLSv1.1",
+            "TLSv1.2"
+          ],
+        "require_client_certs": true,
+        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
+        "cert_key_pairs": [
+          {
+            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
+            "key_path": "/etc/proxy/tls/sidecar/server.key"
+          }
+        ]
+      },
+      "force_https": true
+    }
+    
+  listener.json: |-
+    {
+      "listener_key": "listener-dashboard",
+      "zone_key": "zone-default-zone",
+      "name": "dashboard",
+      "ip": "0.0.0.0",
+      "port": 8080,
+      "protocol": "http_auto",
+      "domain_keys": ["domain-dashboard"],
+      "tracing_config": null
+    }
+    
+  proxy.json: |-
+    {
+      "proxy_key": "proxy-dashboard",
+      "zone_key": "zone-default-zone",
+      "name": "dashboard",
+      "domain_keys": [
+        "domain-dashboard"
+      ],
+      "listener_keys": [
+          "listener-dashboard"
+      ],
+      "listeners": null,
+      "active_proxy_filters": [
+        "gm.metrics" 
+      ],
+      "proxy_filters": {
+        "gm_metrics": {
+          "metrics_port": 8081,
+          "metrics_host": "0.0.0.0",
+          "metrics_dashboard_uri_path": "/metrics",
+          "metrics_prometheus_uri_path": "/prometheus",
+          "prometheus_system_metrics_interval_seconds": 15,
+          "metrics_ring_buffer_size": 4096,
+          "metrics_key_function": "depth",
+          "metrics_key_depth": "1"
+        }
+      }
+    }
+  route.json: |-
+    {
+      "route_key": "route-dashboard",
+      "domain_key": "domain-dashboard",
+      "zone_key": "zone-default-zone",
+      "path": "/",
+      "prefix_rewrite": null,
+      "redirects": null,
+      "shared_rules_key": "shared-rules-dashboard",
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "retry_policy": null
+    }
+    
+  shared_rules.json: |-
+    {
+      "shared_rules_key": "shared-rules-dashboard",
+      "name": "dashboard",
+      "zone_key": "zone-default-zone",
+      "default": {
+        "light": [
+          {
+            "constraint_key": "",
+            "cluster_key": "cluster-dashboard",
+            "metadata": null,
+            "properties": null,
+            "response_data": {},
+            "weight": 1
+          }
+        ],
+        "dark": null,
+        "tap": null
+      },
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "properties": null,
+      "retry_policy": null
+    }
+    
+...
+---
+# Source: greymatter/charts/gm-control-api/templates/configmaps.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-data-internal-mesh-config
+  namespace: myproject
+data:
+  cluster.json: |-
+    {
+      "cluster_key": "cluster-data-internal",
+      "zone_key": "zone-default-zone",
+      "name": "service",
+      "instances": [
+        {
+            "host": "0.0.0.0",
+            "port": 8181
+        }
+      ],
+      "require_tls": true,
+      "ssl_config": {
+          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+          "protocols": [
+            "SSLv3",
+            "SSLv2",
+            "TLSv1",
+            "TLSv1.1",
+            "TLSv1.2"
+          ],
+        "require_client_certs": true,
+        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
+        "cert_key_pairs": [
+          {
+            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
+            "key_path": "/etc/proxy/tls/sidecar/server.key"
+          }
+        ]
+      },
+      "circuit_breakers": null,
+      "outlier_detection": null,
+      "health_checks": []
+    }
+  domain.json: |-
+    {
+      "domain_key": "domain-data-internal",
+      "zone_key": "zone-default-zone",
+      "name": "*",
+      "port": 8080,
+      "redirects": null,
+      "gzip_enabled": false,
+      "cors_config": null,
+      "aliases": null,
+      "ssl_config": {
+          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+          "protocols": [
+            "SSLv3",
+            "SSLv2",
+            "TLSv1",
+            "TLSv1.1",
+            "TLSv1.2"
+          ],
+        "require_client_certs": true,
+        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
+        "cert_key_pairs": [
+          {
+            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
+            "key_path": "/etc/proxy/tls/sidecar/server.key"
+          }
+        ]
+      },
+      "force_https": true
+    }
+    
+  listener.json: |-
+    {
+      "listener_key": "listener-data-internal",
+      "zone_key": "zone-default-zone",
+      "name": "data-internal",
+      "ip": "0.0.0.0",
+      "port": 8080,
+      "protocol": "http_auto",
+      "domain_keys": ["domain-data-internal"],
+      "tracing_config": null
+    }
+    
+  proxy.json: |-
+    {
+      "proxy_key": "proxy-data-internal",
+      "zone_key": "zone-default-zone",
+      "name": "data-internal",
+      "domain_keys": [
+        "domain-data-internal"
+      ],
+      "listener_keys": [
+          "listener-data-internal"
+      ],
+      "listeners": null,
+      "active_proxy_filters": [
+        "gm.metrics" 
+      ],
+      "proxy_filters": {
+        "gm_metrics": {
+          "metrics_port": 8081,
+          "metrics_host": "0.0.0.0",
+          "metrics_dashboard_uri_path": "/metrics",
+          "metrics_prometheus_uri_path": "/prometheus",
+          "prometheus_system_metrics_interval_seconds": 15,
+          "metrics_ring_buffer_size": 4096,
+          "metrics_key_function": "depth",
+          "metrics_key_depth": "1"
+        }
+      }
+    }
+  route.json: |-
+    {
+      "route_key": "route-data-internal",
+      "domain_key": "domain-data-internal",
+      "zone_key": "zone-default-zone",
+      "path": "/",
+      "prefix_rewrite": null,
+      "redirects": null,
+      "shared_rules_key": "shared-rules-data-internal",
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "retry_policy": null
+    }
+    
+  shared_rules.json: |-
+    {
+      "shared_rules_key": "shared-rules-data-internal",
+      "name": "data-internal",
+      "zone_key": "zone-default-zone",
+      "default": {
+        "light": [
+          {
+            "constraint_key": "",
+            "cluster_key": "cluster-data-internal",
+            "metadata": null,
+            "properties": null,
+            "response_data": {},
+            "weight": 1
+          }
+        ],
+        "dark": null,
+        "tap": null
+      },
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "properties": null,
+      "retry_policy": null
+    }
+    
+...
+---
+# Source: greymatter/charts/gm-control-api/templates/configmaps.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: edge-slo-mesh-config
   namespace: myproject
 data:
   cluster.json: |-
     {
       "zone_key": "zone-default-zone",
-      "cluster_key": "edge-to-dashboard-cluster",
-      "name": "dashboard",
+      "cluster_key": "edge-to-slo-cluster",
+      "name": "slo",
       "instances": [],
       "circuit_breakers": null,
       "outlier_detection": null,
@@ -8628,13 +9454,13 @@ data:
     
   route-1.json: |-
     {
-      "route_key": "edge-dashboard-route",
+      "route_key": "edge-slo-route",
       "domain_key": "edge",
       "zone_key": "zone-default-zone",
-      "path": "/services/dashboard/latest/",
+      "path": "/services/slo/latest/",
       "prefix_rewrite": "/",
       "redirects": null,
-      "shared_rules_key": "edge-dashboard-shared-rules",
+      "shared_rules_key": "edge-slo-shared-rules",
       "rules": null,
       "response_data": {},
       "cohort_seed": null,
@@ -8643,13 +9469,13 @@ data:
     
   route-2.json: |-
     {
-      "route_key": "edge-dashboard-route-slash",
+      "route_key": "edge-slo-route-slash",
       "domain_key": "edge",
       "zone_key": "zone-default-zone",
-      "path": "/services/dashboard/latest",
-      "prefix_rewrite": "/services/dashboard/latest/",
+      "path": "/services/slo/latest",
+      "prefix_rewrite": "/services/slo/latest/",
       "redirects": null,
-      "shared_rules_key": "edge-dashboard-shared-rules",
+      "shared_rules_key": "edge-slo-shared-rules",
       "rules": null,
       "response_data": {},
       "cohort_seed": null,
@@ -8659,13 +9485,13 @@ data:
   shared_rules.json: |-
     {
       "zone_key": "zone-default-zone",
-      "shared_rules_key": "edge-dashboard-shared-rules",
-      "name": "dashboard",
+      "shared_rules_key": "edge-slo-shared-rules",
+      "name": "slo",
       "default": {
         "light": [
           {
             "constraint_key": "",
-            "cluster_key": "edge-to-dashboard-cluster",
+            "cluster_key": "edge-to-slo-cluster",
             "metadata": null,
             "properties": null,
             "response_data": {},
@@ -8913,324 +9739,14 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: service-data-mesh-config
-  namespace: myproject
-data:
-  cluster.json: |-
-    {
-      "cluster_key": "cluster-data",
-      "zone_key": "zone-default-zone",
-      "name": "service",
-      "instances": [
-        {
-            "host": "0.0.0.0",
-            "port": 8181
-        }
-      ],
-      "require_tls": true,
-      "ssl_config": {
-          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
-          "protocols": [
-            "SSLv3",
-            "SSLv2",
-            "TLSv1",
-            "TLSv1.1",
-            "TLSv1.2"
-          ],
-        "require_client_certs": true,
-        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
-        "cert_key_pairs": [
-          {
-            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
-            "key_path": "/etc/proxy/tls/sidecar/server.key"
-          }
-        ]
-      },
-      "circuit_breakers": null,
-      "outlier_detection": null,
-      "health_checks": []
-    }
-  domain.json: |-
-    {
-      "domain_key": "domain-data",
-      "zone_key": "zone-default-zone",
-      "name": "*",
-      "port": 8080,
-      "redirects": null,
-      "gzip_enabled": false,
-      "cors_config": null,
-      "aliases": null,
-      "ssl_config": {
-          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
-          "protocols": [
-            "SSLv3",
-            "SSLv2",
-            "TLSv1",
-            "TLSv1.1",
-            "TLSv1.2"
-          ],
-        "require_client_certs": true,
-        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
-        "cert_key_pairs": [
-          {
-            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
-            "key_path": "/etc/proxy/tls/sidecar/server.key"
-          }
-        ]
-      },
-      "force_https": true
-    }
-    
-  listener.json: |-
-    {
-      "listener_key": "listener-data",
-      "zone_key": "zone-default-zone",
-      "name": "data",
-      "ip": "0.0.0.0",
-      "port": 8080,
-      "protocol": "http_auto",
-      "domain_keys": ["domain-data"],
-      "tracing_config": null
-    }
-    
-  proxy.json: |-
-    {
-      "proxy_key": "proxy-data",
-      "zone_key": "zone-default-zone",
-      "name": "data",
-      "domain_keys": [
-        "domain-data"
-      ],
-      "listener_keys": [
-          "listener-data"
-      ],
-      "listeners": null,
-      "active_proxy_filters": [
-        "gm.metrics" 
-      ],
-      "proxy_filters": {
-        "gm_metrics": {
-          "metrics_port": 8081,
-          "metrics_host": "0.0.0.0",
-          "metrics_dashboard_uri_path": "/metrics",
-          "metrics_prometheus_uri_path": "/prometheus",
-          "prometheus_system_metrics_interval_seconds": 15,
-          "metrics_ring_buffer_size": 4096,
-          "metrics_key_function": "depth",
-          "metrics_key_depth": "1"
-        }
-      }
-    }
-  route.json: |-
-    {
-      "route_key": "route-data",
-      "domain_key": "domain-data",
-      "zone_key": "zone-default-zone",
-      "path": "/",
-      "prefix_rewrite": null,
-      "redirects": null,
-      "shared_rules_key": "shared-rules-data",
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "retry_policy": null
-    }
-    
-  shared_rules.json: |-
-    {
-      "shared_rules_key": "shared-rules-data",
-      "name": "data",
-      "zone_key": "zone-default-zone",
-      "default": {
-        "light": [
-          {
-            "constraint_key": "",
-            "cluster_key": "cluster-data",
-            "metadata": null,
-            "properties": null,
-            "response_data": {},
-            "weight": 1
-          }
-        ],
-        "dark": null,
-        "tap": null
-      },
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "properties": null,
-      "retry_policy": null
-    }
-    
-...
----
-# Source: greymatter/charts/gm-control-api/templates/configmaps.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: service-internal-jwt-security-mesh-config
-  namespace: myproject
-data:
-  cluster.json: |-
-    {
-      "cluster_key": "cluster-internal-jwt-security",
-      "zone_key": "zone-default-zone",
-      "name": "service",
-      "instances": [
-        {
-            "host": "0.0.0.0",
-            "port": 3000
-        }
-      ],
-      "require_tls": true,
-      "ssl_config": {
-          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
-          "protocols": [
-            "SSLv3",
-            "SSLv2",
-            "TLSv1",
-            "TLSv1.1",
-            "TLSv1.2"
-          ],
-        "require_client_certs": true,
-        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
-        "cert_key_pairs": [
-          {
-            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
-            "key_path": "/etc/proxy/tls/sidecar/server.key"
-          }
-        ]
-      },
-      "circuit_breakers": null,
-      "outlier_detection": null,
-      "health_checks": []
-    }
-  domain.json: |-
-    {
-      "domain_key": "domain-internal-jwt-security",
-      "zone_key": "zone-default-zone",
-      "name": "*",
-      "port": 8080,
-      "redirects": null,
-      "gzip_enabled": false,
-      "cors_config": null,
-      "aliases": null,
-      "ssl_config": {
-          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
-          "protocols": [
-            "SSLv3",
-            "SSLv2",
-            "TLSv1",
-            "TLSv1.1",
-            "TLSv1.2"
-          ],
-        "require_client_certs": true,
-        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
-        "cert_key_pairs": [
-          {
-            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
-            "key_path": "/etc/proxy/tls/sidecar/server.key"
-          }
-        ]
-      },
-      "force_https": true
-    }
-    
-  listener.json: |-
-    {
-      "listener_key": "listener-internal-jwt-security",
-      "zone_key": "zone-default-zone",
-      "name": "internal-jwt-security",
-      "ip": "0.0.0.0",
-      "port": 8080,
-      "protocol": "http_auto",
-      "domain_keys": ["domain-internal-jwt-security"],
-      "tracing_config": null
-    }
-    
-  proxy.json: |-
-    {
-      "proxy_key": "proxy-internal-jwt-security",
-      "zone_key": "zone-default-zone",
-      "name": "internal-jwt-security",
-      "domain_keys": [
-        "domain-internal-jwt-security"
-      ],
-      "listener_keys": [
-          "listener-internal-jwt-security"
-      ],
-      "listeners": null,
-      "active_proxy_filters": [
-        "gm.metrics" 
-      ],
-      "proxy_filters": {
-        "gm_metrics": {
-          "metrics_port": 8081,
-          "metrics_host": "0.0.0.0",
-          "metrics_dashboard_uri_path": "/metrics",
-          "metrics_prometheus_uri_path": "/prometheus",
-          "prometheus_system_metrics_interval_seconds": 15,
-          "metrics_ring_buffer_size": 4096,
-          "metrics_key_function": "depth",
-          "metrics_key_depth": "1"
-        }
-      }
-    }
-  route.json: |-
-    {
-      "route_key": "route-internal-jwt-security",
-      "domain_key": "domain-internal-jwt-security",
-      "zone_key": "zone-default-zone",
-      "path": "/",
-      "prefix_rewrite": null,
-      "redirects": null,
-      "shared_rules_key": "shared-rules-internal-jwt-security",
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "retry_policy": null
-    }
-    
-  shared_rules.json: |-
-    {
-      "shared_rules_key": "shared-rules-internal-jwt-security",
-      "name": "internal-jwt-security",
-      "zone_key": "zone-default-zone",
-      "default": {
-        "light": [
-          {
-            "constraint_key": "",
-            "cluster_key": "cluster-internal-jwt-security",
-            "metadata": null,
-            "properties": null,
-            "response_data": {},
-            "weight": 1
-          }
-        ],
-        "dark": null,
-        "tap": null
-      },
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "properties": null,
-      "retry_policy": null
-    }
-    
-...
----
-# Source: greymatter/charts/gm-control-api/templates/configmaps.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: edge-internal-jwt-security-mesh-config
+  name: edge-data-internal-mesh-config
   namespace: myproject
 data:
   cluster.json: |-
     {
       "zone_key": "zone-default-zone",
-      "cluster_key": "edge-to-internal-jwt-security-cluster",
-      "name": "internal-jwt-security",
+      "cluster_key": "edge-to-data-internal-cluster",
+      "name": "data-internal",
       "instances": [],
       "circuit_breakers": null,
       "outlier_detection": null,
@@ -9258,13 +9774,13 @@ data:
     
   route-1.json: |-
     {
-      "route_key": "edge-internal-jwt-security-route",
+      "route_key": "edge-data-internal-route",
       "domain_key": "edge",
       "zone_key": "zone-default-zone",
-      "path": "/services/internal-jwt-security/latest/",
+      "path": "/services/data-internal/latest/",
       "prefix_rewrite": "/",
       "redirects": null,
-      "shared_rules_key": "edge-internal-jwt-security-shared-rules",
+      "shared_rules_key": "edge-data-internal-shared-rules",
       "rules": null,
       "response_data": {},
       "cohort_seed": null,
@@ -9273,13 +9789,13 @@ data:
     
   route-2.json: |-
     {
-      "route_key": "edge-internal-jwt-security-route-slash",
+      "route_key": "edge-data-internal-route-slash",
       "domain_key": "edge",
       "zone_key": "zone-default-zone",
-      "path": "/services/internal-jwt-security/latest",
-      "prefix_rewrite": "/services/internal-jwt-security/latest/",
+      "path": "/services/data-internal/latest",
+      "prefix_rewrite": "/services/data-internal/latest/",
       "redirects": null,
-      "shared_rules_key": "edge-internal-jwt-security-shared-rules",
+      "shared_rules_key": "edge-data-internal-shared-rules",
       "rules": null,
       "response_data": {},
       "cohort_seed": null,
@@ -9289,13 +9805,13 @@ data:
   shared_rules.json: |-
     {
       "zone_key": "zone-default-zone",
-      "shared_rules_key": "edge-internal-jwt-security-shared-rules",
-      "name": "internal-jwt-security",
+      "shared_rules_key": "edge-data-internal-shared-rules",
+      "name": "data-internal",
       "default": {
         "light": [
           {
             "constraint_key": "",
-            "cluster_key": "edge-to-internal-jwt-security-cluster",
+            "cluster_key": "edge-to-data-internal-cluster",
             "metadata": null,
             "properties": null,
             "response_data": {},
@@ -9318,14 +9834,14 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: edge-jwt-security-mesh-config
+  name: edge-catalog-mesh-config
   namespace: myproject
 data:
   cluster.json: |-
     {
       "zone_key": "zone-default-zone",
-      "cluster_key": "edge-to-jwt-security-cluster",
-      "name": "jwt-security",
+      "cluster_key": "edge-to-catalog-cluster",
+      "name": "catalog",
       "instances": [],
       "circuit_breakers": null,
       "outlier_detection": null,
@@ -9353,13 +9869,13 @@ data:
     
   route-1.json: |-
     {
-      "route_key": "edge-jwt-security-route",
+      "route_key": "edge-catalog-route",
       "domain_key": "edge",
       "zone_key": "zone-default-zone",
-      "path": "/services/jwt-security/latest/",
+      "path": "/services/catalog/latest/",
       "prefix_rewrite": "/",
       "redirects": null,
-      "shared_rules_key": "edge-jwt-security-shared-rules",
+      "shared_rules_key": "edge-catalog-shared-rules",
       "rules": null,
       "response_data": {},
       "cohort_seed": null,
@@ -9368,13 +9884,13 @@ data:
     
   route-2.json: |-
     {
-      "route_key": "edge-jwt-security-route-slash",
+      "route_key": "edge-catalog-route-slash",
       "domain_key": "edge",
       "zone_key": "zone-default-zone",
-      "path": "/services/jwt-security/latest",
-      "prefix_rewrite": "/services/jwt-security/latest/",
+      "path": "/services/catalog/latest",
+      "prefix_rewrite": "/services/catalog/latest/",
       "redirects": null,
-      "shared_rules_key": "edge-jwt-security-shared-rules",
+      "shared_rules_key": "edge-catalog-shared-rules",
       "rules": null,
       "response_data": {},
       "cohort_seed": null,
@@ -9384,459 +9900,13 @@ data:
   shared_rules.json: |-
     {
       "zone_key": "zone-default-zone",
-      "shared_rules_key": "edge-jwt-security-shared-rules",
-      "name": "jwt-security",
-      "default": {
-        "light": [
-          {
-            "constraint_key": "",
-            "cluster_key": "edge-to-jwt-security-cluster",
-            "metadata": null,
-            "properties": null,
-            "response_data": {},
-            "weight": 1
-          }
-        ],
-        "dark": null,
-        "tap": null
-      },
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "properties": null,
-      "retry_policy": null
-    }
-    
-...
----
-# Source: greymatter/charts/gm-control-api/templates/configmaps.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: service-prometheus-mesh-config
-  namespace: myproject
-data:
-  cluster.json: |-
-    {
-      "cluster_key": "cluster-prometheus",
-      "zone_key": "zone-default-zone",
-      "name": "service",
-      "instances": [
-        {
-            "host": "0.0.0.0",
-            "port": 9090
-        }
-      ],
-      "circuit_breakers": null,
-      "outlier_detection": null,
-      "health_checks": []
-    }
-  domain.json: |-
-    {
-      "domain_key": "domain-prometheus",
-      "zone_key": "zone-default-zone",
-      "name": "*",
-      "port": 8080,
-      "redirects": null,
-      "gzip_enabled": false,
-      "cors_config": null,
-      "aliases": null,
-      "ssl_config": {
-          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
-          "protocols": [
-            "SSLv3",
-            "SSLv2",
-            "TLSv1",
-            "TLSv1.1",
-            "TLSv1.2"
-          ],
-        "require_client_certs": true,
-        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
-        "cert_key_pairs": [
-          {
-            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
-            "key_path": "/etc/proxy/tls/sidecar/server.key"
-          }
-        ]
-      },
-      "force_https": true
-    }
-    
-  listener.json: |-
-    {
-      "listener_key": "listener-prometheus",
-      "zone_key": "zone-default-zone",
-      "name": "prometheus",
-      "ip": "0.0.0.0",
-      "port": 8080,
-      "protocol": "http_auto",
-      "domain_keys": ["domain-prometheus"],
-      "tracing_config": null
-    }
-    
-  proxy.json: |-
-    {
-      "proxy_key": "proxy-prometheus",
-      "zone_key": "zone-default-zone",
-      "name": "prometheus",
-      "domain_keys": [
-        "domain-prometheus"
-      ],
-      "listener_keys": [
-          "listener-prometheus"
-      ],
-      "listeners": null,
-      "active_proxy_filters": [
-        "gm.metrics" 
-      ],
-      "proxy_filters": {
-        "gm_metrics": {
-          "metrics_port": 8081,
-          "metrics_host": "0.0.0.0",
-          "metrics_dashboard_uri_path": "/metrics",
-          "metrics_prometheus_uri_path": "/prometheus",
-          "prometheus_system_metrics_interval_seconds": 15,
-          "metrics_ring_buffer_size": 4096,
-          "metrics_key_function": "depth",
-          "metrics_key_depth": "1"
-        }
-      }
-    }
-  route.json: |-
-    {
-      "route_key": "route-prometheus",
-      "domain_key": "domain-prometheus",
-      "zone_key": "zone-default-zone",
-      "path": "/",
-      "prefix_rewrite": null,
-      "redirects": null,
-      "shared_rules_key": "shared-rules-prometheus",
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "retry_policy": null
-    }
-    
-  shared_rules.json: |-
-    {
-      "shared_rules_key": "shared-rules-prometheus",
-      "name": "prometheus",
-      "zone_key": "zone-default-zone",
-      "default": {
-        "light": [
-          {
-            "constraint_key": "",
-            "cluster_key": "cluster-prometheus",
-            "metadata": null,
-            "properties": null,
-            "response_data": {},
-            "weight": 1
-          }
-        ],
-        "dark": null,
-        "tap": null
-      },
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "properties": null,
-      "retry_policy": null
-    }
-    
-...
----
-# Source: greymatter/charts/gm-control-api/templates/configmaps.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: service-catalog-mesh-config
-  namespace: myproject
-data:
-  cluster.json: |-
-    {
-      "cluster_key": "cluster-catalog",
-      "zone_key": "zone-default-zone",
-      "name": "service",
-      "instances": [
-        {
-            "host": "0.0.0.0",
-            "port": 9080
-        }
-      ],
-      "require_tls": true,
-      "ssl_config": {
-          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
-          "protocols": [
-            "SSLv3",
-            "SSLv2",
-            "TLSv1",
-            "TLSv1.1",
-            "TLSv1.2"
-          ],
-        "require_client_certs": true,
-        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
-        "cert_key_pairs": [
-          {
-            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
-            "key_path": "/etc/proxy/tls/sidecar/server.key"
-          }
-        ]
-      },
-      "circuit_breakers": null,
-      "outlier_detection": null,
-      "health_checks": []
-    }
-  domain.json: |-
-    {
-      "domain_key": "domain-catalog",
-      "zone_key": "zone-default-zone",
-      "name": "*",
-      "port": 8080,
-      "redirects": null,
-      "gzip_enabled": false,
-      "cors_config": null,
-      "aliases": null,
-      "ssl_config": {
-          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
-          "protocols": [
-            "SSLv3",
-            "SSLv2",
-            "TLSv1",
-            "TLSv1.1",
-            "TLSv1.2"
-          ],
-        "require_client_certs": true,
-        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
-        "cert_key_pairs": [
-          {
-            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
-            "key_path": "/etc/proxy/tls/sidecar/server.key"
-          }
-        ]
-      },
-      "force_https": true
-    }
-    
-  listener.json: |-
-    {
-      "listener_key": "listener-catalog",
-      "zone_key": "zone-default-zone",
+      "shared_rules_key": "edge-catalog-shared-rules",
       "name": "catalog",
-      "ip": "0.0.0.0",
-      "port": 8080,
-      "protocol": "http_auto",
-      "domain_keys": ["domain-catalog"],
-      "tracing_config": null
-    }
-    
-  proxy.json: |-
-    {
-      "proxy_key": "proxy-catalog",
-      "zone_key": "zone-default-zone",
-      "name": "catalog",
-      "domain_keys": [
-        "domain-catalog"
-      ],
-      "listener_keys": [
-          "listener-catalog"
-      ],
-      "listeners": null,
-      "active_proxy_filters": [
-        "gm.metrics" 
-      ],
-      "proxy_filters": {
-        "gm_metrics": {
-          "metrics_port": 8081,
-          "metrics_host": "0.0.0.0",
-          "metrics_dashboard_uri_path": "/metrics",
-          "metrics_prometheus_uri_path": "/prometheus",
-          "prometheus_system_metrics_interval_seconds": 15,
-          "metrics_ring_buffer_size": 4096,
-          "metrics_key_function": "depth",
-          "metrics_key_depth": "1"
-        }
-      }
-    }
-  route.json: |-
-    {
-      "route_key": "route-catalog",
-      "domain_key": "domain-catalog",
-      "zone_key": "zone-default-zone",
-      "path": "/",
-      "prefix_rewrite": null,
-      "redirects": null,
-      "shared_rules_key": "shared-rules-catalog",
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "retry_policy": null
-    }
-    
-  shared_rules.json: |-
-    {
-      "shared_rules_key": "shared-rules-catalog",
-      "name": "catalog",
-      "zone_key": "zone-default-zone",
       "default": {
         "light": [
           {
             "constraint_key": "",
-            "cluster_key": "cluster-catalog",
-            "metadata": null,
-            "properties": null,
-            "response_data": {},
-            "weight": 1
-          }
-        ],
-        "dark": null,
-        "tap": null
-      },
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "properties": null,
-      "retry_policy": null
-    }
-    
-...
----
-# Source: greymatter/charts/gm-control-api/templates/configmaps.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: service-data-internal-mesh-config
-  namespace: myproject
-data:
-  cluster.json: |-
-    {
-      "cluster_key": "cluster-data-internal",
-      "zone_key": "zone-default-zone",
-      "name": "service",
-      "instances": [
-        {
-            "host": "0.0.0.0",
-            "port": 8181
-        }
-      ],
-      "require_tls": true,
-      "ssl_config": {
-          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
-          "protocols": [
-            "SSLv3",
-            "SSLv2",
-            "TLSv1",
-            "TLSv1.1",
-            "TLSv1.2"
-          ],
-        "require_client_certs": true,
-        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
-        "cert_key_pairs": [
-          {
-            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
-            "key_path": "/etc/proxy/tls/sidecar/server.key"
-          }
-        ]
-      },
-      "circuit_breakers": null,
-      "outlier_detection": null,
-      "health_checks": []
-    }
-  domain.json: |-
-    {
-      "domain_key": "domain-data-internal",
-      "zone_key": "zone-default-zone",
-      "name": "*",
-      "port": 8080,
-      "redirects": null,
-      "gzip_enabled": false,
-      "cors_config": null,
-      "aliases": null,
-      "ssl_config": {
-          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
-          "protocols": [
-            "SSLv3",
-            "SSLv2",
-            "TLSv1",
-            "TLSv1.1",
-            "TLSv1.2"
-          ],
-        "require_client_certs": true,
-        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
-        "cert_key_pairs": [
-          {
-            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
-            "key_path": "/etc/proxy/tls/sidecar/server.key"
-          }
-        ]
-      },
-      "force_https": true
-    }
-    
-  listener.json: |-
-    {
-      "listener_key": "listener-data-internal",
-      "zone_key": "zone-default-zone",
-      "name": "data-internal",
-      "ip": "0.0.0.0",
-      "port": 8080,
-      "protocol": "http_auto",
-      "domain_keys": ["domain-data-internal"],
-      "tracing_config": null
-    }
-    
-  proxy.json: |-
-    {
-      "proxy_key": "proxy-data-internal",
-      "zone_key": "zone-default-zone",
-      "name": "data-internal",
-      "domain_keys": [
-        "domain-data-internal"
-      ],
-      "listener_keys": [
-          "listener-data-internal"
-      ],
-      "listeners": null,
-      "active_proxy_filters": [
-        "gm.metrics" 
-      ],
-      "proxy_filters": {
-        "gm_metrics": {
-          "metrics_port": 8081,
-          "metrics_host": "0.0.0.0",
-          "metrics_dashboard_uri_path": "/metrics",
-          "metrics_prometheus_uri_path": "/prometheus",
-          "prometheus_system_metrics_interval_seconds": 15,
-          "metrics_ring_buffer_size": 4096,
-          "metrics_key_function": "depth",
-          "metrics_key_depth": "1"
-        }
-      }
-    }
-  route.json: |-
-    {
-      "route_key": "route-data-internal",
-      "domain_key": "domain-data-internal",
-      "zone_key": "zone-default-zone",
-      "path": "/",
-      "prefix_rewrite": null,
-      "redirects": null,
-      "shared_rules_key": "shared-rules-data-internal",
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "retry_policy": null
-    }
-    
-  shared_rules.json: |-
-    {
-      "shared_rules_key": "shared-rules-data-internal",
-      "name": "data-internal",
-      "zone_key": "zone-default-zone",
-      "default": {
-        "light": [
-          {
-            "constraint_key": "",
-            "cluster_key": "cluster-data-internal",
+            "cluster_key": "edge-to-catalog-cluster",
             "metadata": null,
             "properties": null,
             "response_data": {},
@@ -10014,27 +10084,46 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: service-slo-mesh-config
+  name: service-internal-jwt-security-mesh-config
   namespace: myproject
 data:
   cluster.json: |-
     {
-      "cluster_key": "cluster-slo",
+      "cluster_key": "cluster-internal-jwt-security",
       "zone_key": "zone-default-zone",
       "name": "service",
       "instances": [
         {
             "host": "0.0.0.0",
-            "port": 1337
+            "port": 3000
         }
       ],
+      "require_tls": true,
+      "ssl_config": {
+          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+          "protocols": [
+            "SSLv3",
+            "SSLv2",
+            "TLSv1",
+            "TLSv1.1",
+            "TLSv1.2"
+          ],
+        "require_client_certs": true,
+        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
+        "cert_key_pairs": [
+          {
+            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
+            "key_path": "/etc/proxy/tls/sidecar/server.key"
+          }
+        ]
+      },
       "circuit_breakers": null,
       "outlier_detection": null,
       "health_checks": []
     }
   domain.json: |-
     {
-      "domain_key": "domain-slo",
+      "domain_key": "domain-internal-jwt-security",
       "zone_key": "zone-default-zone",
       "name": "*",
       "port": 8080,
@@ -10065,26 +10154,26 @@ data:
     
   listener.json: |-
     {
-      "listener_key": "listener-slo",
+      "listener_key": "listener-internal-jwt-security",
       "zone_key": "zone-default-zone",
-      "name": "slo",
+      "name": "internal-jwt-security",
       "ip": "0.0.0.0",
       "port": 8080,
       "protocol": "http_auto",
-      "domain_keys": ["domain-slo"],
+      "domain_keys": ["domain-internal-jwt-security"],
       "tracing_config": null
     }
     
   proxy.json: |-
     {
-      "proxy_key": "proxy-slo",
+      "proxy_key": "proxy-internal-jwt-security",
       "zone_key": "zone-default-zone",
-      "name": "slo",
+      "name": "internal-jwt-security",
       "domain_keys": [
-        "domain-slo"
+        "domain-internal-jwt-security"
       ],
       "listener_keys": [
-          "listener-slo"
+          "listener-internal-jwt-security"
       ],
       "listeners": null,
       "active_proxy_filters": [
@@ -10105,13 +10194,13 @@ data:
     }
   route.json: |-
     {
-      "route_key": "route-slo",
-      "domain_key": "domain-slo",
+      "route_key": "route-internal-jwt-security",
+      "domain_key": "domain-internal-jwt-security",
       "zone_key": "zone-default-zone",
       "path": "/",
       "prefix_rewrite": null,
       "redirects": null,
-      "shared_rules_key": "shared-rules-slo",
+      "shared_rules_key": "shared-rules-internal-jwt-security",
       "rules": null,
       "response_data": {},
       "cohort_seed": null,
@@ -10120,14 +10209,14 @@ data:
     
   shared_rules.json: |-
     {
-      "shared_rules_key": "shared-rules-slo",
-      "name": "slo",
+      "shared_rules_key": "shared-rules-internal-jwt-security",
+      "name": "internal-jwt-security",
       "zone_key": "zone-default-zone",
       "default": {
         "light": [
           {
             "constraint_key": "",
-            "cluster_key": "cluster-slo",
+            "cluster_key": "cluster-internal-jwt-security",
             "metadata": null,
             "properties": null,
             "response_data": {},
@@ -10150,150 +10239,14 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: service-dashboard-mesh-config
-  namespace: myproject
-data:
-  cluster.json: |-
-    {
-      "cluster_key": "cluster-dashboard",
-      "zone_key": "zone-default-zone",
-      "name": "service",
-      "instances": [
-        {
-            "host": "0.0.0.0",
-            "port": 1337
-        }
-      ],
-      "circuit_breakers": null,
-      "outlier_detection": null,
-      "health_checks": []
-    }
-  domain.json: |-
-    {
-      "domain_key": "domain-dashboard",
-      "zone_key": "zone-default-zone",
-      "name": "*",
-      "port": 8080,
-      "redirects": null,
-      "gzip_enabled": false,
-      "cors_config": null,
-      "aliases": null,
-      "ssl_config": {
-          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
-          "protocols": [
-            "SSLv3",
-            "SSLv2",
-            "TLSv1",
-            "TLSv1.1",
-            "TLSv1.2"
-          ],
-        "require_client_certs": true,
-        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
-        "cert_key_pairs": [
-          {
-            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
-            "key_path": "/etc/proxy/tls/sidecar/server.key"
-          }
-        ]
-      },
-      "force_https": true
-    }
-    
-  listener.json: |-
-    {
-      "listener_key": "listener-dashboard",
-      "zone_key": "zone-default-zone",
-      "name": "dashboard",
-      "ip": "0.0.0.0",
-      "port": 8080,
-      "protocol": "http_auto",
-      "domain_keys": ["domain-dashboard"],
-      "tracing_config": null
-    }
-    
-  proxy.json: |-
-    {
-      "proxy_key": "proxy-dashboard",
-      "zone_key": "zone-default-zone",
-      "name": "dashboard",
-      "domain_keys": [
-        "domain-dashboard"
-      ],
-      "listener_keys": [
-          "listener-dashboard"
-      ],
-      "listeners": null,
-      "active_proxy_filters": [
-        "gm.metrics" 
-      ],
-      "proxy_filters": {
-        "gm_metrics": {
-          "metrics_port": 8081,
-          "metrics_host": "0.0.0.0",
-          "metrics_dashboard_uri_path": "/metrics",
-          "metrics_prometheus_uri_path": "/prometheus",
-          "prometheus_system_metrics_interval_seconds": 15,
-          "metrics_ring_buffer_size": 4096,
-          "metrics_key_function": "depth",
-          "metrics_key_depth": "1"
-        }
-      }
-    }
-  route.json: |-
-    {
-      "route_key": "route-dashboard",
-      "domain_key": "domain-dashboard",
-      "zone_key": "zone-default-zone",
-      "path": "/",
-      "prefix_rewrite": null,
-      "redirects": null,
-      "shared_rules_key": "shared-rules-dashboard",
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "retry_policy": null
-    }
-    
-  shared_rules.json: |-
-    {
-      "shared_rules_key": "shared-rules-dashboard",
-      "name": "dashboard",
-      "zone_key": "zone-default-zone",
-      "default": {
-        "light": [
-          {
-            "constraint_key": "",
-            "cluster_key": "cluster-dashboard",
-            "metadata": null,
-            "properties": null,
-            "response_data": {},
-            "weight": 1
-          }
-        ],
-        "dark": null,
-        "tap": null
-      },
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "properties": null,
-      "retry_policy": null
-    }
-    
-...
----
-# Source: greymatter/charts/gm-control-api/templates/configmaps.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: edge-data-internal-mesh-config
+  name: edge-prometheus-mesh-config
   namespace: myproject
 data:
   cluster.json: |-
     {
       "zone_key": "zone-default-zone",
-      "cluster_key": "edge-to-data-internal-cluster",
-      "name": "data-internal",
+      "cluster_key": "edge-to-prometheus-cluster",
+      "name": "prometheus",
       "instances": [],
       "circuit_breakers": null,
       "outlier_detection": null,
@@ -10321,13 +10274,13 @@ data:
     
   route-1.json: |-
     {
-      "route_key": "edge-data-internal-route",
+      "route_key": "edge-prometheus-route",
       "domain_key": "edge",
       "zone_key": "zone-default-zone",
-      "path": "/services/data-internal/latest/",
+      "path": "/services/prometheus/latest/",
       "prefix_rewrite": "/",
       "redirects": null,
-      "shared_rules_key": "edge-data-internal-shared-rules",
+      "shared_rules_key": "edge-prometheus-shared-rules",
       "rules": null,
       "response_data": {},
       "cohort_seed": null,
@@ -10336,13 +10289,13 @@ data:
     
   route-2.json: |-
     {
-      "route_key": "edge-data-internal-route-slash",
+      "route_key": "edge-prometheus-route-slash",
       "domain_key": "edge",
       "zone_key": "zone-default-zone",
-      "path": "/services/data-internal/latest",
-      "prefix_rewrite": "/services/data-internal/latest/",
+      "path": "/services/prometheus/latest",
+      "prefix_rewrite": "/services/prometheus/latest/",
       "redirects": null,
-      "shared_rules_key": "edge-data-internal-shared-rules",
+      "shared_rules_key": "edge-prometheus-shared-rules",
       "rules": null,
       "response_data": {},
       "cohort_seed": null,
@@ -10352,13 +10305,725 @@ data:
   shared_rules.json: |-
     {
       "zone_key": "zone-default-zone",
-      "shared_rules_key": "edge-data-internal-shared-rules",
-      "name": "data-internal",
+      "shared_rules_key": "edge-prometheus-shared-rules",
+      "name": "prometheus",
       "default": {
         "light": [
           {
             "constraint_key": "",
-            "cluster_key": "edge-to-data-internal-cluster",
+            "cluster_key": "edge-to-prometheus-cluster",
+            "metadata": null,
+            "properties": null,
+            "response_data": {},
+            "weight": 1
+          }
+        ],
+        "dark": null,
+        "tap": null
+      },
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "properties": null,
+      "retry_policy": null
+    }
+    
+...
+---
+# Source: greymatter/charts/gm-control-api/templates/configmaps.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-payment-mesh-config
+  namespace: myproject
+data:
+  cluster.json: |-
+    {
+      "cluster_key": "cluster-payment",
+      "zone_key": "zone-default-zone",
+      "name": "service",
+      "instances": [
+        {
+            "host": "0.0.0.0",
+            "port": __PAYMENT_PORT__
+        }
+      ],
+      "circuit_breakers": null,
+      "outlier_detection": null,
+      "health_checks": []
+    }
+  domain.json: |-
+    {
+      "domain_key": "domain-payment",
+      "zone_key": "zone-default-zone",
+      "name": "*",
+      "port": 8080,
+      "redirects": null,
+      "gzip_enabled": false,
+      "cors_config": null,
+      "aliases": null,
+      "ssl_config": {
+          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+          "protocols": [
+            "SSLv3",
+            "SSLv2",
+            "TLSv1",
+            "TLSv1.1",
+            "TLSv1.2"
+          ],
+        "require_client_certs": true,
+        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
+        "cert_key_pairs": [
+          {
+            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
+            "key_path": "/etc/proxy/tls/sidecar/server.key"
+          }
+        ]
+      },
+      "force_https": true
+    }
+    
+  listener.json: |-
+    {
+      "listener_key": "listener-payment",
+      "zone_key": "zone-default-zone",
+      "name": "payment",
+      "ip": "0.0.0.0",
+      "port": 8080,
+      "protocol": "http_auto",
+      "domain_keys": ["domain-payment"],
+      "tracing_config": null
+    }
+    
+  proxy.json: |-
+    {
+      "proxy_key": "proxy-payment",
+      "zone_key": "zone-default-zone",
+      "name": "payment",
+      "domain_keys": [
+        "domain-payment"
+      ],
+      "listener_keys": [
+          "listener-payment"
+      ],
+      "listeners": null,
+      "active_proxy_filters": [
+        "gm.metrics" 
+      ],
+      "proxy_filters": {
+        "gm_metrics": {
+          "metrics_port": 8081,
+          "metrics_host": "0.0.0.0",
+          "metrics_dashboard_uri_path": "/metrics",
+          "metrics_prometheus_uri_path": "/prometheus",
+          "prometheus_system_metrics_interval_seconds": 15,
+          "metrics_ring_buffer_size": 4096,
+          "metrics_key_function": "depth",
+          "metrics_key_depth": "1"
+        }
+      }
+    }
+  route.json: |-
+    {
+      "route_key": "route-payment",
+      "domain_key": "domain-payment",
+      "zone_key": "zone-default-zone",
+      "path": "/",
+      "prefix_rewrite": null,
+      "redirects": null,
+      "shared_rules_key": "shared-rules-payment",
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "retry_policy": null
+    }
+    
+  shared_rules.json: |-
+    {
+      "shared_rules_key": "shared-rules-payment",
+      "name": "payment",
+      "zone_key": "zone-default-zone",
+      "default": {
+        "light": [
+          {
+            "constraint_key": "",
+            "cluster_key": "cluster-payment",
+            "metadata": null,
+            "properties": null,
+            "response_data": {},
+            "weight": 1
+          }
+        ],
+        "dark": null,
+        "tap": null
+      },
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "properties": null,
+      "retry_policy": null
+    }
+    
+...
+---
+# Source: greymatter/charts/gm-control-api/templates/configmaps.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: edge-payment-mesh-config
+  namespace: myproject
+data:
+  cluster.json: |-
+    {
+      "zone_key": "zone-default-zone",
+      "cluster_key": "edge-to-payment-cluster",
+      "name": "payment",
+      "instances": [],
+      "circuit_breakers": null,
+      "outlier_detection": null,
+      "health_checks": [],
+      "require_tls": true,
+      "ssl_config": {
+        "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+        "protocols": [
+          "SSLv3",
+          "SSLv2",
+          "TLSv1",
+          "TLSv1.1",
+          "TLSv1.2"
+        ],
+        "require_client_certs": true,
+        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
+        "cert_key_pairs": [
+          {
+            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
+            "key_path": "/etc/proxy/tls/sidecar/server.key"
+          }
+        ]
+      }
+    }
+    
+  route-1.json: |-
+    {
+      "route_key": "edge-payment-route",
+      "domain_key": "edge",
+      "zone_key": "zone-default-zone",
+      "path": "/services/payment/latest/",
+      "prefix_rewrite": "/",
+      "redirects": null,
+      "shared_rules_key": "edge-payment-shared-rules",
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "retry_policy": null
+    }
+    
+  route-2.json: |-
+    {
+      "route_key": "edge-payment-route-slash",
+      "domain_key": "edge",
+      "zone_key": "zone-default-zone",
+      "path": "/services/payment/latest",
+      "prefix_rewrite": "/services/payment/latest/",
+      "redirects": null,
+      "shared_rules_key": "edge-payment-shared-rules",
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "retry_policy": null
+    }
+    
+  shared_rules.json: |-
+    {
+      "zone_key": "zone-default-zone",
+      "shared_rules_key": "edge-payment-shared-rules",
+      "name": "payment",
+      "default": {
+        "light": [
+          {
+            "constraint_key": "",
+            "cluster_key": "edge-to-payment-cluster",
+            "metadata": null,
+            "properties": null,
+            "response_data": {},
+            "weight": 1
+          }
+        ],
+        "dark": null,
+        "tap": null
+      },
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "properties": null,
+      "retry_policy": null
+    }
+    
+...
+---
+# Source: greymatter/charts/gm-control-api/templates/configmaps.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: edge-jwt-security-mesh-config
+  namespace: myproject
+data:
+  cluster.json: |-
+    {
+      "zone_key": "zone-default-zone",
+      "cluster_key": "edge-to-jwt-security-cluster",
+      "name": "jwt-security",
+      "instances": [],
+      "circuit_breakers": null,
+      "outlier_detection": null,
+      "health_checks": [],
+      "require_tls": true,
+      "ssl_config": {
+        "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+        "protocols": [
+          "SSLv3",
+          "SSLv2",
+          "TLSv1",
+          "TLSv1.1",
+          "TLSv1.2"
+        ],
+        "require_client_certs": true,
+        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
+        "cert_key_pairs": [
+          {
+            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
+            "key_path": "/etc/proxy/tls/sidecar/server.key"
+          }
+        ]
+      }
+    }
+    
+  route-1.json: |-
+    {
+      "route_key": "edge-jwt-security-route",
+      "domain_key": "edge",
+      "zone_key": "zone-default-zone",
+      "path": "/services/jwt-security/latest/",
+      "prefix_rewrite": "/",
+      "redirects": null,
+      "shared_rules_key": "edge-jwt-security-shared-rules",
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "retry_policy": null
+    }
+    
+  route-2.json: |-
+    {
+      "route_key": "edge-jwt-security-route-slash",
+      "domain_key": "edge",
+      "zone_key": "zone-default-zone",
+      "path": "/services/jwt-security/latest",
+      "prefix_rewrite": "/services/jwt-security/latest/",
+      "redirects": null,
+      "shared_rules_key": "edge-jwt-security-shared-rules",
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "retry_policy": null
+    }
+    
+  shared_rules.json: |-
+    {
+      "zone_key": "zone-default-zone",
+      "shared_rules_key": "edge-jwt-security-shared-rules",
+      "name": "jwt-security",
+      "default": {
+        "light": [
+          {
+            "constraint_key": "",
+            "cluster_key": "edge-to-jwt-security-cluster",
+            "metadata": null,
+            "properties": null,
+            "response_data": {},
+            "weight": 1
+          }
+        ],
+        "dark": null,
+        "tap": null
+      },
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "properties": null,
+      "retry_policy": null
+    }
+    
+...
+---
+# Source: greymatter/charts/gm-control-api/templates/configmaps.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-catalog-mesh-config
+  namespace: myproject
+data:
+  cluster.json: |-
+    {
+      "cluster_key": "cluster-catalog",
+      "zone_key": "zone-default-zone",
+      "name": "service",
+      "instances": [
+        {
+            "host": "0.0.0.0",
+            "port": 9080
+        }
+      ],
+      "require_tls": true,
+      "ssl_config": {
+          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+          "protocols": [
+            "SSLv3",
+            "SSLv2",
+            "TLSv1",
+            "TLSv1.1",
+            "TLSv1.2"
+          ],
+        "require_client_certs": true,
+        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
+        "cert_key_pairs": [
+          {
+            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
+            "key_path": "/etc/proxy/tls/sidecar/server.key"
+          }
+        ]
+      },
+      "circuit_breakers": null,
+      "outlier_detection": null,
+      "health_checks": []
+    }
+  domain.json: |-
+    {
+      "domain_key": "domain-catalog",
+      "zone_key": "zone-default-zone",
+      "name": "*",
+      "port": 8080,
+      "redirects": null,
+      "gzip_enabled": false,
+      "cors_config": null,
+      "aliases": null,
+      "ssl_config": {
+          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+          "protocols": [
+            "SSLv3",
+            "SSLv2",
+            "TLSv1",
+            "TLSv1.1",
+            "TLSv1.2"
+          ],
+        "require_client_certs": true,
+        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
+        "cert_key_pairs": [
+          {
+            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
+            "key_path": "/etc/proxy/tls/sidecar/server.key"
+          }
+        ]
+      },
+      "force_https": true
+    }
+    
+  listener.json: |-
+    {
+      "listener_key": "listener-catalog",
+      "zone_key": "zone-default-zone",
+      "name": "catalog",
+      "ip": "0.0.0.0",
+      "port": 8080,
+      "protocol": "http_auto",
+      "domain_keys": ["domain-catalog"],
+      "tracing_config": null
+    }
+    
+  proxy.json: |-
+    {
+      "proxy_key": "proxy-catalog",
+      "zone_key": "zone-default-zone",
+      "name": "catalog",
+      "domain_keys": [
+        "domain-catalog"
+      ],
+      "listener_keys": [
+          "listener-catalog"
+      ],
+      "listeners": null,
+      "active_proxy_filters": [
+        "gm.metrics" 
+      ],
+      "proxy_filters": {
+        "gm_metrics": {
+          "metrics_port": 8081,
+          "metrics_host": "0.0.0.0",
+          "metrics_dashboard_uri_path": "/metrics",
+          "metrics_prometheus_uri_path": "/prometheus",
+          "prometheus_system_metrics_interval_seconds": 15,
+          "metrics_ring_buffer_size": 4096,
+          "metrics_key_function": "depth",
+          "metrics_key_depth": "1"
+        }
+      }
+    }
+  route.json: |-
+    {
+      "route_key": "route-catalog",
+      "domain_key": "domain-catalog",
+      "zone_key": "zone-default-zone",
+      "path": "/",
+      "prefix_rewrite": null,
+      "redirects": null,
+      "shared_rules_key": "shared-rules-catalog",
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "retry_policy": null
+    }
+    
+  shared_rules.json: |-
+    {
+      "shared_rules_key": "shared-rules-catalog",
+      "name": "catalog",
+      "zone_key": "zone-default-zone",
+      "default": {
+        "light": [
+          {
+            "constraint_key": "",
+            "cluster_key": "cluster-catalog",
+            "metadata": null,
+            "properties": null,
+            "response_data": {},
+            "weight": 1
+          }
+        ],
+        "dark": null,
+        "tap": null
+      },
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "properties": null,
+      "retry_policy": null
+    }
+    
+...
+---
+# Source: greymatter/charts/gm-control-api/templates/configmaps.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: edge-data-mesh-config
+  namespace: myproject
+data:
+  cluster.json: |-
+    {
+      "zone_key": "zone-default-zone",
+      "cluster_key": "edge-to-data-cluster",
+      "name": "data",
+      "instances": [],
+      "circuit_breakers": null,
+      "outlier_detection": null,
+      "health_checks": [],
+      "require_tls": true,
+      "ssl_config": {
+        "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+        "protocols": [
+          "SSLv3",
+          "SSLv2",
+          "TLSv1",
+          "TLSv1.1",
+          "TLSv1.2"
+        ],
+        "require_client_certs": true,
+        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
+        "cert_key_pairs": [
+          {
+            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
+            "key_path": "/etc/proxy/tls/sidecar/server.key"
+          }
+        ]
+      }
+    }
+    
+  route-1.json: |-
+    {
+      "route_key": "edge-data-route",
+      "domain_key": "edge",
+      "zone_key": "zone-default-zone",
+      "path": "/services/data/latest/",
+      "prefix_rewrite": "/",
+      "redirects": null,
+      "shared_rules_key": "edge-data-shared-rules",
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "retry_policy": null
+    }
+    
+  route-2.json: |-
+    {
+      "route_key": "edge-data-route-slash",
+      "domain_key": "edge",
+      "zone_key": "zone-default-zone",
+      "path": "/services/data/latest",
+      "prefix_rewrite": "/services/data/latest/",
+      "redirects": null,
+      "shared_rules_key": "edge-data-shared-rules",
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "retry_policy": null
+    }
+    
+  shared_rules.json: |-
+    {
+      "zone_key": "zone-default-zone",
+      "shared_rules_key": "edge-data-shared-rules",
+      "name": "data",
+      "default": {
+        "light": [
+          {
+            "constraint_key": "",
+            "cluster_key": "edge-to-data-cluster",
+            "metadata": null,
+            "properties": null,
+            "response_data": {},
+            "weight": 1
+          }
+        ],
+        "dark": null,
+        "tap": null
+      },
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "properties": null,
+      "retry_policy": null
+    }
+    
+...
+---
+# Source: greymatter/charts/gm-control-api/templates/configmaps.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-prometheus-mesh-config
+  namespace: myproject
+data:
+  cluster.json: |-
+    {
+      "cluster_key": "cluster-prometheus",
+      "zone_key": "zone-default-zone",
+      "name": "service",
+      "instances": [
+        {
+            "host": "0.0.0.0",
+            "port": 9090
+        }
+      ],
+      "circuit_breakers": null,
+      "outlier_detection": null,
+      "health_checks": []
+    }
+  domain.json: |-
+    {
+      "domain_key": "domain-prometheus",
+      "zone_key": "zone-default-zone",
+      "name": "*",
+      "port": 8080,
+      "redirects": null,
+      "gzip_enabled": false,
+      "cors_config": null,
+      "aliases": null,
+      "ssl_config": {
+          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+          "protocols": [
+            "SSLv3",
+            "SSLv2",
+            "TLSv1",
+            "TLSv1.1",
+            "TLSv1.2"
+          ],
+        "require_client_certs": true,
+        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
+        "cert_key_pairs": [
+          {
+            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
+            "key_path": "/etc/proxy/tls/sidecar/server.key"
+          }
+        ]
+      },
+      "force_https": true
+    }
+    
+  listener.json: |-
+    {
+      "listener_key": "listener-prometheus",
+      "zone_key": "zone-default-zone",
+      "name": "prometheus",
+      "ip": "0.0.0.0",
+      "port": 8080,
+      "protocol": "http_auto",
+      "domain_keys": ["domain-prometheus"],
+      "tracing_config": null
+    }
+    
+  proxy.json: |-
+    {
+      "proxy_key": "proxy-prometheus",
+      "zone_key": "zone-default-zone",
+      "name": "prometheus",
+      "domain_keys": [
+        "domain-prometheus"
+      ],
+      "listener_keys": [
+          "listener-prometheus"
+      ],
+      "listeners": null,
+      "active_proxy_filters": [
+        "gm.metrics" 
+      ],
+      "proxy_filters": {
+        "gm_metrics": {
+          "metrics_port": 8081,
+          "metrics_host": "0.0.0.0",
+          "metrics_dashboard_uri_path": "/metrics",
+          "metrics_prometheus_uri_path": "/prometheus",
+          "prometheus_system_metrics_interval_seconds": 15,
+          "metrics_ring_buffer_size": 4096,
+          "metrics_key_function": "depth",
+          "metrics_key_depth": "1"
+        }
+      }
+    }
+  route.json: |-
+    {
+      "route_key": "route-prometheus",
+      "domain_key": "domain-prometheus",
+      "zone_key": "zone-default-zone",
+      "path": "/",
+      "prefix_rewrite": null,
+      "redirects": null,
+      "shared_rules_key": "shared-rules-prometheus",
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "retry_policy": null
+    }
+    
+  shared_rules.json: |-
+    {
+      "shared_rules_key": "shared-rules-prometheus",
+      "name": "prometheus",
+      "zone_key": "zone-default-zone",
+      "default": {
+        "light": [
+          {
+            "constraint_key": "",
+            "cluster_key": "cluster-prometheus",
             "metadata": null,
             "properties": null,
             "response_data": {},
@@ -10517,14 +11182,14 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: edge-slo-mesh-config
+  name: edge-dashboard-mesh-config
   namespace: myproject
 data:
   cluster.json: |-
     {
       "zone_key": "zone-default-zone",
-      "cluster_key": "edge-to-slo-cluster",
-      "name": "slo",
+      "cluster_key": "edge-to-dashboard-cluster",
+      "name": "dashboard",
       "instances": [],
       "circuit_breakers": null,
       "outlier_detection": null,
@@ -10552,13 +11217,13 @@ data:
     
   route-1.json: |-
     {
-      "route_key": "edge-slo-route",
+      "route_key": "edge-dashboard-route",
       "domain_key": "edge",
       "zone_key": "zone-default-zone",
-      "path": "/services/slo/latest/",
+      "path": "/services/dashboard/latest/",
       "prefix_rewrite": "/",
       "redirects": null,
-      "shared_rules_key": "edge-slo-shared-rules",
+      "shared_rules_key": "edge-dashboard-shared-rules",
       "rules": null,
       "response_data": {},
       "cohort_seed": null,
@@ -10567,13 +11232,13 @@ data:
     
   route-2.json: |-
     {
-      "route_key": "edge-slo-route-slash",
+      "route_key": "edge-dashboard-route-slash",
       "domain_key": "edge",
       "zone_key": "zone-default-zone",
-      "path": "/services/slo/latest",
-      "prefix_rewrite": "/services/slo/latest/",
+      "path": "/services/dashboard/latest",
+      "prefix_rewrite": "/services/dashboard/latest/",
       "redirects": null,
-      "shared_rules_key": "edge-slo-shared-rules",
+      "shared_rules_key": "edge-dashboard-shared-rules",
       "rules": null,
       "response_data": {},
       "cohort_seed": null,
@@ -10583,13 +11248,13 @@ data:
   shared_rules.json: |-
     {
       "zone_key": "zone-default-zone",
-      "shared_rules_key": "edge-slo-shared-rules",
-      "name": "slo",
+      "shared_rules_key": "edge-dashboard-shared-rules",
+      "name": "dashboard",
       "default": {
         "light": [
           {
             "constraint_key": "",
-            "cluster_key": "edge-to-slo-cluster",
+            "cluster_key": "edge-to-dashboard-cluster",
             "metadata": null,
             "properties": null,
             "response_data": {},
@@ -10612,28 +11277,30 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: edge-prometheus-mesh-config
+  name: service-data-mesh-config
   namespace: myproject
 data:
   cluster.json: |-
     {
+      "cluster_key": "cluster-data",
       "zone_key": "zone-default-zone",
-      "cluster_key": "edge-to-prometheus-cluster",
-      "name": "prometheus",
-      "instances": [],
-      "circuit_breakers": null,
-      "outlier_detection": null,
-      "health_checks": [],
+      "name": "service",
+      "instances": [
+        {
+            "host": "0.0.0.0",
+            "port": 8181
+        }
+      ],
       "require_tls": true,
       "ssl_config": {
-        "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
-        "protocols": [
-          "SSLv3",
-          "SSLv2",
-          "TLSv1",
-          "TLSv1.1",
-          "TLSv1.2"
-        ],
+          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+          "protocols": [
+            "SSLv3",
+            "SSLv2",
+            "TLSv1",
+            "TLSv1.1",
+            "TLSv1.2"
+          ],
         "require_client_certs": true,
         "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
         "cert_key_pairs": [
@@ -10642,33 +11309,91 @@ data:
             "key_path": "/etc/proxy/tls/sidecar/server.key"
           }
         ]
+      },
+      "circuit_breakers": null,
+      "outlier_detection": null,
+      "health_checks": []
+    }
+  domain.json: |-
+    {
+      "domain_key": "domain-data",
+      "zone_key": "zone-default-zone",
+      "name": "*",
+      "port": 8080,
+      "redirects": null,
+      "gzip_enabled": false,
+      "cors_config": null,
+      "aliases": null,
+      "ssl_config": {
+          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+          "protocols": [
+            "SSLv3",
+            "SSLv2",
+            "TLSv1",
+            "TLSv1.1",
+            "TLSv1.2"
+          ],
+        "require_client_certs": true,
+        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
+        "cert_key_pairs": [
+          {
+            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
+            "key_path": "/etc/proxy/tls/sidecar/server.key"
+          }
+        ]
+      },
+      "force_https": true
+    }
+    
+  listener.json: |-
+    {
+      "listener_key": "listener-data",
+      "zone_key": "zone-default-zone",
+      "name": "data",
+      "ip": "0.0.0.0",
+      "port": 8080,
+      "protocol": "http_auto",
+      "domain_keys": ["domain-data"],
+      "tracing_config": null
+    }
+    
+  proxy.json: |-
+    {
+      "proxy_key": "proxy-data",
+      "zone_key": "zone-default-zone",
+      "name": "data",
+      "domain_keys": [
+        "domain-data"
+      ],
+      "listener_keys": [
+          "listener-data"
+      ],
+      "listeners": null,
+      "active_proxy_filters": [
+        "gm.metrics" 
+      ],
+      "proxy_filters": {
+        "gm_metrics": {
+          "metrics_port": 8081,
+          "metrics_host": "0.0.0.0",
+          "metrics_dashboard_uri_path": "/metrics",
+          "metrics_prometheus_uri_path": "/prometheus",
+          "prometheus_system_metrics_interval_seconds": 15,
+          "metrics_ring_buffer_size": 4096,
+          "metrics_key_function": "depth",
+          "metrics_key_depth": "1"
+        }
       }
     }
-    
-  route-1.json: |-
+  route.json: |-
     {
-      "route_key": "edge-prometheus-route",
-      "domain_key": "edge",
+      "route_key": "route-data",
+      "domain_key": "domain-data",
       "zone_key": "zone-default-zone",
-      "path": "/services/prometheus/latest/",
-      "prefix_rewrite": "/",
+      "path": "/",
+      "prefix_rewrite": null,
       "redirects": null,
-      "shared_rules_key": "edge-prometheus-shared-rules",
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "retry_policy": null
-    }
-    
-  route-2.json: |-
-    {
-      "route_key": "edge-prometheus-route-slash",
-      "domain_key": "edge",
-      "zone_key": "zone-default-zone",
-      "path": "/services/prometheus/latest",
-      "prefix_rewrite": "/services/prometheus/latest/",
-      "redirects": null,
-      "shared_rules_key": "edge-prometheus-shared-rules",
+      "shared_rules_key": "shared-rules-data",
       "rules": null,
       "response_data": {},
       "cohort_seed": null,
@@ -10677,14 +11402,14 @@ data:
     
   shared_rules.json: |-
     {
+      "shared_rules_key": "shared-rules-data",
+      "name": "data",
       "zone_key": "zone-default-zone",
-      "shared_rules_key": "edge-prometheus-shared-rules",
-      "name": "prometheus",
       "default": {
         "light": [
           {
             "constraint_key": "",
-            "cluster_key": "edge-to-prometheus-cluster",
+            "cluster_key": "cluster-data",
             "metadata": null,
             "properties": null,
             "response_data": {},
@@ -10707,14 +11432,14 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: edge-catalog-mesh-config
+  name: edge-intake-mesh-config
   namespace: myproject
 data:
   cluster.json: |-
     {
       "zone_key": "zone-default-zone",
-      "cluster_key": "edge-to-catalog-cluster",
-      "name": "catalog",
+      "cluster_key": "edge-to-intake-cluster",
+      "name": "intake",
       "instances": [],
       "circuit_breakers": null,
       "outlier_detection": null,
@@ -10742,13 +11467,13 @@ data:
     
   route-1.json: |-
     {
-      "route_key": "edge-catalog-route",
+      "route_key": "edge-intake-route",
       "domain_key": "edge",
       "zone_key": "zone-default-zone",
-      "path": "/services/catalog/latest/",
+      "path": "/services/intake/latest/",
       "prefix_rewrite": "/",
       "redirects": null,
-      "shared_rules_key": "edge-catalog-shared-rules",
+      "shared_rules_key": "edge-intake-shared-rules",
       "rules": null,
       "response_data": {},
       "cohort_seed": null,
@@ -10757,13 +11482,13 @@ data:
     
   route-2.json: |-
     {
-      "route_key": "edge-catalog-route-slash",
+      "route_key": "edge-intake-route-slash",
       "domain_key": "edge",
       "zone_key": "zone-default-zone",
-      "path": "/services/catalog/latest",
-      "prefix_rewrite": "/services/catalog/latest/",
+      "path": "/services/intake/latest",
+      "prefix_rewrite": "/services/intake/latest/",
       "redirects": null,
-      "shared_rules_key": "edge-catalog-shared-rules",
+      "shared_rules_key": "edge-intake-shared-rules",
       "rules": null,
       "response_data": {},
       "cohort_seed": null,
@@ -10773,13 +11498,13 @@ data:
   shared_rules.json: |-
     {
       "zone_key": "zone-default-zone",
-      "shared_rules_key": "edge-catalog-shared-rules",
-      "name": "catalog",
+      "shared_rules_key": "edge-intake-shared-rules",
+      "name": "intake",
       "default": {
         "light": [
           {
             "constraint_key": "",
-            "cluster_key": "edge-to-catalog-cluster",
+            "cluster_key": "edge-to-intake-cluster",
             "metadata": null,
             "properties": null,
             "response_data": {},
@@ -10875,6 +11600,237 @@ data:
           {
             "constraint_key": "",
             "cluster_key": "edge-to-gm-control-api-cluster",
+            "metadata": null,
+            "properties": null,
+            "response_data": {},
+            "weight": 1
+          }
+        ],
+        "dark": null,
+        "tap": null
+      },
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "properties": null,
+      "retry_policy": null
+    }
+    
+...
+---
+# Source: greymatter/charts/gm-control-api/templates/configmaps.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: edge-internal-jwt-security-mesh-config
+  namespace: myproject
+data:
+  cluster.json: |-
+    {
+      "zone_key": "zone-default-zone",
+      "cluster_key": "edge-to-internal-jwt-security-cluster",
+      "name": "internal-jwt-security",
+      "instances": [],
+      "circuit_breakers": null,
+      "outlier_detection": null,
+      "health_checks": [],
+      "require_tls": true,
+      "ssl_config": {
+        "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+        "protocols": [
+          "SSLv3",
+          "SSLv2",
+          "TLSv1",
+          "TLSv1.1",
+          "TLSv1.2"
+        ],
+        "require_client_certs": true,
+        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
+        "cert_key_pairs": [
+          {
+            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
+            "key_path": "/etc/proxy/tls/sidecar/server.key"
+          }
+        ]
+      }
+    }
+    
+  route-1.json: |-
+    {
+      "route_key": "edge-internal-jwt-security-route",
+      "domain_key": "edge",
+      "zone_key": "zone-default-zone",
+      "path": "/services/internal-jwt-security/latest/",
+      "prefix_rewrite": "/",
+      "redirects": null,
+      "shared_rules_key": "edge-internal-jwt-security-shared-rules",
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "retry_policy": null
+    }
+    
+  route-2.json: |-
+    {
+      "route_key": "edge-internal-jwt-security-route-slash",
+      "domain_key": "edge",
+      "zone_key": "zone-default-zone",
+      "path": "/services/internal-jwt-security/latest",
+      "prefix_rewrite": "/services/internal-jwt-security/latest/",
+      "redirects": null,
+      "shared_rules_key": "edge-internal-jwt-security-shared-rules",
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "retry_policy": null
+    }
+    
+  shared_rules.json: |-
+    {
+      "zone_key": "zone-default-zone",
+      "shared_rules_key": "edge-internal-jwt-security-shared-rules",
+      "name": "internal-jwt-security",
+      "default": {
+        "light": [
+          {
+            "constraint_key": "",
+            "cluster_key": "edge-to-internal-jwt-security-cluster",
+            "metadata": null,
+            "properties": null,
+            "response_data": {},
+            "weight": 1
+          }
+        ],
+        "dark": null,
+        "tap": null
+      },
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "properties": null,
+      "retry_policy": null
+    }
+    
+...
+---
+# Source: greymatter/charts/gm-control-api/templates/configmaps.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-slo-mesh-config
+  namespace: myproject
+data:
+  cluster.json: |-
+    {
+      "cluster_key": "cluster-slo",
+      "zone_key": "zone-default-zone",
+      "name": "service",
+      "instances": [
+        {
+            "host": "0.0.0.0",
+            "port": 1337
+        }
+      ],
+      "circuit_breakers": null,
+      "outlier_detection": null,
+      "health_checks": []
+    }
+  domain.json: |-
+    {
+      "domain_key": "domain-slo",
+      "zone_key": "zone-default-zone",
+      "name": "*",
+      "port": 8080,
+      "redirects": null,
+      "gzip_enabled": false,
+      "cors_config": null,
+      "aliases": null,
+      "ssl_config": {
+          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+          "protocols": [
+            "SSLv3",
+            "SSLv2",
+            "TLSv1",
+            "TLSv1.1",
+            "TLSv1.2"
+          ],
+        "require_client_certs": true,
+        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
+        "cert_key_pairs": [
+          {
+            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
+            "key_path": "/etc/proxy/tls/sidecar/server.key"
+          }
+        ]
+      },
+      "force_https": true
+    }
+    
+  listener.json: |-
+    {
+      "listener_key": "listener-slo",
+      "zone_key": "zone-default-zone",
+      "name": "slo",
+      "ip": "0.0.0.0",
+      "port": 8080,
+      "protocol": "http_auto",
+      "domain_keys": ["domain-slo"],
+      "tracing_config": null
+    }
+    
+  proxy.json: |-
+    {
+      "proxy_key": "proxy-slo",
+      "zone_key": "zone-default-zone",
+      "name": "slo",
+      "domain_keys": [
+        "domain-slo"
+      ],
+      "listener_keys": [
+          "listener-slo"
+      ],
+      "listeners": null,
+      "active_proxy_filters": [
+        "gm.metrics" 
+      ],
+      "proxy_filters": {
+        "gm_metrics": {
+          "metrics_port": 8081,
+          "metrics_host": "0.0.0.0",
+          "metrics_dashboard_uri_path": "/metrics",
+          "metrics_prometheus_uri_path": "/prometheus",
+          "prometheus_system_metrics_interval_seconds": 15,
+          "metrics_ring_buffer_size": 4096,
+          "metrics_key_function": "depth",
+          "metrics_key_depth": "1"
+        }
+      }
+    }
+  route.json: |-
+    {
+      "route_key": "route-slo",
+      "domain_key": "domain-slo",
+      "zone_key": "zone-default-zone",
+      "path": "/",
+      "prefix_rewrite": null,
+      "redirects": null,
+      "shared_rules_key": "shared-rules-slo",
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "retry_policy": null
+    }
+    
+  shared_rules.json: |-
+    {
+      "shared_rules_key": "shared-rules-slo",
+      "name": "slo",
+      "zone_key": "zone-default-zone",
+      "default": {
+        "light": [
+          {
+            "constraint_key": "",
+            "cluster_key": "cluster-slo",
             "metadata": null,
             "properties": null,
             "response_data": {},
@@ -11425,7 +12381,7 @@ spec:
             - name: certs
               mountPath: /etc/pki
         - name: sidecar
-          image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+          image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
           imagePullPolicy: IfNotPresent
           resources:
             limits:
@@ -11491,7 +12447,7 @@ spec:
       serviceAccountName: control-sa
       containers:
         - name: control
-          image: docker.production.deciphernow.com/deciphernow/gm-control:0.5.1
+          image: __DOCKER_IMAGE_REPO__/gm-control:0.5.1
           imagePullPolicy: IfNotPresent
           env:            
             - name: GM_CONTROL_API_HOST
@@ -11558,7 +12514,7 @@ spec:
     spec:
       containers:
       - name: dashboard
-        image: 'docker.production.deciphernow.com/deciphernow/gm-dashboard:3.1.0'
+        image: '__DOCKER_IMAGE_REPO__/gm-dashboard:3.1.0'
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -11582,7 +12538,7 @@ spec:
         - name: BASE_URL
           value: '/services/dashboard/3.1.0/'
       - name: sidecar
-        image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
+        image: '__DOCKER_IMAGE_REPO__/gm-proxy:0.9.1'
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -11672,7 +12628,7 @@ spec:
         - name: prometheus-data
           mountPath: /var/lib/prometheus/data
       - name: sidecar
-        image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+        image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -11748,7 +12704,7 @@ spec:
               value: data-mongo
       containers:
       - name: data 
-        image: "docker.production.deciphernow.com/deciphernow/gm-data:0.2.7"
+        image: "__DOCKER_IMAGE_REPO__/gm-data:0.2.7"
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -11866,7 +12822,7 @@ spec:
         - name: MONGOHOST
           value: "data-mongo-0.data-mongo.myproject.svc.cluster.local:27017"
       - name: sidecar 
-        image: "docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1"
+        image: "__DOCKER_IMAGE_REPO__/gm-proxy:0.9.1"
         env:        
         - name: ENVOY_ADMIN_LOG_PATH
           value: "/dev/stdout"
@@ -11938,7 +12894,7 @@ spec:
     spec:
       containers:
       - name: edge
-        image: "docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1"
+        image: "__DOCKER_IMAGE_REPO__/gm-proxy:0.9.1"
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -12002,7 +12958,7 @@ spec:
     spec:
       containers:
         - name: gm-control-api
-          image: docker.production.deciphernow.com/deciphernow/gm-control-api:0.8.1
+          image: __DOCKER_IMAGE_REPO__/gm-control-api:0.8.1
           imagePullPolicy: IfNotPresent
           env:            
             - name: GM_CONTROL_API_ADDRESS
@@ -12050,7 +13006,7 @@ spec:
             - name: gm-control-api-backup
               mountPath: /app/control-api/data
         - name: sidecar   
-          image: "docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1"
+          image: "__DOCKER_IMAGE_REPO__/gm-proxy:0.9.1"
           imagePullPolicy: IfNotPresent
           resources:
             limits:
@@ -12120,7 +13076,7 @@ spec:
               value: internal-data-mongo
       containers:
       - name: data-internal 
-        image: "docker.production.deciphernow.com/deciphernow/gm-data:0.2.7"
+        image: "__DOCKER_IMAGE_REPO__/gm-data:0.2.7"
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -12226,7 +13182,7 @@ spec:
           - name: data-pvc
             mountPath: /buckets/local/greymatter
       - name: sidecar 
-        image: "docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1"
+        image: "__DOCKER_IMAGE_REPO__/gm-proxy:0.9.1"
         env:        
         - name: ENVOY_ADMIN_LOG_PATH
           value: "/dev/stdout"
@@ -12302,7 +13258,7 @@ spec:
     spec:
       containers:
       - name: jwt-security
-        image: "docker.production.deciphernow.com/deciphernow/gm-jwt-security:0.2.0"
+        image: "__DOCKER_IMAGE_REPO__/gm-jwt-security:0.2.0"
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -12368,7 +13324,7 @@ spec:
           mountPath: /gm-jwt-security/etc
       
       - name: sidecar
-        image: "docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1"
+        image: "__DOCKER_IMAGE_REPO__/gm-proxy:0.9.1"
         imagePullPolicy: IfNotPresent
         env:        
         - name: ENVOY_ADMIN_LOG_PATH
@@ -12493,7 +13449,7 @@ spec:
     spec:
       containers:
       - name: jwt-security
-        image: "docker.production.deciphernow.com/deciphernow/gm-jwt-security:0.2.0"
+        image: "__DOCKER_IMAGE_REPO__/gm-jwt-security:0.2.0"
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -12578,7 +13534,7 @@ spec:
           mountPath: /gm-jwt-security/etc
       
       - name: sidecar
-        image: "docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1"
+        image: "__DOCKER_IMAGE_REPO__/gm-proxy:0.9.1"
         imagePullPolicy: IfNotPresent
         env:        
         - name: ENVOY_ADMIN_LOG_PATH
@@ -12715,7 +13671,7 @@ spec:
               value: "3"
       containers:
       - name: slo
-        image: "docker.production.deciphernow.com/deciphernow/gm-slo:0.5.0"
+        image: "__DOCKER_IMAGE_REPO__/gm-slo:0.5.0"
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -12757,7 +13713,7 @@ spec:
         - name: postgres-certs
           mountPath: "/certs"
       - name: sidecar
-        image: "docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1"
+        image: "__DOCKER_IMAGE_REPO__/gm-proxy:0.9.1"
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -13103,7 +14059,7 @@ spec:
             - name: SERVICE
               value: catalog
       containers:
-        - image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
+        - image: __DOCKER_IMAGE_REPO__/gm-proxy:0.9.1
           name: catalog-init
           imagePullPolicy: IfNotPresent
           command: ["/tmp/bootstrap/bootstrap.sh"]
@@ -13125,8 +14081,12 @@ spec:
               mountPath: /etc/config/mesh/services/data
             - name: service-config-volume-edge
               mountPath: /etc/config/mesh/services/edge
+            - name: service-config-volume-intake
+              mountPath: /etc/config/mesh/services/intake
             - name: service-config-volume-jwt-security
               mountPath: /etc/config/mesh/services/jwt-security
+            - name: service-config-volume-payment
+              mountPath: /etc/config/mesh/services/payment
             - name: service-config-volume-slo
               mountPath: /etc/config/mesh/services/slo
             - name: bootstrap-script-volume
@@ -13151,9 +14111,15 @@ spec:
         - name: service-config-volume-edge
           configMap:
             name: service-edge-catalog-api-config
+        - name: service-config-volume-intake
+          configMap:
+            name: service-intake-catalog-api-config
         - name: service-config-volume-jwt-security
           configMap:
             name: service-jwt-security-catalog-api-config
+        - name: service-config-volume-payment
+          configMap:
+            name: service-payment-catalog-api-config
         - name: service-config-volume-slo
           configMap:
             name: service-slo-catalog-api-config
@@ -13193,7 +14159,7 @@ spec:
             - name: SERVICE
               value: gm-control-api
       containers:
-        - image: docker.production.deciphernow.com/deciphernow/greymatter:0.5.1
+        - image: __DOCKER_IMAGE_REPO__/greymatter:0.5.1
           name: gm-control-api-init
           imagePullPolicy: IfNotPresent
           command: ["/tmp/bootstrap/bootstrap.sh"]
@@ -13225,6 +14191,10 @@ spec:
               mountPath: /etc/config/mesh/services/data
             - name: edge-config-volume-data
               mountPath: /etc/config/mesh/edge/data
+            - name: service-config-volume-intake
+              mountPath: /etc/config/mesh/services/intake
+            - name: edge-config-volume-intake
+              mountPath: /etc/config/mesh/edge/intake
             - name: service-config-volume-data-internal
               mountPath: /etc/config/mesh/services/data-internal
             - name: edge-config-volume-data-internal
@@ -13237,6 +14207,10 @@ spec:
               mountPath: /etc/config/mesh/services/jwt-security
             - name: edge-config-volume-jwt-security
               mountPath: /etc/config/mesh/edge/jwt-security
+            - name: service-config-volume-payment
+              mountPath: /etc/config/mesh/services/payment
+            - name: edge-config-volume-payment
+              mountPath: /etc/config/mesh/edge/payment
             - name: service-config-volume-prometheus
               mountPath: /etc/config/mesh/services/prometheus
             - name: edge-config-volume-prometheus
@@ -13274,6 +14248,12 @@ spec:
         - name: edge-config-volume-data
           configMap:
             name: edge-data-mesh-config
+        - name: service-config-volume-intake
+          configMap:
+            name: service-intake-mesh-config
+        - name: edge-config-volume-intake
+          configMap:
+            name: edge-intake-mesh-config
         - name: service-config-volume-data-internal
           configMap:
             name: service-data-internal-mesh-config
@@ -13292,6 +14272,12 @@ spec:
         - name: edge-config-volume-jwt-security
           configMap:
             name: edge-jwt-security-mesh-config
+        - name: service-config-volume-payment
+          configMap:
+            name: service-payment-mesh-config
+        - name: edge-config-volume-payment
+          configMap:
+            name: edge-payment-mesh-config
         - name: service-config-volume-prometheus
           configMap:
             name: service-prometheus-mesh-config
