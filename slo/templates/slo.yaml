@@ -94,6 +94,10 @@ spec:
         volumeMounts:
         {{- include "sidecar_volume_certs_mount" . | indent 8 }}
         {{- end }}
+      {{- if .Values.global.consul.enabled }}
+      {{- $data := dict "Values" .Values "ServiceName" "slo" }}
+      {{- include "consul.agent" $data | nindent 6 }}
+      {{- end }}
       imagePullSecrets:
         - name: docker.secret
       volumes:
@@ -108,4 +112,10 @@ spec:
         secret:
           secretName: {{ .Values.postgres.ssl.name }}
           defaultMode: 0600
+      {{- end }}
+      {{- if .Values.global.consul.enabled }}
+      - name: data-consul
+        emptyDir: {}
+      - name: config-consul
+        emptyDir: {}
       {{- end }}

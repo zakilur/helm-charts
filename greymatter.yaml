@@ -17,6 +17,10 @@ global:
     version: 1.0.1
     sidecar:
       version: 0.9.1
+  consul:
+    enabled: false
+    host: ''
+    port: 8500
 
   edge:
     enableTLS: true
@@ -105,6 +109,15 @@ control:
       gm_control_console_level:
         type: 'value'
         value: 'debug'
+      #gm_control_cmd:
+      #  type: 'value'
+      #  value: 'consul'
+      #gm_control_consul_dc:
+      #  type: 'value'
+      #  value: 'dc1'
+      #gm_control_consul_hostport:
+      #  type: 'value'
+      #  value: '{{ .Values.global.consul.host }}:{{ .Values.global.consul.port }}'
 
 gm-control-api:
   gmControlApi:
