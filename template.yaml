@@ -785,11 +785,11 @@ metadata:
   namespace: __NAMESPACE__
 data:
   gmdata.js: |-
-    db.auth("mongo", "mongo")
+    db.auth("__MONGO_ROOT_USERNAME__", "__MONGO_ADMIN_PASSWORD__")
     db = db.getSiblingDB("gmdata")
     db.createUser({
-        user: "mongo",
-        pwd: "mongo",
+        user: "__MONGO_ROOT_USERNAME__",
+        pwd: "__MONGO_ADMIN_PASSWORD__",
         roles: [
         {
             role: 'root',
@@ -3777,11 +3777,11 @@ metadata:
   namespace: __NAMESPACE__
 data:
   gmdata.js: |-
-    db.auth("mongo", "mongo")
+    db.auth("__MONGO_ROOT_USERNAME__", "__MONGO_ADMIN_PASSWORD__")
     db = db.getSiblingDB("gmdata")
     db.createUser({
-        user: "mongo",
-        pwd: "mongo",
+        user: "__MONGO_ROOT_USERNAME__",
+        pwd: "__MONGO_ADMIN_PASSWORD__",
         roles: [
         {
             role: 'root',
