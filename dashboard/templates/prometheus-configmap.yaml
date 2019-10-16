@@ -52,7 +52,26 @@ data:
           target_label:  'job'
           #replacement:   '${1}'
           replacement:   '${1}'
-      {{- end }}
+      {{- if .Values.global.sense.enabled }}
+      - job_name: sense
+        metrics_path: /stats/prometheus
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names:
+                - {{ .Release.Namespace | quote }}
+        relabel_configs:
+        # Drop all named ports that are not "metrics"
+        - source_labels: ['__meta_kubernetes_pod_container_port_name']
+          regex: 'metrics'
+          action: 'keep'
+        # Relabel Jobs to the service name and version of the zk path
+        - source_labels: ['__meta_kubernetes_pod_label_app']
+          regex: '(.*)'
+          target_label:  'job'
+          #replacement:   '${1}'
+          replacement:   '${1}'
+      {{- end }}  
 
   # Copied from https://github.com/DecipherNow/gm-dashboard/blob/master/docker/prometheus/recording_rules.yml
   recording_rules.yaml: |-

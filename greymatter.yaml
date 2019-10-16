@@ -17,11 +17,12 @@ global:
     version: 1.0.1
     sidecar:
       version: 0.9.1
+  sense:
+    enabled: false
   consul:
     enabled: false
     host: ''
     port: 8500
-
   edge:
     enableTLS: true
     certPath: /etc/proxy/tls/edge
