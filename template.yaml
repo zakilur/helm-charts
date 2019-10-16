@@ -27,7 +27,7 @@ stringData:
   root_username: __MONGO_ROOT_USERNAME__
   root_password: __MONGO_ROOT_PASSWORD__
   admin_password: __MONGO_ADMIN_PASSWORD__
-  database: gmdata
+  database: __MONGO_GM_DATA_DATABASE__
 ---
 # Source: greymatter/charts/edge/templates/edge-secret.yaml
 apiVersion: v1
@@ -75,7 +75,7 @@ stringData:
   root_username: __MONGO_ROOT_USERNAME__
   root_password: __MONGO_ROOT_PASSWORD__
   admin_password: __MONGO_ADMIN_PASSWORD__
-  database: gmdata
+  database: __MONGO_GM_DATA_DATABASE__
 ---
 # Source: greymatter/charts/internal-jwt/templates/jwt-certs.yaml
 apiVersion: v1
@@ -786,7 +786,7 @@ metadata:
 data:
   gmdata.js: |-
     db.auth("__MONGO_ROOT_USERNAME__", "__MONGO_ADMIN_PASSWORD__")
-    db = db.getSiblingDB("gmdata")
+    db = db.getSiblingDB(__MONGO_GM_DATA_DATABASE__)
     db.createUser({
         user: "__MONGO_ROOT_USERNAME__",
         pwd: "__MONGO_ADMIN_PASSWORD__",
@@ -3778,7 +3778,7 @@ metadata:
 data:
   gmdata.js: |-
     db.auth("__MONGO_ROOT_USERNAME__", "__MONGO_ADMIN_PASSWORD__")
-    db = db.getSiblingDB("gmdata")
+    db = db.getSiblingDB(__MONGO_GM_DATA_DATABASE__)
     db.createUser({
         user: "__MONGO_ROOT_USERNAME__",
         pwd: "__MONGO_ADMIN_PASSWORD__",
