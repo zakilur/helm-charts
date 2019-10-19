@@ -138,21 +138,7 @@ stringData:
   password: greymatter
   database: greymatter
 ---
-# Source: greymatter/templates/docker-secret.yaml
-
-kind: Secret
-apiVersion: v1
-metadata:
-  name: docker.secret
-  namespace: default
-type: kubernetes.io/dockerconfigjson
-data:
-  .dockerconfigjson: eyJhdXRocyI6IHsiZG9ja2VyLnByb2R1Y3Rpb24uZGVjaXBoZXJub3cuY29tIjogeyJhdXRoIjogIkpTRnpLRHh1YVd3K0tUb2xJWE1vUEc1cGJENHAifX19
-
----
 # Source: greymatter/templates/sidecar-secret.yaml
-
----
 apiVersion: v1
 kind: Secret
 metadata:
