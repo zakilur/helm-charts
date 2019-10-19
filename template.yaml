@@ -1,17 +1,4 @@
----
-# Source: greymatter/charts/data/templates/data-secret.yaml
-kind: Secret
-apiVersion: v1
-metadata:
-  name: data-secrets
-  namespace: default
-type: Opaque
-stringData:
-  aws_access_key_id: 
-  aws_secret_access_key: 
-  aws_region: us-east-1
-  aws_s3_bucket: decipher-quickstart-helm
-  master_key: ac8923[lkn43589vi23kl4rfgv0ws
+
 ---
 # Source: greymatter/charts/data/templates/mongo-passwords.yaml
 
@@ -29,9 +16,6 @@ stringData:
   root_password: mongo
   admin_password: mongopassword
   database: gmdata
----
-# Source: greymatter/charts/edge/templates/edge-secret.yaml
-
 
 ---
 apiVersion: v1
