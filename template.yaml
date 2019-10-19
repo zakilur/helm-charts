@@ -3489,54 +3489,6 @@ spec:
   type: ClusterIP
 
 ---
-# Source: greymatter/templates/tests/catalog-test.yaml
-
-
-apiVersion: v1
-kind: Pod
-metadata:
-  name: "catalog-release-name-connection-test"
-  annotations:
-    "helm.sh/hook": test-success
-spec:
-  containers:
-  - name: release-name-connections-test
-    image: "centos"
-    command: ["sh", "-c", "curl --location --cert /etc/test/certs/server.crt --key /etc/test/certs/server.key --request GET \"https://greymatter.default.*/services/catalog/1.0.1/\" -vk"]
-    volumeMounts:
-      - name: test-certs
-        mountPath: /etc/test/certs/
-  restartPolicy: Never
-  volumes:
-    - name: test-certs
-      secret:
-        secretName: sidecar
----
-# Source: greymatter/templates/tests/documentation-test.yaml
-
-
-
-apiVersion: v1
-kind: Pod
-metadata:
-  name: "documentation-release-name-connection-test"
-  annotations:
-    "helm.sh/hook": test-success
-spec:
-  containers:
-  - name: release-name-connections-test
-    image: "centos"
-    command: ["sh", "-c", "curl --location --cert /etc/test/certs/server.crt --key /etc/test/certs/server.key --request GET \"https://greymatter.default.*/services/documentation/3.0.0/\" -vk"]
-    volumeMounts:
-      - name: test-certs
-        mountPath: /etc/test/certs/
-  restartPolicy: Never
-  volumes:
-    - name: test-certs
-      secret:
-        secretName: sidecar
-
----
 # Source: greymatter/charts/catalog/templates/catalog.yaml
 kind: Deployment
 apiVersion: extensions/v1beta1
