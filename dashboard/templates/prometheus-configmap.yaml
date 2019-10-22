@@ -18,6 +18,22 @@ data:
       - job_name: 'prometheus'
         static_configs:
           - targets: ['localhost:9090']
+      {{- if .Values.global.consul.enabled }}
+      - job_name: consul
+        metrics_path: /prometheus
+        consul_sd_configs:
+        - server: '{{ .Values.global.consul.host }}:{{ .Values.global.consul.port }}'
+        relabel_configs:
+          - source_labels: ['__meta_consul_service_metadata_metrics']
+            regex: '(\d+)'
+            action: 'keep'
+          - source_labels: ['__meta_consul_service_address', '__meta_consul_service_metadata_metrics']
+            regex: '(.*);(\d+)'
+            replacement: '${1}:${2}'
+            target_label: __address__
+          - source_labels: ['__meta_consul_service']
+            target_label: job
+      {{- else }}
       - job_name: kubernetes
         metrics_path: /prometheus
         kubernetes_sd_configs:
@@ -36,6 +52,27 @@ data:
           target_label:  'job'
           #replacement:   '${1}'
           replacement:   '${1}'
+      {{- end }}
+      {{- if .Values.global.sense.enabled }}
+      - job_name: sense
+        metrics_path: /stats/prometheus
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names:
+                - {{ .Release.Namespace | quote }}
+        relabel_configs:
+        # Drop all named ports that are not "metrics"
+        - source_labels: ['__meta_kubernetes_pod_container_port_name']
+          regex: 'metrics'
+          action: 'keep'
+        # Relabel Jobs to the service name and version of the zk path
+        - source_labels: ['__meta_kubernetes_pod_label_app']
+          regex: '(.*)'
+          target_label:  'job'
+          #replacement:   '${1}'
+          replacement:   '${1}'
+      {{- end }}  
 
   # Copied from https://github.com/DecipherNow/gm-dashboard/blob/master/docker/prometheus/recording_rules.yml
   recording_rules.yaml: |-

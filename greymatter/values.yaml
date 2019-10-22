@@ -4,12 +4,18 @@ global:
   route_url_name:
   remove_namespace_from_url: false
   zone: zone-default-zone
+  # The observables section defines the common information points for
+  # Grey Matter Observables.  Note that, if enabled, the kafkaServerConnection
+  # MUST be enabled
+  observables:
+    topic: observables
+    kafkaServerConnection: 
   mesh_tls:
     enabled: true
     use_provided_certs: false
   catalog:
     name: catalog
-    version: 1.0.1
+    version: 1.0.2
     sidecar:
       version:
     data_prefix: /data
@@ -18,42 +24,42 @@ global:
     sidecar:
       version:
     prometheus_sidecar:
-      version: 0.8.0
+      version: 1.0.0
   data:
-    version: 0.2.7
+    version: 1.0.0
     sidecar:
       version:
     jwt_prefix: '/jwt'
   internal-data:
-    version: 0.2.7
+    version: 1.0.0
     sidecar:
       version:
     jwt_prefix: '/jwt'
   edge:
     # This enables mTLS on the edge proxy (ingress mTLS)
     enableTLS: true
-    version: 0.9.1
+    version: 1.0.0
     sidecar:
       version:
   jwt:
-    version: 0.2.0
+    version: 1.0.0
     sidecar:
       version:
   slo:
-    version: 0.5.0
+    version: 1.0.0
     sidecar:
       version:
   control:
-    version: 0.5.1
+    version: 1.0.2
     # This specifies the service name that all XDS clients will try to connect to
     name: control
     port: 50000
   gmControlApi:
-    version: 0.8.1
+    version: 1.0.2
     cli:
-      version: 0.5.1
+      version: 1.0.2
   sidecar:
-    version: 0.9.1
+    version: 1.0.0
   spire:
     enabled: false
     trustDomain: deciphernow.com
@@ -68,6 +74,7 @@ global:
       catalogEnabled: true
       controlEnabled: true
       serviceName: 'catalog'
+      observablesEnabled: false
       zone: 'zone-default-zone'
       port: 9080
       enableInstanceMetrics: 'true'
@@ -75,7 +82,7 @@ global:
       documentation: '/services/catalog/latest/'
       name: 'Grey Matter Catalog'
       owner: 'Decipher'
-      version: 1.0.1
+      version: 1.0.2
       minInstances: 1
       maxInstances: 1
       # egressTLS: 'false'
@@ -95,6 +102,7 @@ global:
       controlEnabled: true
       name: 'Grey Matter Dashboard'
       serviceName: 'dashboard'
+      observablesEnabled: false
       zone: zone-default-zone
       port: 1337
       enableInstanceMetrics: 'true'
@@ -112,6 +120,7 @@ global:
       controlEnabled: true
       name: 'Prometheus'
       serviceName: 'prometheus'
+      observablesEnabled: false
       port: 9090
       # egressTLS: 'false'
 
@@ -121,12 +130,13 @@ global:
       name: 'Grey Matter Data'
       zone: zone-default-zone
       serviceName: 'data'
+      observablesEnabled: false
       port: 8181
       enableInstanceMetrics: 'true'
       capability: 'Grey Matter'
       documentation: '/services/data/latest/static/ui/index.html'
       owner: 'Decipher'
-      version: 0.2.7
+      version: 1.0.0
       # egressTLS: 'true'
       routes:
         - '/services/data/{{ $.Values.global.data.version }}'
@@ -139,13 +149,14 @@ global:
       name: 'Grey Matter Internal Data'
       zone: zone-default-zone
       serviceName: 'data-internal'
+      observablesEnabled: false
       port: 8181
       enableInstanceMetrics: "true" 
       capability: 'Grey Matter'
       documentation: '/services/data/latest/static/ui/index.html'
       name: 'Grey Matter Internal Data'
       owner: 'Decipher'
-      version: 0.2.7   
+      version: 1.0.0   
       # egressTLS: 'true'
 
     jwt:
@@ -153,6 +164,7 @@ global:
       controlEnabled: true
       name: 'Grey Matter JWT Security'
       serviceName: 'jwt-security'
+      observablesEnabled: false
       zone: zone-default-zone
       port: 3000
       # egressTLS: 'true'
@@ -170,6 +182,7 @@ global:
       controlEnabled: true
       name: 'Grey Matter JWT Security Internal'
       serviceName: 'internal-jwt-security'
+      observablesEnabled: false
       zone: zone-default-zone
       port: 3000
       # egressTLS: 'true'
@@ -184,13 +197,14 @@ global:
       controlEnabled: true
       name: 'Grey Matter Control API'
       serviceName: 'gm-control-api'
+      observablesEnabled: false
       zone: zone-default-zone
       port: 5555
       enableInstanceMetrics: 'true'
       capability: 'Grey Matter'
       documentation:
       owner: 'Decipher'
-      version: '0.8.1'
+      version: '1.0.2'
       routes:
         - '/services/control-api/{{ $.Values.global.control.version }}'
         - '/services/control-api/{{ $.Values.global.control.version }}/'
@@ -200,6 +214,7 @@ global:
       controlEnabled: false
       name: 'Grey Matter Edge'
       serviceName: 'edge'
+      observablesEnabled: false
       zone: zone-default-zone
       port: 8080
       # We use a static cert on the edge listener
@@ -208,13 +223,14 @@ global:
       capability: 'Grey Matter'
       documentatio: ''
       owner: 'Decipher'
-      version: '0.9.1'
+      version: '1.0.0'
 
     slo:
       catalogEnabled: true
       controlEnabled: true
       name: 'Grey Matter Service Level Objectives'
       serviceName: 'slo'
+      observablesEnabled: false
       zone: zone-default-zone
       port: 1337
       # egressTLS: 'false'
@@ -222,7 +238,7 @@ global:
       capability: 'Grey Matter'
       documentation:
       owner: 'Decipher'
-      version: '0.5.0'
+      version: '1.0.0'
       routes:
         - '/services/slo/{{ $.Values.global.slo.version }}'
         - '/services/slo/{{ $.Values.global.slo.version }}/'

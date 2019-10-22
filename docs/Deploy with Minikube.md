@@ -33,6 +33,38 @@ You will need the following tools installed (tested on both Mac OS and Linux Ubu
 - [helm](https://github.com/helm/helm/releases/tag/v2.14.3)@2.14.3
 - [virtualbox](https://www.virtualbox.org/wiki/Downloads)@6.0.12
 
+### Quickstart
+
+A couple of makefile targets provide a fast and easy way to standup Grey Matter on minikube.
+
+Before starting via Minikube you need to supply your credentials for Decipher's docker registry. This will be your decipher email address and your decipher password.
+
+
+The `fresh` makefile target runs `make credentials` and `make minikube`.
+
+```sh
+make fresh
+```
+
+You can interactively fillout your credentials with the credentials make target.
+```sh
+make credentials
+```
+
+After you have filled out your credentials using the above target you can get minikube up and running in one target using:
+
+```sh
+make minikube
+```
+
+To spin down minikube.
+
+```sh
+make destroy
+```
+
+If you don't have the `envsubst` command you can get it with the `gettext` package on Mac or Ubuntu. The command is required for using `make credentials`.
+
 ### Start Minikube
 
 To launch a Minikube cluster to a `gm-deploy` VM profile, run the following command:
@@ -230,7 +262,7 @@ Once the repository has successfully been added to your `helm` CLI, you can inst
 **Note: Before installing Helm charts it's always prudent to do a dry-run first to ensure your custom YAML is correct. You can do this by adding the `--dry-run` flag to the below `helm install` command. If you receive no errors then you can confidently drop the `--dry-run` flag.**
 
 ```sh
-helm install decipher/greymatter -f custom-greymatter.yaml -f custom-greymatter-secrets.yaml -f custom-greymatter-minikube.yaml --name gm
+helm install decipher/greymatter -f greymatter.yaml -f greymatter-secrets.yaml -f greymatter-minikube.yaml --name gm-deploy
 ```
 
 ### Local Helm charts
