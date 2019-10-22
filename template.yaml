@@ -3142,12 +3142,8 @@ spec:
               mountPath: /etc/config/mesh/services/gm-control-api
             - name: service-config-volume-dashboard
               mountPath: /etc/config/mesh/services/dashboard
-            - name: service-config-volume-data
-              mountPath: /etc/config/mesh/services/data
             - name: service-config-volume-edge
               mountPath: /etc/config/mesh/services/edge
-            - name: service-config-volume-jwt-security
-              mountPath: /etc/config/mesh/services/jwt-security
             - name: service-config-volume-slo
               mountPath: /etc/config/mesh/services/slo
             - name: bootstrap-script-volume
