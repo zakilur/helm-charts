@@ -2922,33 +2922,10 @@ spec:
             memory: 128Mi
           
         env:
-        - name: POSTGRESQL_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: postgres-credentials
-              key: username
-        - name: POSTGRESQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-credentials
-              key: password
-        - name: POSTGRESQL_DATABASE
-          valueFrom:
-            secretKeyRef:
-              name: postgres-credentials
-              key: database 
         - name: DATABASE_URI
           value: postgres://$(POSTGRESQL_USERNAME):$(POSTGRESQL_PASSWORD)@postgres-slo.default.svc.cluster.local:5432/$(POSTGRESQL_DATABASE)
-        - name: SERVICE_PORT
-          value: "1337"
         - name: SSL_ENABLED
           value: "false"
-        - name: SSL_SERVER_CA
-          value: /certs/ca.pem
-        - name: SSL_SERVER_CERT
-          value: /certs/server.crt
-        - name: SSL_SERVER_KEY
-          value: /certs/server.key
         volumeMounts:
         - name: postgres-certs
           mountPath: "/certs"
@@ -2975,6 +2952,8 @@ spec:
           value: "true"
         - name: XDS_CLUSTER
           value: "slo"
+        - name: SERVICE_PORT
+          value: "1337"
         - name: XDS_HOST
           value: "control.default.svc.cluster.local"
         - name: XDS_NODE_ID
