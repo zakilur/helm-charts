@@ -3508,8 +3508,8 @@ spec:
           imagePullPolicy: IfNotPresent
           resources:
             limits:
-              cpu: 200m
-              memory: 1Gi
+              cpu: 100m
+              memory: 128Mi
             requests:
               cpu: 100m
               memory: 128Mi
@@ -3588,8 +3588,8 @@ spec:
           imagePullPolicy: IfNotPresent
           resources:
             limits:
-              cpu: 200m
-              memory: 512Mi
+              cpu: 100m
+              memory: 128Mi
             requests:
               cpu: 100m
               memory: 128Mi
@@ -3722,8 +3722,8 @@ spec:
         imagePullPolicy: IfNotPresent
         resources:
           limits:
-            cpu: 200m
-            memory: 1Gi
+            cpu: 100m
+            memory: 128Mi
           requests:
             cpu: 100m
             memory: 128Mi
@@ -3746,8 +3746,8 @@ spec:
         imagePullPolicy: IfNotPresent
         resources:
           limits:
-            cpu: 200m
-            memory: 512Mi
+            cpu: 100m
+            memory: 128Mi
           requests:
             cpu: 100m
             memory: 128Mi
@@ -3805,11 +3805,11 @@ spec:
         image: "prom/prometheus:v2.7.1"
         resources:
           limits:
-            cpu: "2"
-            memory: 12Gi
+            cpu: "1"
+            memory: 1Gi
           requests:
             cpu: "1"
-            memory: 8Gi
+            memory: 2Gi
           
         ports:
         - name: http
@@ -3836,8 +3836,8 @@ spec:
         imagePullPolicy: IfNotPresent
         resources:
           limits:
-            cpu: 200m
-            memory: 512Mi
+            cpu: 100m
+            memory: 128Mi
           requests:
             cpu: 100m
             memory: 128Mi
@@ -3912,8 +3912,8 @@ spec:
         imagePullPolicy: IfNotPresent
         resources:
           limits:
-            cpu: 250m
-            memory: 512Mi
+            cpu: 100m
+            memory: 128Mi
           requests:
             cpu: 100m
             memory: 128Mi
@@ -4047,8 +4047,8 @@ spec:
         imagePullPolicy: IfNotPresent
         resources:
           limits:
-            cpu: 200m
-            memory: 512Mi
+            cpu: 100m
+            memory: 128Mi
           requests:
             cpu: 100m
             memory: 128Mi
@@ -4105,7 +4105,7 @@ spec:
         resources:
           limits:
             cpu: 1
-            memory: 1Gi
+            memory: 128Mi
           requests:
             cpu: 100m
             memory: 128Mi
@@ -4216,8 +4216,8 @@ spec:
           imagePullPolicy: IfNotPresent
           resources:
             limits:
-              cpu: 200m
-              memory: 512Mi
+              cpu: 100m
+              memory: 128Mi
             requests:
               cpu: 100m
               memory: 128Mi
@@ -4280,8 +4280,8 @@ spec:
         imagePullPolicy: IfNotPresent
         resources:
           limits:
-            cpu: 200m
-            memory: 512Mi
+            cpu: 100m
+            memory: 128Mi
           requests:
             cpu: 100m
             memory: 64Mi
@@ -4378,8 +4378,8 @@ spec:
           value: "50000"
         resources:
           limits:
-            cpu: 200m
-            memory: 512Mi
+            cpu: 100m
+            memory: 128Mi
           requests:
             cpu: 100m
             memory: 128Mi
@@ -4456,8 +4456,8 @@ spec:
           imagePullPolicy: IfNotPresent
           resources:
             limits:
-              cpu: 200m
-              memory: 500Mi
+              cpu: 100m
+              memory: 128Mi
             requests:
               cpu: 100m
               memory: 128Mi
@@ -4509,8 +4509,8 @@ spec:
         imagePullPolicy: IfNotPresent
         resources:
           limits:
-            cpu: 250m
-            memory: 512Mi
+            cpu: 100m
+            memory: 128Mi
           requests:
             cpu: 100m
             memory: 128Mi
@@ -4551,8 +4551,8 @@ spec:
         imagePullPolicy: IfNotPresent
         resources:
           limits:
-            cpu: 200m
-            memory: 512Mi
+            cpu: 100m
+            memory: 128Mi
           requests:
             cpu: 100m
             memory: 128Mi
@@ -4654,8 +4654,8 @@ spec:
         imagePullPolicy: IfNotPresent
         resources:
           limits:
-            cpu: 200m
-            memory: 512Mi
+            cpu: 100m
+            memory: 128Mi
           requests:
             cpu: 100m
             memory: 128Mi
@@ -4712,8 +4712,8 @@ spec:
         imagePullPolicy: IfNotPresent
         resources:
           limits:
-            cpu: 200m
-            memory: 512Mi
+            cpu: 100m
+            memory: 128Mi
           requests:
             cpu: 100m
             memory: 128Mi
