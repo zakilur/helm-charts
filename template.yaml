@@ -2255,37 +2255,37 @@ spec:
               memory: 128Mi
             
           env:          
-          # - name: CA_CERT_PATH
-          #   value: "/etc/pki/ca.crt"
-          # - name: CLIENT_ADDRESS
-          #   value: "localhost"
-          # - name: CLIENT_CERT
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: sidecar-certs
-          #       key: server_b64
-          # - name: CLIENT_CN
-          #   value: "*.greymatter.svc.cluster.local"
-          # - name: CLIENT_EMAIL
-          #   value: "gm-control@deciphernow.com"
-          # - name: CLIENT_IDENTITY
-          #   value: "CN=gm-control,OU=Engineering,O=Decipher Technology Studios,=Alexandria,=Virginia,C=US"
-          # - name: CLIENT_KEY
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: sidecar-certs
-          #       key: key_b64
-          # - name: CLIENT_PORT
-          #   value: "8080"
-          # - name: CLIENT_PREFIX
-          #   value: "/data"
-          # - name: CLIENT_TRUST
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: sidecar-certs
-          #       key: ca_b64
-          # - name: CLIENT_USE_TLS
-          #   value: "true"
+          - name: CA_CERT_PATH
+            value: "/etc/pki/ca.crt"
+          - name: CLIENT_ADDRESS
+            value: "localhost"
+          - name: CLIENT_CERT
+            valueFrom:
+              secretKeyRef:
+                name: sidecar-certs
+                key: server_b64
+          - name: CLIENT_CN
+            value: "*.greymatter.svc.cluster.local"
+          - name: CLIENT_EMAIL
+            value: "gm-control@deciphernow.com"
+          - name: CLIENT_IDENTITY
+            value: "CN=gm-control,OU=Engineering,O=Decipher Technology Studios,=Alexandria,=Virginia,C=US"
+          - name: CLIENT_KEY
+            valueFrom:
+              secretKeyRef:
+                name: sidecar-certs
+                key: key_b64
+          - name: CLIENT_PORT
+            value: "8080"
+          - name: CLIENT_PREFIX
+            value: "/data"
+          - name: CLIENT_TRUST
+            valueFrom:
+              secretKeyRef:
+                name: sidecar-certs
+                key: ca_b64
+          - name: CLIENT_USE_TLS
+            value: "true"
           - name: CONFIG_SOURCE
             value: "env"
           - name: CONTROL_SERVER_0_ADDRESS
@@ -2294,24 +2294,24 @@ spec:
             value: "edge"
           - name: CONTROL_SERVER_0_ZONE_NAME
             value: "zone-default-zone"
-          # - name: GMDATA_MAX_RETRIES
-          #   value: "100"
-          # - name: GMDATA_RETRY_DELAY
-          #   value: "5s"
-          # - name: GMDATA_ROOT_EVENT_NAME
-          #   value: "world"
-          # - name: GMDATA_STARTUP_DELAY
-          #   value: "10s"
-          # - name: INSTANCE_MAX_SILENCE
-          #   value: "15s"
-          # - name: INSTANCE_POLLING_INTERVAL
-          #   value: "5s"
-          # - name: METRICS_MAX_RETRIES
-          #   value: "3"
-          # - name: METRICS_REQUEST_TIMEOUT
-          #   value: "15s"
-          # - name: METRICS_RETRY_DELAY
-          #   value: "10s"
+          - name: GMDATA_MAX_RETRIES
+            value: "100"
+          - name: GMDATA_RETRY_DELAY
+            value: "5s"
+          - name: GMDATA_ROOT_EVENT_NAME
+            value: "world"
+          - name: GMDATA_STARTUP_DELAY
+            value: "10s"
+          - name: INSTANCE_MAX_SILENCE
+            value: "15s"
+          - name: INSTANCE_POLLING_INTERVAL
+            value: "5s"
+          - name: METRICS_MAX_RETRIES
+            value: "3"
+          - name: METRICS_REQUEST_TIMEOUT
+            value: "15s"
+          - name: METRICS_RETRY_DELAY
+            value: "10s"
           - name: PORT
             value: "9080"
           volumeMounts:
