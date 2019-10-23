@@ -4672,6 +4672,8 @@ spec:
               key: database
         - name: USES3
           value: "false"
+        - name: MASTERKEY
+          value: "__AWS_MASTER_KEY__"
         - name: MONGOHOST
           value: "data-mongo-0.data-mongo.decipher-dt.svc.cluster.local:27017"
         volumeMounts:
@@ -5024,6 +5026,8 @@ spec:
               key: database
         - name: USES3
           value: "false"
+        - name: MASTERKEY
+          value: "__AWS_MASTER_KEY__"
         - name: MONGOHOST
           value: "internal-data-mongo-0.internal-data-mongo.decipher-dt.svc.cluster.local:27017"
         volumeMounts:
