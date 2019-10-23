@@ -492,27 +492,6 @@ data:
             expr: histogram_quantile(0.9999,avg without(instance, status)(rate(http_request_duration_seconds_bucket[10m])))
             
 ---
-# Source: greymatter/charts/data/templates/mongo-configmap.yaml
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: data-mongo-init
-  namespace: default
-data:
-  gmdata.js: |-
-    db.auth("mongo", "mongo")
-    db = db.getSiblingDB("gmdata")
-    db.createUser({
-        user: "mongo",
-        pwd: "mongo",
-        roles: [
-        {
-            role: 'root',
-            db: 'admin',
-        },
-        ],
-    });
----
 # Source: greymatter/charts/gm-control-api/templates/bootstrap-configmap.yaml
 kind: ConfigMap
 apiVersion: v1
@@ -901,7 +880,6 @@ data:
     
 ...
 ---
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -1036,7 +1014,6 @@ data:
     
 ...
 ---
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -1171,7 +1148,6 @@ data:
     
 ...
 ---
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -2314,6 +2290,92 @@ spec:
             value: "10s"
           - name: PORT
             value: "9080"
+          - name: SERVICE_0_ZONE_NAME
+            value: "default-zone"
+          - name: SERVICE_0_CLUSTER_NAME
+            value: "catalog"
+          - name: SERVICE_0_CAPABILITY
+            value: "Catalog"
+          - name: SERVICE_0_DOCUMENTATION
+            value: "/services/catalog/latest/"
+          - name: SERVICE_0_NAME
+            value: "Grey Matter Catalog"
+          - name: SERVICE_0_OWNER
+            value: "Decipher"
+          - name: SERVICE_0_VERSION
+            value: "latest"
+          - name: SERVICE_0_ENABLE_INSTANCE_METRICS
+            value: "true"
+          # dashboard
+          - name: SERVICE_1_ZONE_NAME
+            value: "default-zone"
+          - name: SERVICE_1_CLUSTER_NAME
+            value: "dashboard"
+          - name: SERVICE_1_CAPABILITY
+            value: "Dashboard"
+          - name: SERVICE_1_DOCUMENTATION
+            value: "/services/dashboard/latest/"
+          - name: SERVICE_1_NAME
+            value: "Dashboard"
+          - name: SERVICE_1_OWNER
+            value: "Decipher"
+          - name: SERVICE_1_VERSION
+            value: "latest"
+          - name: SERVICE_1_ENABLE_INSTANCE_METRICS
+            value: "true"
+          - name: SERVICE_2_ZONE_NAME
+            value: "default-zone"
+          - name: SERVICE_2_CLUSTER_NAME
+            value: "slo-service"
+          - name: SERVICE_2_CAPABILITY
+            value: "Grey Matter"
+          - name: SERVICE_2_ENABLE_HISTORICAL_METRICS
+            value: "true"
+          - name: SERVICE_2_DOCUMENTATION
+            value: "/services/slo-service/0.4.0/"
+          - name: SERVICE_2_PROMETHEUSJOB
+            value: "slo-service"
+          - name: SERVICE_2_MAX_INSTANCES
+            value: "1"
+          - name: SERVICE_2_ENABLE_INSTANCE_METRICS
+            value: "true"
+          - name: SERVICE_2_MIN_INSTANCES
+            value: "1"
+          - name: SERVICE_2_NAME
+            value: "Grey Matter Service Level Objectives"
+          - name: SERVICE_2_OWNER
+            value: "Decipher"
+          - name: SERVICE_2_RUNTIME
+            value: "GO"
+          - name: SERVICE_2_VERSION
+            value: "0.4.0"
+              # edge service
+          - name: SERVICE_8_CLUSTER_NAME
+            value: "edge"
+          - name: SERVICE_8_ZONE_NAME
+            value: "default-zone"
+          - name: SERVICE_8_CAPABILITY
+            value: "Example"
+          - name: SERVICE_8_ENABLE_HISTORICAL_METRICS
+            value: "false"
+          - name: SERVICE_8_DOCUMENTATION
+            value: "/"
+          - name: SERVICE_8_PROMETHEUSJOB
+            value: "edge"
+          - name: SERVICE_8_MAX_INSTANCES
+            value: "1"
+          - name: SERVICE_8_ENABLE_INSTANCE_METRICS
+            value: "true"
+          - name: SERVICE_8_MIN_INSTANCES
+            value: "1"
+          - name: SERVICE_8_NAME
+            value: "edge"
+          - name: SERVICE_8_OWNER
+            value: "Decipher"
+          - name: SERVICE_8_RUNTIME
+            value: "GO"
+          - name: SERVICE_8_VERSION
+            value: "1.0"
           volumeMounts:
             - name: certs
               mountPath: /etc/pki
