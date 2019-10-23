@@ -4591,16 +4591,10 @@ spec:
             memory: 128Mi
           
         env:        
-        - name: AWS_ACCESS_KEY_ID
-          value: "__AWS_ACCESS_KEY_ID__"
-        - name: AWS_REGION
-          value: "__AWS_REGION__"
         - name: AWS_S3_BUCKET
           value: "data"
         - name: AWS_S3_PARTITION
           value: "data"
-        - name: AWS_SECRET_ACCESS_KEY
-          value: "__AWS_SECRET_ACCESS_KEY__"
         - name: CLIENT_JWT_ENDPOINT_ADDRESS
           value: "localhost"
         - name: CLIENT_JWT_ENDPOINT_CERT
@@ -4661,8 +4655,6 @@ spec:
               key: jwt.pub
         - name: LESS_CHATTY_INFO
           value: "false"
-        - name: MASTERKEY
-          value: "__AWS_MASTER_KEY__"
         - name: MONGO_INITDB_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -5015,8 +5007,6 @@ spec:
               key: jwt.pub
         - name: LESS_CHATTY_INFO
           value: "false"
-        - name: MASTERKEY
-          value: "__AWS_MASTER_KEY__"
         - name: MONGO_INITDB_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
