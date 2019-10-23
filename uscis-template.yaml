@@ -10,7 +10,7 @@ stringData:
   aws_access_key_id: __AWS_ACCESS_KEY_ID__
   aws_secret_access_key: __AWS_SECRET_ACCESS_KEY__
   aws_region: __AWS_REGION__
-  aws_s3_bucket: __AWS_S3_BUCKET__
+  aws_s3_bucket: data
   master_key: __AWS_MASTER_KEY__
 ---
 # Source: greymatter/charts/data/templates/mongo-passwords.yaml
@@ -58,7 +58,7 @@ stringData:
   aws_access_key_id: __AWS_ACCESS_KEY_ID__
   aws_secret_access_key: __AWS_SECRET_ACCESS_KEY__
   aws_region: __AWS_REGION__
-  aws_s3_bucket: __AWS_S3_BUCKET__
+  aws_s3_bucket: data
   master_key: __AWS_MASTER_KEY__
 ---
 # Source: greymatter/charts/internal-data/templates/mongo-passwords.yaml
@@ -4726,7 +4726,7 @@ spec:
           value: "data-mongo-0.data-mongo.decipher-dt.svc.cluster.local:27017"
         volumeMounts:
           - name: data-pvc
-            mountPath: /buckets/__AWS_S3_BUCKET__/data
+            mountPath: /buckets/data/data
       - name: sidecar 
         image: "nexus-nonprod-gss.uscis.dhs.gov:8124/deciphernow/gm-proxy:0.9.1"
         env:        
@@ -5001,8 +5001,8 @@ spec:
             secretKeyRef:
               name: data-internal-secrets
               key: aws_s3_bucket
-        - name: AWS_S3_PARTITION
-          value: "greymatter"
+        - name: data
+          value: "data"
         - name: CLIENT_JWT_ENDPOINT_ADDRESS
           value: "localhost"
         - name: CLIENT_JWT_ENDPOINT_CERT
@@ -5089,7 +5089,7 @@ spec:
           value: "internal-data-mongo-0.internal-data-mongo.decipher-dt.svc.cluster.local:27017"
         volumeMounts:
           - name: data-pvc
-            mountPath: /buckets/local/greymatter
+            mountPath: /buckets/data/data
       - name: sidecar 
         image: "nexus-nonprod-gss.uscis.dhs.gov:8124/deciphernow/gm-proxy:0.9.1"
         env:        
