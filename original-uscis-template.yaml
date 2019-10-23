@@ -1,4 +1,18 @@
 ---
+# Source: greymatter/charts/data/templates/data-secret.yaml
+kind: Secret
+apiVersion: v1
+metadata:
+  name: data-secrets
+  namespace: decipher-dt
+type: Opaque
+stringData:
+  aws_access_key_id: __AWS_ACCESS_KEY_ID__
+  aws_secret_access_key: __AWS_SECRET_ACCESS_KEY__
+  aws_region: __AWS_REGION__
+  aws_s3_bucket: __AWS_S3_BUCKET__
+  master_key: __AWS_MASTER_KEY__
+---
 # Source: greymatter/charts/data/templates/mongo-passwords.yaml
 apiVersion: v1
 kind: Secret
@@ -12,8 +26,8 @@ type: Opaque
 stringData:
   root_username: mongogm
   root_password: USCISMongo64
-  admin_password: USCISMongoA32
-  database: gmdata
+  admin_password: "USCISMongoA32"
+  database: "gmdata"
 ---
 # Source: greymatter/charts/edge/templates/edge-secret.yaml
 apiVersion: v1
@@ -33,6 +47,20 @@ data:
   server.key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcFFJQkFBS0NBUUVBMkZmTUIzL3dwVTU2Y2djRkpTWmJWd0MrcU9DUDdZcHZTcGhWTGdwdHVKZEpvNFpzCnAvMjNEeE9tdysxTmJ1MXAvSWhaUGFaaGRxUDRlZ1ZtNkQzL3U5a2xkNkVzeUg2ejN6aDUrRFJWVExoZlhocXAKYmlNbUZ2dmpZNEorRmdTcXhZLythdmpCVWd2d2FUQlBNL1dYclRFY2M3SjMra1Vob3FVOS9NWjh5MFRlYzhROAprZE0zT0E2dkxGUHFEQUxqaWt6dDN6UWtTajNpWWh0MSswSVN0WktVZ0tXV3N2THhGcThFNWN6ZUFYY2VvMFVUCkpLdFpjUDk5dzYwclJVOTNjemtHbTlXUXFRdnlxa3lGMyt5RHIrb1BoUTBFS3pXbE9OL3dZOGIyQ2tRdnFFek4KeGI4YUtoTW1WQkhmOFhUdFVJUUpCS0NmVDAxMitXaEc4R2RTalFJREFRQUJBb0lCQUMyRXc0UHNjbGlGbTVPMApVR3ZSbHpSR0R0ZC9jQ2o5a0k3MFlDK3d1QWMzcGFISFhjTTJ5YlpkWHlBb0pMdXJManFaQVpYTUZRT2VXbUJxCkZJM1d4YURqZmxPZVVNcmFoY1A0b1FrTkVjbHpuWFV5VE9YRWRYWXVoMWhmazJIVWw0Mjd6ejc0bWN4R2dNM1IKQVVrZ2FrcGhZK2dmNjhoM2xTMGdjVnRtODhqY2tKeHQyNjNiL1oxenI0SHh3eDU3WFYzNTJzK05ZL3VWa3daaAppaFJvNkd5OEFPTzFGangvMVl1Y3M2SjNHRjBEVGZqQ0YyZjVoL25QYlRZU1dpdGY5T1hKUjI4d0YrTmZnd3VXCnBFb2IyaDN5RDRjK2hXSUVLcmt3TmVSRnA3VkxESnhUNUlpdWJVcVZzVUJkZFlXWjBBT3BzQ1Y1WHZVU25jdFQKbHhKdTRtMENnWUVBN1ZQb1pLL3V1d2swbkdxQnY2NUZuQTdndWtnUUd0RFJXMUwyeW82UHJmekNBWHlJMWYrSwpma1E5eUN6WUFSS3MrckRRQ2RzWHlUSFlyaUxzUC9jRlQyd1pkYmpaem5OL1NwMVorRnZOMEkrTERhbllOUHoxClp1K1NlenAvM3JTemRLV01kblg2MktDUmx3eVJJZkdIWHl4ajZMcGszSkF0YnBPSE0vMExZMjhDZ1lFQTZWMDYKU0xxWWJwRDNEZ2VmVURkOFEveElKcmVJcTdnSS9Jcm91MGZPc0x4ZkVsZ0NwcEY0Q3ZDTkQvVTVwc1p2TUM0OApxeFd2MjdXT0Z6VVU1N1dNZkdUelB2ZUdrbGF1ZE4wU291Ty9rTmIxc2Q3T25PNnc0cHBxcENSQlBrM2lQQ1ZCCld2N1hHYnVBMjNQY2ZyN3hRY1cwN3E0TTk3U3VQMGRacjlRd084TUNnWUVBanVLQ3V3UVZSalJmb1lDYVIyNUQKNkpZb2hON1lHMXozZnZVdk1ucXNWSU1seHNGVW5RcXlOaDBkMlVQdWRJN3E2Qy9Gd1BsUWs4aFgvVmQzUjNlUQprZVd5V21jRmN6K2tOcWNQd1BCOHRJR0hwWjFKVjNXb3hlV2RHbVg1RUh0WXcvVGI0WUpjbVVucS9iY0tOaFoxCmV6NTlsR09NVUNMWng0WTQwM3NZL1M4Q2dZRUE1L1lTTkM2OXk5RnVzVlJrU0VFTzFTa1VzdDltQzRKZjlGOUQKSEwwd3R6NVdwZzR6ZkV4R2JXRlVaaE5VSGZGS25qS25mVXVPUlM3L01SUkRWbHFBYlRtUEMvelFsKzl2YzV3MwpwUkFLMzdhNysvVERuUHdwZU9VU3NWdVVPcEVDR3RUUlZOalJDTFAzVHF1bzlaZG9pZjh5YkxrM0RKVmRTbXJxCnZEcUhReThDZ1lFQTRpbDlqSDd5bk93Mk9IUWJEK1hjTHhLZnpqWnRYcTNEQ2lYTmg5KzhLd1c1WHlEY21oL3IKUDJrU2t2Q3ZFRGZCN3BCUGFjL0Fwa0hGaTZ0c1NMYWZiejFWVk9mV0x2d2VVcUZuZXp1NnpXRDBxbFAwMjdVNQp6VjRJamtoWmNTRDN4N3JMSHY2M3hzTjBOVSsvRVppbE83VlZhM1JXcm81OCtMSi81U2ZPbEs0PQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQ==
   key_b64: TFMwdExTMUNSVWRKVGlCU1UwRWdVRkpKVmtGVVJTQkxSVmt0TFMwdExRcE5TVWxGY0ZGSlFrRkJTME5CVVVWQk1rWm1UVUl6TDNkd1ZUVTJZMmRqUmtwVFdtSldkME1yY1U5RFVEZFpjSFpUY0doV1RHZHdkSFZLWkVwdk5GcHpDbkF2TWpORWVFOXRkeXN4VG1KMU1YQXZTV2hhVUdGYWFHUnhVRFJsWjFadE5rUXpMM1U1YTJ4a05rVnplVWcyZWpONmFEVXJSRkpXVkV4b1psaG9jWEFLWW1sTmJVWjJkbXBaTkVvclJtZFRjWGhaTHl0aGRtcENWV2QyZDJGVVFsQk5MMWRZY2xSRlkyTTNTak1yYTFWb2IzRlZPUzlOV2poNU1GUmxZemhST0FwclpFMHpUMEUyZGt4R1VIRkVRVXhxYVd0NmRETjZVV3RUYWpOcFdXaDBNU3N3U1ZOMFdrdFZaMHRYVjNOMlRIaEdjVGhGTldONlpVRllZMlZ2TUZWVUNrcExkRnBqVURrNWR6WXdjbEpWT1ROamVtdEhiVGxYVVhGUmRubHhhM2xHTXl0NVJISXJiMUJvVVRCRlMzcFhiRTlPTDNkWk9HSXlRMnRSZG5GRmVrNEtlR0k0WVV0b1RXMVdRa2htT0ZoVWRGVkpVVXBDUzBObVZEQXhNaXRYYUVjNFIyUlRhbEZKUkVGUlFVSkJiMGxDUVVNeVJYYzBVSE5qYkdsR2JUVlBNQXBWUjNaU2JIcFNSMFIwWkM5alEybzVhMGszTUZsREszZDFRV016Y0dGSVNGaGpUVEo1WWxwa1dIbEJiMHBNZFhKTWFuRmFRVnBZVFVaUlQyVlhiVUp4Q2taSk0xZDRZVVJxWm14UFpWVk5jbUZvWTFBMGIxRnJUa1ZqYkhwdVdGVjVWRTlZUldSWVdYVm9NV2htYXpKSVZXdzBNamQ2ZWpjMGJXTjRSMmROTTFJS1FWVnJaMkZyY0doWksyZG1OamhvTTJ4VE1HZGpWblJ0T0RocVkydEtlSFF5TmpOaUwxb3hlbkkwU0hoM2VEVTNXRll6TlRKekswNVpMM1ZXYTNkYWFBcHBhRkp2TmtkNU9FRlBUekZHYW5ndk1WbDFZM00yU2pOSFJqQkVWR1pxUTBZeVpqVm9MMjVRWWxSWlUxZHBkR1k1VDFoS1VqSTRkMFlyVG1abmQzVlhDbkJGYjJJeWFETjVSRFJqSzJoWFNVVkxjbXQzVG1WU1JuQTNWa3hFU25oVU5VbHBkV0pWY1ZaelZVSmtaRmxYV2pCQlQzQnpRMVkxV0haVlUyNWpkRlFLYkhoS2RUUnRNRU5uV1VWQk4xWlFiMXBMTDNWMWQyc3dia2R4UW5ZMk5VWnVRVGRuZFd0blVVZDBSRkpYTVV3eWVXODJVSEptZWtOQldIbEpNV1lyU3dwbWExRTVlVU42V1VGU1MzTXJja1JSUTJSeldIbFVTRmx5YVV4elVDOWpSbFF5ZDFwa1ltcGFlbTVPTDFOd01Wb3JSblpPTUVrclRFUmhibGxPVUhveENscDFLMU5sZW5Bdk0zSlRlbVJMVjAxa2JsZzJNa3REVW14M2VWSkpaa2RJV0hsNGFqWk1jR3N6U2tGMFluQlBTRTB2TUV4Wk1qaERaMWxGUVRaV01EWUtVMHh4V1dKd1JETkVaMlZtVlVSa09GRXZlRWxLY21WSmNUZG5TUzlKY205MU1HWlBjMHg0WmtWc1owTndjRVkwUTNaRFRrUXZWVFZ3YzFwMlRVTTBPQXB4ZUZkMk1qZFhUMFo2VlZVMU4xZE5aa2RVZWxCMlpVZHJiR0YxWkU0d1UyOTFUeTlyVG1JeGMyUTNUMjVQTm5jMGNIQnhjRU5TUWxCck0ybFFRMVpDQ2xkMk4xaEhZblZCTWpOUVkyWnlOM2hSWTFjd04zRTBUVGszVTNWUU1HUmFjamxSZDA4NFRVTm5XVVZCYW5WTFEzVjNVVlpTYWxKbWIxbERZVkl5TlVRS05rcFpiMmhPTjFsSE1Yb3pablpWZGsxdWNYTldTVTFzZUhOR1ZXNVJjWGxPYURCa01sVlFkV1JKTjNFMlF5OUdkMUJzVVdzNGFGZ3ZWbVF6VWpObFVRcHJaVmQ1VjIxalJtTjZLMnRPY1dOUWQxQkNPSFJKUjBod1dqRktWak5YYjNobFYyUkhiVmcxUlVoMFdYY3ZWR0kwV1VwamJWVnVjUzlpWTB0T2FGb3hDbVY2TlRsc1IwOU5WVU5NV25nMFdUUXdNM05aTDFNNFEyZFpSVUUxTDFsVFRrTTJPWGs1Um5WelZsSnJVMFZGVHpGVGExVnpkRGx0UXpSS1pqbEdPVVFLU0V3d2QzUjZOVmR3WnpSNlprVjRSMkpYUmxWYWFFNVZTR1pHUzI1cVMyNW1WWFZQVWxNM0wwMVNVa1JXYkhGQllsUnRVRU12ZWxGc0t6bDJZelYzTXdwd1VrRkxNemRoTnlzdlZFUnVVSGR3WlU5VlUzTldkVlZQY0VWRFIzUlVVbFpPYWxKRFRGQXpWSEYxYnpsYVpHOXBaamg1WWt4ck0wUktWbVJUYlhKeENuWkVjVWhSZVRoRFoxbEZRVFJwYkRscVNEZDViazkzTWs5SVVXSkVLMWhqVEhoTFpucHFXblJZY1RORVEybFlUbWc1S3poTGQxYzFXSGxFWTIxb0wzSUtVREpyVTJ0MlEzWkZSR1pDTjNCQ1VHRmpMMEZ3YTBoR2FUWjBjMU5NWVdaaWVqRldWazltVjB4MmQyVlZjVVp1WlhwMU5ucFhSREJ4YkZBd01qZFZOUXA2VmpSSmFtdG9XbU5UUkRONE4zSk1TSFkyTTNoelRqQk9WU3N2UlZwcGJFODNWbFpoTTFKWGNtODFPQ3RNU2k4MVUyWlBiRXMwUFFvdExTMHRMVVZPUkNCU1UwRWdVRkpKVmtGVVJTQkxSVmt0TFMwdExRPT0=
 ---
+# Source: greymatter/charts/internal-data/templates/data-secret.yaml
+kind: Secret
+apiVersion: v1
+metadata:
+  name: data-internal-secrets
+  namespace: decipher-dt
+type: Opaque
+stringData:
+  aws_access_key_id: __AWS_ACCESS_KEY_ID__
+  aws_secret_access_key: __AWS_SECRET_ACCESS_KEY__
+  aws_region: __AWS_REGION__
+  aws_s3_bucket: __AWS_S3_BUCKET__
+  master_key: __AWS_MASTER_KEY__
+---
 # Source: greymatter/charts/internal-data/templates/mongo-passwords.yaml
 apiVersion: v1
 kind: Secret
@@ -46,8 +74,8 @@ type: Opaque
 stringData:
   root_username: mongogm
   root_password: USCISMongo64
-  admin_password: USCISMongoA32
-  database: gmdata
+  admin_password: "USCISMongoA32"
+  database: "gmdata"
 ---
 # Source: greymatter/charts/internal-jwt/templates/jwt-certs.yaml
 apiVersion: v1
@@ -313,7 +341,7 @@ data:
       "clusterName": "intake",
       "zoneName": "zone-default-zone",
       "name": "USCIS Intake Service",
-      "version": "1.0.0",
+      "version": ""1.0.0"",
       "owner": "USCIS",
       "capability": "Payments",
       "runtime": "GO",
@@ -757,11 +785,11 @@ metadata:
   namespace: decipher-dt
 data:
   gmdata.js: |-
-    db.auth("mongogm", "USCISMongoA32")
+    db.auth("mongogm", ""USCISMongoA32"")
     db = db.getSiblingDB("gmdata")
     db.createUser({
         user: "mongogm",
-        pwd: "USCISMongo64",
+        pwd: ""USCISMongoA32"",
         roles: [
         {
             role: 'root',
@@ -3749,11 +3777,11 @@ metadata:
   namespace: decipher-dt
 data:
   gmdata.js: |-
-    db.auth("mongogm", "USCISMongoA32")
+    db.auth("mongogm", ""USCISMongoA32"")
     db = db.getSiblingDB("gmdata")
     db.createUser({
         user: "mongogm",
-        pwd: "USCISMongo64",
+        pwd: ""USCISMongoA32"",
         roles: [
         {
             role: 'root',
@@ -3831,7 +3859,7 @@ data:
     host all all 127.0.0.1/32 trust
 
     # IPv4 remote connections for authenticated users
-    hostssl greymatter posgresgm 0.0.0.0/0 md5
+    hostssl greymatter greymatter 0.0.0.0/0 md5
 ---
 # Source: greymatter/charts/slo/templates/postgres-slo-overrides.yaml
 kind: ConfigMap
@@ -3893,22 +3921,6 @@ spec:
     requests:
       storage: 40Gi
 ---
-# Source: greymatter/charts/internal-data/templates/data-pvc.yaml
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: data-pvc
-  namespace: decipher-dt
-annotations:
-   volume.beta.kubernetes.io/storage-class: glusterfs-storage
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 40Gi
----
-
 # Source: greymatter/charts/slo/templates/postgres-pvc.yaml
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -4103,7 +4115,7 @@ spec:
   clusterIP: None
   ports:
     - name: server
-      port: 6379
+      port: "6379"
       protocol: TCP
       targetPort: 6379
   selector:
@@ -4121,7 +4133,7 @@ spec:
   clusterIP: None
   ports:
     - name: server
-      port: 6379
+      port: "6379"
       protocol: TCP
       targetPort: 6379
   selector:
@@ -4592,15 +4604,27 @@ spec:
           
         env:        
         - name: AWS_ACCESS_KEY_ID
-          value: "__AWS_ACCESS_KEY_ID__"
+          valueFrom:
+            secretKeyRef:
+              name: data-secrets
+              key: aws_access_key_id
         - name: AWS_REGION
-          value: "__AWS_REGION__"
+          valueFrom:
+            secretKeyRef:
+              name: data-secrets
+              key: aws_region
         - name: AWS_S3_BUCKET
-          value: "data"
+          valueFrom:
+            secretKeyRef:
+              name: data-secrets
+              key: aws_s3_bucket
         - name: AWS_S3_PARTITION
           value: "data"
         - name: AWS_SECRET_ACCESS_KEY
-          value: "__AWS_SECRET_ACCESS_KEY__"
+          valueFrom:
+            secretKeyRef:
+              name: data-secrets
+              key: aws_secret_access_key
         - name: CLIENT_JWT_ENDPOINT_ADDRESS
           value: "localhost"
         - name: CLIENT_JWT_ENDPOINT_CERT
@@ -4662,7 +4686,10 @@ spec:
         - name: LESS_CHATTY_INFO
           value: "false"
         - name: MASTERKEY
-          value: "__AWS_MASTER_KEY__"
+          valueFrom:
+            secretKeyRef:
+              name: data-secrets
+              key: master_key
         - name: MONGO_INITDB_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -4682,9 +4709,6 @@ spec:
           value: "false"
         - name: MONGOHOST
           value: "data-mongo-0.data-mongo.decipher-dt.svc.cluster.local:27017"
-        volumeMounts:
-          - name: data-pvc
-            mountPath: /buckets/data/data
       - name: sidecar 
         image: "nexus-nonprod-gss.uscis.dhs.gov:8124/deciphernow/gm-proxy:0.9.1"
         env:        
@@ -4727,16 +4751,16 @@ spec:
 
       imagePullSecrets:
       - name: docker.secret
-      volumes:  
+      volumes:      
       - name: sidecar-certs
         secret:
           secretName: sidecar-certs
+      - name: data
+        secret:
+          secretName: data-secrets
       - name: jwt-security
         secret:
           secretName: jwt-security
-      - name: data-pvc
-        persistentVolumeClaim:
-          claimName: data-pvc
 ---
 # Source: greymatter/charts/edge/templates/edge.yaml
 kind: Deployment
@@ -4952,9 +4976,12 @@ spec:
           
         env:        
         - name: AWS_S3_BUCKET
-          value: "data"
+          valueFrom:
+            secretKeyRef:
+              name: data-internal-secrets
+              key: aws_s3_bucket
         - name: AWS_S3_PARTITION
-          value: "data"
+          value: "greymatter"
         - name: CLIENT_JWT_ENDPOINT_ADDRESS
           value: "localhost"
         - name: CLIENT_JWT_ENDPOINT_CERT
@@ -5016,7 +5043,10 @@ spec:
         - name: LESS_CHATTY_INFO
           value: "false"
         - name: MASTERKEY
-          value: "__AWS_MASTER_KEY__"
+          valueFrom:
+            secretKeyRef:
+              name: data-internal-secrets
+              key: master_key
         - name: MONGO_INITDB_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -5038,7 +5068,7 @@ spec:
           value: "internal-data-mongo-0.internal-data-mongo.decipher-dt.svc.cluster.local:27017"
         volumeMounts:
           - name: data-pvc
-            mountPath: /buckets/data/data
+            mountPath: /buckets/local/greymatter
       - name: sidecar 
         image: "nexus-nonprod-gss.uscis.dhs.gov:8124/deciphernow/gm-proxy:0.9.1"
         env:        
@@ -5085,6 +5115,9 @@ spec:
       - name: sidecar-certs
         secret:
           secretName: sidecar-certs
+      - name: data
+        secret:
+          secretName: data-internal-secrets
       - name: jwt-security
         secret:
           secretName: jwt-security
