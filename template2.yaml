@@ -2358,7 +2358,6 @@ data:
         ]
       }
     }
-
   route-1.json: |-
     {
       "route_key": "edge-data-internal-route",
@@ -3084,20 +3083,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
----
-# Source: greymatter/charts/internal-data/templates/data-pvc.yaml
 
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: data-internal-pvc
-  namespace: default
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 40Gi
 ---
 # Source: greymatter/charts/slo/templates/postgres-pvc.yaml
 kind: PersistentVolumeClaim
