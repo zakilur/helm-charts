@@ -1,13 +1,12 @@
-
 ---
 apiVersion: v1
 kind: Secret
 metadata:
   name: edge
   labels:
-    chart: "edge-2.0.1"
-    release: "release-name"
-    heritage: "Tiller"
+    chart: 'edge-2.0.1'
+    release: 'release-name'
+    heritage: 'Tiller'
 type: Opaque
 data:
   ca.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUdjVENDQkZtZ0F3SUJBZ0lDRUFBd0RRWUpLb1pJaHZjTkFRRUxCUUF3Z2MweEN6QUpCZ05WQkFZVEFsVlQKTVJFd0R3WURWUVFJREFoV2FYSm5hVzVwWVRFVE1CRUdBMVVFQnd3S1FXeGxlR0Z1WkhKcFlURWtNQ0lHQTFVRQpDZ3diUkdWamFYQm9aWElnVkdWamFHNXZiRzluZVNCVGRIVmthVzl6TVJRd0VnWURWUVFMREF0RmJtZHBibVZsCmNtbHVaekV1TUN3R0ExVUVBd3dsUkdWamFYQm9aWElnUTJWeWRHbG1hV05oZEdVZ1FYVjBhRzl5YVhSNUlDaFMKYjI5MEtURXFNQ2dHQ1NxR1NJYjNEUUVKQVJZYlpXNW5hVzVsWlhKcGJtZEFaR1ZqYVhCb1pYSnViM2N1WTI5dApNQjRYRFRFM01EZ3dPVEV4TWpNd09Gb1hEVEkzTURnd056RXhNak13T0Zvd2djQXhDekFKQmdOVkJBWVRBbFZUCk1SRXdEd1lEVlFRSURBaFdhWEpuYVc1cFlURWtNQ0lHQTFVRUNnd2JSR1ZqYVhCb1pYSWdWR1ZqYUc1dmJHOW4KZVNCVGRIVmthVzl6TVJRd0VnWURWUVFMREF0RmJtZHBibVZsY21sdVp6RTJNRFFHQTFVRUF3d3RSR1ZqYVhCbwpaWElnUTJWeWRHbG1hV05oZEdVZ1FYVjBhRzl5YVhSNUlDaEpiblJsY20xbFpHbGhkR1VwTVNvd0tBWUpLb1pJCmh2Y05BUWtCRmh0bGJtZHBibVZsY21sdVowQmtaV05wY0dobGNtNXZkeTVqYjIwd2dnSWlNQTBHQ1NxR1NJYjMKRFFFQkFRVUFBNElDRHdBd2dnSUtBb0lDQVFEUGt4YWlVRDN1cVIyQUE1andBYjlnQ2pEK0JyT3JZQm9lbG5SNgp1MjlGUFQ1Y0hlTThiZlZvNnppeHk3cUMybFh6aEs1Z0gvVExXWGVscEV3VStzdzgxb1VielpsQjdaMmx2cGo4CnQ0elhnNHpnSE5QcUFGSk02TDliNzBkTGd1a2hjVU82bm5JaVBQQXBybXRCRHZYYnRCd0RDek9QYU1jQmVFd2kKekVSYTRXeVhZam41USthOExUVExRL09GbUxIRkEyZENHNzhzNmNZUU9mRjkyTDY0MVFkT2hxWFB0cStRd3FBbQpXa1E1M1BlczZySG1qVDBrQzhoRUk1ZkNLRUEzUVhZdDZZdGdYK0tJSGdPWVdJMGcyMndoOTVvaGsrRHVSTC9PCjN6eko5dENqck1QTzJseG1nMEdkcHVxamZSNks4Q0VrNFlxMmRVd1lDN2RmZmdDcld2OXppay9wWGVvU3ZUdjMKWHByTU4yV1dLQlg5bFZDMnFLRmhOWDRkcmlCRlJPMGk1K2JHZE0xZThOaWxVRHFIaWlrd2hhVngyem5iL0UvYgpMQ0N3bGhDMG9BQXhuVloxSjE4azQ2U1RlN2hsZy9ScU0vMTh1eG1oUDlhbjJGa0R0dXlaQnVnYnBXcGdrN2xFCnRwT2Q5MmlDR1lEYzZrOEpzbitwMFVpWmppb0p2L0dtMDRUM3Q5MGRrVnU3RCttd0ZJc0VBYUpqd2VwRVo3a2kKSUJheVdySm1sK0RUNGdoeWFka21zOFVhT2ErWU9ZRVppWTVHekpoRW9kQXQwMU9hblNrelIvRllqTTRTdUdYdwpScnEycDhoVHVVQkJtMXA5aXB2OERMcVBtbFhaMkNuN0J5VFg3VE1zRys3N1I0emtrYTVYRDV0VUxwQWY1eEtvCnF4NE4vUUlEQVFBQm8yWXdaREFkQmdOVkhRNEVGZ1FVYkEySTlwWlVKN1o2V3hYZlRSZWNvQ3NxZm5Vd0h3WUQKVlIwakJCZ3dGb0FVWTVVNEpiOGhDNlNzaW5oMkx6Q0IzdGx5OGJjd0VnWURWUjBUQVFIL0JBZ3dCZ0VCL3dJQgpBREFPQmdOVkhROEJBZjhFQkFNQ0FZWXdEUVlKS29aSWh2Y05BUUVMQlFBRGdnSUJBSE10ZW5zbG5FdXZuVDRnCkpXUjcwRlp2M3dVT09xQXN5eEpkV2o0bzh5TTcvVjN3R0tNeGtSdjdPcWV0cDkyWFlhdWZmU1B4RTNJTm5HTXEKRGRSTVRmMk1HVm52L1c1UEpvdVp3TWhCWDRXNnJqdmw0UUNTbCtRK3dTdCtPaWJOdTJBeGRDZVFLYTY3Y3d2ZgpRZkQ0dWZlV2Z2VVB6YXp3enVKcUU1V0NqTm5NMktzV2JtemNscXVBYlVqS0gwMDE3VUdSWWU4VEhyQ1o1TWRuCkw5WCtaU2U1d1dIV0ltN0pMbjVuZXhlVzY2OGhnY2RJTnJLQlJnN3lnS1dyTy9hTUZubDNjUVhtYk50WEJ0K3kKRTV0b2Y2MTgvSFdKQmpDM2UrZXlJTXFqZ2pFWm14WWZ4d0JUazBYVkVadUEzUHlBR2lnQTE3UTBldjVaeDRpaQoyZkdJWU41eTNMNk9NcmZrY21kdGlob1Fpc3FkK3pLbGd4V0g0WjJLdFYwUkZWVHJlb29OYVNwRlp1NkVlQ1BICjBmZysrVFYvdUdPRWZOYzRzZUVmRmlhTTR1cThtcDVFMVBZT1hYNERMa3ppZ25xcWw5aDh1My8zWkM3bTROb1kKcXBvT3VyUXlZL2RDVUlKdzNLYitEbGNrMU9ac0dRTnZrcGZsSHZDeEN2VHE0OGJFZ2pPK3hrb1lCT0RoWTB3VApncmwxa0ZCWE1OTkFpRmlIbEhhTTZoK01Ldi85Y1JpNjNLWG1oaUVqVVdVVmNkVDlaUlJQSjZxZDVRQUpISitoCk5VN3MxN2FyNS80U2dKeDlCWlNFWXpRUUN6dDRSRXdCeGZyRi9HZEdOaWExd1pjcU1OeWxta0Q4ZkNXQlppVzIKc2Fyc0R6Vnp3dmR1TDFPREl5Y1h4ZS9wWlV4aQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCi0tLS0tQkVHSU4gQ0VSVElGSUNBVEUtLS0tLQpNSUlHZ2pDQ0JHcWdBd0lCQWdJSkFLQmRsUlVuWFhJSk1BMEdDU3FHU0liM0RRRUJDd1VBTUlITk1Rc3dDUVlEClZRUUdFd0pWVXpFUk1BOEdBMVVFQ0F3SVZtbHlaMmx1YVdFeEV6QVJCZ05WQkFjTUNrRnNaWGhoYm1SeWFXRXgKSkRBaUJnTlZCQW9NRzBSbFkybHdhR1Z5SUZSbFkyaHViMnh2WjNrZ1UzUjFaR2x2Y3pFVU1CSUdBMVVFQ3d3TApSVzVuYVc1bFpYSnBibWN4TGpBc0JnTlZCQU1NSlVSbFkybHdhR1Z5SUVObGNuUnBabWxqWVhSbElFRjFkR2h2CmNtbDBlU0FvVW05dmRDa3hLakFvQmdrcWhraUc5dzBCQ1FFV0cyVnVaMmx1WldWeWFXNW5RR1JsWTJsd2FHVnkKYm05M0xtTnZiVEFlRncweE56QTRNRGt4TVRJeU1UbGFGdzB5TnpBNE1EY3hNVEl5TVRsYU1JSE5NUXN3Q1FZRApWUVFHRXdKVlV6RVJNQThHQTFVRUNBd0lWbWx5WjJsdWFXRXhFekFSQmdOVkJBY01Da0ZzWlhoaGJtUnlhV0V4CkpEQWlCZ05WQkFvTUcwUmxZMmx3YUdWeUlGUmxZMmh1YjJ4dloza2dVM1IxWkdsdmN6RVVNQklHQTFVRUN3d0wKUlc1bmFXNWxaWEpwYm1jeExqQXNCZ05WQkFNTUpVUmxZMmx3YUdWeUlFTmxjblJwWm1sallYUmxJRUYxZEdodgpjbWwwZVNBb1VtOXZkQ2t4S2pBb0Jna3Foa2lHOXcwQkNRRVdHMlZ1WjJsdVpXVnlhVzVuUUdSbFkybHdhR1Z5CmJtOTNMbU52YlRDQ0FpSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnSVBBRENDQWdvQ2dnSUJBTERvMDh6UmJzc2kKdnJnSXlDaUUzeDV0dEhEY0VzT3MzRWFaYUUzaEhwWEs1YW41aVhUOC90bDM1QkRBV2wxSjZDSmttNGlwMENoNQpqT3FyazVwZVFKS3VONzMxR2xhZnpvYWJ3SGNxeUQ2Q3ZKWkFOcmU2NHMwSjJDVFpwb2IyZ1dNMDZDNzV1d3pLCjVXNEpmaXZTekJwSHU4QStGSkFSbVpwblFvRkRSSVBXUUZrOXEyMkNQSVd0bFVkcmt3VmRuSGxWKytoUktLQlUKcXdBeVhqNlVVbnJ2d1dORVIwQzB3a3NvSmYrNW9QL0hMeXF6VWNkNnlQbU9pQWU4UWhSOGpMZHQvSzhlMTRHSQo3WGhBeXRLeEkycUhxelVtaTJUNTdsSXp6ODNmRzRDbW81OW1JRjRqTHZIZmpDNDh6ejlkQ29PYkNLL1FjY3pYCmxpcHhtVG05SG9jRFdDQ28wTDAzNWFydld4UmtQOGVjNzVDRTIwUThScVVZOWpRbzRhNjRSeWRiQWFiQ3c4czAKYjBtU29IYlJ2cFpDeDk2S2hDRzdFa2pDb3JXcnZoOWR4WkFlbklaREFibjNzWDlRR2M2QStCNU1ZYnY3MFVLbwo4UkQySU9Ec3Z1Q1NubjFyRVFwR2IwZDZoTlNSZUROMmNZTG5TZXVvTVVseFQvU1JDTkJpekdPV3hKdUZMMUNyCjVZbk55VXYzdENFWEt4RU05T29SSHV0eWRtZWc4ZlRiVHU4aEFsR2lZaGdxZWhta0FwUzI1cUNsNHNWejNGVWoKL3kyeWZRYmVjbGl1L1lkUFZ6aVJHc0xPVEdoUWxkQlNJYVZkTUdBL211enhWdE9KZExCdUsvcUsvZ3ZXN04ycwp2WlFUSFp6K0IxMERseHM5UzJOaGY3Rlg3cE1MTTloWEFnTUJBQUdqWXpCaE1CMEdBMVVkRGdRV0JCUmpsVGdsCnZ5RUxwS3lLZUhZdk1JSGUyWEx4dHpBZkJnTlZIU01FR0RBV2dCUmpsVGdsdnlFTHBLeUtlSFl2TUlIZTJYTHgKdHpBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUE0R0ExVWREd0VCL3dRRUF3SUJoakFOQmdrcWhraUc5dzBCQVFzRgpBQU9DQWdFQWNCNHo0QUxSWCtzMUZiMWoyc1dMbzY1akl5eG0wT0IyUlRsaHN0ZDQremQrekZqTGc3WEUwTzVqCklsbTNiYXNWbExNMm1UbWk1Q0M0bXZPQmliU2I2TmxKcjM0R21LYmZ3WVZMajN0cG5sbkEvSEdHekhZM3VvWDYKekJVU0lZUkgxMGsyYm1wTTQzOGZYdHo5UCtrSEFrbXNWajJZazh1TGcrdFpEWkVkTThxaVdiYUlaYSthd0h3TApEQmhkMWRRN1p5ZWpWSkxLR3lZd2Q3ZE1ZTHEwNEY0QXFhd1BwMmtzbWNVdGt0VTJRK3VHbUpCa3FnQnpVVEMrCjY0eVBLQmJQYTJXRkZEVnRxdDByNnFEMk43RkQ2djBiMFBpQmVydXZocFN2YTF5dkUwdk1OZmE5a2M4RXhyS3oKN0dNTUdzdjNUSU9xSzB0WVhKYXlvTSs4VkFFTHdCY0Z2a0Nrb2JzNFR0a0YzVm9QaU85MWhsbTdLKzd3b05RSApPVmh4cURxSDNFQ0E3dk5MZUEwOXhUN0VBcFh6UEd3azE2M080cW9aZFQ3VlVJMkZ1OUcwK0l6elM0MlRWWE9tCk1VcDFzRWlkVVVFbHd1dXFEdkt4c0JQNmRvOXhUOGRIZzJuOVkwNE1FMkZ5UTFvbXVMelJyY3lqVTZRbzZQTHIKSC9kaTZLVDNpaVovbGVGa0RNZjUvUGVzeTdiRXhQWk4yc0hSM1NwUjVSd1FoNTBUNEtaeDdGT3F2Q0pwaTZQcApIMWN6MDkyMXFHdEcwaWhlT3pXZm9ubXZZS25oeGNUVHBnK2Z1aVZkUFd3ZHV0alZsK0hQYzJ5ancxR2RxdzRoCm40b0ZqRzRLUU82enZaekdERmF5OUhhelp5VUtwZ2FteTI0dThYWTcvQlNXYzFjOTVHZz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQ==
@@ -23,9 +22,9 @@ kind: Secret
 metadata:
   name: postgres-ssl-certs
   labels:
-    chart: "slo-2.0.2"
-    release: "release-name"
-    heritage: "Tiller"
+    chart: 'slo-2.0.2'
+    release: 'release-name'
+    heritage: 'Tiller'
 type: Opaque
 data:
   ca.pem: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUdjVENDQkZtZ0F3SUJBZ0lDRUFBd0RRWUpLb1pJaHZjTkFRRUxCUUF3Z2MweEN6QUpCZ05WQkFZVEFsVlQKTVJFd0R3WURWUVFJREFoV2FYSm5hVzVwWVRFVE1CRUdBMVVFQnd3S1FXeGxlR0Z1WkhKcFlURWtNQ0lHQTFVRQpDZ3diUkdWamFYQm9aWElnVkdWamFHNXZiRzluZVNCVGRIVmthVzl6TVJRd0VnWURWUVFMREF0RmJtZHBibVZsCmNtbHVaekV1TUN3R0ExVUVBd3dsUkdWamFYQm9aWElnUTJWeWRHbG1hV05oZEdVZ1FYVjBhRzl5YVhSNUlDaFMKYjI5MEtURXFNQ2dHQ1NxR1NJYjNEUUVKQVJZYlpXNW5hVzVsWlhKcGJtZEFaR1ZqYVhCb1pYSnViM2N1WTI5dApNQjRYRFRFM01EZ3dPVEV4TWpNd09Gb1hEVEkzTURnd056RXhNak13T0Zvd2djQXhDekFKQmdOVkJBWVRBbFZUCk1SRXdEd1lEVlFRSURBaFdhWEpuYVc1cFlURWtNQ0lHQTFVRUNnd2JSR1ZqYVhCb1pYSWdWR1ZqYUc1dmJHOW4KZVNCVGRIVmthVzl6TVJRd0VnWURWUVFMREF0RmJtZHBibVZsY21sdVp6RTJNRFFHQTFVRUF3d3RSR1ZqYVhCbwpaWElnUTJWeWRHbG1hV05oZEdVZ1FYVjBhRzl5YVhSNUlDaEpiblJsY20xbFpHbGhkR1VwTVNvd0tBWUpLb1pJCmh2Y05BUWtCRmh0bGJtZHBibVZsY21sdVowQmtaV05wY0dobGNtNXZkeTVqYjIwd2dnSWlNQTBHQ1NxR1NJYjMKRFFFQkFRVUFBNElDRHdBd2dnSUtBb0lDQVFEUGt4YWlVRDN1cVIyQUE1andBYjlnQ2pEK0JyT3JZQm9lbG5SNgp1MjlGUFQ1Y0hlTThiZlZvNnppeHk3cUMybFh6aEs1Z0gvVExXWGVscEV3VStzdzgxb1VielpsQjdaMmx2cGo4CnQ0elhnNHpnSE5QcUFGSk02TDliNzBkTGd1a2hjVU82bm5JaVBQQXBybXRCRHZYYnRCd0RDek9QYU1jQmVFd2kKekVSYTRXeVhZam41USthOExUVExRL09GbUxIRkEyZENHNzhzNmNZUU9mRjkyTDY0MVFkT2hxWFB0cStRd3FBbQpXa1E1M1BlczZySG1qVDBrQzhoRUk1ZkNLRUEzUVhZdDZZdGdYK0tJSGdPWVdJMGcyMndoOTVvaGsrRHVSTC9PCjN6eko5dENqck1QTzJseG1nMEdkcHVxamZSNks4Q0VrNFlxMmRVd1lDN2RmZmdDcld2OXppay9wWGVvU3ZUdjMKWHByTU4yV1dLQlg5bFZDMnFLRmhOWDRkcmlCRlJPMGk1K2JHZE0xZThOaWxVRHFIaWlrd2hhVngyem5iL0UvYgpMQ0N3bGhDMG9BQXhuVloxSjE4azQ2U1RlN2hsZy9ScU0vMTh1eG1oUDlhbjJGa0R0dXlaQnVnYnBXcGdrN2xFCnRwT2Q5MmlDR1lEYzZrOEpzbitwMFVpWmppb0p2L0dtMDRUM3Q5MGRrVnU3RCttd0ZJc0VBYUpqd2VwRVo3a2kKSUJheVdySm1sK0RUNGdoeWFka21zOFVhT2ErWU9ZRVppWTVHekpoRW9kQXQwMU9hblNrelIvRllqTTRTdUdYdwpScnEycDhoVHVVQkJtMXA5aXB2OERMcVBtbFhaMkNuN0J5VFg3VE1zRys3N1I0emtrYTVYRDV0VUxwQWY1eEtvCnF4NE4vUUlEQVFBQm8yWXdaREFkQmdOVkhRNEVGZ1FVYkEySTlwWlVKN1o2V3hYZlRSZWNvQ3NxZm5Vd0h3WUQKVlIwakJCZ3dGb0FVWTVVNEpiOGhDNlNzaW5oMkx6Q0IzdGx5OGJjd0VnWURWUjBUQVFIL0JBZ3dCZ0VCL3dJQgpBREFPQmdOVkhROEJBZjhFQkFNQ0FZWXdEUVlKS29aSWh2Y05BUUVMQlFBRGdnSUJBSE10ZW5zbG5FdXZuVDRnCkpXUjcwRlp2M3dVT09xQXN5eEpkV2o0bzh5TTcvVjN3R0tNeGtSdjdPcWV0cDkyWFlhdWZmU1B4RTNJTm5HTXEKRGRSTVRmMk1HVm52L1c1UEpvdVp3TWhCWDRXNnJqdmw0UUNTbCtRK3dTdCtPaWJOdTJBeGRDZVFLYTY3Y3d2ZgpRZkQ0dWZlV2Z2VVB6YXp3enVKcUU1V0NqTm5NMktzV2JtemNscXVBYlVqS0gwMDE3VUdSWWU4VEhyQ1o1TWRuCkw5WCtaU2U1d1dIV0ltN0pMbjVuZXhlVzY2OGhnY2RJTnJLQlJnN3lnS1dyTy9hTUZubDNjUVhtYk50WEJ0K3kKRTV0b2Y2MTgvSFdKQmpDM2UrZXlJTXFqZ2pFWm14WWZ4d0JUazBYVkVadUEzUHlBR2lnQTE3UTBldjVaeDRpaQoyZkdJWU41eTNMNk9NcmZrY21kdGlob1Fpc3FkK3pLbGd4V0g0WjJLdFYwUkZWVHJlb29OYVNwRlp1NkVlQ1BICjBmZysrVFYvdUdPRWZOYzRzZUVmRmlhTTR1cThtcDVFMVBZT1hYNERMa3ppZ25xcWw5aDh1My8zWkM3bTROb1kKcXBvT3VyUXlZL2RDVUlKdzNLYitEbGNrMU9ac0dRTnZrcGZsSHZDeEN2VHE0OGJFZ2pPK3hrb1lCT0RoWTB3VApncmwxa0ZCWE1OTkFpRmlIbEhhTTZoK01Ldi85Y1JpNjNLWG1oaUVqVVdVVmNkVDlaUlJQSjZxZDVRQUpISitoCk5VN3MxN2FyNS80U2dKeDlCWlNFWXpRUUN6dDRSRXdCeGZyRi9HZEdOaWExd1pjcU1OeWxta0Q4ZkNXQlppVzIKc2Fyc0R6Vnp3dmR1TDFPREl5Y1h4ZS9wWlV4aQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCi0tLS0tQkVHSU4gQ0VSVElGSUNBVEUtLS0tLQpNSUlHZ2pDQ0JHcWdBd0lCQWdJSkFLQmRsUlVuWFhJSk1BMEdDU3FHU0liM0RRRUJDd1VBTUlITk1Rc3dDUVlEClZRUUdFd0pWVXpFUk1BOEdBMVVFQ0F3SVZtbHlaMmx1YVdFeEV6QVJCZ05WQkFjTUNrRnNaWGhoYm1SeWFXRXgKSkRBaUJnTlZCQW9NRzBSbFkybHdhR1Z5SUZSbFkyaHViMnh2WjNrZ1UzUjFaR2x2Y3pFVU1CSUdBMVVFQ3d3TApSVzVuYVc1bFpYSnBibWN4TGpBc0JnTlZCQU1NSlVSbFkybHdhR1Z5SUVObGNuUnBabWxqWVhSbElFRjFkR2h2CmNtbDBlU0FvVW05dmRDa3hLakFvQmdrcWhraUc5dzBCQ1FFV0cyVnVaMmx1WldWeWFXNW5RR1JsWTJsd2FHVnkKYm05M0xtTnZiVEFlRncweE56QTRNRGt4TVRJeU1UbGFGdzB5TnpBNE1EY3hNVEl5TVRsYU1JSE5NUXN3Q1FZRApWUVFHRXdKVlV6RVJNQThHQTFVRUNBd0lWbWx5WjJsdWFXRXhFekFSQmdOVkJBY01Da0ZzWlhoaGJtUnlhV0V4CkpEQWlCZ05WQkFvTUcwUmxZMmx3YUdWeUlGUmxZMmh1YjJ4dloza2dVM1IxWkdsdmN6RVVNQklHQTFVRUN3d0wKUlc1bmFXNWxaWEpwYm1jeExqQXNCZ05WQkFNTUpVUmxZMmx3YUdWeUlFTmxjblJwWm1sallYUmxJRUYxZEdodgpjbWwwZVNBb1VtOXZkQ2t4S2pBb0Jna3Foa2lHOXcwQkNRRVdHMlZ1WjJsdVpXVnlhVzVuUUdSbFkybHdhR1Z5CmJtOTNMbU52YlRDQ0FpSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnSVBBRENDQWdvQ2dnSUJBTERvMDh6UmJzc2kKdnJnSXlDaUUzeDV0dEhEY0VzT3MzRWFaYUUzaEhwWEs1YW41aVhUOC90bDM1QkRBV2wxSjZDSmttNGlwMENoNQpqT3FyazVwZVFKS3VONzMxR2xhZnpvYWJ3SGNxeUQ2Q3ZKWkFOcmU2NHMwSjJDVFpwb2IyZ1dNMDZDNzV1d3pLCjVXNEpmaXZTekJwSHU4QStGSkFSbVpwblFvRkRSSVBXUUZrOXEyMkNQSVd0bFVkcmt3VmRuSGxWKytoUktLQlUKcXdBeVhqNlVVbnJ2d1dORVIwQzB3a3NvSmYrNW9QL0hMeXF6VWNkNnlQbU9pQWU4UWhSOGpMZHQvSzhlMTRHSQo3WGhBeXRLeEkycUhxelVtaTJUNTdsSXp6ODNmRzRDbW81OW1JRjRqTHZIZmpDNDh6ejlkQ29PYkNLL1FjY3pYCmxpcHhtVG05SG9jRFdDQ28wTDAzNWFydld4UmtQOGVjNzVDRTIwUThScVVZOWpRbzRhNjRSeWRiQWFiQ3c4czAKYjBtU29IYlJ2cFpDeDk2S2hDRzdFa2pDb3JXcnZoOWR4WkFlbklaREFibjNzWDlRR2M2QStCNU1ZYnY3MFVLbwo4UkQySU9Ec3Z1Q1NubjFyRVFwR2IwZDZoTlNSZUROMmNZTG5TZXVvTVVseFQvU1JDTkJpekdPV3hKdUZMMUNyCjVZbk55VXYzdENFWEt4RU05T29SSHV0eWRtZWc4ZlRiVHU4aEFsR2lZaGdxZWhta0FwUzI1cUNsNHNWejNGVWoKL3kyeWZRYmVjbGl1L1lkUFZ6aVJHc0xPVEdoUWxkQlNJYVZkTUdBL211enhWdE9KZExCdUsvcUsvZ3ZXN04ycwp2WlFUSFp6K0IxMERseHM5UzJOaGY3Rlg3cE1MTTloWEFnTUJBQUdqWXpCaE1CMEdBMVVkRGdRV0JCUmpsVGdsCnZ5RUxwS3lLZUhZdk1JSGUyWEx4dHpBZkJnTlZIU01FR0RBV2dCUmpsVGdsdnlFTHBLeUtlSFl2TUlIZTJYTHgKdHpBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUE0R0ExVWREd0VCL3dRRUF3SUJoakFOQmdrcWhraUc5dzBCQVFzRgpBQU9DQWdFQWNCNHo0QUxSWCtzMUZiMWoyc1dMbzY1akl5eG0wT0IyUlRsaHN0ZDQremQrekZqTGc3WEUwTzVqCklsbTNiYXNWbExNMm1UbWk1Q0M0bXZPQmliU2I2TmxKcjM0R21LYmZ3WVZMajN0cG5sbkEvSEdHekhZM3VvWDYKekJVU0lZUkgxMGsyYm1wTTQzOGZYdHo5UCtrSEFrbXNWajJZazh1TGcrdFpEWkVkTThxaVdiYUlaYSthd0h3TApEQmhkMWRRN1p5ZWpWSkxLR3lZd2Q3ZE1ZTHEwNEY0QXFhd1BwMmtzbWNVdGt0VTJRK3VHbUpCa3FnQnpVVEMrCjY0eVBLQmJQYTJXRkZEVnRxdDByNnFEMk43RkQ2djBiMFBpQmVydXZocFN2YTF5dkUwdk1OZmE5a2M4RXhyS3oKN0dNTUdzdjNUSU9xSzB0WVhKYXlvTSs4VkFFTHdCY0Z2a0Nrb2JzNFR0a0YzVm9QaU85MWhsbTdLKzd3b05RSApPVmh4cURxSDNFQ0E3dk5MZUEwOXhUN0VBcFh6UEd3azE2M080cW9aZFQ3VlVJMkZ1OUcwK0l6elM0MlRWWE9tCk1VcDFzRWlkVVVFbHd1dXFEdkt4c0JQNmRvOXhUOGRIZzJuOVkwNE1FMkZ5UTFvbXVMelJyY3lqVTZRbzZQTHIKSC9kaTZLVDNpaVovbGVGa0RNZjUvUGVzeTdiRXhQWk4yc0hSM1NwUjVSd1FoNTBUNEtaeDdGT3F2Q0pwaTZQcApIMWN6MDkyMXFHdEcwaWhlT3pXZm9ubXZZS25oeGNUVHBnK2Z1aVZkUFd3ZHV0alZsK0hQYzJ5ancxR2RxdzRoCm40b0ZqRzRLUU82enZaekdERmF5OUhhelp5VUtwZ2FteTI0dThYWTcvQlNXYzFjOTVHZz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQ==
@@ -40,9 +39,9 @@ kind: Secret
 metadata:
   name: postgres-credentials
   labels:
-    chart: "slo-2.0.2"
-    release: "release-name"
-    heritage: "Tiller"
+    chart: 'slo-2.0.2'
+    release: 'release-name'
+    heritage: 'Tiller'
 type: Opaque
 stringData:
   username: greymatter
@@ -55,9 +54,9 @@ kind: Secret
 metadata:
   name: sidecar-certs
   labels:
-    chart: "greymatter-2.0.4"
-    release: "release-name"
-    heritage: "Tiller"
+    chart: 'greymatter-2.0.4'
+    release: 'release-name'
+    heritage: 'Tiller'
 type: Opaque
 data:
   ca.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUdjVENDQkZtZ0F3SUJBZ0lDRUFBd0RRWUpLb1pJaHZjTkFRRUxCUUF3Z2MweEN6QUpCZ05WQkFZVEFsVlQKTVJFd0R3WURWUVFJREFoV2FYSm5hVzVwWVRFVE1CRUdBMVVFQnd3S1FXeGxlR0Z1WkhKcFlURWtNQ0lHQTFVRQpDZ3diUkdWamFYQm9aWElnVkdWamFHNXZiRzluZVNCVGRIVmthVzl6TVJRd0VnWURWUVFMREF0RmJtZHBibVZsCmNtbHVaekV1TUN3R0ExVUVBd3dsUkdWamFYQm9aWElnUTJWeWRHbG1hV05oZEdVZ1FYVjBhRzl5YVhSNUlDaFMKYjI5MEtURXFNQ2dHQ1NxR1NJYjNEUUVKQVJZYlpXNW5hVzVsWlhKcGJtZEFaR1ZqYVhCb1pYSnViM2N1WTI5dApNQjRYRFRFM01EZ3dPVEV4TWpNd09Gb1hEVEkzTURnd056RXhNak13T0Zvd2djQXhDekFKQmdOVkJBWVRBbFZUCk1SRXdEd1lEVlFRSURBaFdhWEpuYVc1cFlURWtNQ0lHQTFVRUNnd2JSR1ZqYVhCb1pYSWdWR1ZqYUc1dmJHOW4KZVNCVGRIVmthVzl6TVJRd0VnWURWUVFMREF0RmJtZHBibVZsY21sdVp6RTJNRFFHQTFVRUF3d3RSR1ZqYVhCbwpaWElnUTJWeWRHbG1hV05oZEdVZ1FYVjBhRzl5YVhSNUlDaEpiblJsY20xbFpHbGhkR1VwTVNvd0tBWUpLb1pJCmh2Y05BUWtCRmh0bGJtZHBibVZsY21sdVowQmtaV05wY0dobGNtNXZkeTVqYjIwd2dnSWlNQTBHQ1NxR1NJYjMKRFFFQkFRVUFBNElDRHdBd2dnSUtBb0lDQVFEUGt4YWlVRDN1cVIyQUE1andBYjlnQ2pEK0JyT3JZQm9lbG5SNgp1MjlGUFQ1Y0hlTThiZlZvNnppeHk3cUMybFh6aEs1Z0gvVExXWGVscEV3VStzdzgxb1VielpsQjdaMmx2cGo4CnQ0elhnNHpnSE5QcUFGSk02TDliNzBkTGd1a2hjVU82bm5JaVBQQXBybXRCRHZYYnRCd0RDek9QYU1jQmVFd2kKekVSYTRXeVhZam41USthOExUVExRL09GbUxIRkEyZENHNzhzNmNZUU9mRjkyTDY0MVFkT2hxWFB0cStRd3FBbQpXa1E1M1BlczZySG1qVDBrQzhoRUk1ZkNLRUEzUVhZdDZZdGdYK0tJSGdPWVdJMGcyMndoOTVvaGsrRHVSTC9PCjN6eko5dENqck1QTzJseG1nMEdkcHVxamZSNks4Q0VrNFlxMmRVd1lDN2RmZmdDcld2OXppay9wWGVvU3ZUdjMKWHByTU4yV1dLQlg5bFZDMnFLRmhOWDRkcmlCRlJPMGk1K2JHZE0xZThOaWxVRHFIaWlrd2hhVngyem5iL0UvYgpMQ0N3bGhDMG9BQXhuVloxSjE4azQ2U1RlN2hsZy9ScU0vMTh1eG1oUDlhbjJGa0R0dXlaQnVnYnBXcGdrN2xFCnRwT2Q5MmlDR1lEYzZrOEpzbitwMFVpWmppb0p2L0dtMDRUM3Q5MGRrVnU3RCttd0ZJc0VBYUpqd2VwRVo3a2kKSUJheVdySm1sK0RUNGdoeWFka21zOFVhT2ErWU9ZRVppWTVHekpoRW9kQXQwMU9hblNrelIvRllqTTRTdUdYdwpScnEycDhoVHVVQkJtMXA5aXB2OERMcVBtbFhaMkNuN0J5VFg3VE1zRys3N1I0emtrYTVYRDV0VUxwQWY1eEtvCnF4NE4vUUlEQVFBQm8yWXdaREFkQmdOVkhRNEVGZ1FVYkEySTlwWlVKN1o2V3hYZlRSZWNvQ3NxZm5Vd0h3WUQKVlIwakJCZ3dGb0FVWTVVNEpiOGhDNlNzaW5oMkx6Q0IzdGx5OGJjd0VnWURWUjBUQVFIL0JBZ3dCZ0VCL3dJQgpBREFPQmdOVkhROEJBZjhFQkFNQ0FZWXdEUVlKS29aSWh2Y05BUUVMQlFBRGdnSUJBSE10ZW5zbG5FdXZuVDRnCkpXUjcwRlp2M3dVT09xQXN5eEpkV2o0bzh5TTcvVjN3R0tNeGtSdjdPcWV0cDkyWFlhdWZmU1B4RTNJTm5HTXEKRGRSTVRmMk1HVm52L1c1UEpvdVp3TWhCWDRXNnJqdmw0UUNTbCtRK3dTdCtPaWJOdTJBeGRDZVFLYTY3Y3d2ZgpRZkQ0dWZlV2Z2VVB6YXp3enVKcUU1V0NqTm5NMktzV2JtemNscXVBYlVqS0gwMDE3VUdSWWU4VEhyQ1o1TWRuCkw5WCtaU2U1d1dIV0ltN0pMbjVuZXhlVzY2OGhnY2RJTnJLQlJnN3lnS1dyTy9hTUZubDNjUVhtYk50WEJ0K3kKRTV0b2Y2MTgvSFdKQmpDM2UrZXlJTXFqZ2pFWm14WWZ4d0JUazBYVkVadUEzUHlBR2lnQTE3UTBldjVaeDRpaQoyZkdJWU41eTNMNk9NcmZrY21kdGlob1Fpc3FkK3pLbGd4V0g0WjJLdFYwUkZWVHJlb29OYVNwRlp1NkVlQ1BICjBmZysrVFYvdUdPRWZOYzRzZUVmRmlhTTR1cThtcDVFMVBZT1hYNERMa3ppZ25xcWw5aDh1My8zWkM3bTROb1kKcXBvT3VyUXlZL2RDVUlKdzNLYitEbGNrMU9ac0dRTnZrcGZsSHZDeEN2VHE0OGJFZ2pPK3hrb1lCT0RoWTB3VApncmwxa0ZCWE1OTkFpRmlIbEhhTTZoK01Ldi85Y1JpNjNLWG1oaUVqVVdVVmNkVDlaUlJQSjZxZDVRQUpISitoCk5VN3MxN2FyNS80U2dKeDlCWlNFWXpRUUN6dDRSRXdCeGZyRi9HZEdOaWExd1pjcU1OeWxta0Q4ZkNXQlppVzIKc2Fyc0R6Vnp3dmR1TDFPREl5Y1h4ZS9wWlV4aQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCi0tLS0tQkVHSU4gQ0VSVElGSUNBVEUtLS0tLQpNSUlHZ2pDQ0JHcWdBd0lCQWdJSkFLQmRsUlVuWFhJSk1BMEdDU3FHU0liM0RRRUJDd1VBTUlITk1Rc3dDUVlEClZRUUdFd0pWVXpFUk1BOEdBMVVFQ0F3SVZtbHlaMmx1YVdFeEV6QVJCZ05WQkFjTUNrRnNaWGhoYm1SeWFXRXgKSkRBaUJnTlZCQW9NRzBSbFkybHdhR1Z5SUZSbFkyaHViMnh2WjNrZ1UzUjFaR2x2Y3pFVU1CSUdBMVVFQ3d3TApSVzVuYVc1bFpYSnBibWN4TGpBc0JnTlZCQU1NSlVSbFkybHdhR1Z5SUVObGNuUnBabWxqWVhSbElFRjFkR2h2CmNtbDBlU0FvVW05dmRDa3hLakFvQmdrcWhraUc5dzBCQ1FFV0cyVnVaMmx1WldWeWFXNW5RR1JsWTJsd2FHVnkKYm05M0xtTnZiVEFlRncweE56QTRNRGt4TVRJeU1UbGFGdzB5TnpBNE1EY3hNVEl5TVRsYU1JSE5NUXN3Q1FZRApWUVFHRXdKVlV6RVJNQThHQTFVRUNBd0lWbWx5WjJsdWFXRXhFekFSQmdOVkJBY01Da0ZzWlhoaGJtUnlhV0V4CkpEQWlCZ05WQkFvTUcwUmxZMmx3YUdWeUlGUmxZMmh1YjJ4dloza2dVM1IxWkdsdmN6RVVNQklHQTFVRUN3d0wKUlc1bmFXNWxaWEpwYm1jeExqQXNCZ05WQkFNTUpVUmxZMmx3YUdWeUlFTmxjblJwWm1sallYUmxJRUYxZEdodgpjbWwwZVNBb1VtOXZkQ2t4S2pBb0Jna3Foa2lHOXcwQkNRRVdHMlZ1WjJsdVpXVnlhVzVuUUdSbFkybHdhR1Z5CmJtOTNMbU52YlRDQ0FpSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnSVBBRENDQWdvQ2dnSUJBTERvMDh6UmJzc2kKdnJnSXlDaUUzeDV0dEhEY0VzT3MzRWFaYUUzaEhwWEs1YW41aVhUOC90bDM1QkRBV2wxSjZDSmttNGlwMENoNQpqT3FyazVwZVFKS3VONzMxR2xhZnpvYWJ3SGNxeUQ2Q3ZKWkFOcmU2NHMwSjJDVFpwb2IyZ1dNMDZDNzV1d3pLCjVXNEpmaXZTekJwSHU4QStGSkFSbVpwblFvRkRSSVBXUUZrOXEyMkNQSVd0bFVkcmt3VmRuSGxWKytoUktLQlUKcXdBeVhqNlVVbnJ2d1dORVIwQzB3a3NvSmYrNW9QL0hMeXF6VWNkNnlQbU9pQWU4UWhSOGpMZHQvSzhlMTRHSQo3WGhBeXRLeEkycUhxelVtaTJUNTdsSXp6ODNmRzRDbW81OW1JRjRqTHZIZmpDNDh6ejlkQ29PYkNLL1FjY3pYCmxpcHhtVG05SG9jRFdDQ28wTDAzNWFydld4UmtQOGVjNzVDRTIwUThScVVZOWpRbzRhNjRSeWRiQWFiQ3c4czAKYjBtU29IYlJ2cFpDeDk2S2hDRzdFa2pDb3JXcnZoOWR4WkFlbklaREFibjNzWDlRR2M2QStCNU1ZYnY3MFVLbwo4UkQySU9Ec3Z1Q1NubjFyRVFwR2IwZDZoTlNSZUROMmNZTG5TZXVvTVVseFQvU1JDTkJpekdPV3hKdUZMMUNyCjVZbk55VXYzdENFWEt4RU05T29SSHV0eWRtZWc4ZlRiVHU4aEFsR2lZaGdxZWhta0FwUzI1cUNsNHNWejNGVWoKL3kyeWZRYmVjbGl1L1lkUFZ6aVJHc0xPVEdoUWxkQlNJYVZkTUdBL211enhWdE9KZExCdUsvcUsvZ3ZXN04ycwp2WlFUSFp6K0IxMERseHM5UzJOaGY3Rlg3cE1MTTloWEFnTUJBQUdqWXpCaE1CMEdBMVVkRGdRV0JCUmpsVGdsCnZ5RUxwS3lLZUhZdk1JSGUyWEx4dHpBZkJnTlZIU01FR0RBV2dCUmpsVGdsdnlFTHBLeUtlSFl2TUlIZTJYTHgKdHpBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUE0R0ExVWREd0VCL3dRRUF3SUJoakFOQmdrcWhraUc5dzBCQVFzRgpBQU9DQWdFQWNCNHo0QUxSWCtzMUZiMWoyc1dMbzY1akl5eG0wT0IyUlRsaHN0ZDQremQrekZqTGc3WEUwTzVqCklsbTNiYXNWbExNMm1UbWk1Q0M0bXZPQmliU2I2TmxKcjM0R21LYmZ3WVZMajN0cG5sbkEvSEdHekhZM3VvWDYKekJVU0lZUkgxMGsyYm1wTTQzOGZYdHo5UCtrSEFrbXNWajJZazh1TGcrdFpEWkVkTThxaVdiYUlaYSthd0h3TApEQmhkMWRRN1p5ZWpWSkxLR3lZd2Q3ZE1ZTHEwNEY0QXFhd1BwMmtzbWNVdGt0VTJRK3VHbUpCa3FnQnpVVEMrCjY0eVBLQmJQYTJXRkZEVnRxdDByNnFEMk43RkQ2djBiMFBpQmVydXZocFN2YTF5dkUwdk1OZmE5a2M4RXhyS3oKN0dNTUdzdjNUSU9xSzB0WVhKYXlvTSs4VkFFTHdCY0Z2a0Nrb2JzNFR0a0YzVm9QaU85MWhsbTdLKzd3b05RSApPVmh4cURxSDNFQ0E3dk5MZUEwOXhUN0VBcFh6UEd3azE2M080cW9aZFQ3VlVJMkZ1OUcwK0l6elM0MlRWWE9tCk1VcDFzRWlkVVVFbHd1dXFEdkt4c0JQNmRvOXhUOGRIZzJuOVkwNE1FMkZ5UTFvbXVMelJyY3lqVTZRbzZQTHIKSC9kaTZLVDNpaVovbGVGa0RNZjUvUGVzeTdiRXhQWk4yc0hSM1NwUjVSd1FoNTBUNEtaeDdGT3F2Q0pwaTZQcApIMWN6MDkyMXFHdEcwaWhlT3pXZm9ubXZZS25oeGNUVHBnK2Z1aVZkUFd3ZHV0alZsK0hQYzJ5ancxR2RxdzRoCm40b0ZqRzRLUU82enZaekdERmF5OUhhelp5VUtwZ2FteTI0dThYWTcvQlNXYzFjOTVHZz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQ==
@@ -77,39 +76,39 @@ metadata:
 data:
   bootstrap.sh: |-
     #!/usr/bin/env sh
-    
+
     set -eo pipefail
-    
+
     MESH_CONFIG_DIR="/etc/config/mesh/"
     CURL_COMMAND='curl -s -o /dev/null -w "%{http_code}"'
     HTTP="http"
-    
+
     echo "Configuring mesh from config directory: $MESH_CONFIG_DIR"
-    
+
     echo "Debug set to: $DEBUG"
     if [ "$DEBUG" == "true" ]; then
         set -x
         echo "DEBUG: Catalog API Host: $CATALOG_API_HOST"
         echo "DEBUG: Catalog API USE_TLS: $USE_TLS "
     fi
-    
+
     cd $MESH_CONFIG_DIR
-    
+
     if [ "$USE_TLS" == "true" ]; then
         CURL_COMMAND='curl -s -o /dev/null -w "%{http_code}" -k --cacert /etc/pki/ca.crt --cert /etc/pki/server.crt --key /etc/pki/server.key'
         HTTP="https"
     fi
-    
+
     echo "Config dir contains:"
     ls
-    
+
     # This script expects the gm catalog api to be up and available to serve requests
     # Currently, this is handled in a fairly good idiomatic way using Readiness Probes and `k8s-waiter`
-    
+
     echo "Starting catalog configuration ..."
-    
+
     delay=0.01
-    
+
     sendCommand() {
         if [ "$DEBUG" == "true" ]; then
             echo "Contents of $2..."
@@ -117,45 +116,45 @@ data:
             cat $2
             echo
         fi
-    
+
         echo "Uploading $file..."
         http_response=$($CURL_COMMAND -X POST -d @$2 $HTTP://$CATALOG_API_HOST/$1)
         if [ "$DEBUG" == "true" ]; then
             echo $http_response
         fi 
-    
+
         http_response="${http_response%\"}"
         http_response="${http_response#\"}"
-    
+
         if [ $http_response != "200" ]; then
             echo "There was an error uploading a file to catalog.  Exiting"
             exit 1
         fi
         
     }
-    
+
     cd $MESH_CONFIG_DIR/zones
     echo "Loading the zones to catalog ..."
     for file in $(ls); do
         sendCommand zones $file
     done
-    
+
     cd $MESH_CONFIG_DIR/services
     for d in */; do
         echo
         echo "Found service: $d"
         cd $d
-    
+
         for file in $(ls); do
             echo "Creating catalog item $file"
             sendCommand clusters $file
         done
-    
+
         cd $MESH_CONFIG_DIR/services
     done
-    
+
     echo "Catalog configuration complete"
-    
+
 ---
 # Source: greymatter/charts/catalog/templates/bootstrap-zone-configmap.yaml
 kind: ConfigMap
@@ -199,8 +198,7 @@ data:
       "metricsTemplate": "",
       "metricsPort": 8081
     }
-    
-...
+
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -229,8 +227,7 @@ data:
       "metricsTemplate": "",
       "metricsPort": 8081
     }
-    
-...
+
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -259,8 +256,7 @@ data:
       "metricsTemplate": "",
       "metricsPort": 8081
     }
-    
-...
+
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -289,8 +285,7 @@ data:
       "metricsTemplate": "",
       "metricsPort": 8081
     }
-    
-...
+
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -319,178 +314,7 @@ data:
       "metricsTemplate": "",
       "metricsPort": 8081
     }
-    
-...
----
-# Source: greymatter/charts/dashboard/templates/prometheus-configmap.yaml
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: prometheus
-  namespace: default
-data:
-  prometheus.yaml: |-
-    global:
-      scrape_interval:     5s
-      evaluation_interval: 2m
 
-    # References the recording rules YAML file below
-    rule_files:
-      - "/etc/prometheus/recording_rules.yaml"
-
-    scrape_configs:
-
-      - job_name: 'prometheus'
-        static_configs:
-          - targets: ['localhost:9090']
-      - job_name: kubernetes
-        metrics_path: /prometheus
-        kubernetes_sd_configs:
-          - role: pod
-            namespaces:
-              names:
-                - "default"
-        relabel_configs:
-        # Drop all named ports that are not "metrics"
-        - source_labels: ['__meta_kubernetes_pod_container_port_name']
-          regex: 'metrics'
-          action: 'keep'
-        # Relabel Jobs to the service name and version of the zk path
-        - source_labels: ['__meta_kubernetes_pod_label_app']
-          regex: '(.*)'
-          target_label:  'job'
-          #replacement:   '${1}'
-          replacement:   '${1}'
-
-  # Copied from https://github.com/DecipherNow/gm-dashboard/blob/master/docker/prometheus/recording_rules.yml
-  recording_rules.yaml: |-
-    # Dashboard version: 3.1.0
-    # time intervals:
-    # ["1h", "4h", "12h"]
-
-    groups:
-      # queries for overall services
-      - name: overviewQueries
-        rules:
-          - record: overviewQueries:avgUpPercent:avg
-            expr: avg by (job) (up)
-          # avgResponseTimeByRoute
-          - record: overviewQueries:avgResponseTimeByRoute_1h:avg
-            expr: avg(rate(http_request_duration_seconds_sum{key!="all"}[1h]) / rate(http_request_duration_seconds_count{key!="all"}[1h]) * 1000 > 0) by (job, key)
-          - record: overviewQueries:avgResponseTimeByRoute_4h:avg
-            expr: avg(rate(http_request_duration_seconds_sum{key!="all"}[4h]) / rate(http_request_duration_seconds_count{key!="all"}[4h]) * 1000 > 0) by (job, key)
-          - record: overviewQueries:avgResponseTimeByRoute_12h:avg
-            expr: avg(rate(http_request_duration_seconds_sum{key!="all"}[12h]) / rate(http_request_duration_seconds_count{key!="all"}[12h]) * 1000 > 0) by (job, key)
-            # numberOfRequestsByRoute
-          - record: overviewQueries:numberOfRequestsByRoute_1h:sum
-            expr: sum(floor(increase(http_request_duration_seconds_count[1h])) >= 1) by (job, key)
-          - record: overviewQueries:numberOfRequestsByRoute_4h:sum
-            expr: sum(floor(increase(http_request_duration_seconds_count[4h])) >= 1) by (job, key)
-          - record: overviewQueries:numberOfRequestsByRoute_12h:sum
-            expr: sum(floor(increase(http_request_duration_seconds_count[12h])) >= 1) by (job, key)
-            # latencyByRoute
-          - record: overviewQueries:latencyByRoute_1h:sum
-            expr: sum without(instance, status)(rate(http_request_duration_seconds_count{key!="all"}[1h])) > 0
-          - record: overviewQueries:latencyByRoute_4h:sum
-            expr: sum without(instance, status)(rate(http_request_duration_seconds_count{key!="all"}[4h])) > 0
-          - record: overviewQueries:latencyByRoute_12h:sum
-            expr: sum without(instance, status)(rate(http_request_duration_seconds_count{key!="all"}[12h])) > 0
-            # error percent
-          - record: overviewQueries:errorPercent_1h:sum
-            expr: sum(floor(increase(http_request_duration_seconds_count{status!~"2..|3..", key!="all"}[1h]) )) by (job) / sum(floor(increase(http_request_duration_seconds_count{key!="all"}[1h]) )) by (job) * 100
-          - record: overviewQueries:errorPercent_4h:sum
-            expr: sum(floor(increase(http_request_duration_seconds_count{status!~"2..|3..", key!="all"}[4h]) )) by (job) / sum(floor(increase(http_request_duration_seconds_count{key!="all"}[4h]) )) by (job) * 100
-          - record: overviewQueries:errorPercent_12h:sum
-            expr: sum(floor(increase(http_request_duration_seconds_count{status!~"2..|3..", key!="all"}[12h]) )) by (job) / sum(floor(increase(http_request_duration_seconds_count{key!="all"}[12h]) )) by (job) * 100
-
-        # queries for each route
-      - name: queriesByRoute
-        rules:
-          # error percent
-          - record: queriesByRoute:errorPercent_1h:sum
-            expr: sum(floor(increase(http_request_duration_seconds_count{status!~"2..|3..", key!="all"}[1h]) )) by (job, key, method) / sum(floor(increase(http_request_duration_seconds_count{key!="all"}[1h]) )) by (job, key, method) * 100
-          - record: queriesByRoute:errorPercent_4h:sum
-            expr: sum(floor(increase(http_request_duration_seconds_count{status!~"2..|3..", key!="all"}[4h]) )) by (job, key, method) / sum(floor(increase(http_request_duration_seconds_count{key!="all"}[4h]) )) by (job, key, method) * 100
-          - record: queriesByRoute:errorPercent_12h:sum
-            expr: sum(floor(increase(http_request_duration_seconds_count{status!~"2..|3..", key!="all"}[12h]) )) by (job, key, method) / sum(floor(increase(http_request_duration_seconds_count{key!="all"}[12h]) )) by (job, key, method) * 100
-            # p95Latency
-          - record: queriesByRoute:p95Latency_1h:sum
-            expr: round(histogram_quantile(0.95,avg without(instance, status)(rate(http_request_duration_seconds_bucket[1h]))) * 1000, 0.1)
-          - record: queriesByRoute:p95Latency_4h:sum
-            expr: round(histogram_quantile(0.95,avg without(instance, status)(rate(http_request_duration_seconds_bucket[4h]))) * 1000, 0.1)
-          - record: queriesByRoute:p95Latency_12h:sum
-            expr: round(histogram_quantile(0.95,avg without(instance, status)(rate(http_request_duration_seconds_bucket[12h]))) * 1000, 0.1)
-            # p50 latency
-          - record: queriesByRoute:p50Latency_1h:sum
-            expr: round(histogram_quantile(0.50,avg without(instance, status)(rate(http_request_duration_seconds_bucket[1h]))) * 1000, 0.1)
-          - record: queriesByRoute:p50Latency_4h:sum
-            expr: round(histogram_quantile(0.50,avg without(instance, status)(rate(http_request_duration_seconds_bucket[4h]))) * 1000, 0.1)
-          - record: queriesByRoute:p50Latency_12h:sum
-            expr: round(histogram_quantile(0.50,avg without(instance, status)(rate(http_request_duration_seconds_bucket[12h]))) * 1000, 0.1)
-            # request count for route
-          - record: queriesByRoute:requestCount_1h:sum
-            expr: sum(floor(increase(http_request_duration_seconds_count[1h])) >= 1) by (job, key, method)
-          - record: queriesByRoute:requestCount_4h:sum
-            expr: sum(floor(increase(http_request_duration_seconds_count[4h])) >= 1) by (job, key, method)
-          - record: queriesByRoute:requestCount_12h:sum
-            expr: sum(floor(increase(http_request_duration_seconds_count[12h])) >= 1) by (job, key, method)
-
-        # range queries
-      - name: rangeQueries
-        rules:
-          # pXXLatency range queries
-          - record: rangeQueries:p50Latency:sum
-            expr: round(histogram_quantile(0.50,avg without(instance, status)(rate(http_request_duration_seconds_bucket[10m]))) * 1000, 0.1)
-          - record: rangeQueries:p90Latency:sum
-            expr: round(histogram_quantile(0.90,avg without(instance, status)(rate(http_request_duration_seconds_bucket[10m]))) * 1000, 0.1)
-          - record: rangeQueries:p95Latency:sum
-            expr: round(histogram_quantile(0.95,avg without(instance, status)(rate(http_request_duration_seconds_bucket[10m]))) * 1000, 0.1)
-          - record: rangeQueries:p99Latency:sum
-            expr: round(histogram_quantile(0.99,avg without(instance, status)(rate(http_request_duration_seconds_bucket[10m]))) * 1000, 0.1)
-          - record: rangeQueries:p999Latency:sum
-            expr: round(histogram_quantile(0.999,avg without(instance, status)(rate(http_request_duration_seconds_bucket[10m]))) * 1000, 0.1)
-          - record: rangeQueries:p9999Latency:sum
-            expr: round(histogram_quantile(0.9999,avg without(instance, status)(rate(http_request_duration_seconds_bucket[10m]))) * 1000, 0.1)
-            # error percent by (job, key)
-          - record: rangeQueries:errorPercent:sum
-            expr: sum(floor(increase(http_request_duration_seconds_count{status!~"2..|3..", key!="all"}[1m]) )) by (job, key) / sum(floor(increase(http_request_duration_seconds_count{key!="all"}[1m]) )) by (job, key) * 100
-            # respones time per bucket
-          - record: rangeQueries:responseTimeP50:sum
-            expr: round(histogram_quantile(0.50,avg without(instance, status, key, method)(rate(http_request_duration_seconds_bucket{key!="all"}[10m]))) * 1000, 0.1)
-          - record: rangeQueries:responseTimeP90:sum
-            expr: round(histogram_quantile(0.90,avg without(instance, status, key, method)(rate(http_request_duration_seconds_bucket{key!="all"}[10m]))) * 1000, 0.1)
-          - record: rangeQueries:responseTimeP95:sum
-            expr: round(histogram_quantile(0.95,avg without(instance, status, key, method)(rate(http_request_duration_seconds_bucket{key!="all"}[10m]))) * 1000, 0.1)
-          - record: rangeQueries:responseTimeP99:sum
-            expr: round(histogram_quantile(0.99,avg without(instance, status, key, method)(rate(http_request_duration_seconds_bucket{key!="all"}[10m]))) * 1000, 0.1)
-          - record: rangeQueries:responseTimeP999:sum
-            expr: round(histogram_quantile(0.999,avg without(instance, status, key, method)(rate(http_request_duration_seconds_bucket{key!="all"}[10m]))) * 1000, 0.1)
-          - record: rangeQueries:responseTimeP9999:sum
-            expr: round(histogram_quantile(0.9999,avg without(instance, status, key, method)(rate(http_request_duration_seconds_bucket{key!="all"}[10m]))) * 1000, 0.1)
-
-            # error violation
-          - record: rangeQueries:errorViolation:sum
-            expr: (1 - (sum without(instance, status, key, method)(rate(http_request_duration_seconds_count{key!="all",status=~"2..|3.."}[1m]))) / (sum without(instance, status, key, method)(rate(http_request_duration_seconds_count{key!="all"}[1m])))) * 100
-            # requests violation
-          - record: rangeQueries:requestRateViolation:sum
-            expr: sum without(instance, status, key, method)(rate(http_request_duration_seconds_count{key!="all"}[1m]))
-            # request violations for route violation
-          - record: rangeQueries:routeRequestViolations:sum
-            expr: sum without(instance, status, method)(rate(http_request_duration_seconds_count[1m]))
-            # route latencies
-          - record: rangeQueries:routep50LatencyViolations:sum
-            expr: histogram_quantile(0.50,avg without(instance, status)(rate(http_request_duration_seconds_bucket[10m])))
-          - record: rangeQueries:routep90LatencyViolations:sum
-            expr: histogram_quantile(0.90,avg without(instance, status)(rate(http_request_duration_seconds_bucket[10m])))
-          - record: rangeQueries:routep95LatencyViolations:sum
-            expr: histogram_quantile(0.95,avg without(instance, status)(rate(http_request_duration_seconds_bucket[10m])))
-          - record: rangeQueries:routep99LatencyViolations:sum
-            expr: histogram_quantile(0.99,avg without(instance, status)(rate(http_request_duration_seconds_bucket[10m])))
-          - record: rangeQueries:routep999LatencyViolations:sum
-            expr: histogram_quantile(0.999,avg without(instance, status)(rate(http_request_duration_seconds_bucket[10m])))
-          - record: rangeQueries:routep9999LatencyViolations:sum
-            expr: histogram_quantile(0.9999,avg without(instance, status)(rate(http_request_duration_seconds_bucket[10m])))
-            
 ---
 # Source: greymatter/charts/gm-control-api/templates/bootstrap-configmap.yaml
 kind: ConfigMap
@@ -501,48 +325,48 @@ metadata:
 data:
   bootstrap.sh: |-
     #!/usr/bin/env sh
-    
+
     MESH_CONFIG_DIR="/etc/config/mesh/"
-    
+
     echo "Configuring mesh from config directory: $MESH_CONFIG_DIR"
-    
+
     cd $MESH_CONFIG_DIR
-    
+
     greymatter version
-    
+
     echo "Config dir contains:"
     ls
-    
+
     # This script expects gm-control-api to be up and available to serve requests
     # Currently, this is handled in a fairly good idiomatic way using Readiness Probes and `k8s-waiter`
-    
+
     echo "Starting mesh configuration ..."
-    
+
     echo "Creating service configuration objects..."
-    
+
     delay=0.01
-    
+
     cd $MESH_CONFIG_DIR/services
     # Each service should be able to be created all by itself. This means it needs to contain a domain
     for d in */; do
         echo "Found service: $d"
         cd $d
-    
+
         # The ordering of creating gm-control-api resources is extremely important and precise.
         # All objects referenced by keys must be created before being referenced or will result in an error.
         # So we add a delay of 0.1 seconds between each request to hopefully streamline this
         # A better option is probably to hardcode the order of items
-    
+
         names="domain cluster listener proxy shared_rules route"
         for name in $names; do
             echo "Creating mesh object: $name."
             greymatter create $name <$name.json
             sleep $delay
         done
-    
+
         cd $MESH_CONFIG_DIR/services
     done
-    
+
     # The edge service is created last as it links to the clusters of every other service.
     # The edge domain must be created before it can be referenced
     cd $MESH_CONFIG_DIR/special
@@ -553,35 +377,35 @@ data:
     greymatter create cluster <cluster.json
     greymatter create shared_rules <shared_rules.json
     greymatter create route <route.json
-    
+
     # for file in $(ls route*.json); do
     #     greymatter create route < $file
     # done
-    
+
     cd $MESH_CONFIG_DIR/edge
     echo "Creating edge configuration objects"
-    
+
     # All the following services reference the `edge` domain key
     for d in */; do
         echo "Found service: $d"
         cd $d
-    
+
         names="cluster shared_rules"
         for name in $names; do
             echo "Creating mesh object: $name."
             greymatter create $name <$name.json
             sleep $delay
         done
-    
+
         for file in route-*.json; do
             echo "Creating mesh object: $name."
             greymatter create route <$file
             sleep $delay
         done
-    
+
         cd $MESH_CONFIG_DIR/edge
     done
-    
+
     cd $MESH_CONFIG_DIR/special
     echo "Adding additional Special Routes"
     for rte in $(ls route-*.json); do
@@ -590,7 +414,7 @@ data:
     # greymatter create route < route-data-jwt-slash.json
     # greymatter create route < route-data-jwt.json
     # greymatter create route < route-dashboard-slash.json
-    
+
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -663,7 +487,7 @@ data:
       },
       "force_https": true
     }
-    
+
   listener.json: |-
     {
       "listener_key": "listener-catalog",
@@ -675,7 +499,7 @@ data:
       "domain_keys": ["domain-catalog"],
       "tracing_config": null
     }
-    
+
   proxy.json: |-
     {
       "proxy_key": "proxy-catalog",
@@ -716,7 +540,7 @@ data:
       "cohort_seed": null,
       "retry_policy": null
     }
-    
+
   shared_rules.json: |-
     {
       "shared_rules_key": "shared-rules-catalog",
@@ -742,10 +566,8 @@ data:
       "properties": null,
       "retry_policy": null
     }
-    
-...
----
 
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -798,7 +620,7 @@ data:
       },
       "force_https": true
     }
-    
+
   listener.json: |-
     {
       "listener_key": "listener-gm-control-api",
@@ -810,7 +632,7 @@ data:
       "domain_keys": ["domain-gm-control-api"],
       "tracing_config": null
     }
-    
+
   proxy.json: |-
     {
       "proxy_key": "proxy-gm-control-api",
@@ -851,7 +673,7 @@ data:
       "cohort_seed": null,
       "retry_policy": null
     }
-    
+
   shared_rules.json: |-
     {
       "shared_rules_key": "shared-rules-gm-control-api",
@@ -877,8 +699,7 @@ data:
       "properties": null,
       "retry_policy": null
     }
-    
-...
+
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -932,7 +753,7 @@ data:
       },
       "force_https": true
     }
-    
+
   listener.json: |-
     {
       "listener_key": "listener-dashboard",
@@ -944,7 +765,7 @@ data:
       "domain_keys": ["domain-dashboard"],
       "tracing_config": null
     }
-    
+
   proxy.json: |-
     {
       "proxy_key": "proxy-dashboard",
@@ -985,7 +806,7 @@ data:
       "cohort_seed": null,
       "retry_policy": null
     }
-    
+
   shared_rules.json: |-
     {
       "shared_rules_key": "shared-rules-dashboard",
@@ -1011,142 +832,6 @@ data:
       "properties": null,
       "retry_policy": null
     }
-    
-...
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: service-prometheus-mesh-config
-  namespace: default
-data:
-  cluster.json: |-
-    {
-      "cluster_key": "cluster-prometheus",
-      "zone_key": "zone-default-zone",
-      "name": "service",
-      "instances": [
-        {
-            "host": "0.0.0.0",
-            "port": 9090
-        }
-      ],
-      "circuit_breakers": null,
-      "outlier_detection": null,
-      "health_checks": []
-    }
-  domain.json: |-
-    {
-      "domain_key": "domain-prometheus",
-      "zone_key": "zone-default-zone",
-      "name": "*",
-      "port": 8080,
-      "redirects": null,
-      "gzip_enabled": false,
-      "cors_config": null,
-      "ssl_config": {},
-      "aliases": null,
-      "ssl_config": {
-          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
-          "protocols": [
-            "SSLv3",
-            "SSLv2",
-            "TLSv1",
-            "TLSv1.1",
-            "TLSv1.2"
-          ],
-        "require_client_certs": true,
-        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
-        "cert_key_pairs": [
-          {
-            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
-            "key_path": "/etc/proxy/tls/sidecar/server.key"
-          }
-        ]
-      },
-      "force_https": true
-    }
-    
-  listener.json: |-
-    {
-      "listener_key": "listener-prometheus",
-      "zone_key": "zone-default-zone",
-      "name": "prometheus",
-      "ip": "0.0.0.0",
-      "port": 8080,
-      "protocol": "http_auto",
-      "domain_keys": ["domain-prometheus"],
-      "tracing_config": null
-    }
-    
-  proxy.json: |-
-    {
-      "proxy_key": "proxy-prometheus",
-      "zone_key": "zone-default-zone",
-      "name": "prometheus",
-      "domain_keys": [
-        "domain-prometheus"
-      ],
-      "listener_keys": [
-          "listener-prometheus"
-      ],
-      "listeners": null,
-      "active_proxy_filters": ["gm.metrics"],
-      "proxy_filters": {
-        "gm_metrics": {
-          "metrics_port": 8081,
-          "metrics_host": "0.0.0.0",
-          "metrics_dashboard_uri_path": "/metrics",
-          "metrics_prometheus_uri_path": "/prometheus",
-          "prometheus_system_metrics_interval_seconds": 15,
-          "metrics_ring_buffer_size": 4096,
-          "metrics_key_function": "depth",
-          "metrics_key_depth": "1"
-        }
-      }
-    }
-  route.json: |-
-    {
-      "route_key": "route-prometheus",
-      "domain_key": "domain-prometheus",
-      "zone_key": "zone-default-zone",
-      "path": "/",
-      "prefix_rewrite": null,
-      "redirects": null,
-      "shared_rules_key": "shared-rules-prometheus",
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "retry_policy": null
-    }
-    
-  shared_rules.json: |-
-    {
-      "shared_rules_key": "shared-rules-prometheus",
-      "name": "prometheus",
-      "zone_key": "zone-default-zone",
-      "default": {
-        "light": [
-          {
-            "constraint_key": "",
-            "cluster_key": "cluster-prometheus",
-            "metadata": null,
-            "properties": null,
-            "response_data": {},
-            "weight": 1
-          }
-        ],
-        "dark": null,
-        "tap": null
-      },
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "properties": null,
-      "retry_policy": null
-    }
-    
-...
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -1200,7 +885,7 @@ data:
       },
       "force_https": true
     }
-    
+
   listener.json: |-
     {
       "listener_key": "listener-slo",
@@ -1212,7 +897,7 @@ data:
       "domain_keys": ["domain-slo"],
       "tracing_config": null
     }
-    
+
   proxy.json: |-
     {
       "proxy_key": "proxy-slo",
@@ -1253,7 +938,7 @@ data:
       "cohort_seed": null,
       "retry_policy": null
     }
-    
+
   shared_rules.json: |-
     {
       "shared_rules_key": "shared-rules-slo",
@@ -1279,8 +964,7 @@ data:
       "properties": null,
       "retry_policy": null
     }
-    
-...
+
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -1317,7 +1001,7 @@ data:
         ]
       }
     }
-    
+
   route-1.json: |-
     {
       "route_key": "edge-catalog-route",
@@ -1332,7 +1016,7 @@ data:
       "cohort_seed": null,
       "retry_policy": null
     }
-    
+
   route-2.json: |-
     {
       "route_key": "edge-catalog-route-slash",
@@ -1347,7 +1031,7 @@ data:
       "cohort_seed": null,
       "retry_policy": null
     }
-    
+
   shared_rules.json: |-
     {
       "zone_key": "zone-default-zone",
@@ -1373,8 +1057,7 @@ data:
       "properties": null,
       "retry_policy": null
     }
-    
-...
+
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -1411,7 +1094,7 @@ data:
         ]
       }
     }
-    
+
   route-1.json: |-
     {
       "route_key": "edge-gm-control-api-route",
@@ -1426,7 +1109,7 @@ data:
       "cohort_seed": null,
       "retry_policy": null
     }
-    
+
   route-2.json: |-
     {
       "route_key": "edge-gm-control-api-route-slash",
@@ -1441,7 +1124,7 @@ data:
       "cohort_seed": null,
       "retry_policy": null
     }
-    
+
   shared_rules.json: |-
     {
       "zone_key": "zone-default-zone",
@@ -1467,8 +1150,7 @@ data:
       "properties": null,
       "retry_policy": null
     }
-    
-...
+
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -1505,7 +1187,7 @@ data:
         ]
       }
     }
-    
+
   route-1.json: |-
     {
       "route_key": "edge-dashboard-route",
@@ -1520,7 +1202,7 @@ data:
       "cohort_seed": null,
       "retry_policy": null
     }
-    
+
   route-2.json: |-
     {
       "route_key": "edge-dashboard-route-slash",
@@ -1535,7 +1217,7 @@ data:
       "cohort_seed": null,
       "retry_policy": null
     }
-    
+
   shared_rules.json: |-
     {
       "zone_key": "zone-default-zone",
@@ -1561,102 +1243,6 @@ data:
       "properties": null,
       "retry_policy": null
     }
-    
-...
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: edge-prometheus-mesh-config
-  namespace: default
-data:
-  cluster.json: |-
-    {
-      "zone_key": "zone-default-zone",
-      "cluster_key": "edge-to-prometheus-cluster",
-      "name": "prometheus",
-      "instances": [],
-      "circuit_breakers": null,
-      "outlier_detection": null,
-      "health_checks": [],
-      "require_tls": true,
-      "ssl_config": {
-        "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
-        "protocols": [
-          "SSLv3",
-          "SSLv2",
-          "TLSv1",
-          "TLSv1.1",
-          "TLSv1.2"
-        ],
-        "require_client_certs": true,
-        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
-        "cert_key_pairs": [
-          {
-            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
-            "key_path": "/etc/proxy/tls/sidecar/server.key"
-          }
-        ]
-      }
-    }
-    
-  route-1.json: |-
-    {
-      "route_key": "edge-prometheus-route",
-      "domain_key": "edge",
-      "zone_key": "zone-default-zone",
-      "path": "/services/prometheus/latest/",
-      "prefix_rewrite": "/",
-      "redirects": null,
-      "shared_rules_key": "edge-prometheus-shared-rules",
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "retry_policy": null
-    }
-    
-  route-2.json: |-
-    {
-      "route_key": "edge-prometheus-route-slash",
-      "domain_key": "edge",
-      "zone_key": "zone-default-zone",
-      "path": "/services/prometheus/latest",
-      "prefix_rewrite": "/services/prometheus/latest/",
-      "redirects": null,
-      "shared_rules_key": "edge-prometheus-shared-rules",
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "retry_policy": null
-    }
-    
-  shared_rules.json: |-
-    {
-      "zone_key": "zone-default-zone",
-      "shared_rules_key": "edge-prometheus-shared-rules",
-      "name": "prometheus",
-      "default": {
-        "light": [
-          {
-            "constraint_key": "",
-            "cluster_key": "edge-to-prometheus-cluster",
-            "metadata": null,
-            "properties": null,
-            "response_data": {},
-            "weight": 1
-          }
-        ],
-        "dark": null,
-        "tap": null
-      },
-      "rules": null,
-      "response_data": {},
-      "cohort_seed": null,
-      "properties": null,
-      "retry_policy": null
-    }
-    
-...
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -1693,7 +1279,7 @@ data:
         ]
       }
     }
-    
+
   route-1.json: |-
     {
       "route_key": "edge-slo-route",
@@ -1708,7 +1294,7 @@ data:
       "cohort_seed": null,
       "retry_policy": null
     }
-    
+
   route-2.json: |-
     {
       "route_key": "edge-slo-route-slash",
@@ -1723,7 +1309,7 @@ data:
       "cohort_seed": null,
       "retry_policy": null
     }
-    
+
   shared_rules.json: |-
     {
       "zone_key": "zone-default-zone",
@@ -1749,8 +1335,7 @@ data:
       "properties": null,
       "retry_policy": null
     }
-    
-...
+
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -1842,7 +1427,7 @@ data:
         }
       }
     }
-    
+
   route-dashboard-slash.json: |-
     {
       "route_key": "edge-dashboard-route-no-slash",
@@ -1857,7 +1442,7 @@ data:
       "cohort_seed": null,
       "retry_policy": null
     }
-    
+
   route.json: |-
     {
       "route_key": "route-edge",
@@ -1872,7 +1457,7 @@ data:
       "cohort_seed": null,
       "retry_policy": null
     }
-    
+
   shared_rules.json: |-
     {
       "shared_rules_key": "shared-rules-edge",
@@ -1898,7 +1483,6 @@ data:
       "properties": null,
       "retry_policy": null
     }
-    
 
 ---
 # Source: greymatter/charts/gm-control-api/templates/domain-cfgmap.yaml
@@ -1909,9 +1493,9 @@ metadata:
   namespace: default
 data:
   domain1.json: |-
-    
+
   domain2.json: |-
-    
+
 ---
 # Source: greymatter/charts/jwt/templates/jwt-users.yaml
 kind: ConfigMap
@@ -1989,19 +1573,6 @@ data:
     ssl_key_file = '/certs/server.key'
     ssl_ca_file = '/certs/ca.pem'
 ---
-# Source: greymatter/charts/dashboard/templates/prometheus-pvc.yaml
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: prometheus
-  namespace: default
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 40Gi
----
 # Source: greymatter/charts/gm-control-api/templates/gm-control-api-pvc.yaml
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -2010,7 +1581,7 @@ metadata:
   namespace: default
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
@@ -2023,10 +1594,10 @@ metadata:
   namespace: default
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
-      storage: "8Gi"
+      storage: '8Gi'
 
 ---
 # Source: greymatter/charts/control/templates/serviceaccount.yaml
@@ -2053,9 +1624,9 @@ metadata:
   name: control-sa-role
   namespace: default
 rules:
-- apiGroups: [""]
-  resources: ["pods", "endpoints"]
-  verbs: ["get", "list", "watch"]
+  - apiGroups: ['']
+    resources: ['pods', 'endpoints']
+    verbs: ['get', 'list', 'watch']
 ---
 # Source: greymatter/charts/control/templates/rolebinding.yaml
 
@@ -2065,9 +1636,9 @@ metadata:
   name: control-sa-rolebinding
   namespace: default
 subjects:
-- kind: ServiceAccount
-  name: control-sa
-  namespace: default
+  - kind: ServiceAccount
+    name: control-sa
+    namespace: default
 roleRef:
   kind: ClusterRole
   name: control-sa-role
@@ -2081,9 +1652,9 @@ metadata:
   name: waiter-sa-role
   namespace: default
 rules:
-- apiGroups: [""]
-  resources: ["endpoints"]
-  verbs: ["get", "list", "watch"]
+  - apiGroups: ['']
+    resources: ['endpoints']
+    verbs: ['get', 'list', 'watch']
 ---
 # Source: greymatter/templates/waiter-rolebinding.yaml
 
@@ -2093,9 +1664,9 @@ metadata:
   name: waiter-sa-rolebinding
   namespace: default
 subjects:
-- kind: ServiceAccount
-  name: waiter-sa
-  namespace: default
+  - kind: ServiceAccount
+    name: waiter-sa
+    namespace: default
 roleRef:
   kind: Role
   name: waiter-sa-role
@@ -2133,9 +1704,9 @@ metadata:
   namespace: default
 spec:
   ports:
-  - port: 50000
-    protocol: TCP
-    targetPort: grpc
+    - port: 50000
+      protocol: TCP
+      targetPort: grpc
   selector:
     run: control
   type: ClusterIP
@@ -2167,8 +1738,8 @@ spec:
   selector:
     app: gm-control-api
   ports:
-  - port: 5555
-    targetPort: 5555
+    - port: 5555
+      targetPort: 5555
 
 ---
 # Source: greymatter/charts/slo/templates/postgres-service.yaml
@@ -2182,8 +1753,8 @@ metadata:
 spec:
   clusterIP: None
   ports:
-  - name: postgres
-    port: 5432
+    - name: postgres
+      port: 5432
   selector:
     app: postgres-slo
   type: ClusterIP
@@ -2217,165 +1788,165 @@ spec:
             - name: SERVICE
               value: control
             - name: POST_DELAY
-              value: "10"
+              value: '10'
       containers:
         - name: catalog
           image: docker.production.deciphernow.com/deciphernow/gm-catalog:1.0.1
           imagePullPolicy: IfNotPresent
           resources:
             limits:
-              cpu: 100m
-              memory: 128Mi
+              cpu: 200m
+              memory: 1Gi
             requests:
               cpu: 100m
               memory: 128Mi
-            
-          env:          
-          - name: CA_CERT_PATH
-            value: "/etc/pki/ca.crt"
-          - name: CLIENT_ADDRESS
-            value: "localhost"
-          - name: CLIENT_CERT
-            valueFrom:
-              secretKeyRef:
-                name: sidecar-certs
-                key: server_b64
-          - name: CLIENT_CN
-            value: "*.greymatter.svc.cluster.local"
-          - name: CLIENT_EMAIL
-            value: "gm-control@deciphernow.com"
-          - name: CLIENT_IDENTITY
-            value: "CN=gm-control,OU=Engineering,O=Decipher Technology Studios,=Alexandria,=Virginia,C=US"
-          - name: CLIENT_KEY
-            valueFrom:
-              secretKeyRef:
-                name: sidecar-certs
-                key: key_b64
-          - name: CLIENT_PORT
-            value: "8080"
-          - name: CLIENT_PREFIX
-            value: "/data"
-          - name: CLIENT_TRUST
-            valueFrom:
-              secretKeyRef:
-                name: sidecar-certs
-                key: ca_b64
-          - name: CLIENT_USE_TLS
-            value: "true"
-          - name: CONFIG_SOURCE
-            value: "env"
-          - name: CONTROL_SERVER_0_ADDRESS
-            value: "control.default.svc.cluster.local:50000"
-          - name: CONTROL_SERVER_0_REQUEST_CLUSTER_NAME
-            value: "edge"
-          - name: CONTROL_SERVER_0_ZONE_NAME
-            value: "zone-default-zone"
-          - name: GMDATA_MAX_RETRIES
-            value: "100"
-          - name: GMDATA_RETRY_DELAY
-            value: "5s"
-          - name: GMDATA_ROOT_EVENT_NAME
-            value: "world"
-          - name: GMDATA_STARTUP_DELAY
-            value: "10s"
-          - name: INSTANCE_MAX_SILENCE
-            value: "15s"
-          - name: INSTANCE_POLLING_INTERVAL
-            value: "5s"
-          - name: METRICS_MAX_RETRIES
-            value: "3"
-          - name: METRICS_REQUEST_TIMEOUT
-            value: "15s"
-          - name: METRICS_RETRY_DELAY
-            value: "10s"
-          - name: PORT
-            value: "9080"
-          - name: SERVICE_0_ZONE_NAME
-            value: "default-zone"
-          - name: SERVICE_0_CLUSTER_NAME
-            value: "catalog"
-          - name: SERVICE_0_CAPABILITY
-            value: "Catalog"
-          - name: SERVICE_0_DOCUMENTATION
-            value: "/services/catalog/latest/"
-          - name: SERVICE_0_NAME
-            value: "Grey Matter Catalog"
-          - name: SERVICE_0_OWNER
-            value: "Decipher"
-          - name: SERVICE_0_VERSION
-            value: "latest"
-          - name: SERVICE_0_ENABLE_INSTANCE_METRICS
-            value: "true"
-          # dashboard
-          - name: SERVICE_1_ZONE_NAME
-            value: "default-zone"
-          - name: SERVICE_1_CLUSTER_NAME
-            value: "dashboard"
-          - name: SERVICE_1_CAPABILITY
-            value: "Dashboard"
-          - name: SERVICE_1_DOCUMENTATION
-            value: "/services/dashboard/latest/"
-          - name: SERVICE_1_NAME
-            value: "Dashboard"
-          - name: SERVICE_1_OWNER
-            value: "Decipher"
-          - name: SERVICE_1_VERSION
-            value: "latest"
-          - name: SERVICE_1_ENABLE_INSTANCE_METRICS
-            value: "true"
-          - name: SERVICE_2_ZONE_NAME
-            value: "default-zone"
-          - name: SERVICE_2_CLUSTER_NAME
-            value: "slo-service"
-          - name: SERVICE_2_CAPABILITY
-            value: "Grey Matter"
-          - name: SERVICE_2_ENABLE_HISTORICAL_METRICS
-            value: "true"
-          - name: SERVICE_2_DOCUMENTATION
-            value: "/services/slo-service/0.4.0/"
-          - name: SERVICE_2_PROMETHEUSJOB
-            value: "slo-service"
-          - name: SERVICE_2_MAX_INSTANCES
-            value: "1"
-          - name: SERVICE_2_ENABLE_INSTANCE_METRICS
-            value: "true"
-          - name: SERVICE_2_MIN_INSTANCES
-            value: "1"
-          - name: SERVICE_2_NAME
-            value: "Grey Matter Service Level Objectives"
-          - name: SERVICE_2_OWNER
-            value: "Decipher"
-          - name: SERVICE_2_RUNTIME
-            value: "GO"
-          - name: SERVICE_2_VERSION
-            value: "0.4.0"
-              # edge service
-          - name: SERVICE_8_CLUSTER_NAME
-            value: "edge"
-          - name: SERVICE_8_ZONE_NAME
-            value: "default-zone"
-          - name: SERVICE_8_CAPABILITY
-            value: "Example"
-          - name: SERVICE_8_ENABLE_HISTORICAL_METRICS
-            value: "false"
-          - name: SERVICE_8_DOCUMENTATION
-            value: "/"
-          - name: SERVICE_8_PROMETHEUSJOB
-            value: "edge"
-          - name: SERVICE_8_MAX_INSTANCES
-            value: "1"
-          - name: SERVICE_8_ENABLE_INSTANCE_METRICS
-            value: "true"
-          - name: SERVICE_8_MIN_INSTANCES
-            value: "1"
-          - name: SERVICE_8_NAME
-            value: "edge"
-          - name: SERVICE_8_OWNER
-            value: "Decipher"
-          - name: SERVICE_8_RUNTIME
-            value: "GO"
-          - name: SERVICE_8_VERSION
-            value: "1.0"
+
+          env:
+            - name: CA_CERT_PATH
+              value: '/etc/pki/ca.crt'
+            - name: CLIENT_ADDRESS
+              value: 'localhost'
+            - name: CLIENT_CERT
+              valueFrom:
+                secretKeyRef:
+                  name: sidecar-certs
+                  key: server_b64
+            - name: CLIENT_CN
+              value: '*.greymatter.svc.cluster.local'
+            - name: CLIENT_EMAIL
+              value: 'gm-control@deciphernow.com'
+            - name: CLIENT_IDENTITY
+              value: 'CN=gm-control,OU=Engineering,O=Decipher Technology Studios,=Alexandria,=Virginia,C=US'
+            - name: CLIENT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: sidecar-certs
+                  key: key_b64
+            - name: CLIENT_PORT
+              value: '8080'
+            - name: CLIENT_PREFIX
+              value: '/data'
+            - name: CLIENT_TRUST
+              valueFrom:
+                secretKeyRef:
+                  name: sidecar-certs
+                  key: ca_b64
+            - name: CLIENT_USE_TLS
+              value: 'true'
+            - name: CONFIG_SOURCE
+              value: 'env'
+            - name: CONTROL_SERVER_0_ADDRESS
+              value: 'control.default.svc.cluster.local:50000'
+            - name: CONTROL_SERVER_0_REQUEST_CLUSTER_NAME
+              value: 'edge'
+            - name: CONTROL_SERVER_0_ZONE_NAME
+              value: 'zone-default-zone'
+            - name: GMDATA_MAX_RETRIES
+              value: '100'
+            - name: GMDATA_RETRY_DELAY
+              value: '5s'
+            - name: GMDATA_ROOT_EVENT_NAME
+              value: 'world'
+            - name: GMDATA_STARTUP_DELAY
+              value: '10s'
+            - name: INSTANCE_MAX_SILENCE
+              value: '15s'
+            - name: INSTANCE_POLLING_INTERVAL
+              value: '5s'
+            - name: METRICS_MAX_RETRIES
+              value: '3'
+            - name: METRICS_REQUEST_TIMEOUT
+              value: '15s'
+            - name: METRICS_RETRY_DELAY
+              value: '10s'
+            - name: PORT
+              value: '9080'
+            - name: SERVICE_0_ZONE_NAME
+              value: 'default-zone'
+            - name: SERVICE_0_CLUSTER_NAME
+              value: 'catalog'
+            - name: SERVICE_0_CAPABILITY
+              value: 'Catalog'
+            - name: SERVICE_0_DOCUMENTATION
+              value: '/services/catalog/latest/'
+            - name: SERVICE_0_NAME
+              value: 'Grey Matter Catalog'
+            - name: SERVICE_0_OWNER
+              value: 'Decipher'
+            - name: SERVICE_0_VERSION
+              value: 'latest'
+            - name: SERVICE_0_ENABLE_INSTANCE_METRICS
+              value: 'true'
+            # dashboard
+            - name: SERVICE_1_ZONE_NAME
+              value: 'default-zone'
+            - name: SERVICE_1_CLUSTER_NAME
+              value: 'dashboard'
+            - name: SERVICE_1_CAPABILITY
+              value: 'Dashboard'
+            - name: SERVICE_1_DOCUMENTATION
+              value: '/services/dashboard/latest/'
+            - name: SERVICE_1_NAME
+              value: 'Dashboard'
+            - name: SERVICE_1_OWNER
+              value: 'Decipher'
+            - name: SERVICE_1_VERSION
+              value: 'latest'
+            - name: SERVICE_1_ENABLE_INSTANCE_METRICS
+              value: 'true'
+            - name: SERVICE_2_ZONE_NAME
+              value: 'default-zone'
+            - name: SERVICE_2_CLUSTER_NAME
+              value: 'slo-service'
+            - name: SERVICE_2_CAPABILITY
+              value: 'Grey Matter'
+            - name: SERVICE_2_ENABLE_HISTORICAL_METRICS
+              value: 'true'
+            - name: SERVICE_2_DOCUMENTATION
+              value: '/services/slo-service/0.4.0/'
+            - name: SERVICE_2_PROMETHEUSJOB
+              value: 'slo-service'
+            - name: SERVICE_2_MAX_INSTANCES
+              value: '1'
+            - name: SERVICE_2_ENABLE_INSTANCE_METRICS
+              value: 'true'
+            - name: SERVICE_2_MIN_INSTANCES
+              value: '1'
+            - name: SERVICE_2_NAME
+              value: 'Grey Matter Service Level Objectives'
+            - name: SERVICE_2_OWNER
+              value: 'Decipher'
+            - name: SERVICE_2_RUNTIME
+              value: 'GO'
+            - name: SERVICE_2_VERSION
+              value: '0.4.0'
+            # edge service
+            - name: SERVICE_8_CLUSTER_NAME
+              value: 'edge'
+            - name: SERVICE_8_ZONE_NAME
+              value: 'default-zone'
+            - name: SERVICE_8_CAPABILITY
+              value: 'Example'
+            - name: SERVICE_8_ENABLE_HISTORICAL_METRICS
+              value: 'false'
+            - name: SERVICE_8_DOCUMENTATION
+              value: '/'
+            - name: SERVICE_8_PROMETHEUSJOB
+              value: 'edge'
+            - name: SERVICE_8_MAX_INSTANCES
+              value: '1'
+            - name: SERVICE_8_ENABLE_INSTANCE_METRICS
+              value: 'true'
+            - name: SERVICE_8_MIN_INSTANCES
+              value: '1'
+            - name: SERVICE_8_NAME
+              value: 'edge'
+            - name: SERVICE_8_OWNER
+              value: 'Decipher'
+            - name: SERVICE_8_RUNTIME
+              value: 'GO'
+            - name: SERVICE_8_VERSION
+              value: '1.0'
           volumeMounts:
             - name: certs
               mountPath: /etc/pki
@@ -2384,41 +1955,41 @@ spec:
           imagePullPolicy: IfNotPresent
           resources:
             limits:
-              cpu: 100m
-              memory: 128Mi
+              cpu: 200m
+              memory: 512Mi
             requests:
               cpu: 100m
               memory: 128Mi
-            
+
           ports:
             - name: proxy
               containerPort: 8080
             - name: metrics
               containerPort: 8081
-          env:          
-          - name: ENVOY_ADMIN_LOG_PATH
-            value: "/dev/stdout"
-          - name: PROXY_DYNAMIC
-            value: "true"
-          - name: XDS_CLUSTER
-            value: "catalog"
-          - name: XDS_HOST
-            value: "control.default.svc.cluster.local"
-          - name: XDS_NODE_ID
-            value: "default"
-          - name: XDS_PORT
-            value: "50000"
-          volumeMounts:          
-          - name: sidecar-certs
-            mountPath: /etc/proxy/tls/sidecar/
-            readOnly: true
-      volumes:      
-      - name: sidecar-certs
-        secret:
-          secretName: sidecar-certs
-      - name: certs
-        secret:
-          secretName: sidecar-certs
+          env:
+            - name: ENVOY_ADMIN_LOG_PATH
+              value: '/dev/stdout'
+            - name: PROXY_DYNAMIC
+              value: 'true'
+            - name: XDS_CLUSTER
+              value: 'catalog'
+            - name: XDS_HOST
+              value: 'control.default.svc.cluster.local'
+            - name: XDS_NODE_ID
+              value: 'default'
+            - name: XDS_PORT
+              value: '50000'
+          volumeMounts:
+            - name: sidecar-certs
+              mountPath: /etc/proxy/tls/sidecar/
+              readOnly: true
+      volumes:
+        - name: sidecar-certs
+          secret:
+            secretName: sidecar-certs
+        - name: certs
+          secret:
+            secretName: sidecar-certs
       imagePullSecrets:
         - name: docker.secret
         - name: dev.docker.secret
@@ -2449,29 +2020,29 @@ spec:
         - name: control
           image: docker.production.deciphernow.com/deciphernow/gm-control:0.5.1
           imagePullPolicy: IfNotPresent
-          env:            
+          env:
             - name: GM_CONTROL_API_HOST
-              value: "gm-control-api:5555"
+              value: 'gm-control-api:5555'
             - name: GM_CONTROL_API_KEY
-              value: "xxx"
+              value: 'xxx'
             - name: GM_CONTROL_API_SSL
-              value: "false"
+              value: 'false'
             - name: GM_CONTROL_API_ZONE_NAME
-              value: "default-zone"
+              value: 'default-zone'
             - name: GM_CONTROL_CMD
-              value: "kubernetes"
+              value: 'kubernetes'
             - name: GM_CONTROL_CONSOLE_LEVEL
-              value: "debug"
+              value: 'debug'
             - name: GM_CONTROL_KUBERNETES_CLUSTER_LABEL
-              value: "app"
+              value: 'app'
             - name: GM_CONTROL_KUBERNETES_NAMESPACES
-              value: "default"
+              value: 'default'
             - name: GM_CONTROL_KUBERNETES_PORT_NAME
-              value: "proxy"
+              value: 'proxy'
             - name: GM_CONTROL_XDS_ADS_ENABLED
-              value: "true"
+              value: 'true'
             - name: GM_CONTROL_XDS_RESOLVE_DNS
-              value: "true"
+              value: 'true'
           ports:
             - name: grpc
               containerPort: 50000
@@ -2480,9 +2051,8 @@ spec:
             tcpSocket:
               port: grpc
             initialDelaySeconds: 2
-          resources:
-            null
-            
+          resources: null
+
       initContainers:
         - name: ensure-gm-control-api
           image: deciphernow/k8s-waiter:latest
@@ -2492,7 +2062,7 @@ spec:
             - name: SERVICE
               value: gm-control-api
             - name: POST_DELAY
-              value: "10"
+              value: '10'
       imagePullSecrets:
         - name: docker.secret
 ---
@@ -2513,168 +2083,67 @@ spec:
         app: dashboard
     spec:
       containers:
-      - name: dashboard
-        image: 'docker.production.deciphernow.com/deciphernow/gm-dashboard:3.1.0'
-        imagePullPolicy: IfNotPresent
-        resources:
-          limits:
-            cpu: 100m
-            memory: 128Mi
-          requests:
-            cpu: 100m
-            memory: 128Mi
-          
-        env:
-        - name: FABRIC_SERVER
-          value: '/services/catalog/latest/'
-        - name: CONFIG_SERVER
-          value: '/services/gm-control-api/latest/v1.0'
-        - name: USE_PROMETHEUS
-          value: 'true'
-        - name: OBJECTIVES_SERVER
-          value: '/services/slo/latest/'
-        - name: PROMETHEUS_SERVER
-          value: '/services/prometheus/latest/api/v1/'
-        - name: BASE_URL
-          value: '/services/dashboard/3.1.0/'
-      - name: sidecar
-        image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
-        imagePullPolicy: IfNotPresent
-        resources:
-          limits:
-            cpu: 100m
-            memory: 128Mi
-          requests:
-            cpu: 100m
-            memory: 128Mi
-          
-        ports:
-        - name: proxy
-          containerPort: 8080
-        - name: metrics
-          containerPort: 8081
-        env:        
-        - name: ENVOY_ADMIN_LOG_PATH
-          value: "/dev/stdout"
-        - name: PROXY_DYNAMIC
-          value: "true"
-        - name: XDS_CLUSTER
-          value: "dashboard"
-        - name: XDS_HOST
-          value: "control.default.svc.cluster.local"
-        - name: XDS_NODE_ID
-          value: "default"
-        - name: XDS_PORT
-          value: "50000"
-        volumeMounts:        
+        - name: dashboard
+          image: 'docker.production.deciphernow.com/deciphernow/gm-dashboard:3.1.0'
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 200m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+
+          env:
+            - name: FABRIC_SERVER
+              value: '/services/catalog/latest/'
+            - name: CONFIG_SERVER
+              value: '/services/gm-control-api/latest/v1.0'
+            - name: USE_PROMETHEUS
+              value: 'false'
+            - name: OBJECTIVES_SERVER
+              value: '/services/slo/latest/'
+            - name: BASE_URL
+              value: '/services/dashboard/3.1.0/'
+        - name: sidecar
+          image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 200m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+
+          ports:
+            - name: proxy
+              containerPort: 8080
+            - name: metrics
+              containerPort: 8081
+          env:
+            - name: ENVOY_ADMIN_LOG_PATH
+              value: '/dev/stdout'
+            - name: PROXY_DYNAMIC
+              value: 'true'
+            - name: XDS_CLUSTER
+              value: 'dashboard'
+            - name: XDS_HOST
+              value: 'control.default.svc.cluster.local'
+            - name: XDS_NODE_ID
+              value: 'default'
+            - name: XDS_PORT
+              value: '50000'
+          volumeMounts:
+            - name: sidecar-certs
+              mountPath: /etc/proxy/tls/sidecar/
+              readOnly: true
+      volumes:
         - name: sidecar-certs
-          mountPath: /etc/proxy/tls/sidecar/
-          readOnly: true
-      volumes:      
-      - name: sidecar-certs
-        secret:
-          secretName: sidecar-certs
+          secret:
+            secretName: sidecar-certs
       imagePullSecrets:
         - name: docker.secret
----
-# Source: greymatter/charts/dashboard/templates/prometheus.yaml
-kind: Deployment
-apiVersion: extensions/v1beta1
-metadata:
-  name: prometheus
-  namespace: default
-spec:
-  selector:
-    matchLabels:
-      app: prometheus
-      deployment: prometheus
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: prometheus
-        deployment: prometheus
-    spec:
-      serviceAccountName: control-sa  
-      containers:
-      - name: prometheus
-        image: "prom/prometheus:v2.7.1"
-        resources:
-          limits:
-            cpu: "1"
-            memory: 1Gi
-          requests:
-            cpu: "1"
-            memory: 1Gi
-          
-        ports:
-        - name: http
-          containerPort: 9090
-        command:
-        - "/bin/prometheus"
-        args:
-        - "--query.timeout=4m"
-        - "--query.max-samples=5000000000"
-        - "--storage.tsdb.path=/var/lib/prometheus/data/data"
-        - "--config.file=/etc/prometheus/prometheus.yaml"
-        - "--web.console.libraries=/usr/share/prometheus/console_libraries"
-        - "--web.console.templates=/usr/share/prometheus/consoles"
-        - "--web.enable-admin-api"
-        - "--web.external-url=http://anything/services/prometheus/latest"
-        - "--web.route-prefix=/"
-        volumeMounts:
-        - name: prometheus-configuration
-          mountPath: /etc/prometheus
-        - name: prometheus-data
-          mountPath: /var/lib/prometheus/data
-      - name: sidecar
-        image: docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1
-        imagePullPolicy: IfNotPresent
-        resources:
-          limits:
-            cpu: 100m
-            memory: 128Mi
-          requests:
-            cpu: 100m
-            memory: 128Mi
-          
-        volumeMounts:        
-        - name: sidecar-certs
-          mountPath: /etc/proxy/tls/sidecar/
-          readOnly: true
-        ports:
-        - name: proxy
-          containerPort: 8080
-        - name: metrics
-          containerPort: 8081
-        env:          
-          - name: ENVOY_ADMIN_LOG_PATH
-            value: "/dev/stdout"
-          - name: PROXY_DYNAMIC
-            value: "true"
-          - name: SPIRE_PATH
-            value: "/run/spire/sockets/agent.sock"
-          - name: XDS_CLUSTER
-            value: "prometheus"
-          - name: XDS_HOST
-            value: "control.default.svc.cluster.local"
-          - name: XDS_NODE_ID
-            value: "default"
-          - name: XDS_PORT
-            value: "50000"
-      imagePullSecrets:
-      - name: docker.secret
-      volumes:
-      volumes:      
-      - name: sidecar-certs
-        secret:
-          secretName: sidecar-certs
-      - name: prometheus-configuration
-        configMap:
-          name: prometheus
-      - name: prometheus-data
-        persistentVolumeClaim:
-          claimName: prometheus
 ---
 # Source: greymatter/charts/edge/templates/edge.yaml
 kind: Deployment
@@ -2695,50 +2164,50 @@ spec:
         deployment: edge
     spec:
       containers:
-      - name: edge
-        image: "docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1"
-        imagePullPolicy: IfNotPresent
-        resources:
-          limits:
-            cpu: 1
-            memory: 128Mi
-          requests:
-            cpu: 100m
-            memory: 128Mi
-          
-        env:        
-        - name: ENVOY_ADMIN_LOG_PATH
-          value: "/dev/stdout"
-        - name: PROXY_DYNAMIC
-          value: "true"
-        - name: XDS_CLUSTER
-          value: "edge"
-        - name: XDS_HOST
-          value: "control.default.svc.cluster.local"
-        - name: XDS_NODE_ID
-          value: "default"
-        - name: XDS_PORT
-          value: "50000"
-        ports:
-        - name: proxy
-          containerPort: 8080
-        - name: metrics
-          containerPort: 8081
-        volumeMounts:
         - name: edge
-          mountPath: /etc/proxy/tls/edge        
-        - name: sidecar-certs
-          mountPath: /etc/proxy/tls/sidecar/
-          readOnly: true
+          image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 1
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+
+          env:
+            - name: ENVOY_ADMIN_LOG_PATH
+              value: '/dev/stdout'
+            - name: PROXY_DYNAMIC
+              value: 'true'
+            - name: XDS_CLUSTER
+              value: 'edge'
+            - name: XDS_HOST
+              value: 'control.default.svc.cluster.local'
+            - name: XDS_NODE_ID
+              value: 'default'
+            - name: XDS_PORT
+              value: '50000'
+          ports:
+            - name: proxy
+              containerPort: 8080
+            - name: metrics
+              containerPort: 8081
+          volumeMounts:
+            - name: edge
+              mountPath: /etc/proxy/tls/edge
+            - name: sidecar-certs
+              mountPath: /etc/proxy/tls/sidecar/
+              readOnly: true
       imagePullSecrets:
-      - name: docker.secret
+        - name: docker.secret
       volumes:
-      - name: edge
-        secret:
-          secretName: edge      
-      - name: sidecar-certs
-        secret:
-          secretName: sidecar-certs
+        - name: edge
+          secret:
+            secretName: edge
+        - name: sidecar-certs
+          secret:
+            secretName: sidecar-certs
 ---
 # Source: greymatter/charts/gm-control-api/templates/gm-control-api.yaml
 apiVersion: apps/v1
@@ -2762,24 +2231,24 @@ spec:
         - name: gm-control-api
           image: docker.production.deciphernow.com/deciphernow/gm-control-api:0.8.1
           imagePullPolicy: IfNotPresent
-          env:            
+          env:
             - name: GM_CONTROL_API_ADDRESS
-              value: "0.0.0.0:5555"
+              value: '0.0.0.0:5555'
             - name: GM_CONTROL_API_LOG_LEVEL
-              value: "debug"
+              value: 'debug'
             - name: GM_CONTROL_API_ORG_KEY
-              value: "deciphernow"
+              value: 'deciphernow'
             - name: GM_CONTROL_API_PERSISTER_PATH
-              value: "/app/control-api/data/backend.json"
+              value: '/app/control-api/data/backend.json'
             - name: GM_CONTROL_API_PERSISTER_TYPE
-              value: "file"
+              value: 'file'
             - name: GM_CONTROL_API_ZONE_KEY
-              value: "zone-default-zone"
+              value: 'zone-default-zone'
           ports:
             - name: http
               containerPort: 5555
               protocol: TCP
-          
+
           # We don't want to kill the container if it's taking a while to start up, we'll just remove it from the service
           readinessProbe:
             httpGet:
@@ -2807,48 +2276,48 @@ spec:
           volumeMounts:
             - name: gm-control-api-backup
               mountPath: /app/control-api/data
-        - name: sidecar   
-          image: "docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1"
+        - name: sidecar
+          image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
           imagePullPolicy: IfNotPresent
           resources:
             limits:
-              cpu: 100m
-              memory: 128Mi
+              cpu: 200m
+              memory: 512Mi
             requests:
               cpu: 100m
               memory: 128Mi
-            
+
           ports:
             - name: proxy
               containerPort: 8080
             - name: metrics
               containerPort: 8081
-          env:            
+          env:
             - name: ENVOY_ADMIN_LOG_PATH
-              value: "/dev/stdout"
+              value: '/dev/stdout'
             - name: PROXY_DYNAMIC
-              value: "true"
+              value: 'true'
             - name: XDS_CLUSTER
-              value: "gm-control-api"
+              value: 'gm-control-api'
             - name: XDS_HOST
-              value: "control.default.svc.cluster.local"
+              value: 'control.default.svc.cluster.local'
             - name: XDS_NODE_ID
-              value: "default"
+              value: 'default'
             - name: XDS_PORT
-              value: "50000"
-          volumeMounts:            
+              value: '50000'
+          volumeMounts:
             - name: sidecar-certs
               mountPath: /etc/proxy/tls/sidecar/
               readOnly: true
       imagePullSecrets:
         - name: docker.secret
-      volumes:      
-      - name: sidecar-certs
-        secret:
-          secretName: sidecar-certs
-      - name: gm-control-api-backup
-        persistentVolumeClaim:
-          claimName: gm-control-api-pvc
+      volumes:
+        - name: sidecar-certs
+          secret:
+            secretName: sidecar-certs
+        - name: gm-control-api-backup
+          persistentVolumeClaim:
+            claimName: gm-control-api-pvc
 ---
 # Source: greymatter/charts/slo/templates/slo.yaml
 kind: Deployment
@@ -2878,72 +2347,72 @@ spec:
             - name: SERVICE
               value: postgres-slo
             - name: POST_DELAY
-              value: "3"
+              value: '3'
       containers:
-      - name: slo
-        image: "docker.production.deciphernow.com/deciphernow/gm-slo:0.5.0"
-        imagePullPolicy: IfNotPresent
-        resources:
-          limits:
-            cpu: 100m
-            memory: 128Mi
-          requests:
-            cpu: 100m
-            memory: 128Mi
-          
-        env:
-        - name: DATABASE_URI
-          value: postgres://$(POSTGRESQL_USERNAME):$(POSTGRESQL_PASSWORD)@postgres-slo.default.svc.cluster.local:5432/$(POSTGRESQL_DATABASE)
-        - name: SSL_ENABLED
-          value: "false"
-        volumeMounts:
-        - name: postgres-certs
-          mountPath: "/certs"
-      - name: sidecar
-        image: "docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1"
-        imagePullPolicy: IfNotPresent
-        resources:
-          limits:
-            cpu: 100m
-            memory: 128Mi
-          requests:
-            cpu: 100m
-            memory: 128Mi
-          
-        ports:
-        - name: proxy
-          containerPort: 8080
-        - name: metrics
-          containerPort: 8081
-        env:        
-        - name: ENVOY_ADMIN_LOG_PATH
-          value: "/dev/stdout"
-        - name: PROXY_DYNAMIC
-          value: "true"
-        - name: XDS_CLUSTER
-          value: "slo"
-        - name: SERVICE_PORT
-          value: "1337"
-        - name: XDS_HOST
-          value: "control.default.svc.cluster.local"
-        - name: XDS_NODE_ID
-          value: "default"
-        - name: XDS_PORT
-          value: "50000"
-        volumeMounts:        
-        - name: sidecar-certs
-          mountPath: /etc/proxy/tls/sidecar/
-          readOnly: true
+        - name: slo
+          image: 'docker.production.deciphernow.com/deciphernow/gm-slo:0.5.0'
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 250m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+
+          env:
+            - name: DATABASE_URI
+              value: postgres://$(POSTGRESQL_USERNAME):$(POSTGRESQL_PASSWORD)@postgres-slo.default.svc.cluster.local:5432/$(POSTGRESQL_DATABASE)
+            - name: SSL_ENABLED
+              value: 'false'
+          volumeMounts:
+            - name: postgres-certs
+              mountPath: '/certs'
+        - name: sidecar
+          image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 200m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+
+          ports:
+            - name: proxy
+              containerPort: 8080
+            - name: metrics
+              containerPort: 8081
+          env:
+            - name: ENVOY_ADMIN_LOG_PATH
+              value: '/dev/stdout'
+            - name: PROXY_DYNAMIC
+              value: 'true'
+            - name: XDS_CLUSTER
+              value: 'slo'
+            - name: SERVICE_PORT
+              value: '1337'
+            - name: XDS_HOST
+              value: 'control.default.svc.cluster.local'
+            - name: XDS_NODE_ID
+              value: 'default'
+            - name: XDS_PORT
+              value: '50000'
+          volumeMounts:
+            - name: sidecar-certs
+              mountPath: /etc/proxy/tls/sidecar/
+              readOnly: true
       imagePullSecrets:
         - name: docker.secret
-      volumes:      
-      - name: sidecar-certs
-        secret:
-          secretName: sidecar-certs
-      - name: postgres-certs
-        secret:
-          secretName: postgres-ssl-certs
-          defaultMode: 0600
+      volumes:
+        - name: sidecar-certs
+          secret:
+            secretName: sidecar-certs
+        - name: postgres-certs
+          secret:
+            secretName: postgres-ssl-certs
+            defaultMode: 0600
 ---
 # Source: greymatter/charts/slo/templates/postgres.yaml
 kind: StatefulSet
@@ -2965,69 +2434,69 @@ spec:
         app: postgres-slo
     spec:
       containers:
-      - name: postgres
-        image: postgres:10
-        imagePullPolicy: IfNotPresent
-        resources:
-          limits:
-            cpu: 100m
-            memory: 128Mi
-          requests:
-            cpu: 100m
-            memory: 128Mi
-          
-        ports:
-          - name: postgres
-            containerPort: 5432
-        env:
-          - name: POSTGRESQL_USER
-            valueFrom:
-              secretKeyRef:
-                name: postgres-credentials
-                key: username
-          - name: POSTGRESQL_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: postgres-credentials
-                key: password
-          - name: POSTGRES_USER_CN
-            value: "CN=*.greymatter.svc.cluster.local, OU=Engineering, O=Decipher Technology Studios, L=Alexandria, ST=Virginia, C=US"
-          - name: POSTGRESQL_DATABASE
-            valueFrom:
-              secretKeyRef:
-                name: postgres-credentials
-                key: database
-        volumeMounts:
-          - name: postgres-slo
-            mountPath: /var/lib/pgsql/data
-          - name: certificates
-            mountPath: /certs
-          - name: postgres-slo-config
-            mountPath: /conf
-          - name: postgres-slo-overrides
-            mountPath: /opt/app-root/src/postgresql-cfg
-        readinessProbe:
-          tcpSocket:
-            port: postgres
-          # Pods are considered to be in a Failure state before the initialDelaySeconds has passed, meaning they won't be backends for a service
-          initialDelaySeconds: 5
-          periodSeconds: 2
+        - name: postgres
+          image: postgres:10
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 200m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+
+          ports:
+            - name: postgres
+              containerPort: 5432
+          env:
+            - name: POSTGRESQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: username
+            - name: POSTGRESQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password
+            - name: POSTGRES_USER_CN
+              value: 'CN=*.greymatter.svc.cluster.local, OU=Engineering, O=Decipher Technology Studios, L=Alexandria, ST=Virginia, C=US'
+            - name: POSTGRESQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: database
+          volumeMounts:
+            - name: postgres-slo
+              mountPath: /var/lib/pgsql/data
+            - name: certificates
+              mountPath: /certs
+            - name: postgres-slo-config
+              mountPath: /conf
+            - name: postgres-slo-overrides
+              mountPath: /opt/app-root/src/postgresql-cfg
+          readinessProbe:
+            tcpSocket:
+              port: postgres
+            # Pods are considered to be in a Failure state before the initialDelaySeconds has passed, meaning they won't be backends for a service
+            initialDelaySeconds: 5
+            periodSeconds: 2
       imagePullSecrets:
-      - name: docker.secret
+        - name: docker.secret
       volumes:
-      - name: postgres-slo
-        persistentVolumeClaim:
-          claimName: postgres-slo
-      - name: postgres-slo-config
-        configMap:
-          name: postgres-slo-config
-      - name: postgres-slo-overrides
-        configMap:
-          name: postgres-slo-overrides
-      - name: certificates
-        secret:
-          secretName: postgres-ssl-certs
-          defaultMode: 0400
+        - name: postgres-slo
+          persistentVolumeClaim:
+            claimName: postgres-slo
+        - name: postgres-slo-config
+          configMap:
+            name: postgres-slo-config
+        - name: postgres-slo-overrides
+          configMap:
+            name: postgres-slo-overrides
+        - name: certificates
+          secret:
+            secretName: postgres-ssl-certs
+            defaultMode: 0400
 
 ---
 # # Source: greymatter/charts/catalog/templates/catalog-init.yaml
@@ -3063,7 +2532,7 @@ spec:
 #           name: catalog-init
 #           imagePullPolicy: IfNotPresent
 #           command: ["/tmp/bootstrap/bootstrap.sh"]
-#           env:            
+#           env:
 #             - name: CATALOG_API_HOST
 #               value: "catalog:9080"
 #             - name: DEBUG
@@ -3126,7 +2595,7 @@ spec:
     metadata:
       name: gm-control-api-init
     spec:
-      restartPolicy: "Never"
+      restartPolicy: 'Never'
       # We need a SA with read access to the `Endpoints` resource
       serviceAccountName: waiter-sa
       initContainers:
@@ -3142,18 +2611,18 @@ spec:
         - image: docker.production.deciphernow.com/deciphernow/greymatter:0.5.1
           name: gm-control-api-init
           imagePullPolicy: IfNotPresent
-          command: ["/tmp/bootstrap/bootstrap.sh"]
-          env:            
+          command: ['/tmp/bootstrap/bootstrap.sh']
+          env:
             - name: BASIC_OBJECT_PATH
-              value: "/tmp/mesh/basic_objects"
+              value: '/tmp/mesh/basic_objects'
             - name: GREYMATTER_API_HOST
-              value: "gm-control-api:5555"
+              value: 'gm-control-api:5555'
             - name: GREYMATTER_API_KEY
-              value: "xxx"
+              value: 'xxx'
             - name: GREYMATTER_API_SSL
-              value: "false"
+              value: 'false'
             - name: GREYMATTER_CONSOLE_LEVEL
-              value: "debug"
+              value: 'debug'
           volumeMounts:
             - name: service-config-volume-catalog
               mountPath: /etc/config/mesh/services/catalog
@@ -3222,25 +2691,24 @@ spec:
 ---
 # Source: greymatter/charts/edge/templates/edge-ingress.yaml
 
-
 apiVersion: voyager.appscode.com/v1beta1
 kind: Ingress
 metadata:
   name: edge
   namespace: default
   annotations:
-    kubernetes.io/ingress.class: "voyager"
+    kubernetes.io/ingress.class: 'voyager'
     ingress.appscode.com/type: NodePort
-    ingress.appscode.com/ssl-passthrough: "true"
+    ingress.appscode.com/ssl-passthrough: 'true'
 spec:
   rules:
-  - tcp:
-      port: '80'
-      backend:
-        serviceName: edge
-        servicePort: 8080
-  - tcp:
-      port: '443'
-      backend:
-        serviceName: edge
-        servicePort: 8080
+    - tcp:
+        port: '80'
+        backend:
+          serviceName: edge
+          servicePort: 8080
+    - tcp:
+        port: '443'
+        backend:
+          serviceName: edge
+          servicePort: 8080
