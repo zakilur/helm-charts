@@ -5663,8 +5663,8 @@ spec:
   - metadata:
       name: data
       annotations:
-        volume.beta.kubernetes.io/storage-class: glusterfs-storage
-        volume.beta.kubernetes.io/storage-provisioner: glusterfs-storage
+        volume.beta.kubernetes.io/storage-class: __MONGO_STORAGE_CLASS__
+        volume.beta.kubernetes.io/storage-provisioner: __MONGO_STORAGE_PROVISIONER__
     spec:
       accessModes:
         - ReadWriteOnce
@@ -5760,8 +5760,8 @@ spec:
   volumeClaimTemplates:
   - metadata:
       annotations:
-        volume.beta.kubernetes.io/storage-class: glusterfs-storage
-        volume.beta.kubernetes.io/storage-provisioner: glusterfs-storage
+        volume.beta.kubernetes.io/storage-class: __MONGO_STORAGE_CLASS__
+        volume.beta.kubernetes.io/storage-provisioner: __MONGO_STORAGE_PROVISIONER__
       name: data
     spec:
       accessModes:
