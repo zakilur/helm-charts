@@ -218,6 +218,18 @@ stringData:
   password: greymatter
   database: greymatter
 ---
+# Source: greymatter/templates/docker-secret.yaml
+
+kind: Secret
+apiVersion: v1
+metadata:
+  name: docker.secret
+  namespace: default
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: eyJhdXRocyI6IHsiZG9ja2VyLnByb2R1Y3Rpb24uZGVjaXBoZXJub3cuY29tIjogeyJhdXRoIjogIkpTRnpLRHh1YVd3K0tUb2xJWE1vUEc1cGJENHAifX19
+
+---
 # Source: greymatter/templates/sidecar-secret.yaml
 
 ---
@@ -4189,10 +4201,7 @@ spec:
               name: data-secrets
               key: aws_region
         - name: AWS_S3_BUCKET
-          valueFrom:
-            secretKeyRef:
-              name: data-secrets
-              key: aws_s3_bucket
+          value: "data"
         - name: AWS_S3_PARTITION
           value: "data"
         - name: AWS_SECRET_ACCESS_KEY
@@ -4283,7 +4292,7 @@ spec:
         - name: USES3
           value: "false"
         - name: MONGOHOST
-          value: "data-mongo-0.data-mongo.decipher-dt.svc.cluster.local:27017"
+          value: "data-mongo-0.data-mongo.default.svc.cluster.local:27017"
       - name: sidecar 
         image: "docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0"
         env:        
@@ -4558,12 +4567,9 @@ spec:
           
         env:        
         - name: AWS_S3_BUCKET
-          valueFrom:
-            secretKeyRef:
-              name: data-internal-secrets
-              key: aws_s3_bucket
+          value: "data"
         - name: AWS_S3_PARTITION
-          value: "greymatter"
+          value: "data"
         - name: CLIENT_JWT_ENDPOINT_ADDRESS
           value: "localhost"
         - name: CLIENT_JWT_ENDPOINT_CERT
@@ -4647,10 +4653,10 @@ spec:
         - name: USES3
           value: "false"
         - name: MONGOHOST
-          value: "data-mongo-0.data-mongo.decipher-dt.svc.cluster.local:27017"
+          value: "internal-data-mongo-0.internal-data-mongo.default.svc.cluster.local:27017"
         volumeMounts:
           - name: data-pvc
-            mountPath: /buckets/local/greymatter
+            mountPath: /buckets/data/data
       - name: sidecar 
         image: "docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0"
         env:        
