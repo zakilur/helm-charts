@@ -170,21 +170,20 @@ sudo apt-get update && sudo apt-get install socat
 
 ## Configuration
 
-Our Helm charts can be overridden by custom YAML files that are chained together during install. We've provided three examples:
+Our Helm charts can be overridden by custom YAML files that are chained together during install. We've provided two templates:
 
 - [greymatter.yaml](../greymatter.yaml) provides a primary set of overrides
 - [greymatter-secrets.yaml](../greymatter-secrets.yaml) provides a separate set of overrides specifically for passwords, secrets, and other sensitive data
-- [greymatter-minikube.yaml](../greymatter-minikube.yaml) provides Minikube specific configurations but requires no changes
   
 
-Copy these files to `custom-greymatter.yaml`, `custom-greymatter-secrets.yaml` and `custom-greymatter-minikube.yaml`.
+Copy these files to `custom-greymatter.yaml` and  `custom-greymatter-secrets.yaml`.
 
 ### Copy Files to EC2
 
 If deploying to EC2, secure copy these files into the instance.
 
 ```sh
-scp -i <path-to-keyfile> custom-greymatter-secrets.yaml custom-greymatter.yaml custom-greymatter-minikube.yaml ubuntu@<public-dns>:/home/ubuntu
+scp -i <path-to-keyfile> custom-greymatter-secrets.yaml custom-greymatter.yaml ubuntu@<public-dns>:/home/ubuntu
 ```
 
 ### Docker Credentials
@@ -216,7 +215,7 @@ For more information on securing your installation see: https://docs.helm.sh/usi
 
 ### Configure Voyager Ingress
 
-For Kubernetes, we recommend the [Voyager Ingress Controller](https://appscode.com/products/voyager/), which automatically provisions a load balancer from a variety of supported cloud providers like EKS in AWS. This allows you to access the cluster at the provided load balancer URL.
+For Kubernetes, we use the [Voyager Ingress Controller](https://appscode.com/products/voyager/), which automatically provisions a load balancer from a variety of supported cloud providers like EKS in AWS. This allows you to access the cluster at the provided load balancer URL.
 
 At present, there's [an issue](https://github.com/appscode/voyager/issues/1415) specifying Voyager as a dependency so we need to manually configure Voyager ingress as a prerequisite. This can be done with following commands:
 
@@ -262,7 +261,7 @@ helm repo add decipher https://nexus.production.deciphernow.com/repository/helm-
 helm repo update
 ```
 
-Now let's tell our helm chart to use `minikube` as its environment. In `greymatter.yaml` change 
+We also need to tell our helm chart to use `minikube` as its environment. In `custom-greymatter.yaml` change 
 
 ```yaml
   environment: openshift
@@ -271,7 +270,7 @@ Now let's tell our helm chart to use `minikube` as its environment. In `greymatt
 to
 
 ```yaml
-  environment: minikube
+  environment: kubernetes
 ```
 
 Once the repository has successfully been added to your `helm` CLI, and our environment has been changed to`minikube`, you can install Grey Matter from the latest charts.
@@ -279,7 +278,7 @@ Once the repository has successfully been added to your `helm` CLI, and our envi
 **Note: Before installing Helm charts it's always prudent to do a dry-run first to ensure your custom YAML is correct. You can do this by adding the `--dry-run` flag to the below `helm install` command. If you receive no errors then you can confidently drop the `--dry-run` flag.**
 
 ```sh
-helm install greymatter -f greymatter.yaml -f greymatter-secrets.yaml  --name gm-deploy
+helm install decipher/greymatter -f custom-greymatter.yaml -f custom-greymatter-secrets.yaml --name gm
 ```
 
 ### Local Helm charts
@@ -304,8 +303,9 @@ dependencies:
 Then you can run the following commands to update the local charts and then install them.
 
 ```sh
+rm -rf greymatter/charts
 helm dep up greymatter
-helm install greymatter -f custom-greymatter.yaml -f custom-greymatter-secrets.yaml -f custom-greymatter-minikube.yaml --name gm
+helm install greymatter -f custom-greymatter.yaml -f custom-greymatter-secrets.yaml --name gm
 ```
 
 The `helm dep up greymatter` command will create a `./greymatter/charts` directory with tarballs of each sub-chart that the parent `greymatter` chart will use to install Grey Matter.
@@ -319,7 +319,7 @@ We also have the option to specify:
 - "--replace" will replace an existing deployment
 - "--dry-run" will print all Kubernetes configs to stdout
 
-We can run `helm ls` to see all our current deployments and `helm delete --purge $DEPLOYMENT` to delete deployments. If you need to make changes, you can run `helm upgrade gm deciperhnow/greymatter -f custom-greymatter.yaml -f custom-greymatter-secrets.yaml -f custom-greymatter-minikube.yaml` to update your release in place.
+We can run `helm ls` to see all our current deployments and `helm delete --purge $DEPLOYMENT` to delete deployments. If you need to make changes, you can run `helm upgrade gm deciperhnow/greymatter -f custom-greymatter.yaml -f custom-greymatter-secrets.yaml` to update your release in place.
 
 ```sh
 NAME                    REVISION        UPDATED                         STATUS          CHART                   APP VERSION     NAMESPACE  
