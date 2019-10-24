@@ -3842,8 +3842,8 @@ apiVersion: v1
 metadata:
   name: prometheus
   namespace: dhs
-annotations:
-   volume.beta.kubernetes.io/storage-class: glusterfs-storage
+  # annotations:
+  #    volume.beta.kubernetes.io/storage-class: glusterfs-storage
 spec:
   accessModes:
   - ReadWriteOnce
@@ -3857,8 +3857,8 @@ apiVersion: v1
 metadata:
   name: gm-control-api-pvc
   namespace: dhs
-annotations:
-   volume.beta.kubernetes.io/storage-class: glusterfs-storage
+  # annotations:
+  #    volume.beta.kubernetes.io/storage-class: glusterfs-storage
 spec:
   accessModes:
   - ReadWriteOnce
@@ -3872,8 +3872,8 @@ apiVersion: v1
 metadata:
   name: data-internal-pvc
   namespace: dhs
-annotations:
-   volume.beta.kubernetes.io/storage-class: glusterfs-storage
+  # annotations:
+  #    volume.beta.kubernetes.io/storage-class: glusterfs-storage
 spec:
   accessModes:
   - ReadWriteOnce
@@ -3887,8 +3887,8 @@ apiVersion: v1
 metadata:
   name: data-pvc
   namespace: dhs
-annotations:
-   volume.beta.kubernetes.io/storage-class: glusterfs-storage
+  # annotations:
+  #    volume.beta.kubernetes.io/storage-class: glusterfs-storage
 spec:
   accessModes:
   - ReadWriteOnce
@@ -3903,8 +3903,8 @@ apiVersion: v1
 metadata:
   name: postgres-slo
   namespace: dhs
-annotations:
-   volume.beta.kubernetes.io/storage-class: glusterfs-storage
+  # annotations:
+  #    volume.beta.kubernetes.io/storage-class: glusterfs-storage
 spec:
   accessModes:
   - ReadWriteOnce
@@ -5662,6 +5662,9 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: data
+      # annotations:
+      #   volume.beta.kubernetes.io/storage-class: glusterfs-storage
+      #   volume.beta.kubernetes.io/storage-provisioner: glusterfs-storage
     spec:
       accessModes:
         - ReadWriteOnce
