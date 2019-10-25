@@ -4343,3 +4343,60 @@ spec:
             secretName: sidecar-certs
       imagePullSecrets:
         - name: docker.secret
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: egress-edge
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: egress-edge
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: egress-edge
+    spec:
+      containers:
+        - name: egress-edge
+          image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 200m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+
+          ports:
+            - name: proxy
+              containerPort: 8080
+            - name: metrics
+              containerPort: 8081
+          env:
+            - name: ENVOY_ADMIN_LOG_PATH
+              value: '/dev/stdout'
+            - name: PROXY_DYNAMIC
+              value: 'true'
+            - name: XDS_CLUSTER
+              value: 'egress-edge'
+            - name: XDS_HOST
+              value: 'control.default.svc.cluster.local'
+            - name: XDS_NODE_ID
+              value: 'default'
+            - name: XDS_PORT
+              value: '50000'
+          volumeMounts:
+            - name: sidecar-certs
+              mountPath: /etc/proxy/tls/sidecar/
+              readOnly: true
+      volumes:
+        - name: sidecar-certs
+          secret:
+            secretName: sidecar-certs
+      imagePullSecrets:
+        - name: docker.secret
