@@ -2460,6 +2460,8 @@ spec:
               mountPath: /etc/config/mesh/services/edge
             - name: service-config-volume-slo
               mountPath: /etc/config/mesh/services/slo
+            - name: service-config-volume-passthrough
+              mountPath: /etc/config/mesh/services/passthrough
             - name: bootstrap-script-volume
               mountPath: /tmp/bootstrap
             - name: bootstrap-zone-volume
@@ -2482,6 +2484,9 @@ spec:
         - name: service-config-volume-slo
           configMap:
             name: service-slo-catalog-api-config
+        - name: service-config-volume-passthrough
+          configMap:
+            name: service-passthrough-catalog-api-config
         - name: bootstrap-script-volume
           configMap:
             name: catalog-bootstrap-script
@@ -2534,6 +2539,10 @@ spec:
             - name: GREYMATTER_CONSOLE_LEVEL
               value: 'debug'
           volumeMounts:
+            - name: service-config-volume-passthrough
+              mountPath: /etc/config/mesh/services/passthrough
+            - name: edge-config-volume-passthrough
+              mountPath: /etc/config/mesh/edge/passthrough
             - name: service-config-volume-catalog
               mountPath: /etc/config/mesh/services/catalog
             - name: edge-config-volume-catalog
@@ -2555,6 +2564,12 @@ spec:
             - name: bootstrap-script-volume
               mountPath: /tmp/bootstrap
       volumes:
+        - name: service-config-volume-passthrough
+          configMap:
+            name: service-passthrough-mesh-config
+        - name: edge-config-volume-passthrough
+          configMap:
+            name: edge-passthrough-mesh-config
         - name: service-config-volume-catalog
           configMap:
             name: service-catalog-mesh-config
@@ -2797,3 +2812,257 @@ spec:
             secretName: sidecar-certs
       imagePullSecrets:
         - name: docker.secret
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-passthrough-catalog-api-config
+  namespace: default
+data:
+  service.json: |-
+    {
+      "clusterName": "passthrough",
+      "zoneName": "zone-default-zone",
+      "name": "Passthrough --> multimesh",
+      "version": "0.0.1",
+      "owner": "Decipher",
+      "capability": "Grey Matter",
+      "runtime": "GO",
+      "documentation": "services/passthrough/latest/get?url=http://google.com",
+      "prometheusJob": "",
+      "minInstances": 1,
+      "maxInstances": 1,
+      "authorized": true,
+      "clusterID": "",
+      "meshID": "",
+      "enableInstanceMetrics": true,
+      "enableHistoricalMetrics": true,
+      "metricsTemplate": "",
+      "metricsPort": 8081
+    }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-passthrough-mesh-config
+  namespace: default
+data:
+  cluster.json: |-
+    {
+      "cluster_key": "cluster-passthrough",
+      "zone_key": "zone-default-zone",
+      "name": "service",
+      "instances": [
+        {
+            "host": "0.0.0.0",
+            "port": 3000
+        }
+      ],
+      "circuit_breakers": null,
+      "outlier_detection": null,
+      "health_checks": []
+    }
+  domain.json: |-
+    {
+      "domain_key": "domain-passthrough",
+      "zone_key": "zone-default-zone",
+      "name": "*",
+      "port": 8080,
+      "redirects": null,
+      "gzip_enabled": false,
+      "cors_config": null,
+      "aliases": null,
+      "ssl_config": {
+          "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+          "protocols": [
+            "SSLv3",
+            "SSLv2",
+            "TLSv1",
+            "TLSv1.1",
+            "TLSv1.2"
+          ],
+        "require_client_certs": true,
+        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
+        "cert_key_pairs": [
+          {
+            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
+            "key_path": "/etc/proxy/tls/sidecar/server.key"
+          }
+        ]
+      },
+      "force_https": true
+    }
+
+  listener.json: |-
+    {
+      "listener_key": "listener-passthrough",
+      "zone_key": "zone-default-zone",
+      "name": "passthrough",
+      "ip": "0.0.0.0",
+      "port": 8080,
+      "protocol": "http_auto",
+      "domain_keys": ["domain-passthrough"],
+      "tracing_config": null
+    }
+
+  proxy.json: |-
+    {
+      "proxy_key": "proxy-passthrough",
+      "zone_key": "zone-default-zone",
+      "name": "passthrough",
+      "domain_keys": [
+        "domain-passthrough"
+      ],
+      "listener_keys": [
+          "listener-passthrough"
+      ],
+      "listeners": null,
+      "active_proxy_filters": [
+        "gm.metrics" 
+      ],
+      "proxy_filters": {
+        "gm_metrics": {
+          "metrics_port": 8081,
+          "metrics_host": "0.0.0.0",
+          "metrics_dashboard_uri_path": "/metrics",
+          "metrics_prometheus_uri_path": "/prometheus",
+          "prometheus_system_metrics_interval_seconds": 15,
+          "metrics_ring_buffer_size": 4096,
+          "metrics_key_function": "depth",
+          "metrics_key_depth": "1"
+        }
+      }
+    }
+  route.json: |-
+    {
+      "route_key": "route-passthrough",
+      "domain_key": "domain-passthrough",
+      "zone_key": "zone-default-zone",
+      "path": "/",
+      "prefix_rewrite": null,
+      "redirects": null,
+      "shared_rules_key": "shared-rules-passthrough",
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "retry_policy": null
+    }
+
+  shared_rules.json: |-
+    {
+      "shared_rules_key": "shared-rules-passthrough",
+      "name": "passthrough",
+      "zone_key": "zone-default-zone",
+      "default": {
+        "light": [
+          {
+            "constraint_key": "",
+            "cluster_key": "cluster-passthrough",
+            "metadata": null,
+            "properties": null,
+            "response_data": {},
+            "weight": 1
+          }
+        ],
+        "dark": null,
+        "tap": null
+      },
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "properties": null,
+      "retry_policy": null
+    }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: edge-passthrough-mesh-config
+  namespace: default
+data:
+  cluster.json: |-
+    {
+      "zone_key": "zone-default-zone",
+      "cluster_key": "edge-to-passthrough-cluster",
+      "name": "passthrough",
+      "instances": [],
+      "circuit_breakers": null,
+      "outlier_detection": null,
+      "health_checks": [],
+      "require_tls": true,
+      "ssl_config": {
+        "cipher_filter": "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH",
+        "protocols": [
+          "SSLv3",
+          "SSLv2",
+          "TLSv1",
+          "TLSv1.1",
+          "TLSv1.2"
+        ],
+        "require_client_certs": true,
+        "trust_file": "/etc/proxy/tls/sidecar/ca.crt",
+        "cert_key_pairs": [
+          {
+            "certificate_path": "/etc/proxy/tls/sidecar/server.crt",
+            "key_path": "/etc/proxy/tls/sidecar/server.key"
+          }
+        ]
+      }
+    }
+
+  route-1.json: |-
+    {
+      "route_key": "edge-passthrough-route",
+      "domain_key": "edge",
+      "zone_key": "zone-default-zone",
+      "path": "/services/passthrough/latest/",
+      "prefix_rewrite": "/",
+      "redirects": null,
+      "shared_rules_key": "edge-passthrough-shared-rules",
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "retry_policy": null
+    }
+
+  route-2.json: |-
+    {
+      "route_key": "edge-passthrough-route-slash",
+      "domain_key": "edge",
+      "zone_key": "zone-default-zone",
+      "path": "/services/passthrough/latest",
+      "prefix_rewrite": "/services/passthrough/latest/",
+      "redirects": null,
+      "shared_rules_key": "edge-passthrough-shared-rules",
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "retry_policy": null
+    }
+
+  shared_rules.json: |-
+    {
+      "zone_key": "zone-default-zone",
+      "shared_rules_key": "edge-passthrough-shared-rules",
+      "name": "passthrough",
+      "default": {
+        "light": [
+          {
+            "constraint_key": "",
+            "cluster_key": "edge-to-passthrough-cluster",
+            "metadata": null,
+            "properties": null,
+            "response_data": {},
+            "weight": 1
+          }
+        ],
+        "dark": null,
+        "tap": null
+      },
+      "rules": null,
+      "response_data": {},
+      "cohort_seed": null,
+      "properties": null,
+      "retry_policy": null
+    }
