@@ -2763,7 +2763,7 @@ spec:
           imagePullPolicy: IfNotPresent
           resources:
             limits:
-              cpu: 200m
+              cpu: 100m
               memory: 512Mi
             requests:
               cpu: 100m
