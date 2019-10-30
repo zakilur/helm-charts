@@ -165,7 +165,7 @@ kind: Secret
 apiVersion: v1
 metadata:
   name: docker.secret
-  namespace: dhs
+  namespace: dhs-2
 type: kubernetes.io/dockerconfigjson
 data:
   .dockerconfigjson: REMOVED
@@ -192,7 +192,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: catalog-bootstrap-script
-  namespace: dhs
+  namespace: dhs-2
 data:
   bootstrap.sh: |-
     #!/usr/bin/env sh
@@ -280,11 +280,11 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: catalog-zone-bootstrap
-  namespace: dhs
+  namespace: dhs-2
 data:
   zone.json: |-
     {
-      "serverAddress": "control.dhs.svc.cluster.local:50000",
+      "serverAddress": "control.dhs-2.svc.cluster.local:50000",
       "zoneName": "zone-default-zone",
       "requestCluster": "edge"
     }
@@ -294,7 +294,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-intake-catalog-api-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   service.json: |-
     {
@@ -325,7 +325,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-jwt-security-catalog-api-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   service.json: |-
     {
@@ -356,7 +356,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-payment-catalog-api-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   service.json: |-
     {
@@ -387,7 +387,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-edge-catalog-api-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   service.json: |-
     {
@@ -418,7 +418,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-dashboard-catalog-api-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   service.json: |-
     {
@@ -449,7 +449,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-data-catalog-api-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   service.json: |-
     {
@@ -480,7 +480,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-catalog-catalog-api-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   service.json: |-
     {
@@ -511,7 +511,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-gm-control-api-catalog-api-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   service.json: |-
     {
@@ -542,7 +542,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-slo-catalog-api-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   service.json: |-
     {
@@ -573,7 +573,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: prometheus
-  namespace: dhs
+  namespace: dhs-2
 data:
   prometheus.yaml: |-
     global:
@@ -595,7 +595,7 @@ data:
           - role: pod
             namespaces:
               names:
-                - "dhs"
+                - "dhs-2"
         relabel_configs:
         # Drop all named ports that are not "metrics"
         - source_labels: ['__meta_kubernetes_pod_container_port_name']
@@ -742,7 +742,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: data-mongo-init
-  namespace: dhs
+  namespace: dhs-2
 data:
   gmdata.js: |-
     db.auth("mongogm", "USCISMongoA32")
@@ -763,7 +763,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: bootstrap-script
-  namespace: dhs
+  namespace: dhs-2
 data:
   bootstrap.sh: |-
     #!/usr/bin/env sh
@@ -862,7 +862,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: edge-slo-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -957,7 +957,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: edge-data-internal-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -1052,7 +1052,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-slo-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -1188,7 +1188,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-intake-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -1324,7 +1324,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-internal-jwt-security-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -1479,7 +1479,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-dashboard-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -1615,7 +1615,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: edge-internal-jwt-security-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -1710,7 +1710,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: edge-prometheus-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -1805,7 +1805,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: edge-catalog-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -1900,7 +1900,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-payment-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -2036,7 +2036,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: special-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -2261,7 +2261,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: edge-payment-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -2356,7 +2356,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: edge-data-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -2451,7 +2451,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: edge-dashboard-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -2546,7 +2546,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: edge-gm-control-api-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -2641,7 +2641,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: edge-intake-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -2736,7 +2736,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-jwt-security-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -2891,7 +2891,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-data-internal-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -3046,7 +3046,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-data-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -3201,7 +3201,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-gm-control-api-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -3337,7 +3337,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-catalog-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -3492,7 +3492,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-prometheus-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -3628,7 +3628,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: edge-jwt-security-mesh-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   cluster.json: |-
     {
@@ -3723,7 +3723,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: domain-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   domain1.json: |-
     
@@ -3734,7 +3734,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: internal-data-mongo-init
-  namespace: dhs
+  namespace: dhs-2
 data:
   gmdata.js: |-
     db.auth("mongogm", "USCISMongoA32")
@@ -3755,7 +3755,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: internal-jwt-users
-  namespace: dhs
+  namespace: dhs-2
 data:
   users.json: |-
     {
@@ -3795,7 +3795,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: jwt-users
-  namespace: dhs
+  namespace: dhs-2
 data:
   users.json: |-
     {
@@ -3807,7 +3807,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: postgres-slo-config
-  namespace: dhs
+  namespace: dhs-2
 data:
   pg_hba.conf: |-
     # TYPE  DATABASE        USER            ADDRESS                 METHOD
@@ -3826,7 +3826,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: postgres-slo-overrides
-  namespace: dhs
+  namespace: dhs-2
 data:
   postgresql.conf: |-
     # These override configs in OpenShift's postgres container located at /var/lib/pgsql/data/userdata/postgresql.conf
@@ -3841,7 +3841,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: prometheus
-  namespace: dhs
+  namespace: dhs-2
   # annotations:
   #    volume.beta.kubernetes.io/storage-class: glusterfs-storage
 spec:
@@ -3856,7 +3856,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: gm-control-api-pvc
-  namespace: dhs
+  namespace: dhs-2
   # annotations:
   #    volume.beta.kubernetes.io/storage-class: glusterfs-storage
 spec:
@@ -3871,7 +3871,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: data-internal-pvc
-  namespace: dhs
+  namespace: dhs-2
   # annotations:
   #    volume.beta.kubernetes.io/storage-class: glusterfs-storage
 spec:
@@ -3886,7 +3886,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: data-pvc
-  namespace: dhs
+  namespace: dhs-2
   # annotations:
   #    volume.beta.kubernetes.io/storage-class: glusterfs-storage
 spec:
@@ -3902,7 +3902,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: postgres-slo
-  namespace: dhs
+  namespace: dhs-2
   # annotations:
   #    volume.beta.kubernetes.io/storage-class: glusterfs-storage
 spec:
@@ -3917,21 +3917,21 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: control-sa
-  namespace: dhs
+  namespace: dhs-2
 ---
 # Source: greymatter/templates/waiter-serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: waiter-sa
-  namespace: dhs
+  namespace: dhs-2
 ---
 # Source: greymatter/charts/control/templates/role.yaml
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: control-sa-role
-  namespace: dhs
+  namespace: dhs-2
 rules:
 - apiGroups: [""]
   resources: ["pods", "endpoints"]
@@ -3942,11 +3942,11 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: control-sa-rolebinding
-  namespace: dhs
+  namespace: dhs-2
 subjects:
 - kind: ServiceAccount
   name: control-sa
-  namespace: dhs
+  namespace: dhs-2
 roleRef:
   kind: ClusterRole
   name: control-sa-role
@@ -3957,7 +3957,7 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: waiter-sa-role
-  namespace: dhs
+  namespace: dhs-2
 rules:
 - apiGroups: [""]
   resources: ["endpoints"]
@@ -3968,11 +3968,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: waiter-sa-rolebinding
-  namespace: dhs
+  namespace: dhs-2
 subjects:
 - kind: ServiceAccount
   name: waiter-sa
-  namespace: dhs
+  namespace: dhs-2
 roleRef:
   kind: Role
   name: waiter-sa-role
@@ -4006,7 +4006,7 @@ metadata:
   labels:
     run: control
   name: control
-  namespace: dhs
+  namespace: dhs-2
 spec:
   ports:
   - port: 50000
@@ -4021,7 +4021,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: data-mongo
-  namespace: dhs
+  namespace: dhs-2
 spec:
   clusterIP: None
   ports:
@@ -4039,7 +4039,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: edge
-  namespace: dhs
+  namespace: dhs-2
   labels:
     app: edge
 spec:
@@ -4068,7 +4068,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: internal-data-mongo
-  namespace: dhs
+  namespace: dhs-2
 spec:
   clusterIP: None
   ports:
@@ -4086,7 +4086,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: internal-redis
-  namespace: dhs
+  namespace: dhs-2
 spec:
   clusterIP: None
   ports:
@@ -4104,7 +4104,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: redis
-  namespace: dhs
+  namespace: dhs-2
 spec:
   clusterIP: None
   ports:
@@ -4122,7 +4122,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: postgres-slo
-  namespace: dhs
+  namespace: dhs-2
   labels:
     app: postgres-slo
 spec:
@@ -4139,7 +4139,7 @@ kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
   name: catalog
-  namespace: dhs
+  namespace: dhs-2
 spec:
   selector:
     matchLabels:
@@ -4158,7 +4158,7 @@ spec:
           image: deciphernow/k8s-waiter:latest
           env:
             - name: NAMESPACE
-              value: dhs
+              value: dhs-2
             - name: SERVICE
               value: control
             - name: POST_DELAY
@@ -4210,7 +4210,7 @@ spec:
           - name: CONFIG_SOURCE
             value: "gmdata"
           - name: CONTROL_SERVER_0_ADDRESS
-            value: "control.dhs.svc.cluster.local:50000"
+            value: "control.dhs-2.svc.cluster.local:50000"
           - name: CONTROL_SERVER_0_REQUEST_CLUSTER_NAME
             value: "edge"
           - name: CONTROL_SERVER_0_ZONE_NAME
@@ -4268,7 +4268,7 @@ spec:
           - name: XDS_CLUSTER
             value: "catalog"
           - name: XDS_HOST
-            value: "control.dhs.svc.cluster.local"
+            value: "control.dhs-2.svc.cluster.local"
           - name: XDS_NODE_ID
             value: "default"
           - name: XDS_PORT
@@ -4293,7 +4293,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: control
-  namespace: dhs
+  namespace: dhs-2
 spec:
   replicas: 1
   selector:
@@ -4329,7 +4329,7 @@ spec:
             - name: GM_CONTROL_KUBERNETES_CLUSTER_LABEL
               value: "app"
             - name: GM_CONTROL_KUBERNETES_NAMESPACES
-              value: "dhs"
+              value: "dhs-2"
             - name: GM_CONTROL_KUBERNETES_PORT_NAME
               value: "proxy"
             - name: GM_CONTROL_XDS_ADS_ENABLED
@@ -4352,7 +4352,7 @@ spec:
           image: deciphernow/k8s-waiter:latest
           env:
             - name: NAMESPACE
-              value: dhs
+              value: dhs-2
             - name: SERVICE
               value: gm-control-api
             - name: POST_DELAY
@@ -4365,7 +4365,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: dashboard
-  namespace: dhs
+  namespace: dhs-2
 spec:
   selector:
     matchLabels:
@@ -4425,7 +4425,7 @@ spec:
         - name: XDS_CLUSTER
           value: "dashboard"
         - name: XDS_HOST
-          value: "control.dhs.svc.cluster.local"
+          value: "control.dhs-2.svc.cluster.local"
         - name: XDS_NODE_ID
           value: "default"
         - name: XDS_PORT
@@ -4446,7 +4446,7 @@ kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
   name: prometheus
-  namespace: dhs
+  namespace: dhs-2
 spec:
   selector:
     matchLabels:
@@ -4521,7 +4521,7 @@ spec:
           - name: XDS_CLUSTER
             value: "prometheus"
           - name: XDS_HOST
-            value: "control.dhs.svc.cluster.local"
+            value: "control.dhs-2.svc.cluster.local"
           - name: XDS_NODE_ID
             value: "default"
           - name: XDS_PORT
@@ -4545,7 +4545,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: data
-  namespace: dhs
+  namespace: dhs-2
 spec:
   replicas: 1
   selector:
@@ -4563,7 +4563,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: NAMESPACE
-              value: dhs
+              value: dhs-2
             - name: SERVICE
               value: data-mongo
       containers:
@@ -4663,7 +4663,7 @@ spec:
         - name: MASTERKEY
           value: "__AWS_MASTER_KEY__"
         - name: MONGOHOST
-          value: "data-mongo-0.data-mongo.dhs.svc.cluster.local:27017"
+          value: "data-mongo-0.data-mongo.dhs-2.svc.cluster.local:27017"
         volumeMounts:
           - name: data-pvc
             mountPath: /buckets/data/data
@@ -4677,7 +4677,7 @@ spec:
         - name: XDS_CLUSTER
           value: "data"
         - name: XDS_HOST
-          value: "control.dhs.svc.cluster.local"
+          value: "control.dhs-2.svc.cluster.local"
         - name: XDS_NODE_ID
           value: "default"
         - name: XDS_PORT
@@ -4725,7 +4725,7 @@ kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
   name: edge
-  namespace: dhs
+  namespace: dhs-2
 spec:
   replicas: 1
   selector:
@@ -4758,7 +4758,7 @@ spec:
         - name: XDS_CLUSTER
           value: "edge"
         - name: XDS_HOST
-          value: "control.dhs.svc.cluster.local"
+          value: "control.dhs-2.svc.cluster.local"
         - name: XDS_NODE_ID
           value: "default"
         - name: XDS_PORT
@@ -4789,7 +4789,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gm-control-api
-  namespace: dhs
+  namespace: dhs-2
 spec:
   replicas: 1
   selector:
@@ -4875,7 +4875,7 @@ spec:
             - name: XDS_CLUSTER
               value: "gm-control-api"
             - name: XDS_HOST
-              value: "control.dhs.svc.cluster.local"
+              value: "control.dhs-2.svc.cluster.local"
             - name: XDS_NODE_ID
               value: "default"
             - name: XDS_PORT
@@ -4899,7 +4899,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: data-internal
-  namespace: dhs
+  namespace: dhs-2
 spec:
   replicas: 1
   selector:
@@ -4917,7 +4917,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: NAMESPACE
-              value: dhs
+              value: dhs-2
             - name: SERVICE
               value: internal-data-mongo
       containers:
@@ -4963,7 +4963,7 @@ spec:
         - name: CLIENT_JWT_PREFIX
           value: "/jwt"
         - name: CLIENT_PREFIX
-          value: "/services/dhs-data-internal/0.2.7"
+          value: "/services/dhs-2-data-internal/0.2.7"
         - name: GMDATA_CERT
           valueFrom:
             secretKeyRef:
@@ -5017,7 +5017,7 @@ spec:
         - name: MASTERKEY
           value: "__AWS_MASTER_KEY__"
         - name: MONGOHOST
-          value: "internal-data-mongo-0.internal-data-mongo.dhs.svc.cluster.local:27017"
+          value: "internal-data-mongo-0.internal-data-mongo.dhs-2.svc.cluster.local:27017"
         volumeMounts:
           - name: data-pvc
             mountPath: /buckets/data/data
@@ -5031,7 +5031,7 @@ spec:
         - name: XDS_CLUSTER
           value: "data-internal"
         - name: XDS_HOST
-          value: "control.dhs.svc.cluster.local"
+          value: "control.dhs-2.svc.cluster.local"
         - name: XDS_NODE_ID
           value: "default"
         - name: XDS_PORT
@@ -5079,7 +5079,7 @@ kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
     name: internal-jwt-security
-    namespace: dhs
+    namespace: dhs-2
 spec:
   replicas: 1
   revisionHistoryLimit: 10
@@ -5146,7 +5146,7 @@ spec:
               name: internal-jwt-certs
               key: jwt.key.pem   
         - name: REDIS_HOST
-          value: internal-redis.dhs.svc.cluster.local
+          value: internal-redis.dhs-2.svc.cluster.local
         - name:  REDIS_PORT
           value: "6379"
         - name: REDIS_DB
@@ -5171,7 +5171,7 @@ spec:
         - name: XDS_CLUSTER
           value: "internal-jwt-security"
         - name: XDS_HOST
-          value: "control.dhs.svc.cluster.local"
+          value: "control.dhs-2.svc.cluster.local"
         - name: XDS_NODE_ID
           value: "default"
         - name: XDS_PORT
@@ -5213,7 +5213,7 @@ metadata:
   labels:
     app: internal-redis
   name: internal-redis
-  namespace: dhs
+  namespace: dhs-2
 spec:
   replicas: 1
   revisionHistoryLimit: 10
@@ -5270,7 +5270,7 @@ kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
     name: jwt-security
-    namespace: dhs
+    namespace: dhs-2
 spec:
   replicas: 1
   revisionHistoryLimit: 10
@@ -5337,7 +5337,7 @@ spec:
               name: jwt-certs
               key: jwt.key.pem  
         - name: REDIS_HOST
-          value: redis.dhs.svc.cluster.local
+          value: redis.dhs-2.svc.cluster.local
         - name:  REDIS_PORT
           value: "6379"
         - name: REDIS_DB
@@ -5362,7 +5362,7 @@ spec:
         - name: XDS_CLUSTER
           value: "jwt-security"
         - name: XDS_HOST
-          value: "control.dhs.svc.cluster.local"
+          value: "control.dhs-2.svc.cluster.local"
         - name: XDS_NODE_ID
           value: "default"
         - name: XDS_PORT
@@ -5404,7 +5404,7 @@ metadata:
   labels:
     app: redis
   name: redis
-  namespace: dhs
+  namespace: dhs-2
 spec:
   replicas: 1
   revisionHistoryLimit: 10
@@ -5463,7 +5463,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: slo
-  namespace: dhs
+  namespace: dhs-2
 spec:
   selector:
     matchLabels:
@@ -5482,7 +5482,7 @@ spec:
           image: deciphernow/k8s-waiter:latest
           env:
             - name: NAMESPACE
-              value: dhs
+              value: dhs-2
             - name: SERVICE
               value: postgres-slo
             - name: POST_DELAY
@@ -5516,7 +5516,7 @@ spec:
               name: postgres-credentials
               key: database 
         - name: DATABASE_URI
-          value: postgres://$(POSTGRESQL_USERNAME):$(POSTGRESQL_PASSWORD)@postgres-slo.dhs.svc.cluster.local:5432/$(POSTGRESQL_DATABASE)
+          value: postgres://$(POSTGRESQL_USERNAME):$(POSTGRESQL_PASSWORD)@postgres-slo.dhs-2.svc.cluster.local:5432/$(POSTGRESQL_DATABASE)
         - name: SERVICE_PORT
           value: "1337"
         - name: SSL_ENABLED
@@ -5554,7 +5554,7 @@ spec:
         - name: XDS_CLUSTER
           value: "slo"
         - name: XDS_HOST
-          value: "control.dhs.svc.cluster.local"
+          value: "control.dhs-2.svc.cluster.local"
         - name: XDS_NODE_ID
           value: "default"
         - name: XDS_PORT
@@ -5581,7 +5581,7 @@ metadata:
   labels:
     app: data-mongo
   name: data-mongo
-  namespace: dhs
+  namespace: dhs-2
 spec:
   podManagementPolicy: Parallel
   replicas: 1
@@ -5679,7 +5679,7 @@ metadata:
   labels:
     app: internal-data-mongo
   name: internal-data-mongo
-  namespace: dhs
+  namespace: dhs-2
 spec:
   podManagementPolicy: Parallel
   replicas: 1
@@ -5772,7 +5772,7 @@ kind: StatefulSet
 apiVersion: apps/v1
 metadata:
   name: postgres-slo
-  namespace: dhs
+  namespace: dhs-2
   labels:
     app: postgres-slo
 spec:
@@ -5876,7 +5876,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: NAMESPACE
-              value: dhs
+              value: dhs-2
             - name: SERVICE
               value: catalog
       containers:
@@ -5976,7 +5976,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: NAMESPACE
-              value: dhs
+              value: dhs-2
             - name: SERVICE
               value: gm-control-api
       containers:
@@ -6121,15 +6121,16 @@ spec:
       imagePullSecrets:
         - name: docker.secret
 ---
-# Source: greymatter/charts/edge/templates/edge-ingress.yaml
-kind: Route
 apiVersion: route.openshift.io/v1
+kind: Route
 metadata:
+  labels:
+    app: edge
   name: edge
-  namespace: dhs
+  namespace: dhs-2
 spec:
-  host: greymatter.dhs.apps.ocp-nonprod.uscis.dhs.gov
-  port: 
+  host: dhs2.staging.deciphernow.com
+  port:
     targetPort: proxy
   tls:
     termination: passthrough
@@ -6138,3 +6139,11 @@ spec:
     name: edge
     weight: 100
   wildcardPolicy: None
+status:
+  ingress:
+    - conditions:
+        - lastTransitionTime: '2019-10-29T21:55:05Z'
+          status: 'True'
+          type: Admitted
+      routerName: router
+      wildcardPolicy: None
