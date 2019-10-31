@@ -1,0 +1,90 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: payment
+  namespace: dhs
+spec:
+  selector:
+    matchLabels:
+      app: payment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: payment
+    spec:
+      containers:
+        - name: payment
+          image: 'dgoldstein1/passthrough:latest'
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              cpu: 200m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+
+          env:
+            - name: PORT
+              value: '3000'
+            - name: MESH_ID
+              value: 'mesh 2'
+            - name: USE_TLS
+              value: 'true'
+            - name: SERVER_CERT
+              value: '/certs/server.crt'
+            - name: SERVER_KEY
+              value: '/certs/server.key'
+            - name: SERVER_CA
+              value: '/certs/ca.crt'
+            - name: PING_RESPONSE_URL
+              value: 'https://localhost:8080/mesh1/services/passthrough/latest/ping?pause=2'
+          volumeMounts:
+            - name: sidecar-certs
+              mountPath: /certs/
+              readOnly: true
+
+        - name: payment
+          image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 200m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+
+          ports:
+            - name: proxy
+              containerPort: 8080
+            - name: http
+              containerPort: 443
+            - name: metrics
+              containerPort: 8081
+          env:
+            - name: ENVOY_ADMIN_LOG_PATH
+              value: '/dev/stdout'
+            - name: PROXY_DYNAMIC
+              value: 'true'
+            - name: XDS_CLUSTER
+              value: 'payment'
+            - name: XDS_HOST
+              value: 'control.dhs.svc.cluster.local'
+            - name: XDS_NODE_ID
+              value: 'default'
+            - name: XDS_PORT
+              value: '50000'
+          volumeMounts:
+            - name: sidecar-certs
+              mountPath: /etc/proxy/tls/sidecar/
+              readOnly: true
+      volumes:
+        - name: sidecar-certs
+          secret:
+            secretName: sidecar-certs
+      imagePullSecrets:
+        - name: docker.secret

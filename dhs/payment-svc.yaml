@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: payment-252
+  name: payment-252
+  namespace: dhs-2
+spec:
+  ports:
+    - name: proxy
+      port: 3000
+  selector:
+    app: payment-252
+  type: ClusterIP
