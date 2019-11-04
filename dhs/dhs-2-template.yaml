@@ -3926,32 +3926,6 @@ metadata:
   name: waiter-sa
   namespace: dhs-2
 ---
-# Source: greymatter/charts/control/templates/role.yaml
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: control-sa-role
-  namespace: dhs-2
-rules:
-- apiGroups: [""]
-  resources: ["pods", "endpoints"]
-  verbs: ["get", "list", "watch"]
----
-# Source: greymatter/charts/control/templates/rolebinding.yaml
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: control-sa-rolebinding
-  namespace: dhs-2
-subjects:
-- kind: ServiceAccount
-  name: control-sa
-  namespace: dhs-2
-roleRef:
-  kind: ClusterRole
-  name: control-sa-role
-  apiGroup: rbac.authorization.k8s.io
----
 # Source: greymatter/templates/waiter-role.yaml
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
