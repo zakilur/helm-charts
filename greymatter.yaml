@@ -9,6 +9,8 @@ global:
     use_provided_certs: true
   kafka:
     replicas: 3
+    tls:
+      enabled: true
   dashboard:
     version: 3.2.0
     sidecar:
@@ -74,11 +76,12 @@ global:
   sidecar:
     version: 1.0.0
     envvars:
-      # You can customize the sidecar environment variables mesh-wide to enable features in the mesh
-      # All the sidecar envvars are documented in `./greymatter/README.md`, and the custom service-level defaults are documented in the services `configuration.md` files.
-      # These are sorted by how different the values are for the sidecars running on different services. The options are "all the same", "all except XDS". and "different"
+      # You can customize the sidecar environment variables mesh-wide to enable features in the mesh. All sidecar envvars are documented in 
+      # ./greymatter/README.md and the custom service-level defaults are documented in the services configuration.md files.
+      # The following environment variables are shared globally by all sidecars, except for XDS configuration. This is a baseline subset of the
+      # avialable environment variables supported by the sidecar. To use an environment variable with the sidecar, even if it doesn't have a global default,
+      # it needs to be set globally as either a value or a secret.
       # TODO: update each service to use default global values and only set the ones that are different.
-      # All the same
       proxy_dynamic:
         type: 'value'
         value: 'true'
@@ -97,9 +100,24 @@ global:
       envoy_admin_log_path:
         type: 'value'
         value: '/dev/stdout'
-      # There may be more sidecar environment variables, but we haven't added them here yet.
-      # However, to use an env var with the sidecar, even if it doesn't have a global default,
-      # it needs to be set globally as either a value or a secret
+      kafka_use_tls:
+        type: 'value'
+        value: 'true'
+      kafka_server_name:
+        type: 'value'
+        value: '{{ .Release.Namespace }}.svc.cluster.local'
+      kafka_tls_trusts:
+        type: 'value'
+        value: /etc/proxy/tls/kafka/ca.crt
+      kafka_tls_certs:
+        type: 'value'
+        value: /etc/proxy/tls/kafka/server.crt
+      kafka_tls_key:
+        type: 'value'
+        value: /etc/proxy/tls/kafka/server.key
+
+  observables:
+    kafkaServerConnection: kafka-default.fabric.svc:9092
 
 control:
   control:
@@ -127,11 +145,11 @@ gm-control-api:
     init:
       image: docker.production.deciphernow.com/deciphernow/greymatter:1.0.2
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
 
 data:
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
@@ -271,7 +289,7 @@ data:
 
 internal-data:
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
@@ -436,14 +454,14 @@ catalog:
         value: 'gm-control@deciphernow.com'
 
     init:
-      image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+      image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
       envvars:
         debug:
           type: value
           value: 'true'
 
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
@@ -458,14 +476,14 @@ dashboard:
       mountPoint: /certs
       name: dashboard-certs
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
         type: value
         value: 'dashboard'
   sidecar_prometheus:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
   prometheus:
     serviceAccount:
       create: false
@@ -485,7 +503,7 @@ slo:
       name: slo-certs
       mountPoint: /service-certs
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
@@ -524,7 +542,7 @@ slo:
 
 jwt:
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
@@ -586,7 +604,7 @@ jwt:
 
 internal-jwt:
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
@@ -663,13 +681,13 @@ internal-jwt:
     password: 'internalRedis'
 
 sidecar:
-  image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+  image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
   create_sidecar_secret: true
 
 edge:
   sidecar:
     version: 1.0.0
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
     envvars:
       xds_cluster:
         type: value

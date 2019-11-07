@@ -31,7 +31,7 @@ You will need the following tools installed (tested on both Mac OS and Linux Ubu
 
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)@1.16.0
 - [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)@1.4.0
-- [helm](https://github.com/helm/helm/releases/tag/v2.14.3)@2.15.0
+- [helm](https://github.com/helm/helm/releases/tag/v2.14.3)@2.14.3
 - [virtualbox](https://www.virtualbox.org/wiki/Downloads)@6.0.12
 
 ### Quick Start
@@ -174,7 +174,6 @@ Our Helm charts can be overridden by custom YAML files that are chained together
 
 - [greymatter.yaml](../greymatter.yaml) provides a primary set of overrides
 - [greymatter-secrets.yaml](../greymatter-secrets.yaml) provides a separate set of overrides specifically for passwords, secrets, and other sensitive data
-  
 
 Copy these files to `custom-greymatter.yaml` and  `custom-greymatter-secrets.yaml`.
 
@@ -229,6 +228,7 @@ helm install appscode/voyager --name voyager-operator --version 10.0.0 \
   --set enableAnalytics=false \
   --set apiserver.enableAdmissionWebhook=false
 ```
+
 ```sh
 NOTES:
 Set cloudProvider for installing Voyager
@@ -261,7 +261,7 @@ helm repo add decipher https://nexus.production.deciphernow.com/repository/helm-
 helm repo update
 ```
 
-We also need to tell our helm chart to use `minikube` as its environment. In `custom-greymatter.yaml` change 
+We also need to tell our helm chart to use `minikube` as its environment. In `custom-greymatter.yaml` change
 
 ```yaml
   environment: openshift

@@ -169,6 +169,7 @@ sidecar:
   # sidecar secret, but if individual testing is being done, the sidecar secret will
   # need to be created.
   create_sidecar_secret: false
+  create_kafka_secret: false
   certificates:
     name: sidecar
     ca: |-
@@ -183,3 +184,17 @@ sidecar:
       -----BEGIN RSA PRIVATE KEY-----
       ...
       -----END RSA PRIVATE KEY-----
+    kafka:
+      name: kafka
+      ca: |-
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+      cert: |-
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+      key: |-
+        -----BEGIN RSA PRIVATE KEY-----
+        ...
+        -----END RSA PRIVATE KEY-----  
