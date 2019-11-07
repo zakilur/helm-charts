@@ -394,7 +394,7 @@ data:
       "clusterName": "edge",
       "zoneName": "zone-default-zone",
       "name": "Grey Matter Edge",
-      "version": "0.9.1",
+      "version": "1.1.0",
       "owner": "Decipher",
       "capability": "Grey Matter",
       "runtime": "GO",
@@ -3917,7 +3917,6 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: control-sa
-  namespace: dhs
 ---
 # Source: greymatter/templates/waiter-serviceaccount.yaml
 apiVersion: v1
@@ -4245,7 +4244,7 @@ spec:
             - name: certs
               mountPath: /etc/pki
         - name: sidecar
-          image:  'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
+          image:  'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
           imagePullPolicy: IfNotPresent
           resources:
             limits:
@@ -4311,7 +4310,7 @@ spec:
       serviceAccountName: control-sa
       containers:
         - name: control
-          image:  'docker.production.deciphernow.com/deciphernow/gm-control:0.5.1'
+          image:  'docker.production.deciphernow.com/deciphernow/gm-control:1.1.0'
           imagePullPolicy: IfNotPresent
           env:            
             - name: GM_CONTROL_API_HOST
@@ -4402,7 +4401,7 @@ spec:
         - name: BASE_URL
           value: '/services/dashboard/3.1.0/'
       - name: sidecar
-        image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
+        image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -4492,7 +4491,7 @@ spec:
         - name: prometheus-data
           mountPath: /var/lib/prometheus/data
       - name: sidecar
-        image:  'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
+        image:  'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -4668,7 +4667,7 @@ spec:
           - name: data-pvc
             mountPath: /buckets/data/data
       - name: sidecar 
-        image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
+        image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
         env:        
         - name: ENVOY_ADMIN_LOG_PATH
           value: "/dev/stdout"
@@ -4740,7 +4739,7 @@ spec:
     spec:
       containers:
       - name: edge
-        image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
+        image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -4804,7 +4803,7 @@ spec:
     spec:
       containers:
         - name: gm-control-api
-          image:  'docker.production.deciphernow.com/deciphernow/gm-control-api:0.8.1'
+          image:  'docker.production.deciphernow.com/deciphernow/gm-control-api:1.1.0'
           imagePullPolicy: IfNotPresent
           env:            
             - name: GM_CONTROL_API_ADDRESS
@@ -4852,7 +4851,7 @@ spec:
             - name: gm-control-api-backup
               mountPath: /app/control-api/data
         - name: sidecar   
-          image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
+          image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
           imagePullPolicy: IfNotPresent
           resources:
             limits:
@@ -5022,7 +5021,7 @@ spec:
           - name: data-pvc
             mountPath: /buckets/data/data
       - name: sidecar 
-        image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
+        image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
         env:        
         - name: ENVOY_ADMIN_LOG_PATH
           value: "/dev/stdout"
@@ -5161,7 +5160,7 @@ spec:
           mountPath: /gm-jwt-security/etc
       
       - name: sidecar
-        image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
+        image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
         imagePullPolicy: IfNotPresent
         env:        
         - name: ENVOY_ADMIN_LOG_PATH
@@ -5352,7 +5351,7 @@ spec:
           mountPath: /gm-jwt-security/etc
       
       - name: sidecar
-        image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
+        image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
         imagePullPolicy: IfNotPresent
         env:        
         - name: ENVOY_ADMIN_LOG_PATH
@@ -5531,7 +5530,7 @@ spec:
         - name: postgres-certs
           mountPath: "/certs"
       - name: sidecar
-        image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
+        image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -5880,7 +5879,7 @@ spec:
             - name: SERVICE
               value: catalog
       containers:
-        - image:  'docker.production.deciphernow.com/deciphernow/gm-proxy:0.9.1'
+        - image:  'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.0'
           name: catalog-init
           imagePullPolicy: IfNotPresent
           command: ["/tmp/bootstrap/bootstrap.sh"]
@@ -5980,7 +5979,7 @@ spec:
             - name: SERVICE
               value: gm-control-api
       containers:
-        - image:  'docker.production.deciphernow.com/deciphernow/greymatter:0.5.1'
+        - image:  'docker.production.deciphernow.com/deciphernow/greymatter:1.1.0'
           name: gm-control-api-init
           imagePullPolicy: IfNotPresent
           command: ["/tmp/bootstrap/bootstrap.sh"]
