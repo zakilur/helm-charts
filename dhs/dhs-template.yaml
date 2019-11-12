@@ -4328,7 +4328,7 @@ spec:
             - name: GM_CONTROL_KUBERNETES_CLUSTER_LABEL
               value: "app"
             - name: GM_CONTROL_KUBERNETES_NAMESPACES
-              value: "dhs"
+              value: "dhs,dhs-2"
             - name: GM_CONTROL_KUBERNETES_PORT_NAME
               value: "proxy"
             - name: GM_CONTROL_XDS_ADS_ENABLED
