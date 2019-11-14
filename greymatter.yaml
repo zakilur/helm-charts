@@ -1,5 +1,7 @@
 global:
   environment: openshift
+  # If `environment: kubernetes`, set to true to install Voyager ingress 
+  k8s_use_voyager_ingress: false
   domain: staging.deciphernow.com
   route_url_name: greymatter
   remove_namespace_from_url: false
@@ -7,6 +9,10 @@ global:
   mesh_tls:
     enabled: true
     use_provided_certs: true
+    # This i s the DN of the cert being used in the mesh.  The Helm charts will add whitelist the Dn throughout the mesh
+    dn: C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=*.greymatter.svc.cluster.local
+  # Turns on tls for control api and configures control to talk to it using tls
+  control_api_tls: true
   kafka:
     replicas: 3
   dashboard:
@@ -14,7 +20,7 @@ global:
     sidecar:
       version: 1.0.0
   catalog:
-    version: 1.0.2
+    version: 1.0.1
     sidecar:
       version: 1.0.0
   sense:
@@ -25,6 +31,8 @@ global:
     port: 8500
   edge:
     enableTLS: true
+    # This is the DN of the new certificate issued to the edge for internal mesh communication. It needs to be whitelisted by the proxies
+    egressDn: C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=edge
     certPath: /etc/proxy/tls/edge
     version: 1.0.0
   spire:
@@ -45,7 +53,7 @@ global:
     catalog:
       egressTLS: true
       mTLS: true
-      version: 1.0.2
+      version: 1.0.1
     dashboard:
       egressTLS: true
       mTLS: true
@@ -70,6 +78,9 @@ global:
     control:
       egressTLS: false
       mTLS: true
+    controlApi:
+      # This value must match global.control_api_tls
+      egressTLS: true
 
   sidecar:
     version: 1.0.0
@@ -87,7 +98,7 @@ global:
         value: ''
       xds_host:
         type: 'value'
-        value: 'control.{{ .Release.Namespace }}.svc.cluster.local'
+        value: 'control.{{ .Release.Namespace }}.svc'
       xds_port:
         type: 'value'
         value: '{{ .Values.global.control.port }}'
@@ -103,6 +114,11 @@ global:
 
 control:
   control:
+    # Configures certs for control to talk to control api via tls. Only used when global.control_api_tls=true.
+    controlApiTLS:
+      name: control-to-control-api-certs
+      mountPoint: /service-certs
+      insecure: true
     serviceAccount:
       create: true
     image: docker.production.deciphernow.com/deciphernow/gm-control:1.0.2
@@ -122,6 +138,10 @@ control:
 
 gm-control-api:
   gmControlApi:
+    ssl:
+      name: control-api-certs
+      mountPoint: /service-certs
+      insecure: true
     image: docker.production.deciphernow.com/deciphernow/gm-control-api:1.0.2
     zone: zone-default-zone
     init:
@@ -278,7 +298,7 @@ data:
         key: root_password
       mongo_client_dn:
         type: value
-        value: CN=*.greymatter.svc.cluster.local, OU=Engineering, O=Decipher Technology Studios, L=Alexandria, ST=Virginia, C=US
+        value: CN=*.greymatter.svc, OU=Engineering, O=Decipher Technology Studios, L=Alexandria, ST=Virginia, C=US
 
 internal-data:
   sidecar:
@@ -364,7 +384,7 @@ internal-data:
         key: root_password
       mongo_client_dn:
         type: value
-        value: CN=*.greymatter.svc.cluster.local, OU=Engineering, O=Decipher Technology Studios, L=Alexandria, ST=Virginia, C=US
+        value: CN=*.greymatter.svc, OU=Engineering, O=Decipher Technology Studios, L=Alexandria, ST=Virginia, C=US
 
 catalog:
   catalog:
@@ -392,7 +412,7 @@ catalog:
         value: '9080'
       control_server_0_address:
         type: value
-        value: '{{ .Values.global.control.name }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.global.control.port }}'
+        value: '{{ .Values.global.control.name }}.{{ .Release.Namespace }}.svc:{{ .Values.global.control.port }}'
       control_server_0_zone_name:
         type: value
         value: '{{ .Values.global.zone }}'
@@ -452,10 +472,10 @@ catalog:
         value: 'world'
       client_identity:
         type: value
-        value: 'CN=gm-control,OU=Engineering,O=Decipher Technology Studios,=Alexandria,=Virginia,C=US'
+        value: 'C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=*.greymatter.svc.cluster.local'
       client_email:
         type: value
-        value: 'gm-control@deciphernow.com'
+        value: 'engineering@deciphernow.com'
 
     init:
       image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
@@ -538,7 +558,7 @@ slo:
         key: password
       - type: value
         name: POSTGRES_USER_CN
-        value: CN=*.greymatter.svc.cluster.local, OU=Engineering, O=Decipher Technology Studios, L=Alexandria, ST=Virginia, C=US
+        value: CN=*.greymatter.svc, OU=Engineering, O=Decipher Technology Studios, L=Alexandria, ST=Virginia, C=US
       - type: secret
         name: POSTGRESQL_DATABASE
         secret: postgres-credentials
@@ -554,7 +574,7 @@ jwt:
         value: 'jwt-security'
 
   jwt:
-    use_aac: true
+    use_aac: false
     users_mount_point: /gm-jwt-security/etc
     image: docker.production.deciphernow.com/deciphernow/gm-jwt-security:1.0.0
     envvars:
@@ -582,24 +602,6 @@ jwt:
         key: jwt.cert.pem
       - type: secret
         name: SERVER_KEY
-        secret: jwt-certs
-        key: jwt.key.pem
-      - type: value
-        name: JWT_AACHOST
-        value: aac.memecore.svc.cluster.local
-      - type: value
-        name: JWT_AACPORT
-        value: 9080
-      - type: secret
-        name: AAC_TRUST
-        secret: jwt-certs
-        key: jwt.trust.pem
-      - type: secret
-        name: AAC_CERT
-        secret: jwt-certs
-        key: jwt.cert.pem
-      - type: secret
-        name: AAC_KEY
         secret: jwt-certs
         key: jwt.key.pem
 
@@ -647,6 +649,7 @@ internal-jwt:
         key: jwt.key.pem
 
     users_cg_name: internal-jwt-users
+    # This is a list of authorized users for the JWT service.  It's preloaded with the DNs for GM Control, Catalog and the Mesh Cert
     users: |-
       {
         "users": [
@@ -666,6 +669,20 @@ internal-jwt:
         },
         {
           "label": "CN=gm-catalog,OU=Engineering,O=Decipher Technology Studios,=Alexandria,=Virginia,C=US",
+          "values": {
+            "email": [
+                "engineering@deciphernow.com"
+            ],
+            "org": [
+                "www.deciphernow.com"
+            ],
+            "privilege": [
+                "root"
+            ]
+          }
+        },
+        {
+          "label": "C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=*.greymatter.svc.cluster.local",
           "values": {
             "email": [
                 "engineering@deciphernow.com"

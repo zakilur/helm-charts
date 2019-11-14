@@ -1,0 +1,36 @@
+# Grey Matter Waiter service account
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: waiter-sa
+  namespace: wisard
+
+---
+# Grey Matter Waiter Role
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: waiter-sa-role
+  namespace: wisard
+rules:
+  - apiGroups: ['']
+    resources: ['endpoints']
+    verbs: ['get', 'list', 'watch']
+---
+# Grey Matter Waiter Cluster Role Binding
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: waiter-sa-rolebinding
+  namespace: wisard
+subjects:
+  - kind: ServiceAccount
+    name: waiter-sa
+    namespace: wisard
+roleRef:
+  kind: Role
+  name: waiter-sa-role
+  apiGroup: rbac.authorization.k8s.io
+---
+

@@ -49,3 +49,86 @@ Alternatively, a YAML file that specifies the values for the above parameters ca
 ```console
 $ helm install data --name <my-release> -f custom.yaml
 ```
+
+
+## Data Standalone
+
+To deploy data as a standalone service in its own namespace, change the `.Values.data.name` to `data-standalone` (it is important that this name matches the proxy name in the json configuration).  Set `.Values.data.deploy.standalone` to `true` to make sure all the secrets get created.  Also make sure that the image names and other provided configs are the ones you wish to use.
+
+If Data is being deployed into its own namespace of a namespace seperate from the rest of greymatter then the (Waiter Service Account)[#WAITER-Service_Account] must be added.
+
+You can install the chart as described above, making sure the tiller namespace is set to the namespace set aside to only contain data.
+
+`helm install data --name data-only --tiller-namespace=data-only`
+
+To configure this standalone data into the mesh, follow the [Grey Matter Configuration Builder](#Grey-Matter-Configuration-Builder) section.
+
+### Waiter Service Account
+
+The standalone deployment relies on the `waiter` pod to ensure mongo is up, this requires the use of the waiter service account.  If you need to add this to your namespace use the ServiceAccount, ClusterRole, and RoleBinding below. When Data is deployed as part of the Grey Matter suite the following are applied automatically, you can do this manually by copying them to a file and using `kubectl apply -f <the_file>`:
+```yaml
+# Grey Matter Waiter service account
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: waiter-sa
+  namespace: greymatter #CHANGE ME
+
+---
+# Grey Matter Waiter Role
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: waiter-sa-role
+  namespace: greymatter #CHANGE ME
+rules:
+  - apiGroups: ['']
+    resources: ['endpoints']
+    verbs: ['get', 'list', 'watch']
+---
+# Grey Matter Waiter Cluster Role Binding
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: waiter-sa-rolebinding
+  namespace: greymatter #CHANGE ME
+subjects:
+  - kind: ServiceAccount
+    name: waiter-sa
+    namespace: greymatter
+roleRef:
+  kind: Role
+  name: waiter-sa-role
+  apiGroup: rbac.authorization.k8s.io
+---
+
+```
+
+### Grey Matter Configuration Builder
+To make configuring greymatter simpler for a standalone deployment you can use the [builder.sh](standalone-json-builder/builder.sh).  To use this cd into `standalone-json-builder` and run `./builder.sh`.  
+
+Note: This builder makes a some assumptions:
+  1. The terminal has made a connection to Grey Matter Control and can run `greymatter` commands using these envars:
+     1. GREYMATTER_API_HOST
+     2. GREYMATTER_API_SSLCERT
+     3. GREYMATTER_API_SSLKEY
+  2. `.Values.data.deploy.control` and `.Values.data.name` are the same.
+  3. The ports data and it's sidecar use have not been changed.
+
+To use the script:
+  - The script will ask for a cluster name, this will be the values used for `.Values.data.deploy.control` and `.Values.data.name`.
+  - Once the builder script has run you will have a folder called `builder-output-<cluster-name-entered>`.
+  - This directory will contain the Grey Matter configurations for your standalone Data deployment, generic catalog entry, and scripts for deploying and removing them.
+
+Add Configurations to Mesh:
+  - Inside this directory are two scripts `populate.sh` and `remove.sh`.
+  - `./populate.sh` will add all the Grey Matter objects into the mesh in the appropriate order.
+  - `./remove.sh` will remove them. Pretty complicated naming strategy!
+
+Add Catalog Entry:
+  - In the catalog directory there is an entry `catalog.json` and scripts `add-entry.sh` and `remove-entry.sh`.
+  - `catalog.json` may be edited with more specific information related to the data deployment (owners, etc...), DO NOT change the `"clusterName": ` value as this is what ties the catalog entry to the Data instance installed.
+  - `./catalog/add-entry.sh` will add the entry to catalog.
+  - `./catalog/remove-entry.sh` will remove the entry from catalog.

@@ -1,10 +1,12 @@
-kind: Deployment
+kind: StatefulSet
 apiVersion: apps/v1
 metadata:
   name: {{ .Values.data.name }}
   namespace: {{ .Release.Namespace }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.data.replicas | default 1 }}
+  updateStrategy:
+    type: RollingUpdate
   selector:
     matchLabels:
       app: {{ .Values.data.name }}
@@ -25,15 +27,23 @@ spec:
               value: {{ .Values.mongo.name }}
       containers:
       - name: {{ .Values.data.name }}
-        {{- if .Values.data.deploy.standalone }}
-        image: {{ tpl .Values.data.standalone_image $ | quote }}
-        {{- else }} 
         image: {{ tpl .Values.data.image $ | quote }}
-        {{- end }}
         imagePullPolicy: {{ .Values.data.imagePullPolicy }}
         {{- if .Values.data.resources }}
         resources:
 {{ toYaml .Values.data.resources | indent 10 }}
+        {{- end }}
+        {{- if and .Values.global.environment (ne .Values.global.environment "openshift") }}
+        {{- if .Values.data.securityContext.enabled }}
+        securityContext:
+          runAsUser: {{ .Values.data.securityContext.runAsUser }}
+          runAsGroup: {{ .Values.data.securityContext.runAsGroup }}
+          fsGroup: {{ .Values.data.securityContext.fsGroup }}
+        {{- end }}
+        securityContext:
+          runAsUser: 666
+          runAsGroup: 666
+          fsGroup: 666
         {{- end }}
         env:
           {{- include "data.envvars" (dict "envvar" .Values.data.envvars "top" $) | indent 8 }}
@@ -65,31 +75,42 @@ spec:
             mountPath: {{ tpl .Values.data.pvc.mountPath $ }}
         {{- end }}
       - name: sidecar
-        {{- if .Values.data.deploy.standalone }}
-        image: {{ tpl .Values.sidecar.standalone_image $ | quote }}
-        {{- else }} 
         image: {{ tpl .Values.sidecar.image $ | quote }}
-        {{- end }}
-        env:
-           {{- include "greymatter.envvars" . | indent 8 }}
+<<<<<<< HEAD
+=======
 
-            # XDS_CLUSTER should be set in values.yaml for regular (non-standalone) deployments
-            # The rest of the values will automatically be populated by the envvars template
-            {{- if .Values.data.deploy.standalone }}
-            {{- if .Values.data.deploy.xds.address }}
+        readinessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - "curl -k --cacert /etc/proxy/tls/sidecar/ca.crt --key /etc/proxy/tls/sidecar/server.key --cert /etc/proxy/tls/sidecar/server.crt https://localhost:8181/list/1/"
+          initialDelaySeconds: 20
+          periodSeconds: 5
+
+        env:
+          # XDS_CLUSTER should be set in values.yaml for regular (non-standalone) deployments
+          # The rest of the values will automatically be populated by the envvars template
+          {{- if .Values.data.deploy.standalone }}
+          {{- if .Values.data.deploy.control.address }}
           - name: XDS_CLUSTER
-            value: {{ .Values.data.deploy.xds.cluster }}
+            value: {{ .Values.data.deploy.control.cluster }}
           - name: XDS_HOST
-            value: {{ .Values.data.deploy.xds.address }}
+            value: {{ .Values.data.deploy.control.address }}
             {{- end }}
           - name: XDS_PORT
-            value: {{ .Values.global.xds.port | quote }}
+            value: {{ .Values.global.control.port | quote }}
+            {{- else }}
+            {{- include "greymatter.envvars" . | indent 8 }}
             {{- end }}
+>>>>>>> d767c83... add ability to specify image pull secret, number of data replicas, change order of envars if statment so only one will be brought in
         imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
         {{- if .Values.sidecar.resources }}
         resources:
 {{ toYaml .Values.sidecar.resources | indent 10 }}
         {{- end }}
+        env:
+        {{- include "greymatter.envvars" . | indent 8 }}
         ports:
         - containerPort: 8080
           name: proxy
@@ -110,7 +131,7 @@ spec:
       {{- end }}
 
       imagePullSecrets:
-      - name: docker.secret
+      - name: {{ .Values.data.imagePullSecret | default "docker.secret" }}
       volumes:
       {{- if .Values.global.consul.enabled }}
       - name: data-consul
@@ -130,9 +151,12 @@ spec:
         secret:
           secretName: jwt-security
       {{- if  (eq .Values.data.envvars.uses3.value  "false") }}
-      - name: data-pvc
-        persistentVolumeClaim:
-          claimName: {{ .Values.data.name }}-pvc
+  volumeClaimTemplates:
+  - metadata:
+      name: data-pvc
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: {{ .Values.data.pvc.size | default "40" }}Gi
       {{- end }}
-
-
