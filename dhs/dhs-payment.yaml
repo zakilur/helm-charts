@@ -1,0 +1,285 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: payment
+  name: payment
+  namespace: egis-dt
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: payment
+    deploymentconfig: payment
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: payment
+        deploymentconfig: payment
+    spec:
+      containers:
+        - env:
+            - name: SSL_KEYSTORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: SSL_KEYSTORE_PASSWORD
+                  name: egis-ssl
+            - name: SSL_KEY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: SSL_KEY_PASSWORD
+                  name: egis-ssl
+            - name: SSL_TRUSTSTORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: SSL_TRUSTSTORE_PASSWORD
+                  name: egis-ssl
+            - name: PAYGOV_KEYSTORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: PAYMENT_PAYGOVKEYSTORE_PASSWORD
+                  name: egis-payments
+            - name: PAYGOV_TRUSTSTORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: PAYMENT_PAYGOVKEYSTORE_PASSWORD
+                  name: egis-payments
+            - name: KAFKA_KEYSTORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: KAFKA_KEYSTORE_PASSWORD
+                  name: egis-payments-kafka-nonprod
+            - name: KAFKA_TRUSTSTORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: KAFKA_TRUSTSTORE_PASSWORD
+                  name: egis-payments-kafka-nonprod
+            - name: KAFKA_KEY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: KAFKA_KEY_PASSWORD
+                  name: egis-payments-kafka-nonprod
+            - name: KAFKA_METRICS_KEYSTORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: KAFKA_KEYSTORE_PASSWORD
+                  name: egis-payments-kafka-nonprod
+            - name: KAFKA_METRICS_TRUSTSTORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: KAFKA_TRUSTSTORE_PASSWORD
+                  name: egis-payments-kafka-nonprod
+            - name: KAFKA_METRICS_KEY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: KAFKA_KEY_PASSWORD
+                  name: egis-payments-kafka-nonprod
+            - name: PAYMENT_POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  key: PAYMENT_POSTGRES_USER
+                  name: egis-payments
+            - name: PAYMENT_POSTGRES_PW
+              valueFrom:
+                secretKeyRef:
+                  key: PAYMENT_POSTGRES_PW
+                  name: egis-payments
+            - name: BENEFITVAL_CLIENT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: PAYMENT_BENEFIT_VALIDATION_USERNAME
+                  name: egis-payments
+            - name: BENEFITVAL_CLIENT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: PAYMENT_BENEFIT_VALIDATION_PASSWORD
+                  name: egis-payments
+            - name: SERVICE_PORT
+              value: '8080'
+            - name: SERVICE_NAME
+              value: egis-payments
+            - name: PAYMENT_ENVIRONMENT
+              value: development
+            - name: SWAGGER_HOST
+              value: uscis-dev.api-nonprod.uscis.dhs.gov
+            - name: HTTP_PROXY_REQUIRED
+              value: 'false'
+            - name: SSL_ENABLED
+              value: 'false'
+            - name: SSL_KEY_ALIAS
+              value: egis-ssl
+            - name: SSL_KEYSTORE_PATH
+              value: /etc/egis-ssl-volume/ssl_keystore.jks
+            - name: SSL_KEYSTORE_TYPE
+              value: JKS
+            - name: SSL_TRUSTSTORE_PATH
+              value: /etc/egis-ssl-volume/ssl_truststore.jks
+            - name: SSL_TRUSTSTORE_TYPE
+              value: JKS
+            - name: TCS_CONFIRM_URL
+              value: >-
+                https://uscis-dev.api-nonprod.uscis.dhs.gov/egis-payments-dev/public/pay/complete
+            - name: TCS_CANCEL_URL
+              value: >-
+                https://uscis-dev.api-nonprod.uscis.dhs.gov/egis-payments-dev/public/pay/cancel
+            - name: PAYGOV_TCS_WS_URL
+              value: 'https://qa.tcs.pay.gov/services/TCSOnlineService/2.0/'
+            - name: TCS_REDIRECT_URL
+              value: 'https://qa.pay.gov/tcsonline/payment.do'
+            - name: PAYGOV_KEYSTORE_REQUIRED
+              value: 'true'
+            - name: PAYGOV_KEY_ALIAS
+              value: qadhsusciseprccert0
+            - name: PAYGOV_KEYSTORE_PATH
+              value: /etc/payment-secret-volume/paygov.jks
+            - name: PAYGOV_TRUSTSTORE_PATH
+              value: /etc/payment-secret-volume/paygov.jks
+            - name: PAYMENT_POSTGRES_HOST
+              value: egis-dt-1.c32ex1vxvpqs.us-east-1.rds.amazonaws.com
+            - name: PAYMENT_POSTGRES_PORT
+              value: '5432'
+            - name: KAFKA_TOPIC_INTAKE_CASE_SUBMIT
+              value: intake.caseReceipt.submit
+            - name: KAFKA_TOPIC_PAYMENT_NOTIFY
+              value: payments.transaction.submit
+            - name: KAFKA_TOPIC_RECONCILIATION_LOCKBOX
+              value: payments.cirTransactionLockbox.submit
+            - name: KAFKA_TOPIC_RECONCILIATION_PAYGOV
+              value: payments.cirTransactionPaygov.submit
+            - name: KAFKA_TOPIC_SETTLEMENT_NOTIFY
+              value: payments.transaction.update
+            - name: KAFKA_CONSUMER_GROUP
+              value: egis-payments-dt
+            - name: KAFKA_URL
+              value: broker.kafka-nonprod.uscis.dhs.gov
+            - name: KAFKA_PORT
+              value: '9093'
+            - name: KAFKA_SECURITY_PROTOCOL
+              value: SSL
+            - name: KAFKA_KEYSTORE_LOCATION
+              value: /etc/kafka-secret-volume/kafka-nonprod-payments_keystore.jks
+            - name: KAFKA_TRUSTSTORE_LOCATION
+              value: /etc/kafka-secret-volume/kafka-all_truststore.jks
+            - name: KAFKA_METRICS_ENABLED
+              value: 'false'
+            - name: KAFKA_METRICS_URL
+              value: broker.kafka-sint.uscis.dhs.gov
+            - name: KAFKA_METRICS_PORT
+              value: '9093'
+            - name: KAFKA_METRICS_KEYSTORE_LOCATION
+              value: /etc/kafka-secret-volume/kafka-nonprod-payments_keystore.jks
+            - name: KAFKA_METRICS_TRUSTSTORE_LOCATION
+              value: /etc/kafka-secret-volume/kafka-all_truststore.jks
+          image: >-
+            nexus-nonprod-gss.uscis.dhs.gov:8127/egis-payments@sha256:147547699809f880f43532e5818b1c60db4ff36a97d15376ab0097b4e4b80409
+          imagePullPolicy: Always
+          name: payment
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 8778
+              name: jolokia
+              protocol: TCP
+          resources:
+            limits:
+              cpu: '2'
+              memory: 2Gi
+            requests:
+              cpu: 250m
+              memory: 768Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /etc/egis-ssl-volume
+              name: egis-ssl-volume
+              readOnly: true
+            - mountPath: /etc/payment-secret-volume
+              name: payment-secret-volume
+              readOnly: true
+            - mountPath: /etc/kafka-secret-volume
+              name: kafka-secret-volume
+              readOnly: true
+        - env:
+            - name: ENVOY_ADMIN_LOG_PATH
+              value: /dev/stdout
+            - name: PROXY_DYNAMIC
+              value: 'true'
+            - name: XDS_CLUSTER
+              value: payment
+            - name: XDS_HOST
+              value: control.decipher-dt.svc.cluster.local
+            - name: XDS_NODE_ID
+              value: default
+            - name: XDS_PORT
+              value: '50000'
+          image: 'nexus-nonprod-gss.uscis.dhs.gov:8124/deciphernow/gm-proxy:0.9.1'
+          imagePullPolicy: IfNotPresent
+          name: payments
+          ports:
+            - containerPort: 8080
+              name: proxy
+              protocol: TCP
+            - containerPort: 8081
+              name: metrics
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 200m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /etc/proxy/tls/sidecar/
+              name: sidecar-certs
+              readOnly: true
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - name: egis-ssl-volume
+          secret:
+            defaultMode: 420
+            secretName: egis-ssl
+        - name: kafka-secret-volume
+          secret:
+            defaultMode: 420
+            secretName: egis-payments-kafka-nonprod
+        - name: payment-secret-volume
+          secret:
+            defaultMode: 420
+            secretName: egis-payments
+        - name: sidecar-certs
+          secret:
+            defaultMode: 420
+            secretName: sidecar-certs
+  
+
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - payment
+        from:
+          kind: ImageStreamTag
+          name: 'egis-payments-egis-252:egis-252-79'
+          namespace: egis-dt
+      type: ImageChange
+  
