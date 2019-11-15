@@ -193,7 +193,7 @@ spec:
               protocol: TCP
           resources:
             limits:
-              cpu: '2'
+              cpu: '1'
               memory: 2Gi
             requests:
               cpu: 250m
@@ -223,9 +223,9 @@ spec:
               value: default
             - name: XDS_PORT
               value: '50000'
-          image: 'nexus-nonprod-gss.uscis.dhs.gov:8124/deciphernow/gm-proxy:0.9.1'
+          image: 'nexus-nonprod-gss.uscis.dhs.gov:8124/deciphernow/gm-proxy:1.1.1'
           imagePullPolicy: IfNotPresent
-          name: payments
+          name: sidecar
           ports:
             - containerPort: 8080
               name: proxy
@@ -245,6 +245,9 @@ spec:
           volumeMounts:
             - mountPath: /etc/proxy/tls/sidecar/
               name: sidecar-certs
+              readOnly: true
+            - mountPath: /etc/proxy/tls/kafka/
+              name: kafka-certs
               readOnly: true
       dnsPolicy: ClusterFirst
       restartPolicy: Always
@@ -268,6 +271,10 @@ spec:
           secret:
             defaultMode: 420
             secretName: sidecar-certs
+        - name: kafka-certs
+          secret:
+            defaultMode: 420
+            secretName: decipher-kafka-secret
   
 
   test: false
