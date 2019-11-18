@@ -162,3 +162,70 @@ spec:
           requests:
             storage: 16Gi
         storageClassName: gp2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: zookeeper-greymatter
+  name: zookeeper-greymatter-external
+  namespace: dhs
+spec:
+  ports:
+  - name: client
+    port: 2181
+    protocol: TCP
+    targetPort: 2181
+  selector:
+    app: zookeeper-greymatter
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: zookeeper-greymatter
+  name: zookeeper-greymatter-internal
+  namespace: dhs
+spec:
+  clusterIP: None
+  ports:
+  - name: follower
+    port: 2888
+    protocol: TCP
+    targetPort: 2888
+  - name: leader
+    port: 3888
+    protocol: TCP
+    targetPort: 3888
+  selector:
+    app: zookeeper-greymatter
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: kafka-greymatter
+  name: kafka-greymatter
+  namespace: dhs
+spec:
+  clusterIP: None
+  ports:
+  - name: client
+    port: 9092
+    protocol: TCP
+    targetPort: 9092
+  selector:
+    app: kafka-greymatter
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
