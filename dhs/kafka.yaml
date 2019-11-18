@@ -63,7 +63,7 @@ spec:
     - metadata:
         creationTimestamp: null
         name: kafka-greymatter
-        namespace: default
+        namespace: dhs
       spec:
         accessModes:
           - ReadWriteOnce
@@ -141,7 +141,7 @@ spec:
     - metadata:
         creationTimestamp: null
         name: zookeeper-greymatter-data
-        namespace: default
+        namespace: dhs
       spec:
         accessModes:
           - ReadWriteOnce
@@ -154,11 +154,11 @@ spec:
     - metadata:
         creationTimestamp: null
         name: zookeeper-greymatter-log
-        namespace: default
+        namespace: dhs
       spec:
         accessModes:
           - ReadWriteOnce
         resources:
           requests:
             storage: 16Gi
-        storageClassName: gp
+        storageClassName: gp2
