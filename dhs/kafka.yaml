@@ -1,0 +1,164 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kafka-greymatter
+  namespace: dhs
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 3
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: kafka-greymatter
+  serviceName: kafka-greymatter
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: kafka-greymatter
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - env:
+            - name: HOST
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: 'metadata.labels[''statefulset.kubernetes.io/pod-name'']'
+            - name: ADVERTISED_ADDRESS
+              value: $(HOST).kafka-greymatter
+            - name: ADVERTISED_PORT
+              value: '9092'
+            - name: LISTENER_ADDRESS
+              value: 0.0.0.0
+            - name: LISTENER_PORT
+              value: '9092'
+            - name: ZOOKEEPER_ENSEMBLE
+              value: >-
+                zookeeper-greymatter-0.zookeeper-greymatter-external:2181,zookeeper-greymatter-1.zookeeper-greymatter-external:2181,zookeeper-greymatter-2.zookeeper-greymatter-external:2181
+          image: 'deciphernow/kafka:2.12-2.1.1'
+          imagePullPolicy: Always
+          name: kafka-greymatter
+          ports:
+            - containerPort: 9092
+              name: client
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /var/lib/kafka
+              name: kafka-greymatter
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  updateStrategy:
+    type: RollingUpdate
+  volumeClaimTemplates:
+    - metadata:
+        creationTimestamp: null
+        name: kafka-greymatter
+        namespace: default
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 16Gi
+        storageClassName: gp2
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: zookeeper-greymatter
+  namespace: dhs
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 3
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: zookeeper-greymatter
+  serviceName: zookeeper-greymatter-internal
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: zookeeper-greymatter
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - env:
+            - name: HOST
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: 'metadata.labels[''statefulset.kubernetes.io/pod-name'']'
+            - name: LOG_LEVEL
+              value: INFO
+            - name: SERVER
+              value: $(HOST).zookeeper-greymatter-internal
+            - name: SERVERS
+              value: >-
+                zookeeper-greymatter-0.zookeeper-greymatter-internal,zookeeper-greymatter-1.zookeeper-greymatter-internal,zookeeper-greymatter-2.zookeeper-greymatter-internal
+          image: 'deciphernow/zookeeper:3.5.5'
+          imagePullPolicy: Always
+          name: zookeeper-greymatter
+          ports:
+            - containerPort: 2181
+              name: client
+              protocol: TCP
+            - containerPort: 2888
+              name: follower
+              protocol: TCP
+            - containerPort: 3888
+              name: leader
+              protocol: TCP
+          resources:
+            requests:
+              cpu: '1'
+              memory: 2Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /var/lib/zookeeper/data
+              name: zookeeper-greymatter-data
+            - mountPath: /var/lib/zookeeper/log
+              name: zookeeper-greymatter-log
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  updateStrategy:
+    type: RollingUpdate
+  volumeClaimTemplates:
+    - metadata:
+        creationTimestamp: null
+        name: zookeeper-greymatter-data
+        namespace: default
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 16Gi
+        storageClassName: gp2
+      status:
+        phase: Pending
+    - metadata:
+        creationTimestamp: null
+        name: zookeeper-greymatter-log
+        namespace: default
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 16Gi
+        storageClassName: gp
