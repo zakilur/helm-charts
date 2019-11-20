@@ -1,5 +1,4 @@
 # Grey Matter Data settings
-
 global:
   environment: kubernetes
   domain:
@@ -18,6 +17,8 @@ global:
 
   waiter:
     image: deciphernow/k8s-waiter:latest
+    serviceAccount:
+      create: true
 
 data:
   # The name of this installation of GM Data.  Used in the zookeeper address.  Allow to be unique to support multiple installations of Data
@@ -250,7 +251,7 @@ mongo:
           -----END RSA PRIVATE KEY-----
 
 sidecar:
-  version: '{{- $.Values.global.data.sidecar.version | default $.Values.global.sidecar.version }}'
+  version: '1.0.0'
   image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:{{ tpl $.Values.sidecar.version $ }}'
   imagePullPolicy: IfNotPresent
   resources:
