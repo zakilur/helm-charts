@@ -1,0 +1,9 @@
+{
+  "route_key": "data2-jwt-route",
+  "domain_key": "data2",
+  "zone_key": "zone-default-zone",
+  "path": "/jwt/",
+  "prefix_rewrite": "/",
+  "shared_rules_key": "edge-jwt-security-shared-rules",
+  "response_data": {}
+}

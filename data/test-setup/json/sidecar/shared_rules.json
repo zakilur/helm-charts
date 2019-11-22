@@ -1,0 +1,14 @@
+{
+  "zone_key": "zone-default-zone",
+  "shared_rules_key": "data2-shared-rules",
+  "name": "data2",
+  "default": {
+    "light": [
+      {
+        "constraint_key": "",
+        "cluster_key": "data2-service",
+        "weight": 1
+      }
+    ]
+  }
+}

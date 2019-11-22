@@ -1,0 +1,17 @@
+{
+  "clusterName": "data2",
+  "zoneName": "zone-default-zone",
+  "name": "DATA2",
+  "version": "lat",
+  "owner": "Decipher",
+  "capability": "service",
+  "runtime": "GO",
+  "documentation": "/services/data2/latest/static/ui/index.html",
+  "prometheusJob": "",
+  "minInstances": 1,
+  "maxInstances": 1,
+  "authorized": true,
+  "enableInstanceMetrics": true,
+  "enableHistoricalMetrics": true,
+  "metricsPort": 8081
+}

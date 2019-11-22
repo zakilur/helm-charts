@@ -1,0 +1,8 @@
+{
+  "zone_key": "zone-default-zone",
+  "route_key": "edge-data2-route-slash",
+  "domain_key": "edge",
+  "path": "/apps/data2/1.5",
+  "prefix_rewrite": "/apps/data2/1.5/",
+  "shared_rules_key": "edge-data2-shared-rules"
+}

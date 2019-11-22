@@ -1,0 +1,8 @@
+{
+  "zone_key": "zone-default-zone",
+  "route_key": "edge-data2-route",
+  "domain_key": "edge",
+  "path": "/services/data2/latest/",
+  "prefix_rewrite": "/",
+  "shared_rules_key": "edge-data2-shared-rules"
+}

@@ -1,0 +1,13 @@
+{
+  "zone_key": "zone-default-zone",
+  "shared_rules_key": "edge-data2-shared-rules",
+  "name": "data2",
+  "default": {
+    "light": [
+      {
+        "cluster_key": "edge-data2-cluster",
+        "weight": 1
+      }
+    ]
+  }
+}

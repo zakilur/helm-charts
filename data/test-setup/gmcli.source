@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# local dev
+
+
+# export GREYMATTER_CONSOLE_LEVEL=debug
+# export GREYMATTER_API_HOST=localhost:8088
+# export GREYMATTER_API_KEY=xxx
+# export GREYMATTER_API_SSL=false
+# export GREYMATTER_API_INSECURE=true
+# export EDITOR=vim
+
+#1
+export GREYMATTER_API_HOST='18.220.101.65:30001'
+#2
+export GREYMATTER_API_PREFIX='/services/gm-control-api/latest'
+#3
+export GREYMATTER_API_SSLCERT='/Users/kyleg/Downloads/quickstart/quickstart.crt'
+#4
+export GREYMATTER_API_SSLKEY='/Users/kyleg/Downloads/quickstart/quickstart.key'
+#5
+export GREYMATTER_CONSOLE_LEVEL='debug'
+#6
+export GREYMATTER_API_SSL='true'
+#7
+export GREYMATTER_API_INSECURE='true'
