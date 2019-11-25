@@ -1,0 +1,161 @@
+<form theme="dark">
+  <label>Devops View: Failed Requests, Service Time and Traffic Security</label>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="time">
+      <label>Time Range</label>
+      <default>
+        <earliest>1562025600</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <html>
+      <p>
+        <i> Changing this will update all the panels </i>
+      </p>
+    </html>
+  </fieldset>
+  <row>
+    <panel>
+      <html>
+        <h1> Splunk's Graphing and Charting Features Enable Better Insight Into Topics Such as Traffic Requests and Upstream Service Time  </h1>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Requests With Failed HTTP Codes Over Time</title>
+      <chart>
+        <search>
+          <query>host=decipher-demo-canned payload.response.headers.:status!=200 
+| timechart span=1d count</query>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Failed HTTP Codes Counted by Service Type</title>
+      <chart>
+        <search>
+          <query>host=decipher-demo-canned payload.response.headers.:status!=200
+| rename payload.response.headers.:status as status 
+| timechart span=1d count by extracted_eventType</query>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="height">269</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Successful Requests Compared to Failed Requests</title>
+        <search>
+          <query>host=decipher-demo-canned payload.response.headers.:status=200 
+| rename payload.response.headers.:status as status 
+| stats count by status 
+| eval failed_requests= 
+    [ search host=decipher-demo-canned payload.response.headers.:status!=200 
+    | stats count as all 
+    | return $all] 
+| eval total=count+failed_requests 
+| eval "Failed %"= round(failed_requests/total, 5)*100 
+| eval "Successful %"= round(count/total, 4)*100 
+| rename count as "Successful Requests" 
+| rename failed_requests as "Failed Requests" 
+| table "Successful Requests", "Failed Requests", "Successful %",  "Failed %"</query>
+          <earliest>$earliest$</earliest>
+          <latest>$latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel id="service_time_graph">
+      <html>
+        <style>
+          #service_time_graph{
+            width:65% !important;
+          }
+          #service_time_table{
+            width:35% !important;
+          }
+        </style>
+      </html>
+      <chart>
+        <title>Average Upstream Service Time (in ms)</title>
+        <search>
+          <query>host=decipher-demo-canned 
+| rename payload.response.headers.x-envoy-upstream-service-time as "Service Time" 
+| timechart avg("Service Time") as "Average Service Time"</query>
+          <earliest>$earliest$</earliest>
+          <latest>$latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="height">378</option>
+      </chart>
+    </panel>
+    <panel id="service_time_table">
+      <table>
+        <title>Average Service Time for Each User (in ms)</title>
+        <search>
+          <query>host=decipher-demo-canned 
+| rename payload.request.headers.user_dn as user 
+| rename payload.response.headers.x-envoy-upstream-service-time as "Service Time" 
+| stats avg("Service Time") as "Average Service Time" by user 
+| eval "Average Service Time"=round('Average Service Time', 3) 
+| sort - "Average Service Time"</query>
+          <earliest>$earliest$</earliest>
+          <latest>$latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Breakdown of Secured vs. Unsecured Traffic</title>
+        <search>
+          <query>host=decipher-demo-canned 
+| stats count as total 
+| eval unsecured= 
+    [ search host=decipher-demo-canned payload.request.headers.x-forwarded-proto="http" originatorToken="null" 
+    | rename payload.request.headers.x-forwarded-proto as traffic_type 
+    | stats count as all 
+    | return $all] 
+| eval secured=total-unsecured 
+| eval "secured %"=round((secured/total), 4)*100
+| eval "unsecured %"=round((unsecured/total), 4)*100 
+| table secured, unsecured, "secured %", "unsecured %"</query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+      <html>
+        <p>
+          <i>Unsecured traffic was assessed under the assumptions that two conditions were true: x-forwarded-proto is 'http', and the originatorToken is 'null'</i>
+        </p>
+      </html>
+    </panel>
+    <panel>
+      <table>
+        <title>Breakdown of Data Accessed (GET) vs. Data Created (POST)</title>
+        <search>
+          <query>host=decipher-demo-canned 
+| rename payload.request.headers.:method as Method 
+| stats count by Method 
+| eventstats sum(count) as total 
+| eval percentage=round((count/total), 4)*100
+| table Method, count, percentage</query>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+</form>

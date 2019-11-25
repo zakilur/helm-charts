@@ -1,0 +1,355 @@
+<form theme="dark">
+  <label>Decipher: Overview</label>
+  <fieldset submitButton="false" autoRun="true"></fieldset>
+  <row>
+    <panel>
+      <title>Origin IP geolocation via XForwardedIP</title>
+      <input type="time" token="time_range">
+        <label>Time period</label>
+        <default>
+          <earliest>1562630400</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+      <map>
+        <search>
+          <query>host="decipher-demo-canned" 
+| eval temp=split(xForwardedForIp,",") 
+| where isnotnull(temp) 
+| eval extractedIP=mvindex(temp,0) 
+| iplocation extractedIP allfields=true
+| geostats latfield=lat longfield=lon count
+| eval high=if(count&gt;=10000, count, 0) 
+| eval medium=if(count&lt;10000 AND count&gt;=5000, count, 0)
+| eval medium_low=if(count&lt;5000 AND count&gt;=1000, count, 0)
+| eval low=if(count&lt;1000, count, 0) 
+| fields - count
+| rangemap field=count low=1-1000 medium_low=1000-5000 medium=5000-10000 high=10000-100000 default=gray</query>
+          <earliest>$time_range.earliest$</earliest>
+          <latest>$time_range.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="mapping.data.maxClusters">100</option>
+        <option name="mapping.fieldColors">{"high":#00e600,"medium":#66ff66,"medium_low":#99ff99,"low":#e6ffe6}</option>
+        <option name="mapping.legend.placement">bottomright</option>
+        <option name="mapping.map.center">(0,0)</option>
+        <option name="mapping.map.panning">1</option>
+        <option name="mapping.map.scrollZoom">0</option>
+        <option name="mapping.map.zoom">2</option>
+        <option name="mapping.markerLayer.markerMaxSize">50</option>
+        <option name="mapping.markerLayer.markerMinSize">10</option>
+        <option name="mapping.markerLayer.markerOpacity">0.7</option>
+        <option name="mapping.showTiles">1</option>
+        <option name="mapping.tileLayer.maxZoom">8</option>
+        <option name="mapping.tileLayer.minZoom">0</option>
+        <option name="mapping.tileLayer.tileOpacity">1</option>
+        <option name="mapping.type">marker</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </map>
+      <html>
+        <table style="width:50%" align="center">
+          <tbody>
+            <tr style="border:1px solid LightGray;">
+              <th>Color</th>
+              <th>IP Count Label</th>
+              <th>Count Range</th>
+            </tr>
+            <tr style="border:1px solid LightGray;">
+              <td style="background-color:#00e600;"/>
+              <td style="text-align:center;">high</td>
+              <td style="text-align:center;">10,000-100,000</td>
+            </tr>
+            <tr style="border:1px solid LightGray;">
+              <td style="background-color:#66ff66;"/>
+              <td style="text-align:center;">medium</td>
+              <td style="text-align:center;">5,000-10,000</td>
+            </tr>
+            <tr style="border:1px solid LightGray;">
+              <td style="background-color:#99ff99;"/>
+              <td style="text-align:center;">medium_low</td>
+              <td style="text-align:center;">1,000-5,000</td>
+            </tr>
+            <tr style="border:1px solid LightGray;">
+              <td style="background-color:#e6ffe6;"/>
+              <td style="text-align:center;">low</td>
+              <td style="text-align:center;">0-1,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Request Count Grouped by User DN</title>
+      <input type="text" token="num_users" searchWhenChanged="true">
+        <label>Number of users displayed</label>
+        <default>10</default>
+      </input>
+      <input type="time" token="time_range1">
+        <label>Time period</label>
+        <default>
+          <earliest>1562630400</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+      <chart>
+        <title>Most Frequent User Counts</title>
+        <search>
+          <query>host=decipher-demo-canned 
+| rename payload.request.headers.user_dn as user 
+| top limit="$num_users$" user 
+| sort -count 
+| table user, count</query>
+          <earliest>$time_range1.earliest$</earliest>
+          <latest>$time_range1.latest$</latest>
+        </search>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.seriesColors">[#8c1aff]</option>
+        <option name="charting.chart">bar</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Request Count Grouped by Service</title>
+      <input type="time" token="time_range2">
+        <label>Time period</label>
+        <default>
+          <earliest>1562630400</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+      <chart>
+        <title>Request Count Grouped by Service Type</title>
+        <search>
+          <query>host=decipher-demo-canned 
+| rename extracted_eventType as "Service" 
+| top limit=10 Service
+| sort -count 
+| table Service, count</query>
+          <earliest>$time_range2.earliest$</earliest>
+          <latest>$time_range2.latest$</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.seriesColors">[#1aff1a]</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Request Count Grouped by Path</title>
+      <input type="text" token="num_users2" searchWhenChanged="true">
+        <label>Number of paths displayed</label>
+        <default>10</default>
+      </input>
+      <input type="time" token="time_range3">
+        <label>Time period</label>
+        <default>
+          <earliest>1562630400</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+      <chart>
+        <search>
+          <query>host=decipher-demo-canned
+| rename payload.request.headers.:path as Path 
+| top limit=$num_users2$ Path 
+| sort -Path</query>
+          <earliest>$time_range3.earliest$</earliest>
+          <latest>$time_range3.latest$</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.seriesColors">[#8c1aff]</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Request Count Grouped by Response Code</title>
+      <input type="time" token="time_range4">
+        <label>Time period</label>
+        <default>
+          <earliest>1562630400</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+      <chart>
+        <search>
+          <query>host=decipher-demo-canned 
+| rename payload.response.code as code
+| top limit=10 code
+| sort code
+| table code, count
+| rename code as "Response Code"</query>
+          <earliest>$time_range4.earliest$</earliest>
+          <latest>$time_range4.latest$</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">none</option>
+        <!--<option name="charting.seriesColors">[#1fcf42,0xC2D1E0,0x99B2CC,0x7094B8,0x4775A3,0x2E5C8A,0x24476B,0x1A334C,0x0F1F2E,0x050A0F]</option>-->
+        <option name="charting.seriesColors">[#1aff1a]</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Request Count Grouped by Response Body</title>
+      <input type="time" token="time_range5">
+        <label>Time period</label>
+        <default>
+          <earliest>1562630400</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+      <table>
+        <search>
+          <query>host="decipher-demo-canned" 
+| rename "payload.response.body" as "Response body" 
+| top limit=20 "Response body" 
+| table "Response body", count</query>
+          <earliest>$time_range5.earliest$</earliest>
+          <latest>$time_range5.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Request Count Grouped by User Agent</title>
+      <input type="time" token="time_range6">
+        <label>Time period</label>
+        <default>
+          <earliest>1562630400</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+      <chart>
+        <search>
+          <query>host=decipher-demo-canned 
+| rename payload.request.headers.user-agent as "User Agent" 
+| stats count by "User Agent"</query>
+          <earliest>$time_range6.earliest$</earliest>
+          <latest>$time_range6.latest$</latest>
+        </search>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.seriesColors">[#f2e6ff,#d9b3ff,#bf80ff,#a64dff,#8c1aff,#7300e6]</option>
+        <option name="height">384</option>
+        <option name="trellis.enabled">0</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Request Count Per User</title>
+      <input type="text" token="user_dn" searchWhenChanged="true">
+        <label>User</label>
+        <default>*</default>
+      </input>
+      <input type="time" token="time_range7">
+        <label>Time period</label>
+        <default>
+          <earliest>1562630400</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+      <html>
+        <p>Click the user to view the count of requests over time and the count of HTTP response statuses for that user.</p>
+      </html>
+      <table>
+        <search>
+          <query>host="decipher-demo-canned" 
+|chart count by payload.request.headers.user_dn
+|sort - count</query>
+          <earliest>$time_range7.earliest$</earliest>
+          <latest>$time_range7.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <set token="form.user_dn">$row.payload.request.headers.user_dn$</set>
+        </drilldown>
+      </table>
+    </panel>
+    <panel>
+      <input type="time" token="time_range8">
+        <label>Time period</label>
+        <default>
+          <earliest>1562630400</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+      <chart id="request_over_time" depends="$user_dn$">
+        <title>Count of Requests over Time for: $user_dn$</title>
+        <search>
+          <query>host="decipher-demo-canned"
+|search payload.request.headers.user_dn="$user_dn$" 
+|timechart span=1h count</query>
+          <earliest>$time_range8.earliest$</earliest>
+          <latest>$time_range8.latest$</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Count</option>
+        <option name="charting.seriesColors">[#1aff1a]</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+      <chart id="status_over_time" depends="$user_dn$">
+        <title>Count of HTTP Response Status by User: $user_dn$</title>
+        <search>
+          <query>host="decipher-demo-canned" 
+|search payload.request.headers.user_dn="$user_dn$"
+|timechart count by payload.response.headers.:status</query>
+          <earliest>$time_range8.earliest$</earliest>
+          <latest>$time_range8.latest$</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Count</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.seriesColors">[#ffffff,#f2e6ff,#d9b3ff,#bf80ff,#a64dff,#8c1aff,#7300e6]</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+      <chart id="count_by_status" depends="$user_dn$">
+        <title>Count of HTTP Status Codes</title>
+        <search>
+          <query>host="decipher-demo-canned" 
+|search payload.request.headers.user_dn="$user_dn$"
+|timechart count by payload.request.headers.:path useother=f</query>
+          <earliest>$time_range8.earliest$</earliest>
+          <latest>$time_range8.latest$</latest>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Count</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.seriesColors">[#00e600,#1aff1a,#4dff4d,#b3ffb3,#e6ffe6,#f2e6ff,#d9b3ff,#bf80ff,#a64dff,#8c1aff]</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</form>

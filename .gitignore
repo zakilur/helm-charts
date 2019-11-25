@@ -3,6 +3,9 @@ custom*.yaml
 greymatter/charts
 charts.txt
 *.log
+manifest.yaml
+credentials.yaml
+.DS_Store
 
 
 # Allow admins to store credentials in a file so no passwords leak to bash history

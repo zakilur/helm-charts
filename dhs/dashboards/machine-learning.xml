@@ -1,0 +1,403 @@
+<form theme="dark">
+  <label>demo-ml</label>
+  <fieldset submitButton="false" autoRun="true"></fieldset>
+  <row>
+    <panel>
+      <title>Outliers in Request Activity Over Time For All Users</title>
+      <input type="time" token="outliertime" searchWhenChanged="true">
+        <label>Time Range</label>
+        <default>
+          <earliest>-30d</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+      <input type="text" token="input_stdv" searchWhenChanged="true">
+        <label>Standard Deviation Multiplier</label>
+        <default>3</default>
+        <change>
+          <eval token="stdv">if(match(value, "^[0-9]+$"), $value$, "3")</eval>
+        </change>
+      </input>
+      <input type="text" token="input_interval" searchWhenChanged="true">
+        <label>Time Interval to Sort by (Min)</label>
+        <default>15</default>
+        <change>
+          <eval token="interval">if(match(value, "^[1-9][0-9]*$"), $value$, "15")</eval>
+        </change>
+      </input>
+      <html>
+
+        <p> Outliers are points that fall $stdv$ standard deviation(s) above or below the mean. </p>
+
+      </html>
+      <viz type="Splunk_ML_Toolkit.OutliersViz">
+        <title>Outliers in Activity Over Time in $interval$ Minute Intervals</title>
+        <search>
+          <query>host="decipher-demo-canned" 
+          | table payload.response.headers.date 
+          | rename payload.response.headers.date AS rawDate
+          | eval _time=strptime(rawDate, "%a, %d %b %Y %H:%M:%S %Z") 
+          | bin span=$interval$m _time 
+          | stats count as events by _time 
+          | eventstats avg("events") as avg stdev("events") as stdev  
+          | eval lowerBound=(avg-stdev*exact($stdv$)), upperBound=(avg+stdev*exact($stdv$)) 
+          | eval isOutlier=if('events' &lt; lowerBound OR 'events' &gt; upperBound, 1, 0) 
+          | fields _time, "events", lowerBound, upperBound, isOutlier, *</query>
+          <earliest>$outliertime.earliest$</earliest>
+          <latest>$outliertime.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="Splunk_ML_Toolkit.OutliersViz.showOutlierCount">true</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </viz>
+    </panel>
+  </row>
+  <row>
+    <panel id="ip_line_chart">
+      <title>IP Address Data and Forecasts</title>
+      <input type="time" token="ip_time_range">
+        <label>Time Range</label>
+        <default>
+          <earliest>1562025600</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+      <input type="text" token="input_ip_limit" searchWhenChanged="true">
+        <label>Number of Addresses Shown</label>
+        <default>10</default>
+        <change>
+          <eval token="ip_limit">if(match(value, "^[1-9][0-9]*$"), $value$, "10")</eval>
+        </change>
+      </input>
+      <html>
+     <style>
+       #ip_line_chart{
+         width:70% !important;
+       }
+       #ip_table_chart{
+         width:30% !important;
+       }
+     </style>
+   </html>
+      <chart>
+        <title>Traffic by IP Address</title>
+        <search>
+          <query>host=decipher-demo-canned 
+| eval temp=split(xForwardedForIp,",") 
+| where isnotnull(temp) 
+| eval extractedIP=mvindex(temp,0)
+| timechart limit=$ip_limit$ span=1d count by extractedIP useother=0</query>
+          <earliest>$ip_time_range.earliest$</earliest>
+          <latest>$ip_time_range.latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="height">400</option>
+        <drilldown>
+          <set token="form.ip_address">$click.name2$</set>
+        </drilldown>
+      </chart>
+      <html>
+        <p> </p>
+        <h2 style="text-align:center;">The graph below shows the predicted traffic forecast for a specific IP address. Please select an IP address by either clicking the IP address on the Traffic by IP Address graph or from the table above.</h2>
+      </html>
+    </panel>
+    <panel id="ip_table_chart">
+      <input type="text" token="ip_address" searchWhenChanged="true">
+        <label>Enter or Select IP Address</label>
+        <default>50.204.68.162</default>
+      </input>
+      <table>
+        <title>IP Address Sorted by Count</title>
+        <search>
+          <query>host=decipher-demo-canned 
+| eval temp=split(xForwardedForIp,",") 
+| where isnotnull(temp) 
+| eval extractedIP=mvindex(temp,0) 
+| stats count by extractedIP 
+| rename extractedIP as "IP Address" 
+| sort - count 
+| table "IP Address", count</query>
+          <earliest>$ip_time_range.earliest$</earliest>
+          <latest>$ip_time_range.latest$</latest>
+        </search>
+        <option name="count">15</option>
+        <drilldown>
+          <set token="form.ip_address">$row.IP Address$</set>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Regional Activity Forecast</title>
+      <input type="dropdown" token="FW2">
+        <label>Future Forecast</label>
+        <choice value="10">Next Week</choice>
+        <choice value="17">2 Weeks</choice>
+        <choice value="24">3 Weeks</choice>
+        <choice value="31">4 Weeks</choice>
+        <choice value="38">5 Weeks</choice>
+        <choice value="45">6 Weeks</choice>
+        <choice value="52">7 Weeks</choice>
+        <choice value="59">8 Weeks</choice>
+        <choice value="66">9 Weeks</choice>
+        <choice value="73">10 Weeks</choice>
+        <default>10</default>
+      </input>
+      <input type="time" token="TIME1">
+        <label>Time Range</label>
+        <default>
+          <earliest>1562112000</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+      <input type="text" token="input_CI2">
+        <label>Confidence Interval (0-99)</label>
+        <default>0</default>
+        <change>
+          <eval token="CI2">if(match(value, "^[0-9]+$"), $value$, "0")</eval>
+        </change>
+      </input>
+      <input type="text" token="input_HB1">
+        <label>Holdback</label>
+        <default>0</default>
+        <change>
+          <eval token="HB1">if(match(value, "^[0-9]+$"), $value$, "0")</eval>
+        </change>
+      </input>
+      <html>
+        <p>
+          <i>
+            Confidence interval specifies the probability that a given piece of data lies in the interval/shaded region.
+            <br/>
+            Holdback indicates the number of data points that aren't used for training the model. It lets you see the predicted value versus the actual value.
+          </i>
+        </p>
+      </html>
+      <viz depends="$ip_address$" type="Splunk_ML_Toolkit.ForecastViz">
+        <title>Prediction (Per Day) For IP Address: $ip_address$</title>
+        <search>
+          <query>host=decipher-demo-canned
+          | eval temp=split(xForwardedForIp,",")
+          | where isnotnull(temp)
+          | eval extractedIP=mvindex(temp,0) 
+          | where extractedIP = "$ip_address$"
+          | timechart span=1d count as Regional_Activity 
+          | predict "Regional_Activity" as prediction algorithm=LLP holdback=$HB1$ future_timespan=$FW2$ period=7 upper$CI2$=upper$CI2$ lower$CI2$=lower$CI2$ 
+          | `forecastviz($FW2$, 0, "Regional_Activity", $CI2$)`</query>
+          <earliest>$TIME1.earliest$</earliest>
+          <latest>$TIME1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </viz>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Total User Activity Per Day Forecast</title>
+      <input type="dropdown" token="FW1">
+        <label>Future Forecast</label>
+        <choice value="10">Next Week</choice>
+        <choice value="17">2 Weeks</choice>
+        <choice value="24">3 Weeks</choice>
+        <choice value="31">4 Weeks</choice>
+        <choice value="38">5 Weeks</choice>
+        <choice value="45">6 Weeks</choice>
+        <choice value="52">7 Weeks</choice>
+        <choice value="59">8 Weeks</choice>
+        <choice value="66">9 Weeks</choice>
+        <choice value="73">10 Weeks</choice>
+        <default>10</default>
+      </input>
+      <input type="time" token="TIME2">
+        <label>Time Range</label>
+        <default>
+          <earliest>1562025600</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+      <input type="text" token="input_CI1">
+        <label>Confidence Interval (0-99)</label>
+        <default>0</default>
+        <change>
+          <eval token="CI1">if(match(value, "^[0-9]+$"), $value$, "0")</eval>
+        </change>
+      </input>
+      <input type="text" token="input_HB2">
+        <label>Holdback</label>
+        <default>0</default>
+        <change>
+          <eval token="HB2">if(match(value, "^[0-9]+$"), $value$, "0")</eval>
+        </change>
+      </input>
+      <viz type="Splunk_ML_Toolkit.ForecastViz">
+        <search>
+          <query>host="decipher-demo-canned" 
+          | timechart span=1d count as User_Activity 
+          | predict "User_Activity" as prediction algorithm=LLP holdback=$HB2$ future_timespan=$FW1$ period=7 upper$CI1$=upper$CI1$ lower$CI1$=lower$CI1$ 
+          | `forecastviz($FW1$, 0, "User_Activity", $CI1$)`</query>
+          <earliest>$TIME2.earliest$</earliest>
+          <latest>$TIME2.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </viz>
+    </panel>
+    <panel>
+      <title>Prediction of All Failed Requests</title>
+      <input type="dropdown" token="FW7">
+        <label>Future Forecast</label>
+        <choice value="10">Next Week</choice>
+        <choice value="17">2 Weeks</choice>
+        <choice value="24">3 Weeks</choice>
+        <choice value="31">4 Weeks</choice>
+        <choice value="38">5 Weeks</choice>
+        <choice value="45">6 Weeks</choice>
+        <choice value="52">7 Weeks</choice>
+        <choice value="59">8 Weeks</choice>
+        <choice value="66">9 Weeks</choice>
+        <choice value="73">10 Weeks</choice>
+        <default>10</default>
+      </input>
+      <input type="time" token="TIME7">
+        <label>Time Range</label>
+        <default>
+          <earliest>1562025600</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+      <input type="text" token="input_CI7">
+        <label>Confidence Interval (0-99)</label>
+        <default>0</default>
+        <change>
+          <eval token="CI7">if(match(value, "^[0-9]+$"), $value$, "0")</eval>
+        </change>
+      </input>
+      <input type="text" token="input_HB3">
+        <label>Holdback</label>
+        <default>0</default>
+        <change>
+          <eval token="HB3">if(match(value, "^[0-9]+$"), $value$, "0")</eval>
+        </change>
+      </input>
+      <viz type="Splunk_ML_Toolkit.ForecastViz">
+        <search>
+          <query>host="decipher-demo-canned" payload.isSuccessful=false 
+| timechart span=1d count as Failed_Requests | predict "Failed_Requests" as prediction algorithm=LLP holdback=$HB3$ future_timespan=$FW7$ period=7 upper$CI7$=upper$CI7$ lower$CI7$=lower$CI7$ | `forecastviz($FW7$, 0, "Failed_Requests", $CI7$)`</query>
+          <earliest>$TIME7.earliest$</earliest>
+          <latest>$TIME7.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </viz>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Per User Prediction For Users With Requests &gt; Percentile</title>
+      <input type="time" token="time2">
+        <label>Time Range</label>
+        <default>
+          <earliest>1562025600</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+      <input type="text" token="percent" searchWhenChanged="true">
+        <label>Percentile</label>
+        <default>90</default>
+      </input>
+      <input type="text" token="user" searchWhenChanged="true">
+        <label>User DN</label>
+        <default>*</default>
+      </input>
+      <html>
+            <p>
+          <i>Enter a number to see all users with request counts above that percentile. Then click a user on the graph or chart to see their predicted user counts in the future.</i>
+        </p>
+      </html>
+      <table>
+        <title>Users Above the $percent$th Percentile</title>
+        <search>
+          <query>host=decipher-demo-canned 
+| rename payload.request.headers.user_dn as user 
+| stats count by user 
+| eventstats perc"$percent$"(count) as threshold 
+| where count&gt;=threshold 
+| eval threshold=round(threshold, 3)
+| sort -count 
+| table user, count, threshold</query>
+          <earliest>$time2.earliest$</earliest>
+          <latest>$time2.latest$</latest>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <set token="form.user">$row.user$</set>
+        </drilldown>
+      </table>
+    </panel>
+    <panel>
+      <input type="dropdown" token="FW3">
+        <label>Future Forecast</label>
+        <choice value="24">1 Day</choice>
+        <choice value="72">3 Days</choice>
+        <choice value="168">Next Week</choice>
+        <choice value="336">2 Weeks</choice>
+        <choice value="504">3 Weeks</choice>
+        <choice value="672">4 Weeks</choice>
+        <choice value="840">5 Weeks</choice>
+        <choice value="1680">10 Weeks</choice>
+        <default>168</default>
+      </input>
+      <input type="text" token="input_CI3">
+        <label>Confidence Interval (0-99)</label>
+        <default>0</default>
+        <change>
+          <eval token="CI3">if(match(value, "^[0-9]+$"), $value$, "0")</eval>
+        </change>
+      </input>
+      <input type="text" token="input_HB4">
+        <label>Holdback</label>
+        <default>0</default>
+        <change>
+          <eval token="HB4">if(match(value, "^[0-9]+$"), $value$, "0")</eval>
+        </change>
+      </input>
+      <html>
+        <p>(A '*' indicates all users)</p>
+      </html>
+      <viz depends="$user$" type="Splunk_ML_Toolkit.ForecastViz">
+        <title>User Requests Prediction [User DN: '$user$']</title>
+        <search>
+          <query>host="decipher-demo-canned" payload.request.headers.user_dn="$user$"
+| rename payload.request.headers.user_dn as user
+| timechart span=1h count as "Activity"
+| predict "Activity" as prediction algorithm=LLP holdback=$HB4$ future_timespan=$FW3$ upper$CI3$=upper$CI3$ lower$CI3$=lower$CI3$ 
+| `forecastviz($FW3$, $HB4$, "Activity", $CI3$)`</query>
+          <earliest>$time2.earliest$</earliest>
+          <latest>$time2.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </viz>
+    </panel>
+  </row>
+</form>
