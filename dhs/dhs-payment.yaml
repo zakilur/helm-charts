@@ -227,7 +227,7 @@ spec:
           imagePullPolicy: IfNotPresent
           name: sidecar
           ports:
-            - containerPort: 8080
+            - containerPort: 9080
               name: proxy
               protocol: TCP
             - containerPort: 8081
