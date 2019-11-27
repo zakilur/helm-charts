@@ -12,9 +12,9 @@ global:
     port: 18000
     cluster: greymatter
   gmControlApi:
-    version: 1.0.2
+    version: 1.1.0
     cli:
-      version: 1.0.2
+      version: 1.1.0
   data:
     jwt_prefix:
   waiter:
@@ -80,6 +80,9 @@ gmControlApi:
     gm_control_api_org_key:
       type: 'value'
       value: 'deciphernow'
+    gm_control_api_zone_name:
+      type: 'value'
+      value: '{{ .Values.gmControlApi.zone }}'
     gm_control_api_zone_key:
       type: 'value'
       value: '{{ .Values.gmControlApi.zone }}'

@@ -45,7 +45,8 @@ global:
 catalog:
   name: catalog
   version: 1.0.2
-  image: docker.production.deciphernow.com/deciphernow/gm-catalog:{{ $.Values.global.catalog.version }}
+  image: deciphernow/gm-catalog:latest
+  # image: docker.production.deciphernow.com/deciphernow/gm-catalog:{{ $.Values.global.catalog.version }}
   debug: 'true'
   imagePullPolicy: IfNotPresent
   resources:
@@ -130,6 +131,12 @@ catalog:
     client_email:
       type: value
       value: 'gm-control@deciphernow.com'
+    config_polling_interval:
+      type: value
+      value: '10s'
+    # debug:
+    #   type: value
+    #   value: "true"
 
   init:
     image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:{{ tpl $.Values.sidecar.version $ }}'
