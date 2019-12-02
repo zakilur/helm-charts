@@ -38,7 +38,7 @@ global:
   spire:
     enabled: false
   waiter:
-    image: deciphernow.com/k8s-waiter:latest
+    image: deciphernow/k8s-waiter:latest
     serviceAccount:
       create: true
   control:
@@ -160,7 +160,7 @@ data:
         value: 'data'
 
   data:
-    imagePullPolicy: Always
+    imagePullPolicy: IfNotPresent
     image: docker.production.deciphernow.com/deciphernow/gm-data:1.0.0
     certs_mount_point: /app/certs
     envvars:
@@ -311,7 +311,7 @@ internal-data:
         type: value
         value: 'data-internal'
   data:
-    imagePullPolicy: Always
+    imagePullPolicy: IfNotPresent
     image: docker.production.deciphernow.com/deciphernow/gm-data:1.0.0
     certs_mount_point: /app/certs
     version: 1.0.0
