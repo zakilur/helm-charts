@@ -5,6 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: {{ .Values.gmControlApi.replicas }}
+  serviceName: {{ .Values.gmControlApi.name }}
   updateStrategy:
     type: RollingUpdate
   selector:

@@ -1,7 +1,7 @@
 global:
   environment: openshift
-  # If `environment: kubernetes`, set to true to install Voyager ingress 
-  k8s_use_voyager_ingress: false
+  # If `environment: kubernetes`, set to true to install Voyager ingress
+  k8s_use_voyager_ingress: true
   domain: staging.deciphernow.com
   route_url_name: greymatter
   remove_namespace_from_url: false
@@ -38,6 +38,7 @@ global:
   spire:
     enabled: false
   waiter:
+    image: deciphernow.com/k8s-waiter:latest
     serviceAccount:
       create: true
   control:
@@ -159,6 +160,7 @@ data:
         value: 'data'
 
   data:
+    imagePullPolicy: Always
     image: docker.production.deciphernow.com/deciphernow/gm-data:1.0.0
     certs_mount_point: /app/certs
     envvars:
@@ -309,6 +311,7 @@ internal-data:
         type: value
         value: 'data-internal'
   data:
+    imagePullPolicy: Always
     image: docker.production.deciphernow.com/deciphernow/gm-data:1.0.0
     certs_mount_point: /app/certs
     version: 1.0.0
