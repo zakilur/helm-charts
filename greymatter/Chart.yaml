@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 appVersion: 2.1.0
 description: A Helm chart to deploy Grey Matter
 name: greymatter
@@ -12,50 +12,50 @@ keywords:
   - Grey Matter
   - service mesh
 dependencies:
-  - name: catalog
-    version: '2.1.4'
-    repository: 'file://../catalog'
+- name: catalog
+  version: '2.1.4'
+  repository: 'file://../catalog'
 
-  - name: data
-    version: '2.1.4'
-    repository: 'file://../data'
-    alias: internal-data
-    
-  - name: data
-    version: '2.1.4'
-    repository: 'file://../data'
+- name: data
+  version: '2.1.4'
+  repository: 'file://../data'
+  alias: internal-data
+  
+- name: data
+  version: '2.1.4'
+  repository: 'file://../data'
 
-  - name: dashboard
-    version: '2.1.2'
-    repository: 'file://../dashboard'
+- name: dashboard
+  version: '2.1.2'
+  repository: 'file://../dashboard'
 
-  - name: edge
-    version: '2.1.2'
-    repository: 'file://../edge'
+- name: edge
+  version: '2.1.2'
+  repository: 'file://../edge'
 
-  - name: jwt
-    version: '2.1.1'
-    repository: 'file://../jwt'
+- name: jwt
+  version: '2.1.1'
+  repository: 'file://../jwt'
 
-  - name: jwt
-    version: '2.1.1'
-    repository: 'file://../jwt'
-    alias: internal-jwt
+- name: jwt
+  version: '2.1.1'
+  repository: 'file://../jwt'
+  alias: internal-jwt
 
-  - name: slo
-    version: '2.1.1'
-    repository: 'file://../slo'
+- name: slo
+  version: '2.1.1'
+  repository: 'file://../slo'
 
-  - name: gm-control-api
-    repository: 'file://../gm-control-api'
-    version: '2.1.4'
+- name: gm-control-api
+  repository: 'file://../gm-control-api'
+  version: '2.1.4'
 
-  - name: control
-    repository: 'file://../control'
-    version: '2.1.2'
+- name: control
+  repository: 'file://../control'
+  version: '2.1.2'
 
-  - name: spire
-    repository: 'file://../spire'
-    version: '2.1.1'
-    condition: global.spire.enabled
+- name: spire
+  repository: 'file://../spire'
+  version: '2.1.1'
+  condition: global.spire.enabled
 

@@ -13,5 +13,5 @@ helm template voyager voyager \
   --set apiserver.enableAdmissionWebhook=false \
   > manifest.yaml
 kubectl apply -f manifest.yaml
-while [[ $(kubectl get pods -n kube-system -l app=voyager -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "waiting for pod" && sleep 10; done
 rm -rf voyager
+while [[ $(kubectl get pods -n kube-system -l app=voyager -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "waiting for pod" && sleep 10; done
