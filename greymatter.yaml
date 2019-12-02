@@ -395,6 +395,9 @@ catalog:
       config_source:
         type: value
         value: 'gmdata'
+      config_polling_interval:
+        type: value
+        value: '30s'
       instance_polling_interval:
         type: value
         value: '5s'

@@ -133,7 +133,7 @@ catalog:
       value: 'gm-control@deciphernow.com'
     config_polling_interval:
       type: value
-      value: '10s'
+      value: '30s'
     # debug:
     #   type: value
     #   value: "true"
