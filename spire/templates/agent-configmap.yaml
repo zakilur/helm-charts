@@ -12,7 +12,7 @@ data:
       server_port = "8081"
       socket_path = "/run/spire/sockets/agent.sock"
       trust_bundle_path = "/run/spire/config/bootstrap.crt"
-      trust_domain = "{{ .Values.global.spire.trustDomain }}"
+      trust_domain = "{{ .Values.global.spire2.trustDomain }}"
       enable_sds = true
     }
 
@@ -33,7 +33,7 @@ data:
         plugin_data {
           # Does not use Kubelet readonly port
           # Uses service account authenticated + authorized for full cluster read-only access
-          # skip_kubelet_verification = true
+          skip_kubelet_verification = true
         }
       }
 
