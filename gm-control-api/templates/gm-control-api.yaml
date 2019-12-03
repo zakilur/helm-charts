@@ -117,10 +117,11 @@ spec:
           {{- end }}
           env:
           {{- include "greymatter.envvars" . | indent 12 }}
-        {{- if .Values.global.spire.enabled }}
+          {{- if .Values.global.spire2.enabled }}
           volumeMounts:
           {{- include "sidecar_volume_mounts" . | indent 12 }}
-          {{- else if and (not .Values.global.spire.enabled) (.Values.global.mesh_tls.use_provided_certs) }}
+          {{- include "sidecar_volume_certs_mount" . | indent 12 }}
+          {{- else if and (not .Values.global.spire2.enabled) (.Values.global.mesh_tls.use_provided_certs) }}
           volumeMounts:
           {{- include "sidecar_volume_certs_mount" . | indent 12 }}
           {{- end }}
@@ -143,9 +144,10 @@ spec:
       - name: config-consul
         emptyDir: {}
       {{- end }}
-      {{- if .Values.global.spire.enabled }}
+      {{- if .Values.global.spire2.enabled }}
       {{- include "sidecar_volumes" . | indent 6 }}
-      {{- else if and (not .Values.global.spire.enabled) (.Values.global.mesh_tls.use_provided_certs) }}
+      {{- include "sidecar_certs_volumes" . | indent 6 }}
+      {{- else if and (not .Values.global.spire2.enabled) (.Values.global.mesh_tls.use_provided_certs) }}
       {{- include "sidecar_certs_volumes" . | indent 6 }}
       {{- end }}
   volumeClaimTemplates:
