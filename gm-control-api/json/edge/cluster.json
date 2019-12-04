@@ -7,7 +7,7 @@
   "outlier_detection": null,
   "health_checks": []{{- if .Values.global.mesh_tls.enabled }},
   "require_tls": true,
-  {{- if .Values.global.mesh_tls.use_provided_certs }}
+  {{- if .Values.global.mesh_tls.notspire }}
   "ssl_config": {
     "protocols": [
       "SSLv3",
@@ -26,7 +26,7 @@
     ]
   }
   {{- end }}
-  {{- if .Values.global.spire.enabled }}
+  {{- if .Values.global.spire2.enabled }}
   "secret": {
     "secret_key": "secret-edge-secret",
     "secret_name": "spiffe://{{ .Values.global.spire.trustDomain }}/edge/mTLS",
@@ -35,6 +35,6 @@
         "X25519:P-256:P-521:P-384"
     ]
   }
-  {{- end}}
+  {{- end }}
   {{- end }}
 }

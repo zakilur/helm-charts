@@ -6,7 +6,7 @@
   "port": 8080,
   "protocol": "http_auto",
   "domain_keys": ["domain-{{.service.serviceName}}"],
-  "tracing_config": null{{- if .Values.global.spire.enabled }},
+  "tracing_config": null{{- if .Values.global.spire2.enabled }},
   "secret": {
     "secret_key": "secret-{{.service.serviceName}}-secret",
     "secret_name": "spiffe://{{ .Values.global.spire.trustDomain }}/{{.service.serviceName}}/mTLS",

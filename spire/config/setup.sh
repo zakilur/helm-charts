@@ -54,7 +54,6 @@ else
                 entry create \
                 -parentID spiffe://$TRUST_DOMAIN/$service \
                 -spiffeID spiffe://$TRUST_DOMAIN/$service/mTLS \
-                -selector k8s:pod-label:app:$service \
                 -selector k8s:ns:$KUBERNETES_NAMESPACE \
                 -registrationUDSPath $REGISTRATION_API_PATH &&
             echo "Done with service: $service"

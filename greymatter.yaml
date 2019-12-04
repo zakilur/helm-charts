@@ -7,6 +7,7 @@ global:
   zone: zone-default-zone
   mesh_tls:
     enabled: true
+    notspire: false
     use_provided_certs: true
     # This is the DN of the cert being used in the mesh. The Helm charts will add whitelist the DN throughout the mesh
     dn: C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=*.greymatter.svc.cluster.local
@@ -95,6 +96,9 @@ global:
       proxy_dynamic:
         type: 'value'
         value: 'true'
+      spire_path:
+        type: 'value'
+        value: '/run/spire/sockets/agent.sock'
       xds_cluster:
         type: 'value'
         value: ''
@@ -123,7 +127,8 @@ control:
       insecure: true
     serviceAccount:
       create: true
-    image: docker.production.deciphernow.com/deciphernow/gm-control:1.1.0
+    image: deciphernow/gm-control:spire
+    imagePullPolicy: IfNotPresent
     envvars:
       gm_control_console_level:
         type: 'value'
@@ -223,7 +228,7 @@ data:
         key: database
       gmdata_use_tls:
         type: value
-        value: 'true'
+        value: 'false'
       gmdata_cert:
         type: secret
         secret: jwt-certs
@@ -444,7 +449,7 @@ catalog:
         value: '/data'
       client_use_tls:
         type: value
-        value: 'true'
+        value: 'false'
       client_cert:
         type: secret
         secret: sidecar-certs
