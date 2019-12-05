@@ -76,8 +76,6 @@ spec:
         {{- end }}
       - name: sidecar
         image: {{ tpl .Values.sidecar.image $ | quote }}
-<<<<<<< HEAD
-=======
 
         readinessProbe:
           exec:
@@ -103,7 +101,6 @@ spec:
             {{- else }}
             {{- include "greymatter.envvars" . | indent 8 }}
             {{- end }}
->>>>>>> d767c83... add ability to specify image pull secret, number of data replicas, change order of envars if statment so only one will be brought in
         imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
         {{- if .Values.sidecar.resources }}
         resources:
