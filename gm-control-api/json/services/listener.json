@@ -8,16 +8,16 @@
   "domain_keys": ["domain-{{.service.serviceName}}"],
   "tracing_config": null{{- if .Values.global.spire2.enabled }},
   "secret": {
-    "secret_key": "secret-{{.service.serviceName}}-secret",
-    "secret_name": "spiffe://{{ .Values.global.spire.trustDomain }}/{{.service.serviceName}}/mTLS",
-    "secret_validation_name": "spiffe://{{ .Values.global.spire.trustDomain }}",
-    "ecdh_curves": [
-        "X25519:P-256:P-521:P-384"
-    ],
-    "forward_client_cert_details": "SANITIZE_SET",
-    "set_current_client_cert_details": {
-        "uri": true
-    }
-  }
-  {{- end }}
+        "secret_key": "secret-edge-secret",
+        "secret_name": "spiffe://{{ .Values.global.spire.trustDomain }}/edge/mTLS",
+        "secret_validation_name": "spiffe://{{ .Values.global.spire.trustDomain }}",
+        "ecdh_curves": [
+            "X25519:P-256:P-521:P-384"
+        ],
+        "forward_client_cert_details": "SANITIZE_SET",
+        "set_current_client_cert_details": {
+            "uri": true
+        }
+      }
+   {{- end }}
 }
