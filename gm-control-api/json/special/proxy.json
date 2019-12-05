@@ -5,7 +5,7 @@
   "listener_keys": ["edge-listener"],
   "name": "edge",
   "listeners": null,
-  "active_proxy_filters": ["gm.metrics", "gm.inheaders"],
+  "active_proxy_filters": ["gm.metrics"],
   "proxy_filters": {
     "gm_metrics": {
       "metrics_port": 8081,

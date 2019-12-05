@@ -13,7 +13,7 @@
   {{- if (.service.observablesEnabled) }}
     "gm.observables",
   {{- end }}
-  {{- if .Values.global.mesh_tls.enabled }}
+  {{- if .Values.global.mesh_tls.notspire }}
     "gm.impersonation",
   {{- end }}
     "gm.metrics"
