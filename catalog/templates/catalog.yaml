@@ -73,7 +73,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - "curl -k --cacert /etc/proxy/tls/sidecar/ca.crt --key /etc/proxy/tls/sidecar/server.key --cert /etc/proxy/tls/sidecar/server.crt https://localhost:9080/summary"
+                - "curl http://localhost:9080/summary"
             initialDelaySeconds: 20
             periodSeconds: 5
 

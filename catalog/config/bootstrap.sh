@@ -18,8 +18,8 @@ fi
 cd $MESH_CONFIG_DIR
 
 if [ "$USE_TLS" == "true" ]; then
-    CURL_COMMAND='curl -s -o /dev/null -w "%{http_code}" -k --cacert /etc/pki/ca.crt --cert /etc/pki/server.crt --key /etc/pki/server.key'
-    HTTP="https"
+    CURL_COMMAND='curl -s -o /dev/null -w "%{http_code}"'
+    HTTP="http"
 fi
 
 echo "Config dir contains:"

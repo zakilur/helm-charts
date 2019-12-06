@@ -396,6 +396,9 @@ internal-data:
 catalog:
   catalog:
     envvars:
+      debug:
+        type: value
+        value: 'true'
       config_source:
         type: value
         value: 'env'
