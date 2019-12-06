@@ -15,6 +15,10 @@ spec:
       labels:
         app: {{ .Values.data.name }}
     spec:
+      {{- if .Values.data.securityContext.enabled }}
+      securityContext:
+        fsGroup: {{ .Values.data.securityContext.fsGroup }}
+      {{- end }}
       serviceAccountName: {{ .Values.global.waiter.serviceAccount.name }}
       initContainers:
         - name: ensure-{{ .Values.data.name }}
@@ -42,12 +46,7 @@ spec:
         securityContext:
           runAsUser: {{ .Values.data.securityContext.runAsUser }}
           runAsGroup: {{ .Values.data.securityContext.runAsGroup }}
-          fsGroup: {{ .Values.data.securityContext.fsGroup }}
         {{- end }}
-        securityContext:
-          runAsUser: 666
-          runAsGroup: 666
-          fsGroup: 666
         {{- end }}
         env:
           {{- include "data.envvars" (dict "envvar" .Values.data.envvars "top" $) | indent 8 }}
