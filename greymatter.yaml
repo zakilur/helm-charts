@@ -12,7 +12,7 @@ global:
     # This is the DN of the cert being used in the mesh. The Helm charts will add whitelist the DN throughout the mesh
     dn: C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=*.greymatter.svc.cluster.local
   # Turns on tls for control api and configures control to talk to it using tls
-  control_api_tls: true
+  control_api_tls: false
   kafka:
     replicas: 3
   dashboard:
@@ -20,7 +20,7 @@ global:
     sidecar:
       version: 1.0.0
   catalog:
-    version: 1.0.1
+    version: 1.0.3
     sidecar:
       version: 1.0.0
   sense:
@@ -83,7 +83,7 @@ global:
       mTLS: true
     controlApi:
       # This value must match global.control_api_tls
-      egressTLS: true
+      egressTLS: false
 
   sidecar:
     version: 1.0.0
@@ -226,6 +226,9 @@ data:
         type: secret
         secret: '{{ .Values.mongo.credentials.secret_name }}'
         key: database
+      bind_address:
+        type: value
+        value: 127.0.0.1
       gmdata_use_tls:
         type: value
         value: 'false'
@@ -395,7 +398,7 @@ catalog:
     envvars:
       config_source:
         type: value
-        value: 'gmdata'
+        value: 'env'
       config_polling_interval:
         type: value
         value: '30s'
@@ -428,58 +431,115 @@ catalog:
         value: 'edge'
       use_tls:
         type: value
-        value: 'true'
-      ca_cert_path:
-        type: value
-        value: '/etc/pki/ca.crt'
-      server_cert_path:
-        type: value
-        value: '/etc/pki/server.crt'
-      server_key_path:
-        type: value
-        value: '/etc/pki/server.key'
-      client_address:
-        type: value
-        value: localhost
-      client_port:
-        type: value
-        value: '8080'
-      client_prefix:
-        type: value
-        value: '/data'
-      client_use_tls:
-        type: value
         value: 'false'
-      client_cert:
-        type: secret
-        secret: sidecar-certs
-        key: server_b64
-      client_key:
-        type: secret
-        secret: sidecar-certs
-        key: key_b64
-      client_trust:
-        type: secret
-        secret: sidecar-certs
-        key: ca_b64
-      gmdata_startup_delay:
+      service_0_cluster_name:
         type: value
-        value: '10s'
-      gmdata_max_retries:
+        value: 'gm-control-api'
+      service_0_capability:
         type: value
-        value: '100'
-      gmdata_retry_delay:
+        value: 'Control API'
+      service_0_documentation:
         type: value
-        value: '5s'
-      gmdata_root_event_name:
+        value: '/services/gm-control-api/latest'
+      service_0_zone_name:
         type: value
-        value: 'world'
-      client_identity:
+        value: '{{ .Values.global.zone }}'
+      service_0_owner:
         type: value
-        value: 'C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=*.greymatter.svc.cluster.local'
-      client_email:
+        value: 'Decipher'
+      service_0_version:
         type: value
-        value: 'engineering@deciphernow.com'
+        value: '1.1.0'
+      service_0_enable_instance_metrics:
+        type: value
+        value: 'true'
+      service_0_enable_historical_metrics:
+        type: value
+        value: 'true'
+      service_0_metrics_port:
+        type: value
+        value: '8081'
+      service_1_zone_name:
+        type: value
+        value: '{{ .Values.global.zone }}'
+      service_1_cluster_name:
+        type: value
+        value: 'catalog'
+      service_1_capability:
+        type: value
+        value: 'Catalog'
+      service_1_documentation:
+        type: value
+        value: '/services/catalog/latest'
+      service_1_owner:
+        type: value
+        value: 'Decipher'
+      service_1_version:
+        type: value
+        value: '1.1.0'
+      service_1_enable_instance_metrics:
+        type: value
+        value: 'true'
+      service_1_enable_historical_metrics:
+        type: value
+        value: 'true'
+      service_1_metrics_port:
+        type: value
+        value: '8081'
+      service_2_zone_name:
+        type: value
+        value: '{{ .Values.global.zone }}'
+      service_2_cluster_name:
+        type: value
+        value: 'dashboard'
+      service_2_capability:
+        type: value
+        value: 'Dashboard'
+      service_2_documentation:
+        type: value
+        value: '/services/dashboard/latest'
+      service_2_owner:
+        type: value
+        value: 'Decipher'
+      service_2_version:
+        type: value
+        value: '1.1.0'
+      service_2_enable_instance_metrics:
+        type: value
+        value: 'true'
+      service_2_enable_historical_metrics:
+        type: value
+        value: 'true'
+      service_2_metrics_port:
+        type: value
+        value: '8081'
+      service_3_zone_name:
+        type: value
+        value: '{{ .Values.global.zone }}'
+      service_3_cluster_name:
+        type: value
+        value: 'slo'
+      service_3_capability:
+        type: value
+        value: 'Objectives'
+      service_3_documentation:
+        type: value
+        value: '/services/slo/latest'
+      service_3_owner:
+        type: value
+        value: 'Decipher'
+      service_3_version:
+        type: value
+        value: '1.1.0'
+      service_3_enable_instance_metrics:
+        type: value
+        value: 'true'
+      service_3_enable_historical_metrics:
+        type: value
+        value: 'true'
+      service_3_metrics_port:
+        type: value
+        value: '8081'
 
     init:
       image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
@@ -500,7 +560,7 @@ dashboard:
   dashboard:
     image: 'docker.production.deciphernow.com/deciphernow/gm-dashboard:3.2.0'
     ssl:
-      enabled: true
+      enabled: false
       mountPoint: /certs
       name: dashboard-certs
   sidecar:
