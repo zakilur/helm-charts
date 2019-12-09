@@ -54,7 +54,7 @@ global:
     jwt_prefix: '/jwt'
   services:
     catalog:
-      egressTLS: true
+      egressTLS: false
       mTLS: true
       version: 1.0.1
     dashboard:
@@ -423,126 +423,19 @@ catalog:
       port:
         type: value
         value: '9080'
+      use_tls:
+        type: value
+        value: 'false'
       control_server_0_address:
         type: value
         value: '{{ .Values.global.control.name }}.{{ .Release.Namespace }}.svc:{{ .Values.global.control.port }}'
       control_server_0_zone_name:
         type: value
-        value: '{{ .Values.global.zone }}'
+        value: 'default-zone'
       control_server_0_request_cluster_name:
         type: value
         value: 'edge'
-      use_tls:
-        type: value
-        value: 'false'
-      service_0_cluster_name:
-        type: value
-        value: 'gm-control-api'
-      service_0_capability:
-        type: value
-        value: 'Control API'
-      service_0_documentation:
-        type: value
-        value: '/services/gm-control-api/latest'
-      service_0_zone_name:
-        type: value
-        value: '{{ .Values.global.zone }}'
-      service_0_owner:
-        type: value
-        value: 'Decipher'
-      service_0_version:
-        type: value
-        value: '1.1.0'
-      service_0_enable_instance_metrics:
-        type: value
-        value: 'true'
-      service_0_enable_historical_metrics:
-        type: value
-        value: 'true'
-      service_0_metrics_port:
-        type: value
-        value: '8081'
-      service_1_zone_name:
-        type: value
-        value: '{{ .Values.global.zone }}'
-      service_1_cluster_name:
-        type: value
-        value: 'catalog'
-      service_1_capability:
-        type: value
-        value: 'Catalog'
-      service_1_documentation:
-        type: value
-        value: '/services/catalog/latest'
-      service_1_owner:
-        type: value
-        value: 'Decipher'
-      service_1_version:
-        type: value
-        value: '1.1.0'
-      service_1_enable_instance_metrics:
-        type: value
-        value: 'true'
-      service_1_enable_historical_metrics:
-        type: value
-        value: 'true'
-      service_1_metrics_port:
-        type: value
-        value: '8081'
-      service_2_zone_name:
-        type: value
-        value: '{{ .Values.global.zone }}'
-      service_2_cluster_name:
-        type: value
-        value: 'dashboard'
-      service_2_capability:
-        type: value
-        value: 'Dashboard'
-      service_2_documentation:
-        type: value
-        value: '/services/dashboard/latest'
-      service_2_owner:
-        type: value
-        value: 'Decipher'
-      service_2_version:
-        type: value
-        value: '1.1.0'
-      service_2_enable_instance_metrics:
-        type: value
-        value: 'true'
-      service_2_enable_historical_metrics:
-        type: value
-        value: 'true'
-      service_2_metrics_port:
-        type: value
-        value: '8081'
-      service_3_zone_name:
-        type: value
-        value: '{{ .Values.global.zone }}'
-      service_3_cluster_name:
-        type: value
-        value: 'slo'
-      service_3_capability:
-        type: value
-        value: 'Objectives'
-      service_3_documentation:
-        type: value
-        value: '/services/slo/latest'
-      service_3_owner:
-        type: value
-        value: 'Decipher'
-      service_3_version:
-        type: value
-        value: '1.1.0'
-      service_3_enable_instance_metrics:
-        type: value
-        value: 'true'
-      service_3_enable_historical_metrics:
-        type: value
-        value: 'true'
-      service_3_metrics_port:
-        type: value
-        value: '8081'
+
 
     init:
       image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
