@@ -20,7 +20,7 @@ global:
     sidecar:
       version: 1.0.0
   catalog:
-    version: 1.0.3
+    version: 1.0.1
     sidecar:
       version: 1.0.0
   sense:
