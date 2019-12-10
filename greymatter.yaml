@@ -35,11 +35,9 @@ global:
     egressDn: C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=edge
     certPath: /etc/proxy/tls/edge
     version: 1.0.0
-  spire2:
+  spire:
     enabled: true
     trustDomain: deciphernow.com
-  spire:
-    enabled: false
   waiter:
     serviceAccount:
       create: true

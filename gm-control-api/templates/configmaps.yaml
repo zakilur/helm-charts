@@ -1,10 +1,10 @@
 {{- $top := . }}
 {{- $svidList := list }}
 {{- range $name, $service := .Values.global.services }}
-    {{- $svidList = append $svidList (print "spiffe://" $top.Values.global.spire2.trustDomain "/" $service.serviceName "/mTLS") }}
+    {{- $svidList = append $svidList (print "spiffe://" $top.Values.global.spire.trustDomain "/" $service.serviceName "/mTLS") }}
 {{- end }}
-{{- $svidList = append $svidList (print "spiffe://" $top.Values.global.spire2.trustDomain "/edge/mTLS") }}
-{{- $svidList = append $svidList (print "spiffe://" $top.Values.global.spire2.trustDomain "/spire-client/mTLS") }}
+{{- $svidList = append $svidList (print "spiffe://" $top.Values.global.spire.trustDomain "/edge/mTLS") }}
+{{- $svidList = append $svidList (print "spiffe://" $top.Values.global.spire.trustDomain "/spire-client/mTLS") }}
 {{- /* We loop over all the services to create the individual service objects */}}
 {{- range $name, $service := .Values.global.services }}
 {{- if $service.controlEnabled }}

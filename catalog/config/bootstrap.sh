@@ -19,7 +19,7 @@ cd $MESH_CONFIG_DIR
 
 if [ "$USE_TLS" == "true" ]; then
     CURL_COMMAND='curl -s -o /dev/null -w "%{http_code}"'
-    HTTP="http"
+    HTTP="https"
 fi
 
 echo "Config dir contains:"

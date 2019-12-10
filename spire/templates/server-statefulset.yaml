@@ -50,7 +50,7 @@ spec:
             - name: SERVICE_LIST_FILE
               value: /etc/config/services.txt
             - name: TRUST_DOMAIN
-              value: {{ .Values.global.spire2.trustDomain }}
+              value: {{ .Values.global.spire.trustDomain }}
             - name: KUBERNETES_NAMESPACE
               value: {{ .Release.Namespace }}
             - name: CONFIG_FILE_PATH

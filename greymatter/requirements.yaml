@@ -45,4 +45,4 @@ dependencies:
   - name: spire
     version: '2.1.1'
     repository: 'file://../spire'
-    condition: global.spire2.enabled
+    condition: global.spire.enabled
