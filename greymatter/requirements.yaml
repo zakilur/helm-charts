@@ -18,7 +18,7 @@ dependencies:
 
   - name: edge
     version: '2.1.4'
-    repository: 'https://nexus.production.deciphernow.com/repository/helm-hosted'
+    repository: 'file://../edge'
 
   - name: jwt
     version: '2.1.1'

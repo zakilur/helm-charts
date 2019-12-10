@@ -11,14 +11,21 @@ if [ $LC -ge 4 ]; then
     MINI="sudo $MINILOC"
 fi
 
+export CHANGE_MINIKUBE_NONE_USER=true
+MINILOC=$(which minikube)
+MINI="sudo $MINILOC"
+minikube config set vm-driver none
+
 $MINI start --memory 6144 --cpus 6
 
-if [ $LC -ge 4 ]; then
-    sudo chown -R ubuntu /home/ubuntu/.kube /home/ubuntu/.minikube
-fi
+# if [ $LC -ge 4 ]; then
+#     sudo chown -R ubuntu /home/ubuntu/.kube /home/ubuntu/.minikube
+# fi
+
+# #sudo chown -R $USER $HOME/.kube $HOME/.minikube
 
 helm init --wait
-./ci/scripts/install-voyager.sh
-helm install decipher/greymatter -f greymatter.yaml -f greymatter-secrets.yaml -f credentials.yaml --set global.environment=kubernetes --set global.k8s_use_voyager_ingress=true -n gm-deploy
+#./ci/scripts/install-voyager.sh
+helm install greymatter -f greymatter.yaml -f greymatter-secrets.yaml -f credentials.yaml --set global.environment=kubernetes --set global.k8s_use_voyager_ingress=true -n gm-deploy
 ./ci/scripts/show-voyager.sh
 

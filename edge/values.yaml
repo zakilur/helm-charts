@@ -78,6 +78,7 @@ edge:
       kubernetes.io/ingress.class: "voyager"
       ingress.appscode.com/ssl-passthrough: "true"
       ingress.appscode.com/type: NodePort
+      ingress.appscode.com/default-timeout: '{"connect": "30s", "server": "200s"}'
     
     # Provide the rule set you want your ingress controller to use
     rules:
