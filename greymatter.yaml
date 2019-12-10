@@ -58,25 +58,25 @@ global:
       mTLS: true
       version: 1.0.1
     dashboard:
-      egressTLS: true
+      egressTLS: false
       mTLS: true
     prometheus:
       egressTLS: false
       mTLS: true
     data:
-      egressTLS: true
+      egressTLS: false
       mTLS: true
     internal-data:
-      egressTLS: true
+      egressTLS: false
       mTLS: true
     jwt:
-      egressTLS: true
+      egressTLS: false
       mTLS: true
     internal-jwt:
-      egressTLS: true
+      egressTLS: false
       mTLS: true
     slo:
-      egressTLS: true
+      egressTLS: false
       mTLS: true
     control:
       egressTLS: false
@@ -483,7 +483,7 @@ slo:
   slo:
     image: docker.production.deciphernow.com/deciphernow/gm-slo:1.1.0
     ssl:
-      enabled: true
+      enabled: false
       name: slo-certs
       mountPoint: /service-certs
   sidecar:
@@ -498,7 +498,7 @@ slo:
     private_image: true
     data_mount_point: /var/lib/pgsql/data
     ssl:
-      enabled: true
+      enabled: false
       name: postgres-ssl-certs
       mountPoint: /certs
     credentials:
