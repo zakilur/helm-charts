@@ -1,0 +1,10 @@
+{
+  "domain_key": "domain-{{.service.serviceName}}-local",
+  "zone_key": "{{.service.zone}}",
+  "name": "localhost",
+  "port": 8180,
+  "redirects": null,
+  "gzip_enabled": false,
+  "cors_config": null,
+  "aliases": null
+}

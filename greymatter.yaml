@@ -130,7 +130,7 @@ control:
     envvars:
       gm_control_console_level:
         type: 'value'
-        value: 'info'
+        value: 'debug'
       #gm_control_cmd:
       #  type: 'value'
       #  value: 'consul'
@@ -253,13 +253,13 @@ data:
         value: localhost
       client_jwt_endpoint_port:
         type: value
-        value: '8080'
+        value: '8180'
       client_jwt_endpoint_prefix:
         type: value
         value: /jwt
       client_jwt_endpoint_use_tls:
         type: value
-        value: 'true'
+        value: 'false'
       client_jwt_endpoint_cert:
         type: secret
         secret: jwt-certs

@@ -3,10 +3,12 @@
   "zone_key": "{{.service.zone}}",
   "name": "{{.service.serviceName}}",
   "domain_keys": [
-    "domain-{{.service.serviceName}}"
+    "domain-{{.service.serviceName}}",
+    "domain-{{.service.serviceName}}-local"
   ],
   "listener_keys": [
-      "listener-{{.service.serviceName}}"
+      "listener-{{.service.serviceName}}",
+      "listener-{{.service.serviceName}}-local"
   ],
   "listeners": null,
   "active_proxy_filters": [

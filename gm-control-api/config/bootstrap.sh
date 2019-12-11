@@ -30,8 +30,32 @@ for d in */; do
     # All objects referenced by keys must be created before being referenced or will result in an error.
     # So we add a delay of 0.1 seconds between each request to hopefully streamline this
     # A better option is probably to hardcode the order of items
-
-    names="domain cluster listener proxy shared_rules route"
+    
+    names="domain"
+    for name in $names; do
+        echo "Creating mesh object: $name."
+        greymatter create $name <$name.json
+        sleep $delay
+    done
+    names="domain-local"
+    for name in $names; do
+        echo "Creating mesh object: $name."
+        greymatter create domain <$name.json
+        sleep $delay
+    done
+    names="cluster listener"
+    for name in $names; do
+        echo "Creating mesh object: $name."
+        greymatter create $name <$name.json
+        sleep $delay
+    done
+    names="listener-local"
+    for name in $names; do
+        echo "Creating mesh object: $name."
+        greymatter create listener <$name.json
+        sleep $delay
+    done
+    names="proxy shared_rules route"
     for name in $names; do
         echo "Creating mesh object: $name."
         greymatter create $name <$name.json
