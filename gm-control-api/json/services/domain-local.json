@@ -6,5 +6,11 @@
   "redirects": null,
   "gzip_enabled": false,
   "cors_config": null,
-  "aliases": null
+  "aliases": null,
+  "custom_headers": [
+    {
+      "key": "X-FORWARDED-PROTO",
+      "value": "https"
+    }
+  ]
 }

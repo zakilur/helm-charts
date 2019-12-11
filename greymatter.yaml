@@ -537,7 +537,7 @@ jwt:
     image: docker.production.deciphernow.com/deciphernow/gm-jwt-security:1.0.0
     envvars:
       - type: value
-        name: HTTPS_PORT
+        name: HTTP_PORT
         value: '3000'
       - type: secret
         name: PRIVATE_KEY
@@ -549,7 +549,7 @@ jwt:
         key: jwt.api_key
       - type: value
         name: ENABLE_TLS
-        value: true
+        value: false
       - type: secret
         name: SERVER_TRUST
         secret: jwt-certs
@@ -562,6 +562,9 @@ jwt:
         name: SERVER_KEY
         secret: jwt-certs
         key: jwt.key.pem
+      - type: value
+        name: ZEROLOG_LEVEL
+        value: DEBUG
 
   redis:
     private_image: true
