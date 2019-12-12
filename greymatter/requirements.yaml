@@ -1,4 +1,8 @@
 dependencies:
+  - name: bootstrapper
+    version: '0.1.0'
+    repository: 'file://../bootstrapper'
+
   - name: catalog
     version: '2.1.5'
     repository: 'https://nexus.production.deciphernow.com/repository/helm-hosted'

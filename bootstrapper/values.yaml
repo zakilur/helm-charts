@@ -1,0 +1,42 @@
+global:
+  environment: kubernetes
+  domain:
+  route_url_name:
+  control_api_tls: true
+  remove_namespace_from_url: ''
+  bootstrapper:
+    version: latest
+
+bootstrapper:
+  name: 'bootstrapper'
+  port: 8080
+  displayName: 'Bootstrapper'
+  replicas: 1
+  image: 'registry.hub.docker.com/bcmendoza/gm-k8s-bootstrapper:{{ $.Values.global.bootstrapper.version }}'
+  imagePullPolicy: IfNotPresent
+  controlApiTLS:
+    name: bootstrapper-to-control-api-certs
+    mountPoint: /service-certs
+    insecure: true
+    certificates:
+      ca: |-
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+      cert: |-
+        -----BEGIN CERTIFICATE-----
+        ...
+        -----END CERTIFICATE-----
+      key: |-
+        -----BEGIN RSA PRIVATE KEY-----
+        ...
+        -----END RSA PRIVATE KEY-----
+  serviceAccount:
+    create: true
+    name: bootstrapper-sa
+  envvars:
+    console_level:
+      type: 'value'
+      value: 'info'
+  resources:
+    {}
