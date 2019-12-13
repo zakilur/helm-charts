@@ -1,5 +1,5 @@
 global:
-  environment: openshift
+  environment: kubernetes
   # If `environment: kubernetes`, set to true to install Voyager ingress
   domain: staging.deciphernow.com
   route_url_name: greymatter
@@ -81,6 +81,10 @@ global:
       # This value must match global.control_api_tls
       egressTLS: true
 
+  voyager:
+    cloudProvider: aws
+    enableAnalytics: false
+
   sidecar:
     version: 1.0.0
     envvars:
@@ -146,16 +150,35 @@ gm-control-api:
     init:
       image: docker.production.deciphernow.com/deciphernow/greymatter:1.1.0
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:dev-trace'
+    envvars:
+      tracing_enabled:
+        type: value
+        value: 'true'
+      tracing_address:
+        type: value
+        value: 'jaeger'
+      tracing_port:
+        type: value
+        value: '9411'
 
 data:
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:dev-trace'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
         type: value
         value: 'data'
+      tracing_enabled:
+        type: value
+        value: 'true'
+      tracing_address:
+        type: value
+        value: 'jaeger'
+      tracing_port:
+        type: value
+        value: '9411'
 
   data:
     image: docker.production.deciphernow.com/deciphernow/gm-data:1.0.0
@@ -300,12 +323,22 @@ data:
 
 internal-data:
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:dev-trace'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
         type: value
         value: 'data-internal'
+      tracing_enabled:
+        type: value
+        value: 'true'
+      tracing_address:
+        type: value
+        value: 'jaeger'
+      tracing_port:
+        type: value
+        value: '9411'
+
   data:
     version: 1.0.0
     name: data-internal
@@ -474,19 +507,37 @@ catalog:
         value: 'engineering@deciphernow.com'
 
     init:
-      image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+      image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:dev-trace'
       envvars:
         debug:
           type: value
           value: 'true'
+        tracing_enabled:
+          type: value
+          value: 'true'
+        tracing_address:
+         type: value
+         value: 'jaeger'
+        tracing_port:
+          type: value
+          value: '9411'
 
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:dev-trace'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
         type: value
         value: 'catalog'
+      tracing_enabled:
+        type: value
+        value: 'true'
+      tracing_address:
+        type: value
+        value: 'jaeger'
+      tracing_port:
+        type: value
+        value: '9411'
 
 dashboard:
   dashboard:
@@ -496,14 +547,35 @@ dashboard:
       mountPoint: /certs
       name: dashboard-certs
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:dev-trace'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
         type: value
         value: 'dashboard'
+      tracing_enabled:
+        type: value
+        value: 'true'
+      tracing_address:
+        type: value
+        value: 'jaeger'
+      tracing_port:
+        type: value
+        value: '9411'
+
   sidecar_prometheus:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:dev-trace'
+    envvars:
+      tracing_enabled:
+        type: value
+        value: 'true'
+      tracing_address:
+        type: value
+        value: 'jaeger'
+      tracing_port:
+        type: value
+        value: '9411'
+
   prometheus:
     serviceAccount:
       create: true
@@ -523,12 +595,22 @@ slo:
       name: slo-certs
       mountPoint: /service-certs
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:dev-trace'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
         type: value
         value: 'slo'
+      tracing_enabled:
+        type: value
+        value: 'true'
+      tracing_address:
+        type: value
+        value: 'jaeger'
+      tracing_port:
+        type: value
+        value: '9411'
+
 
   postgres:
     private_image: true
@@ -562,12 +644,21 @@ slo:
 
 jwt:
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:dev-trace'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
         type: value
         value: 'jwt-security'
+      tracing_enabled:
+        type: value
+        value: 'true'
+      tracing_address:
+        type: value
+        value: 'jaeger'
+      tracing_port:
+        type: value
+        value: '9411'
 
   jwt:
     use_aac: false
@@ -606,12 +697,22 @@ jwt:
 
 internal-jwt:
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:dev-trace'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
         type: value
         value: 'internal-jwt-security'
+      tracing_enabled:
+        type: value
+        value: 'true'
+      tracing_address:
+        type: value
+        value: 'jaeger'
+      tracing_port:
+        type: value
+        value: '9411'
+
   jwt:
     name: internal-jwt-security
     certs_mount_point: /gm-jwt-security/certs
@@ -698,20 +799,50 @@ internal-jwt:
     password: 'internalRedis'
 
 sidecar:
-  image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+  image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:dev-trace'
   create_sidecar_secret: true
+  envvars:
+    tracing_enabled:
+      type: value
+      value: 'true'
+    tracing_address:
+      type: value
+      value: 'jaeger'
+    tracing_port:
+      type: value
+      value: '9411'
 
 edge:
   sidecar:
     version: 1.0.0
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:dev-trace'
     envvars:
       xds_cluster:
         type: value
         value: 'edge'
+      tracing_enabled:
+        type: value
+        value: 'true'
+      tracing_address:
+        type: value
+        value: 'jaeger'
+      tracing_port:
+        type: value
+        value: '9411'
+
   edge:
     base_path: /services/edge/1.0.0
     create_edge_secret: true
+    envvars:
+      tracing_enabled:
+        type: value
+        value: 'true'
+      tracing_address:
+        type: value
+        value: 'jaeger'
+      tracing_port:
+        type: value
+        value: '9411'
 
     ingress:
       # There are a lot of options for ingress into a kubernetes cluster.

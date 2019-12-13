@@ -12,6 +12,8 @@ kind: ServiceAccount
 metadata:
   name: tiller
   namespace: greymatter
+
+---
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
@@ -21,6 +23,8 @@ rules:
   - apiGroups: ['', 'extensions', 'apps', 'route.openshift.io', 'batch']
     resources: ['*']
     verbs: ['*']
+
+---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
