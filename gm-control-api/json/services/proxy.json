@@ -3,12 +3,14 @@
   "zone_key": "{{.service.zone}}",
   "name": "{{.service.serviceName}}",
   "domain_keys": [
-    "domain-{{.service.serviceName}}",
+    "domain-{{.service.serviceName}}"{{- if .Values.global.spire.enabled }},
     "domain-{{.service.serviceName}}-local"
+    {{- end }}
   ],
   "listener_keys": [
-      "listener-{{.service.serviceName}}",
+      "listener-{{.service.serviceName}}"{{- if .Values.global.spire.enabled }},
       "listener-{{.service.serviceName}}-local"
+      {{- end }}
   ],
   "listeners": null,
   "active_proxy_filters": [
