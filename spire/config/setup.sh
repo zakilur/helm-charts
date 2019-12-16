@@ -49,6 +49,7 @@ else
                 -spiffeID spiffe://$TRUST_DOMAIN/$service \
                 -selector k8s:pod-label:app:$service \
                 -selector k8s:ns:$KUBERNETES_NAMESPACE \
+		-dns ${service}.${TRUST_DOMAIN} \
                 -registrationUDSPath $REGISTRATION_API_PATH &&
             /opt/spire/bin/spire-server \
                 entry create \
