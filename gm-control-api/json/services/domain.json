@@ -6,7 +6,7 @@
   "redirects": null,
   "gzip_enabled": false,
   "cors_config": null,
-  "aliases": null{{- if .Values.global.mesh_tls.notspire }},
+  "aliases": null{{- if and (.Values.global.mesh_tls.use_provided_certs) (not .Values.global.spire.enabled) }},
   "ssl_config": {
       "protocols": [
         "SSLv3",

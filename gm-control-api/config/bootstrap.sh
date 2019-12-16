@@ -18,6 +18,8 @@ echo "Starting mesh configuration ..."
 
 echo "Creating service configuration objects..."
 
+echo "Creating objects for spire: $SPIRE_ENABLED"
+
 delay=0.01
 
 cd $MESH_CONFIG_DIR/services
@@ -37,24 +39,28 @@ for d in */; do
         greymatter create $name <$name.json
         sleep $delay
     done
-    names="domain-local"
-    for name in $names; do
-        echo "Creating mesh object: $name."
-        greymatter create domain <$name.json
-        sleep $delay
-    done
+    if $SPIRE_ENABLED; then
+    	names="domain-local"
+    	for name in $names; do
+        	echo "Creating mesh object: $name."
+        	greymatter create domain <$name.json
+        	sleep $delay
+    	done
+    fi
     names="cluster listener"
     for name in $names; do
         echo "Creating mesh object: $name."
         greymatter create $name <$name.json
         sleep $delay
     done
-    names="listener-local"
-    for name in $names; do
-        echo "Creating mesh object: $name."
-        greymatter create listener <$name.json
-        sleep $delay
-    done
+    if $SPIRE_ENABLED; then
+    	names="listener-local"
+    	for name in $names; do
+        	echo "Creating mesh object: $name."
+        	greymatter create listener <$name.json
+        	sleep $delay
+    	done
+    fi
     names="proxy shared_rules route"
     for name in $names; do
         echo "Creating mesh object: $name."
@@ -109,6 +115,12 @@ echo "Adding additional Special Routes"
 for rte in $(ls route-*.json); do
     greymatter create route <$rte
 done
+
+if $SPIRE_ENABLED; then
+    for rte in $(ls local-route-*.json); do
+        greymatter create route <$rte
+    done
+fi
 # greymatter create route < route-data-jwt-slash.json
 # greymatter create route < route-data-jwt.json
 # greymatter create route < route-dashboard-slash.json

@@ -35,7 +35,6 @@ spec:
           mountPath: {{ .Values.global.edge.certPath }}
         {{- if .Values.global.spire.enabled }}
         {{- include "edge_spire_volume_mounts" . | indent 8 }}
-        {{- include "edge_volume_certs_mount" . | indent 8 }}
         {{- else if and (not .Values.global.spire.enabled) (.Values.global.mesh_tls.use_provided_certs) }}
         {{- include "edge_volume_certs_mount" . | indent 8 }}
         {{- end}}
@@ -57,7 +56,6 @@ spec:
           secretName: {{ .Values.edge.certificates.ingress.name}}
       {{- if .Values.global.spire.enabled }}
       {{- include "edge_spire_volumes" . | indent 6 }}
-      {{- include "edge_certs_volumes" . | indent 6 }}
       {{- else if and (not .Values.global.spire.enabled) (.Values.global.mesh_tls.use_provided_certs) }}
       {{- include "edge_certs_volumes" . | indent 6 }}
       {{- end }}

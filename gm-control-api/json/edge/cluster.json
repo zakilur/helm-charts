@@ -7,7 +7,7 @@
   "outlier_detection": null,
   "health_checks": []{{- if .Values.global.mesh_tls.enabled }},
   "require_tls": true,
-  {{- if .Values.global.mesh_tls.notspire }}
+  {{- if and (not .Values.global.spire.enabled) (.Values.global.mesh_tls.use_provided_certs) }}
   "ssl_config": {
     "protocols": [
       "SSLv3",

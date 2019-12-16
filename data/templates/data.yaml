@@ -90,8 +90,11 @@ spec:
             command:
               - /bin/sh
               - -c
+              {{- if .Values.global.spire.enabled }}
               - "curl http://127.0.0.1:8181/list/1"
-                #- "curl -k --cacert /etc/proxy/tls/sidecar/ca.crt --key /etc/proxy/tls/sidecar/server.key --cert /etc/proxy/tls/sidecar/server.crt https://localhost:8181/list/1/"
+              {{- else if .Values.global.mesh_tls.use_provided_certs }}
+              - "curl -k --cacert /etc/proxy/tls/sidecar/ca.crt --key /etc/proxy/tls/sidecar/server.key --cert /etc/proxy/tls/sidecar/server.crt https://localhost:8181/list/1/"
+              {{- end }}
           initialDelaySeconds: 20
           periodSeconds: 5
 
@@ -125,7 +128,6 @@ spec:
         {{- if .Values.global.spire.enabled }}
         volumeMounts:
         {{- include "sidecar_volume_mounts" . | indent 8 }}
-        {{- include "sidecar_volume_certs_mount" . | indent 8 }}
         {{- else if and (not .Values.global.spire.enabled) (.Values.global.mesh_tls.use_provided_certs) }}
         volumeMounts:
         {{- include "sidecar_volume_certs_mount" . | indent 8 }}
@@ -146,7 +148,6 @@ spec:
       {{- end }}
       {{- if .Values.global.spire.enabled }}
       {{- include "sidecar_volumes" . | indent 6 }}
-      {{- include "sidecar_certs_volumes" . | indent 6 }}
       {{- else if and (not .Values.global.spire.enabled) (.Values.global.mesh_tls.use_provided_certs) }}
       {{- include "sidecar_certs_volumes" . | indent 6 }}
       {{- end }}

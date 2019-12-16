@@ -15,7 +15,7 @@
   {{- if (.service.observablesEnabled) }}
     "gm.observables",
   {{- end }}
-  {{- if .Values.global.mesh_tls.notspire }}
+  {{- if not (.Values.global.spire.enabled) }}
     "gm.impersonation",
   {{- end }}
     "gm.metrics"
@@ -29,7 +29,7 @@
       "kafkaServerConnection": "{{ .Values.global.observables.kafkaServerConnection }}"
     },
     {{- end }}
-    {{- if .Values.global.mesh_tls.enabled }}
+    {{- if and (not .Values.global.spire.enabled) (.Values.global.mesh_tls.enabled) }}
     "gm_impersonation": {
       "servers": "{{ .Values.global.edge.egressDn }}{{- if not (eq .service.serviceName "dashboard") -}}|{{ .Values.global.mesh_tls.dn }}{{- end -}}"
     },

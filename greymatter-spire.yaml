@@ -7,11 +7,11 @@ global:
   zone: zone-default-zone
   mesh_tls:
     enabled: true
-    use_provided_certs: true
+    use_provided_certs: false
     # This is the DN of the cert being used in the mesh. The Helm charts will add whitelist the DN throughout the mesh
     dn: C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=*.greymatter.svc.cluster.local
   # Turns on tls for control api and configures control to talk to it using tls
-  control_api_tls: true
+  control_api_tls: false
   kafka:
     replicas: 3
   dashboard:
@@ -35,7 +35,8 @@ global:
     certPath: /etc/proxy/tls/edge
     version: 1.0.0
   spire:
-    enabled: false
+    enabled: true
+    trustDomain: deciphernow.com
   waiter:
     serviceAccount:
       create: true
@@ -50,36 +51,36 @@ global:
     jwt_prefix: '/jwt'
   services:
     catalog:
-      egressTLS: true
+      egressTLS: false
       mTLS: true
       version: 1.0.1
     dashboard:
-      egressTLS: true
+      egressTLS: false
       mTLS: true
     prometheus:
       egressTLS: false
       mTLS: true
     data:
-      egressTLS: true
+      egressTLS: false
       mTLS: true
     internal-data:
-      egressTLS: true
+      egressTLS: false
       mTLS: true
     jwt:
-      egressTLS: true
+      egressTLS: false
       mTLS: true
     internal-jwt:
-      egressTLS: true
+      egressTLS: false
       mTLS: true
     slo:
-      egressTLS: true
+      egressTLS: false
       mTLS: true
     control:
       egressTLS: false
       mTLS: true
     controlApi:
       # This value must match global.control_api_tls
-      egressTLS: true
+      egressTLS: false
 
   sidecar:
     version: 1.0.0
@@ -92,6 +93,9 @@ global:
       proxy_dynamic:
         type: 'value'
         value: 'true'
+      spire_path:
+        type: 'value'
+        value: '/run/spire/sockets/agent.sock'
       xds_cluster:
         type: 'value'
         value: ''
@@ -120,11 +124,12 @@ control:
       insecure: true
     serviceAccount:
       create: true
-    image: docker.production.deciphernow.com/deciphernow/gm-control:1.1.0
+    image: deciphernow/gm-control:spire
+    imagePullPolicy: IfNotPresent
     envvars:
       gm_control_console_level:
         type: 'value'
-        value: 'info'
+        value: 'debug'
       #gm_control_cmd:
       #  type: 'value'
       #  value: 'consul'
@@ -218,9 +223,12 @@ data:
         type: secret
         secret: '{{ .Values.mongo.credentials.secret_name }}'
         key: database
+      bind_address:
+        type: value
+        value: 127.0.0.1
       gmdata_use_tls:
         type: value
-        value: 'true'
+        value: 'false'
       gmdata_cert:
         type: secret
         secret: jwt-certs
@@ -244,13 +252,13 @@ data:
         value: localhost
       client_jwt_endpoint_port:
         type: value
-        value: '8080'
+        value: '8180'
       client_jwt_endpoint_prefix:
         type: value
         value: /jwt
       client_jwt_endpoint_use_tls:
         type: value
-        value: 'true'
+        value: 'false'
       client_jwt_endpoint_cert:
         type: secret
         secret: jwt-certs
@@ -336,7 +344,7 @@ internal-data:
         value: greymatter
       gmdata_use_tls:
         type: value
-        value: 'true'
+        value: 'false'
       jwt_pub:
         type: secret
         secret: internal-jwt-security-secret
@@ -345,6 +353,25 @@ internal-data:
         type: secret
         secret: internal-jwt-security-secret
         key: jwt.api_key
+      client_prefix:
+        type: value
+        value: /services/data/1.0.0
+      client_jwt_prefix:
+        type: value
+        value: /jwt
+      client_jwt_endpoint_address:
+        type: value
+        value: localhost
+      client_jwt_endpoint_port:
+        type: value
+        value: '8180'
+      client_jwt_endpoint_prefix:
+        type: value
+        value: /jwt
+      client_jwt_endpoint_use_tls:
+        type: value
+        value: 'false'
+
   mongo:
     private_image: true
     name: internal-data-mongo
@@ -385,6 +412,9 @@ internal-data:
 catalog:
   catalog:
     envvars:
+      debug:
+        type: value
+        value: 'true'
       config_source:
         type: value
         value: 'gmdata'
@@ -409,51 +439,30 @@ catalog:
       port:
         type: value
         value: '9080'
+      use_tls:
+        type: value
+        value: 'false'
       control_server_0_address:
         type: value
         value: '{{ .Values.global.control.name }}.{{ .Release.Namespace }}.svc:{{ .Values.global.control.port }}'
       control_server_0_zone_name:
         type: value
-        value: '{{ .Values.global.zone }}'
+        value: 'default-zone'
       control_server_0_request_cluster_name:
         type: value
         value: 'edge'
-      use_tls:
-        type: value
-        value: 'true'
-      ca_cert_path:
-        type: value
-        value: '/etc/pki/ca.crt'
-      server_cert_path:
-        type: value
-        value: '/etc/pki/server.crt'
-      server_key_path:
-        type: value
-        value: '/etc/pki/server.key'
       client_address:
         type: value
         value: localhost
       client_port:
         type: value
-        value: '8080'
+        value: '8180'
       client_prefix:
         type: value
         value: '/data'
       client_use_tls:
         type: value
-        value: 'true'
-      client_cert:
-        type: secret
-        secret: sidecar-certs
-        key: server_b64
-      client_key:
-        type: secret
-        secret: sidecar-certs
-        key: key_b64
-      client_trust:
-        type: secret
-        secret: sidecar-certs
-        key: ca_b64
+        value: 'false'
       gmdata_startup_delay:
         type: value
         value: '10s'
@@ -472,6 +481,7 @@ catalog:
       client_email:
         type: value
         value: 'engineering@deciphernow.com'
+
 
     init:
       image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.0.0'
@@ -492,7 +502,7 @@ dashboard:
   dashboard:
     image: 'docker.production.deciphernow.com/deciphernow/gm-dashboard:3.2.0'
     ssl:
-      enabled: true
+      enabled: false
       mountPoint: /certs
       name: dashboard-certs
   sidecar:
@@ -519,7 +529,7 @@ slo:
   slo:
     image: docker.production.deciphernow.com/deciphernow/gm-slo:1.1.0
     ssl:
-      enabled: true
+      enabled: false
       name: slo-certs
       mountPoint: /service-certs
   sidecar:
@@ -534,7 +544,7 @@ slo:
     private_image: true
     data_mount_point: /var/lib/pgsql/data
     ssl:
-      enabled: true
+      enabled: false
       name: postgres-ssl-certs
       mountPoint: /certs
     credentials:
@@ -575,7 +585,7 @@ jwt:
     image: docker.production.deciphernow.com/deciphernow/gm-jwt-security:1.0.0
     envvars:
       - type: value
-        name: HTTPS_PORT
+        name: HTTP_PORT
         value: '3000'
       - type: secret
         name: PRIVATE_KEY
@@ -587,7 +597,7 @@ jwt:
         key: jwt.api_key
       - type: value
         name: ENABLE_TLS
-        value: true
+        value: false
       - type: secret
         name: SERVER_TRUST
         secret: jwt-certs
@@ -600,6 +610,9 @@ jwt:
         name: SERVER_KEY
         secret: jwt-certs
         key: jwt.key.pem
+      - type: value
+        name: ZEROLOG_LEVEL
+        value: DEBUG
 
   redis:
     private_image: true
@@ -618,7 +631,7 @@ internal-jwt:
     image: docker.production.deciphernow.com/deciphernow/gm-jwt-security:1.0.0
     envvars:
       - type: value
-        name: HTTPS_PORT
+        name: HTTP_PORT
         value: '3000'
       - type: secret
         name: PRIVATE_KEY
@@ -630,7 +643,7 @@ internal-jwt:
         key: jwt.api_key
       - type: value
         name: ENABLE_TLS
-        value: true
+        value: false
       - type: secret
         name: SERVER_TRUST
         secret: internal-jwt-certs
@@ -759,3 +772,12 @@ edge:
             backend:
               serviceName: edge
               servicePort: 8080
+
+spire:
+  spire:
+    server:
+      serviceAccount:
+        create: true
+    agent:
+      serviceAccount:
+        create: true

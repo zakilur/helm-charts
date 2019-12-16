@@ -120,7 +120,6 @@ spec:
           {{- if .Values.global.spire.enabled }}
           volumeMounts:
           {{- include "sidecar_volume_mounts" . | indent 12 }}
-          {{- include "sidecar_volume_certs_mount" . | indent 12 }}
           {{- else if and (not .Values.global.spire.enabled) (.Values.global.mesh_tls.use_provided_certs) }}
           volumeMounts:
           {{- include "sidecar_volume_certs_mount" . | indent 12 }}
@@ -146,7 +145,6 @@ spec:
       {{- end }}
       {{- if .Values.global.spire.enabled }}
       {{- include "sidecar_volumes" . | indent 6 }}
-      {{- include "sidecar_certs_volumes" . | indent 6 }}
       {{- else if and (not .Values.global.spire.enabled) (.Values.global.mesh_tls.use_provided_certs) }}
       {{- include "sidecar_certs_volumes" . | indent 6 }}
       {{- end }}
