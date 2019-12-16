@@ -36,7 +36,7 @@ global:
     version: 1.0.0
   spire:
     enabled: true
-    trustDomain: deciphernow.com
+    trustDomain: greymatter.io
   waiter:
     serviceAccount:
       create: true

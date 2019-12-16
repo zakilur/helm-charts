@@ -28,8 +28,8 @@
   {{- end }}
   {{- if .Values.global.spire.enabled }}
   "secret": {
-    "secret_key": "secret-edge-secret",
-    "secret_name": "spiffe://{{ .Values.global.spire.trustDomain }}/edge/mTLS",
+    "secret_key": "secret-{{.service.serviceName}}-secret",
+    "secret_name": "spiffe://{{ .Values.global.spire.trustDomain }}/{{.service.serviceName}}/mTLS",
     "secret_validation_name": "spiffe://{{ .Values.global.spire.trustDomain }}",
     "ecdh_curves": [
         "X25519:P-256:P-521:P-384"

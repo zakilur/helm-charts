@@ -55,6 +55,7 @@ else
                 -parentID spiffe://$TRUST_DOMAIN/$service \
                 -spiffeID spiffe://$TRUST_DOMAIN/$service/mTLS \
                 -selector k8s:ns:$KUBERNETES_NAMESPACE \
+		-dns ${service}.${TRUST_DOMAIN} \
                 -registrationUDSPath $REGISTRATION_API_PATH &&
             echo "Done with service: $service"
         } || { # catch
