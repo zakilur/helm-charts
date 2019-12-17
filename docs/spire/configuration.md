@@ -17,7 +17,7 @@ Our helm charts are configured to set up the below configurations in `greymatter
 
 The mesh is configured to use spire through the `secrets` set on the Grey Matter cluster object and listener object.  The cluster object secret sets the spiffe certificate for the sidecar egress, and the listener secret sets the same for the ingress.  The secrets are configured for certificates to be fetched from the spire agent by Envoy's [Secret Discovery Service](https://www.envoyproxy.io/docs/envoy/v1.10.0/configuration/secret.html?highlight=sds).  See the [Cluster]() and [Listerner]() documentation for specific information on configuring the objects and secrets.
 
-1. Every sidecar is configured with an environment variable, `SPIREPATH`, set to `/run/spire/sockets/agent.sock`. This is the path to the workload API socket (where the workloads connect to the workload API) as set in the Spire Agent configuration.  Passing this variable to the sidecar will configure Envoy SDS to be served over the same domain socket as the Spire Agent.
+1. Every sidecar is configured with an environment variable, `SPIRE_PATH`, set to `/run/spire/sockets/agent.sock`. This is the path to the workload API socket (where the workloads connect to the workload API) as set in the Spire Agent configuration.  Passing this variable to the sidecar will configure Envoy SDS to be served over the same domain socket as the Spire Agent.
 
 2. On startup, every `edge-to-servicex-cluster` will be configured with a secret.  The secret set on these clusters configures edge egress to `servicex` to use a SPIFFE certificate with ID `spiffe://greymatter.io/servicex/mTLS`, the secret looks like:
 
@@ -88,9 +88,10 @@ Follow the steps below to add a new service to the mesh and configure it to use 
 
 3. Create your deployment, `kubectl apply fib.yaml`. Now, configure the mesh as usual, (follow the [training material](https://github.com/DecipherNow/workshops/blob/master/training/3.%20Grey%20Matter%20Service%20Deployment/Grey%20Matter%20Service%20Deployment%20Training.md#grey-matter-sidecar-configuration) for a guide on mesh objects), and add the following.
 
-   - In your `edge-fibonacci-cluster`, add a secret configuration:
+   - In your `edge-fibonacci-cluster`, add a secret configuration, and set `require_tls` to true::
   
     ```json
+    "require_tls": true,
     "secret": {
       "secret_key": "secret-fibonacci-secret",
       "secret_name": "spiffe://greymatter.io/fibonacci/mTLS",
