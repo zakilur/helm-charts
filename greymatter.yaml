@@ -158,7 +158,7 @@ data:
         value: 'data'
 
   data:
-    image: docker.production.deciphernow.com/deciphernow/gm-data:1.0.0
+    image: docker.production.deciphernow.com/deciphernow/gm-data:1.0.1
     certs_mount_point: /app/certs
     securityContext:
       enabled: false
@@ -307,9 +307,9 @@ internal-data:
         type: value
         value: 'data-internal'
   data:
-    version: 1.0.0
+    version: 1.0.1
     name: data-internal
-    image: docker.production.deciphernow.com/deciphernow/gm-data:1.0.0
+    image: docker.production.deciphernow.com/deciphernow/gm-data:1.0.1
     certs_mount_point: /app/certs
     securityContext:
       enabled: true

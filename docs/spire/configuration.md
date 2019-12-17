@@ -124,3 +124,99 @@ Follow the steps below to add a new service to the mesh and configure it to use 
 4. Register the service with catalog, in this case, you will need to curl with the browser certificate originally configured on the edge node.  The call should look something like: `curl -XPOST https://host:port/services/catalog/latest/clusters --cert /etc/ssl/quickstart/certs/quickstart.crt --key /etc/ssl/quickstart/certs/quickstart.key -k -d "@entry.json"` where `entry.json` is your [catalog entry](https://github.com/DecipherNow/workshops/blob/master/training/3.%20Grey%20Matter%20Service%20Deployment/Grey%20Matter%20Service%20Deployment%20Training.md#catalog-service-configuration).
 
 Now, you should see fibonacci in the dashboard and be able to access its endpoints!
+
+## Troubleshooting
+
+When we setup services to participate in the mesh, Spiffe identities are setup for them.  This means that the service will get a certificate that is made for that service.  As an example of probing into data, to verify that it is setup to use Spiffe:
+
+```bash
+# Find the sidecar for data
+ubuntu@ip-172-31-23-183:~$ sudo docker ps | grep data | grep sidecar
+91fb0f9935dd        f603d9788209                 "/bin/sh -c './gm-pr…"   About an hour ago   Up About an hour                        k8s_sidecar_data-internal-0_default_61570ccf-d5d7-4f95-87fd-991ca980d4df_0
+42f73ab8a18e        f603d9788209                 "/bin/sh -c './gm-pr…"   About an hour ago   Up About an hour                        k8s_sidecar_data-0_default_32e31d2a-68c9-4ae3-9b4f-87b7bc336a53_0
+```
+
+Then we know where the sidecar is exposing its network ingress port.
+
+```bash
+ubuntu@ip-172-31-23-183:~$ sudo docker exec -ti k8s_sidecar_data-0_default_32e31d2a-68c9-4ae3-9b4f-87b7bc336a53_0 ifconfig eth0
+eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:12  
+          inet addr:172.17.0.18  Bcast:172.17.255.255  Mask:255.255.0.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:53363 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:42836 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:34726145 (33.1 MiB)  TX bytes:20288558 (19.3 MiB)
+```
+
+From here, we know that port 8080 is the network ingress port, and that 172.17.0.18 is where gm-data resides.  We can connect without proper credentials to just see _who_ the service claims to be, and _who_ it trusts to connect.
+
+```bash
+ubuntu@ip-172-31-23-183:~$ openssl s_client --connect 172.17.0.18:8080
+CONNECTED(00000005)
+depth=1 C = US, O = SPIFFE
+verify error:num=20:unable to get local issuer certificate
+---
+Certificate chain
+ 0 s:C = US, O = SPIRE, CN = data.greymatter.io
+   i:C = US, O = SPIFFE
+ 1 s:C = US, O = SPIFFE
+   i:C = US, O = SPIFFE
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+MIICODCCAb6gAwIBAgIQUgfReo3aOeYydZoRkNcpHDAKBggqhkjOPQQDAzAeMQsw
+CQYDVQQGEwJVUzEPMA0GA1UEChMGU1BJRkZFMB4XDTE5MTIxNzIxMjAwNloXDTE5
+MTIxNzIyMjAxNlowOjELMAkGA1UEBhMCVVMxDjAMBgNVBAoTBVNQSVJFMRswGQYD
+VQQDExJkYXRhLmdyZXltYXR0ZXIuaW8wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNC
+AATW+tgjx+W4XrRKeDVLzEiXF8gPQPLdeuF3XVp+eQk1bxG+qJsyviN3FXqcf/T2
+u6koGaKah/RPTdRn7nj43PHIo4HBMIG+MA4GA1UdDwEB/wQEAwIDqDAdBgNVHSUE
+FjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQU
+HCjXKKwaCggw3TK2JSoNwv/zWuwwHwYDVR0jBBgwFoAUMR7sRWmlb+bfVycwCjXr
+GdXdCCswPwYDVR0RBDgwNoISZGF0YS5ncmV5bWF0dGVyLmlvhiBzcGlmZmU6Ly9n
+cmV5bWF0dGVyLmlvL2RhdGEvbVRMUzAKBggqhkjOPQQDAwNoADBlAjEA7i3KkPea
+VIV7T1H96ICRt2ZRxIGp688RRoJH+gRXWhy8nQYVThZNA212u3bDc7CkAjBfzvnT
+GJROTXP8oyHC3gfecIF77ryXfElEm9pVWV3t83k4M1qaRgGxSPRqF6Fupdo=
+-----END CERTIFICATE-----
+subject=C = US, O = SPIRE, CN = data.greymatter.io
+
+issuer=C = US, O = SPIFFE
+
+---
+Acceptable client certificate CA names
+C = US, O = SPIFFE
+Requested Signature Algorithms: ECDSA+SHA256:RSA-PSS+SHA256:RSA+SHA256:ECDSA+SHA384:RSA-PSS+SHA384:RSA+SHA384:RSA-PSS+SHA512:RSA+SHA512:RSA+SHA1
+Shared Requested Signature Algorithms: ECDSA+SHA256:RSA-PSS+SHA256:RSA+SHA256:ECDSA+SHA384:RSA-PSS+SHA384:RSA+SHA384:RSA-PSS+SHA512:RSA+SHA512
+Peer signing digest: SHA256
+Peer signature type: ECDSA
+Server Temp Key: X25519, 253 bits
+---
+SSL handshake has read 1466 bytes and written 423 bytes
+...
+```
+
+From here, we can see that:
+
+- `C = US, O = SPIRE` is the name of the certificate authority root signer
+- `C = US, O = SPIRE, CN = data.greymatter.io` is the name of the certificate issued to this sidecar for its identity.
+
+The job of Spiffe is to setup certificates for edge egress, to sidecar network ingress.  If we look at the certificate in detail, we can see that they are set to expire hourly.
+
+```bash
+ubuntu@ip-172-31-23-183:~$ openssl s_client --connect 172.17.0.18:8080 | openssl x509 -text | grep After
+depth=1 C = US, O = SPIFFE
+verify error:num=20:unable to get local issuer certificate
+140286333182400:error:1409445C:SSL routines:ssl3_read_bytes:tlsv13 alert certificate required:../ssl/record/rec_layer_s3.c:1528:SSL alert number 116
+            Not After : Dec 17 22:20:16 2019 GMT
+```
+
+A sidecar that is using Spire is reading from a Unix Socket.  The use of a Unix Socket helps to attest that this is the rightful owner of the certificates that it would pull off of this socket.
+
+```bash
+ubuntu@ip-172-31-23-183:~/helm-charts$ sudo docker exec -ti k8s_sidecar_data-0_default_32e31d2a-68c9-4ae3-9b4f-87b7bc336a53_0 ls -al /run/spire/sockets
+total 4
+drwxr-xr-x    2 root     root            60 Dec 17 19:50 .
+drwxr-xr-x    3 root     root          4096 Dec 17 19:50 ..
+srwxrwxrwx    1 root     root             0 Dec 17 19:50 agent.sock
+ubuntu@ip-172-31-23-183:~/helm-charts$
+```

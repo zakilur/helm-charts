@@ -22,11 +22,11 @@ global:
 data:
   # The name of this installation of GM Data.  Used in the zookeeper address.  Allow to be unique to support multiple installations of Data
   name: data
-  version: 1.0.0
+  version: 1.0.1
   client_jwt_endpoint_address: localhost
   client_jwt_endpoint_use_tls: 'true'
   base_path: /services/{{ $.Values.data.name | lower }}/{{ $.Values.data.version }}
-  image: docker.production.deciphernow.com/deciphernow/gm-data:{{ $.Values.data.version }}
+  image: docker.production.deciphernow.com/deciphernow/gm-data:1.0.1
   standalone_image:
   certs_mount_point: /certs
   imagePullPolicy: IfNotPresent
