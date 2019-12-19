@@ -1,48 +1,47 @@
 dependencies:
   - name: catalog
-    version: '2.1.5'
-    repository: 'file://../catalog'
+    repository: file://../catalog
+    version: '2.1.6'
 
   - name: data
+    repository: file://../data
     version: '2.1.4'
-    repository: 'file://../data'
+
+  - name: data
+    repository: file://../data
+    version: '2.1.4'
     alias: internal-data
 
-  - name: data
-    version: '2.1.4'
-    repository: 'file://../data'
-
   - name: dashboard
-    version: '2.1.2'
-    repository: 'file://../dashboard'
+    repository: file://../dashboard
+    version: '2.1.3'
 
   - name: edge
+    repository: file://../edge
     version: '2.1.5'
-    repository: 'file://../edge'
 
   - name: jwt
+    repository: file://../jwt
     version: '2.1.1'
-    repository: 'file://../jwt'
 
   - name: jwt
+    repository: file://../jwt
     version: '2.1.1'
-    repository: 'file://../jwt'
     alias: internal-jwt
 
   - name: slo
+    repository: file://../slo
     version: '2.1.1'
-    repository: 'file://../slo'
-    
 
   - name: gm-control-api
+    repository: file://../gm-control-api
     version: '2.1.5'
-    repository: 'file://../gm-control-api'
 
   - name: control
+    repository: file://../control
     version: '2.1.3'
-    repository: 'file://../control'
 
   - name: spire
+    repository: file://../spire
     version: '2.1.1'
-    repository: 'file://../spire'
     condition: global.spire.enabled
