@@ -11,6 +11,13 @@ Our configurations can be found in the [Spire server.conf](https://github.com/De
 
 The Spire Agent is run in a Daemonset, so a new agent is spun up for each kubernetes node.
 
+## How to generate a new SPIFFE CA
+
+```bash
+openssl ecparam -noout -genkey -name secp384r1 -out spire-root.key.pem
+openssl req -new -x509 -days 365 -key spire-root.key.pem -subj "/C=US/OU=SPIFFE" -out spire-root.cert.pem
+```
+
 ## Grey Matter API Objects
 
 Our helm charts are configured to set up the below configurations in `greymatter-spire.yaml` automatically.  When `.Values.global.spire.enabled` is set to true, the Grey Matter core services are configured as follows.
