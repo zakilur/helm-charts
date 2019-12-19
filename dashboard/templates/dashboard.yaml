@@ -21,6 +21,7 @@ spec:
         resources:
 {{ toYaml .Values.dashboard.resources | indent 10 }}
         {{- end }}
+        {{- if not .Values.global.spire.enabled }}
         readinessProbe:
           httpGet:
             path: "/#/?ascending=true"
@@ -35,6 +36,7 @@ spec:
             scheme: HTTPS
           initialDelaySeconds: 20
           periodSeconds: 5
+        {{- end }}
         env:
         - name: FABRIC_SERVER
           value: '{{ tpl .Values.dashboard.fabric_server . }}'
