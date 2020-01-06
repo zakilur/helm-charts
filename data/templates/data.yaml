@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.data.name }}
   namespace: {{ .Release.Namespace }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.data.replicas | default 1 }}
   updateStrategy:
     type: RollingUpdate
   selector:
@@ -33,11 +33,7 @@ spec:
               value: {{ .Values.mongo.name }}
       containers:
       - name: {{ .Values.data.name }}
-        {{- if .Values.data.deploy.standalone }}
-        image: {{ tpl .Values.data.standalone_image $ | quote }}
-        {{- else }} 
         image: {{ tpl .Values.data.image $ | quote }}
-        {{- end }}
         imagePullPolicy: {{ .Values.data.imagePullPolicy }}
         {{- if .Values.data.resources }}
         resources:
@@ -80,11 +76,7 @@ spec:
             mountPath: {{ tpl .Values.data.pvc.mountPath $ }}
         {{- end }}
       - name: sidecar
-        {{- if .Values.data.deploy.standalone }}
-        image: {{ tpl .Values.sidecar.standalone_image $ | quote }}
-        {{- else }} 
         image: {{ tpl .Values.sidecar.image $ | quote }}
-        {{- end }}
         readinessProbe:
           exec:
             command:
@@ -118,6 +110,8 @@ spec:
         resources:
 {{ toYaml .Values.sidecar.resources | indent 10 }}
         {{- end }}
+        env:
+        {{- include "greymatter.envvars" . | indent 8 }}
         ports:
         - containerPort: 8080
           name: proxy
@@ -138,7 +132,7 @@ spec:
       {{- end }}
 
       imagePullSecrets:
-      - name: docker.secret
+      - name: {{ .Values.data.imagePullSecret | default "docker.secret" }}
       volumes:
       {{- if .Values.global.consul.enabled }}
       - name: data-consul
