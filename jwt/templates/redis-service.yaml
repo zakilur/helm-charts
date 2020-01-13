@@ -5,10 +5,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   ports:
-    - name: server
-      port: 6379
-      protocol: TCP
-      targetPort: 6379
     - name: redis-ingres
       port: 1443
       protocol: TCP

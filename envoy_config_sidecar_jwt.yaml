@@ -73,4 +73,4 @@ static_resources:
             address:
               socket_address:
                 address: redis.default.svc
-                port_value: 6379
+                port_value: 1443
