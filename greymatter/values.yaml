@@ -78,7 +78,7 @@ global:
       observablesEnabled: false
       port: 9080
       enableInstanceMetrics: 'true'
-      capability: 'Grey Matter'
+      capability: 'Mesh'
       documentation: '/services/catalog/latest/'
       name: 'Grey Matter Catalog'
       owner: 'Decipher'
@@ -105,7 +105,7 @@ global:
       observablesEnabled: false
       port: 1337
       enableInstanceMetrics: 'true'
-      capability: 'Grey Matter'
+      capability: 'Apps'
       documentation: ''
       owner: 'Decipher'
       version: 3.2.0
@@ -131,7 +131,7 @@ global:
       observablesEnabled: false
       port: 8181
       enableInstanceMetrics: 'true'
-      capability: 'Grey Matter'
+      capability: 'Data'
       documentation: '/services/data/latest/static/ui/index.html'
       owner: 'Decipher'
       version: 1.0.0
@@ -149,7 +149,7 @@ global:
       observablesEnabled: false
       port: 8181
       enableInstanceMetrics: "true" 
-      capability: 'Grey Matter'
+      capability: 'Data'
       documentation: '/services/data/latest/static/ui/index.html'
       name: 'Grey Matter Internal Data'
       owner: 'Decipher'
@@ -165,7 +165,7 @@ global:
       port: 3000
       # egressTLS: 'true'
       enableInstanceMetrics: 'true'
-      capability: 'Grey Matter'
+      capability: 'Security'
       documentation: ''
       owner: 'Decipher'
       version: '0.2.0'
@@ -195,7 +195,7 @@ global:
       observablesEnabled: false
       port: 5555
       enableInstanceMetrics: 'true'
-      capability: 'Grey Matter'
+      capability: 'Mesh'
       documentation:
       owner: 'Decipher'
       version: '1.1.0'
@@ -213,7 +213,7 @@ global:
       # We use a static cert on the edge listener
       removeListenerSecret: true
       enableInstanceMetrics: 'true'
-      capability: 'Grey Matter'
+      capability: 'Mesh'
       documentatio: ''
       owner: 'Decipher'
       version: '1.0.0'
@@ -227,7 +227,7 @@ global:
       port: 1337
       # egressTLS: 'false'
       enableInstanceMetrics: 'true'
-      capability: 'Grey Matter'
+      capability: 'Sense'
       documentation:
       owner: 'Decipher'
       version: '1.1.0'
