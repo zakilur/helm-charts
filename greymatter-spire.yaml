@@ -1,9 +1,9 @@
 global:
   environment: openshift
-  # If `environment: kubernetes`, set to true to install Voyager ingress
   domain: staging.deciphernow.com
   route_url_name: greymatter
   remove_namespace_from_url: false
+  zone: zone-default-zone
   mesh_tls:
     enabled: true
     use_provided_certs: false
@@ -12,6 +12,7 @@ global:
   # Turns on tls for control api and configures control to talk to it using tls
   control_api_tls: false
   kafka:
+
     replicas: 3
   dashboard:
     version: 3.2.0
@@ -92,9 +93,12 @@ global:
       proxy_dynamic:
         type: 'value'
         value: 'true'
+      spire_path:
+        type: 'value'
+        value: '/run/spire/sockets/agent.sock'
       xds_zone:
         type: 'value'
-        value: 'zone-default-zone'
+        value: '{{ .Values.global.zone }}'
       xds_cluster:
         type: 'value'
         value: ''
@@ -110,9 +114,6 @@ global:
       envoy_admin_log_path:
         type: 'value'
         value: '/dev/stdout'
-      spire_path:
-        type: 'value'
-        value: '/run/spire/sockets/agent.sock'
       # There may be more sidecar environment variables, but we haven't added them here yet.
       # However, to use an env var with the sidecar, even if it doesn't have a global default,
       # it needs to be set globally as either a value or a secret
@@ -127,11 +128,10 @@ control:
     serviceAccount:
       create: true
     image: deciphernow/gm-control:spire
-    imagePullPolicy: IfNotPresent
     envvars:
       gm_control_console_level:
         type: 'value'
-        value: 'debug'
+        value: 'info'
       #gm_control_cmd:
       #  type: 'value'
       #  value: 'consul'
@@ -149,7 +149,7 @@ gm-control-api:
       mountPoint: /service-certs
       insecure: true
     image: docker.production.deciphernow.com/deciphernow/gm-control-api:1.1.0
-    zone: 'zone-default-zone'
+    zone: '{{ .Values.global.zone }}'
     init:
       image: docker.production.deciphernow.com/deciphernow/greymatter:1.1.0
   sidecar:
@@ -166,6 +166,7 @@ data:
 
   data:
     image: docker.production.deciphernow.com/deciphernow/gm-data:1.0.1
+    name: data
     certs_mount_point: /app/certs
     securityContext:
       enabled: false
@@ -414,9 +415,6 @@ internal-data:
 catalog:
   catalog:
     envvars:
-      debug:
-        type: value
-        value: 'true'
       config_source:
         type: value
         value: 'gmdata'
@@ -441,18 +439,27 @@ catalog:
       port:
         type: value
         value: '9080'
-      use_tls:
-        type: value
-        value: 'false'
       control_server_0_address:
         type: value
         value: '{{ .Values.global.control.name }}.{{ .Release.Namespace }}.svc:{{ .Values.global.control.port }}'
       control_server_0_zone_name:
         type: value
-        value: 'zone-default-zone'
+        value: '{{ .Values.global.zone }}'
       control_server_0_request_cluster_name:
         type: value
         value: 'edge'
+      use_tls:
+        type: value
+        value: 'false'
+      ca_cert_path:
+        type: value
+        value: '/etc/pki/ca.crt'
+      server_cert_path:
+        type: value
+        value: '/etc/pki/server.crt'
+      server_key_path:
+        type: value
+        value: '/etc/pki/server.key'
       client_address:
         type: value
         value: localhost
@@ -465,6 +472,18 @@ catalog:
       client_use_tls:
         type: value
         value: 'false'
+      client_cert:
+        type: secret
+        secret: sidecar-certs
+        key: server_b64
+      client_key:
+        type: secret
+        secret: sidecar-certs
+        key: key_b64
+      client_trust:
+        type: secret
+        secret: sidecar-certs
+        key: ca_b64
       gmdata_startup_delay:
         type: value
         value: '10s'
@@ -483,7 +502,6 @@ catalog:
       client_email:
         type: value
         value: 'engineering@deciphernow.com'
-
 
     init:
       image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.1'
@@ -531,7 +549,7 @@ slo:
   slo:
     image: docker.production.deciphernow.com/deciphernow/gm-slo:1.1.0
     ssl:
-      enabled: false
+      enabled: true
       name: slo-certs
       mountPoint: /service-certs
   sidecar:
@@ -546,7 +564,7 @@ slo:
     private_image: true
     data_mount_point: /var/lib/pgsql/data
     ssl:
-      enabled: false
+      enabled: true
       name: postgres-ssl-certs
       mountPoint: /certs
     credentials:
@@ -632,6 +650,9 @@ internal-jwt:
     certs_mount_point: /gm-jwt-security/certs
     image: docker.production.deciphernow.com/deciphernow/gm-jwt-security:1.0.0
     envvars:
+      - type: value
+        name: ZEROLOG_LEVEL
+        value: DEBUG
       - type: value
         name: HTTP_PORT
         value: '3000'

@@ -1,6 +1,6 @@
 {
   "domain_key": "domain-{{.service.serviceName}}-local",
-  "zone_key": "{{.service.zone}}",
+  "zone_key": "{{.Values.global.zone}}",
   "name": "localhost",
   "port": 8180,
   "redirects": null,
