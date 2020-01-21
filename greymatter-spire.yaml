@@ -549,7 +549,7 @@ slo:
   slo:
     image: docker.production.deciphernow.com/deciphernow/gm-slo:1.1.0
     ssl:
-      enabled: true
+      enabled: false
       name: slo-certs
       mountPoint: /service-certs
   sidecar:
@@ -564,7 +564,7 @@ slo:
     private_image: true
     data_mount_point: /var/lib/pgsql/data
     ssl:
-      enabled: true
+      enabled: false
       name: postgres-ssl-certs
       mountPoint: /certs
     credentials:
