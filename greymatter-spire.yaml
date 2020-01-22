@@ -38,6 +38,7 @@ global:
     enabled: true
     trustDomain: greymatter.io
   waiter:
+    image: ad-dbn-stdec001.citadelgroup.com/deciphernow/k8s-waiter:latest
     serviceAccount:
       create: true
   control:
@@ -127,7 +128,7 @@ control:
       insecure: true
     serviceAccount:
       create: true
-    image: deciphernow/gm-control:spire
+    image: ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-control:1.1.0
     envvars:
       gm_control_console_level:
         type: 'value'
@@ -148,16 +149,16 @@ gm-control-api:
       name: control-api-certs
       mountPoint: /service-certs
       insecure: true
-    image: docker.production.deciphernow.com/deciphernow/gm-control-api:1.1.0
+    image: ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-control-api:1.1.0
     zone: '{{ .Values.global.zone }}'
     init:
-      image: docker.production.deciphernow.com/deciphernow/greymatter:1.1.0
+      image: ad-dbn-stdec001.citadelgroup.com/deciphernow/greymatter:1.1.0
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.1'
+    image: 'ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-proxy:1.1.1'
 
 data:
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.1'
+    image: 'ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-proxy:1.1.1'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
@@ -165,7 +166,7 @@ data:
         value: 'data'
 
   data:
-    image: docker.production.deciphernow.com/deciphernow/gm-data:1.0.1
+    image: ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-data:1.0.0
     name: data
     certs_mount_point: /app/certs
     securityContext:
@@ -276,6 +277,7 @@ data:
         key: jwt.trust.pem
 
   mongo:
+    image: 'ad-dbn-stdec001.citadelgroup.com/deciphernow/mongo:4.0.3'
     private_image: true
     ssl:
       enabled: false
@@ -311,7 +313,7 @@ data:
 
 internal-data:
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.1'
+    image: 'ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-proxy:1.1.1'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
@@ -320,7 +322,7 @@ internal-data:
   data:
     version: 1.0.1
     name: data-internal
-    image: docker.production.deciphernow.com/deciphernow/gm-data:1.0.1
+    image: ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-data:1.0.0
     certs_mount_point: /app/certs
     securityContext:
       enabled: true
@@ -376,6 +378,7 @@ internal-data:
         value: 'false'
 
   mongo:
+    image: 'ad-dbn-stdec001.citadelgroup.com/deciphernow/mongo:4.0.3'
     private_image: true
     name: internal-data-mongo
     credentials:
@@ -414,6 +417,7 @@ internal-data:
 
 catalog:
   catalog:
+    image: ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-catalog:1.0.3
     envvars:
       config_source:
         type: value
@@ -504,14 +508,14 @@ catalog:
         value: 'engineering@deciphernow.com'
 
     init:
-      image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.1'
+      image: 'ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-proxy:1.1.1'
       envvars:
         debug:
           type: value
           value: 'true'
 
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.1'
+    image: 'ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-proxy:1.1.1'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
@@ -520,21 +524,22 @@ catalog:
 
 dashboard:
   dashboard:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-dashboard:3.2.0'
+    image: 'ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-dashboard:3.2.0'
     ssl:
       enabled: false
       mountPoint: /certs
       name: dashboard-certs
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.1'
+    image: 'ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-proxy:1.1.1'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
         type: value
         value: 'dashboard'
   sidecar_prometheus:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.1'
+    image: 'ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-proxy:1.1.1'
   prometheus:
+    image: 'ad-dbn-stdec001.citadelgroup.com/prom/prometheus:v2.7.1'
     serviceAccount:
       create: true
     resources:
@@ -547,13 +552,13 @@ dashboard:
 
 slo:
   slo:
-    image: docker.production.deciphernow.com/deciphernow/gm-slo:1.1.0
+    image: ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-slo:1.1.1
     ssl:
       enabled: false
       name: slo-certs
       mountPoint: /service-certs
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.1'
+    image: 'ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-proxy:1.1.1'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
@@ -562,6 +567,10 @@ slo:
 
   postgres:
     private_image: true
+    openshift:
+      image: 'ad-dbn-stdec001.citadelgroup.com/centos/postgresql-10-centos7'
+    k8s:
+      image: 'ad-dbn-stdec001.citadelgroup.com/centos/postgresql-10-centos7'
     data_mount_point: /var/lib/pgsql/data
     ssl:
       enabled: false
@@ -592,7 +601,7 @@ slo:
 
 jwt:
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.1'
+    image: 'ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-proxy:1.1.1'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
@@ -602,7 +611,7 @@ jwt:
   jwt:
     use_aac: false
     users_mount_point: /gm-jwt-security/etc
-    image: docker.production.deciphernow.com/deciphernow/gm-jwt-security:1.0.0
+    image: ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-jwt-security:1.0.0
     envvars:
       - type: value
         name: HTTP_PORT
@@ -636,10 +645,14 @@ jwt:
 
   redis:
     private_image: true
+    openshift:
+      image: 'ad-dbn-stdec001.citadelgroup.com/centos/redis-32-centos7'
+    k8s:
+      image: 'ad-dbn-stdec001.citadelgroup.com/redis:3.2'
 
 internal-jwt:
   sidecar:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.1'
+    image: 'ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-proxy:1.1.1'
     create_sidecar_secret: false
     envvars:
       xds_cluster:
@@ -648,7 +661,7 @@ internal-jwt:
   jwt:
     name: internal-jwt-security
     certs_mount_point: /gm-jwt-security/certs
-    image: docker.production.deciphernow.com/deciphernow/gm-jwt-security:1.0.0
+    image: ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-jwt-security:1.0.0
     envvars:
       - type: value
         name: ZEROLOG_LEVEL
@@ -732,15 +745,19 @@ internal-jwt:
     name: internal-redis
     secret_name: internal-redis-password
     password: 'internalRedis'
+    openshift:
+      image: 'ad-dbn-stdec001.citadelgroup.com/centos/redis-32-centos7'
+    k8s:
+      image: 'ad-dbn-stdec001.citadelgroup.com/redis:3.2'
 
 sidecar:
-  image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.1'
+  image: 'ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-proxy:1.1.1'
   create_sidecar_secret: true
 
 edge:
   sidecar:
     version: 1.1.1
-    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:1.1.1'
+    image: 'ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-proxy:1.1.1'
     envvars:
       xds_cluster:
         type: value
@@ -799,8 +816,10 @@ edge:
 spire:
   spire:
     server:
+      image: ad-dbn-stdec001.citadelgroup.com/spiffe-io/spire-server:0.8.1
       serviceAccount:
         create: true
     agent:
+      image: ad-dbn-stdec001.citadelgroup.com/spiffe-io/spire-agent:0.8.1
       serviceAccount:
         create: true
