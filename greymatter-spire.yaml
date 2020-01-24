@@ -1,8 +1,8 @@
 global:
   environment: openshift
-  domain: staging.deciphernow.com
+  domain: openshift.citadelgroup.com
   route_url_name: greymatter
-  remove_namespace_from_url: false
+  remove_namespace_from_url: true
   zone: zone-default-zone
   mesh_tls:
     enabled: true
