@@ -197,7 +197,7 @@ data:
 mongo:
   name: data-mongo
   replicas: 1
-  image: 'deciphernow/mongo:4.0.3'
+  image: 'ad-dbn-stdec001.citadelgroup.com/deciphernow/mongo:4.0.3'
   imagePullPolicy: IfNotPresent
   #private_image: false
   storage:
