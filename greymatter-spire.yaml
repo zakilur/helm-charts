@@ -128,7 +128,7 @@ control:
       insecure: true
     serviceAccount:
       create: true
-    image: ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-control:1.1.0
+    image: ad-dbn-stdec001.citadelgroup.com/deciphernow/gm-control:spire
     envvars:
       gm_control_console_level:
         type: 'value'
