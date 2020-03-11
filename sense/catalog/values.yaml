@@ -8,6 +8,8 @@ global:
     name: catalog
     version: latest
     data_prefix: /data
+    sidecar:
+      version: latest
   dashboard:
     version: 3.1.0
   # data:
@@ -41,6 +43,10 @@ global:
     enabled: false
     host: ''
     port: 8500
+  spire:
+    enabled: false
+  mesh_tls:
+    use_provided_certs: true
 
 catalog:
   name: catalog
