@@ -1,4 +1,5 @@
 global:
+  imagePullSecret: docker.secret
   environment: openshift
   domain: staging.deciphernow.com
   route_url_name: greymatter
@@ -17,6 +18,8 @@ global:
     version: 3.3.1
     sidecar:
       version: latest
+    sidecar_prometheus:
+       version: latest
   catalog:
     version: latest
     sidecar:
@@ -37,7 +40,7 @@ global:
     enabled: false
   waiter:
     serviceAccount:
-      create: true
+      create: false
       name: waiter-sa
   control:
     # This specifies the service name that all XDS clients will try to connect to
@@ -48,6 +51,9 @@ global:
     jwt_prefix: '/jwt'
   internal-data:
     jwt_prefix: '/jwt'
+  sidecar:
+    version: latest
+  
   services:
     catalog:
       egressTLS: true
@@ -81,310 +87,6 @@ global:
       # This value must match global.control_api_tls
       egressTLS: true
 
-  sidecar:
-    version: latest
-    envvars:
-      # You can customize the sidecar environment variables mesh-wide to enable features in the mesh
-      # All the sidecar envvars are documented in `./greymatter/README.md`, and the custom service-level defaults are documented in the services `configuration.md` files.
-      # These are sorted by how different the values are for the sidecars running on different services. The options are "all the same", "all except XDS". and "different"
-      # TODO: update each service to use default global values and only set the ones that are different.
-      # All the same
-      proxy_dynamic:
-        type: 'value'
-        value: 'true'
-      xds_zone:
-        type: 'value'
-        value: '{{ .Values.global.zone }}'
-      xds_cluster:
-        type: 'value'
-        value: ''
-      xds_host:
-        type: 'value'
-        value: 'control.{{ .Release.Namespace }}.svc'
-      xds_port:
-        type: 'value'
-        value: '{{ .Values.global.control.port }}'
-      xds_node_id:
-        type: 'value'
-        value: 'default'
-      envoy_admin_log_path:
-        type: 'value'
-        value: '/dev/stdout'
-      # There may be more sidecar environment variables, but we haven't added them here yet.
-      # However, to use an env var with the sidecar, even if it doesn't have a global default,
-      # it needs to be set globally as either a value or a secret
-
-control:
-  control:
-    # Configures certs for control to talk to control api via tls. Only used when global.control_api_tls=true.
-    controlApiTLS:
-      name: control-to-control-api-certs
-      mountPoint: /service-certs
-      insecure: true
-    serviceAccount:
-      create: true
-    image: docker-dev.production.deciphernow.com/deciphernow/gm-control:latest
-    envvars:
-      gm_control_console_level:
-        type: 'value'
-        value: 'info'
-      #gm_control_cmd:
-      #  type: 'value'
-      #  value: 'consul'
-      #gm_control_consul_dc:
-      #  type: 'value'
-      #  value: 'dc1'
-      #gm_control_consul_hostport:
-      #  type: 'value'
-      #  value: '{{ .Values.global.consul.host }}:{{ .Values.global.consul.port }}'
-
-gm-control-api:
-  gmControlApi:
-    ssl:
-      name: control-api-certs
-      mountPoint: /service-certs
-      insecure: true
-    image: 'docker-dev.production.deciphernow.com/deciphernow/gm-control-api:latest'
-    zone: '{{ .Values.global.zone }}'
-    init:
-      image: docker-dev.production.deciphernow.com/deciphernow/greymatter:latest
-  sidecar:
-    image: 'docker-dev.production.deciphernow.com/deciphernow/gm-proxy:latest'
-
-data:
-  sidecar:
-    image: 'docker-dev.production.deciphernow.com/deciphernow/gm-proxy:latest'
-    create_sidecar_secret: false
-    envvars:
-      xds_cluster:
-        type: value
-        value: 'data'
-
-  data:
-    name: data
-    image: docker.production.deciphernow.com/deciphernow/gm-data:1.0.0
-    certs_mount_point: /app/certs
-    securityContext:
-      enabled: false
-    envvars:
-      uses3:
-        type: value
-        value: 'true'
-      aws_access_key_id:
-        type: secret
-        secret: '{{ .Values.data.name }}-secrets'
-        key: aws_access_key_id
-      aws_secret_access_key:
-        type: secret
-        secret: '{{ .Values.data.name }}-secrets'
-        key: aws_secret_access_key
-      aws_region:
-        type: secret
-        secret: '{{ .Values.data.name }}-secrets'
-        key: aws_region
-      aws_s3_bucket:
-        type: secret
-        secret: '{{ .Values.data.name }}-secrets'
-        key: aws_s3_bucket
-      aws_s3_partition:
-        type: value
-        value: data
-      gmdata_namespace:
-        type: value
-        value: home
-      gmdata_namespace_userfield:
-        type: value
-        value: email
-      jwt_pub:
-        type: secret
-        secret: jwt-security
-        key: jwt.pub
-      jwt_api_key:
-        type: secret
-        secret: jwt-security
-        key: jwt.api_key
-      less_chatty_info:
-        type: value
-        value: 'false'
-      masterkey:
-        type: secret
-        secret: '{{ .Values.data.name }}-secrets'
-        key: master_key
-      mongo_initdb_root_username:
-        type: secret
-        secret: '{{ .Values.mongo.credentials.secret_name }}'
-        key: gmdata_username
-      mongo_initdb_root_password:
-        type: secret
-        secret: '{{ .Values.mongo.credentials.secret_name }}'
-        key: gmdata_password
-      mongodb:
-        type: secret
-        secret: '{{ .Values.mongo.credentials.secret_name }}'
-        key: database
-      gmdata_use_tls:
-        type: value
-        value: 'true'
-      gmdata_cert:
-        type: secret
-        secret: jwt-certs
-        key: server.cert.pem
-      gmdata_key:
-        type: secret
-        secret: jwt-certs
-        key: server.key.pem
-      gmdata_trust:
-        type: secret
-        secret: jwt-certs
-        key: server.trust.pem
-      client_prefix:
-        type: value
-        value: /services/data/1.0.0
-      client_jwt_prefix:
-        type: value
-        value: /jwt
-      client_jwt_endpoint_address:
-        type: value
-        value: localhost
-      client_jwt_endpoint_port:
-        type: value
-        value: '8080'
-      client_jwt_endpoint_prefix:
-        type: value
-        value: /jwt
-      client_jwt_endpoint_use_tls:
-        type: value
-        value: 'true'
-      client_jwt_endpoint_cert:
-        type: secret
-        secret: jwt-certs
-        key: jwt.cert.pem
-      client_jwt_endpoint_key:
-        type: secret
-        secret: jwt-certs
-        key: jwt.key.pem
-      client_jwt_endpoint_trust:
-        type: secret
-        secret: jwt-certs
-        key: jwt.trust.pem
-
-  mongo:
-    private_image: true
-    ssl:
-      enabled: false
-      name: mongo-ssl-certs
-    storage:
-      # The size, in Gi, that the Mongo PVC should be
-      size: 40
-      ## Mongo data Persistent Volume Storage Class
-      ## If defined, StorageClassName: <storageClass>
-      ## If set to "-", StorageClassName: "", which disables dynamic provisioning
-      ## If undefined (the default) or set to null, no storageClassName spec is
-      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-      ##   GKE, AWS & OpenStack)
-      ##
-      # storageClass: "-"
-    envvars:
-      mongodb_admin_password:
-        type: secret
-        secret: mongo-credentials
-        key: gmdata_password
-      mongodb_database:
-        type: secret
-        secret: mongo-credentials
-        key: database
-      mongodb_user:
-        type: secret
-        secret: mongo-credentials
-        key: root_username
-      mongodb_password:
-        type: secret
-        secret: mongo-credentials
-        key: root_password
-
-internal-data:
-  sidecar:
-    image: 'docker-dev.production.deciphernow.com/deciphernow/gm-proxy:latest'
-    create_sidecar_secret: false
-    envvars:
-      xds_cluster:
-        type: value
-        value: 'data-internal'
-  data:
-    version: 1.0.0
-    name: data-internal
-    image: docker.production.deciphernow.com/deciphernow/gm-data:1.0.0
-    certs_mount_point: /app/certs
-    securityContext:
-      enabled: true
-    pvc:
-      mountPath: /buckets/{{ $.Values.data.aws.bucket}}/{{ $.Values.data.envvars.aws_s3_partition.value }}
-    envvars:
-      gmdata_namespace:
-        type: value
-        value: 'world'
-      gmdata_namespace_userfield:
-        type: value
-        value: email
-      uses3:
-        type: value
-        value: 'false'
-      aws_access_key_id:
-        type: 'null'
-      aws_secret_access_key:
-        type: 'null'
-      aws_region:
-        type: 'null'
-      aws_s3_partition:
-        type: value
-        value: greymatter
-      gmdata_use_tls:
-        type: value
-        value: 'true'
-      jwt_pub:
-        type: secret
-        secret: internal-jwt-security-secret
-        key: jwt.pub
-      jwt_api_key:
-        type: secret
-        secret: internal-jwt-security-secret
-        key: jwt.api_key
-  mongo:
-    private_image: true
-    name: internal-data-mongo
-    credentials:
-      secret_name: 'internal-mongo-credentials'
-    ssl:
-      enabled: false
-      name: internal-mongo-ssl-certs
-    storage:
-      # The size, in Gi, that the Mongo PVC should be
-      size: 10
-      ## Mongo data Persistent Volume Storage Class
-      ## If defined, StorageClassName: <storageClass>
-      ## If set to "-", StorageClassName: "", which disables dynamic provisioning
-      ## If undefined (the default) or set to null, no storageClassName spec is
-      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-      ##   GKE, AWS & OpenStack)
-      ##
-      # storageClass: '-'
-    envvars:
-      mongodb_admin_password:
-        type: secret
-        secret: internal-mongo-credentials
-        key: gmdata_password
-      mongodb_database:
-        type: secret
-        secret: internal-mongo-credentials
-        key: database
-      mongodb_user:
-        type: secret
-        secret: internal-mongo-credentials
-        key: root_username
-      mongodb_password:
-        type: secret
-        secret: internal-mongo-credentials
-        key: root_password
 
 catalog:
   catalog:
@@ -449,7 +151,7 @@ catalog:
       client_cert:
         type: secret
         secret: sidecar-certs
-        key: server_b64
+        key: cert_b64
       client_key:
         type: secret
         secret: sidecar-certs
@@ -490,64 +192,186 @@ catalog:
     envvars:
       xds_cluster:
         type: value
-        value: 'catalog'
+        value: 'catalog'      
+    secret:
+      secret_name: sidecar-certs
+      mountPoint: /etc/proxy/tls/sidecar
+      secretKeys:
+        ca: ca.crt
+        cert: server.crt
+        key: server.key
+
 
 dashboard:
   dashboard:
-    image: 'docker.production.deciphernow.com/deciphernow/gm-dashboard:3.3.1'
-    ssl:
-      enabled: true
+    image: 'docker.production.deciphernow.com/deciphernow/gm-dashboard:{{ $.Values.global.dashboard.version }}'
+    port: 1337
+    # TODO: make these URLs dynamic based on the globally specified version
+    fabric_server: '/services/catalog/latest/'
+    use_prometheus: 'true'
+    objectives_server: '/services/slo/latest/'
+    config_server: '/services/gm-control-api/latest/v1.0'
+    prometheus_server: '/services/prometheus/latest/api/v1/'
+    base_url: '/services/dashboard/{{ $.Values.global.dashboard.version }}/'
+    requestTimeout: '15000'
+    version: 3.3.1
+    imagePullPolicy: IfNotPresent
+    secret:
+      secret_name: dashboard-certs
       mountPoint: /certs
-      name: dashboard-certs
+      secretKeys:
+        ca: ca.crt
+        cert: service.crt
+        key: service.key
+
   sidecar:
-    image: 'docker-dev.production.deciphernow.com/deciphernow/gm-proxy:latest'
-    create_sidecar_secret: false
+    version: '{{- $.Values.global.dashboard.sidecar.version | default $.Values.global.sidecar.version }}'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:{{ tpl $.Values.sidecar.version $ }}'
+    imagePullPolicy: IfNotPresent
+    resources:
+      limits:
+        cpu: 200m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
     envvars:
       xds_cluster:
         type: value
         value: 'dashboard'
-  sidecar_prometheus:
-    image: 'docker-dev.production.deciphernow.com/deciphernow/gm-proxy:latest'
+    secret:
+      secret_name: sidecar-certs
+      mountPoint: /etc/proxy/tls/sidecar
+      secretKeys:
+        ca: ca.crt
+        cert: server.crt
+        key: server.key
+
   prometheus:
+    image: 'prom/prometheus:v2.7.1'
+    imagePullPolicy: IfNotPresent
+    zk_announce_path: '/services/prometheus/2.7.1'
+    version: '2.7.1'
+    replica_count: 1
+    data_mount_point: /var/lib/prometheus/data
+    config_mount_point: /etc/prometheus
+    start_cmd: /bin/prometheus
+    serviceAccount:
+      create: false
+      name: prometheus-sa
+    #Size is in GB
     pvcSize: 80
     serviceAccount:
-      create: true
+      create: false
     resources:
       requests:
-        memory: '1Gi'
+        memory: '8Gi'
         cpu: '1'
       limits:
-        memory: '1Gi'
+        memory: '12Gi'
         cpu: '2'
 
-slo:
+  sidecar_prometheus:
+    version: '{{- $.Values.global.dashboard.sidecar_prometheus.version | default $.Values.global.sidecar.version }}'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:{{ tpl $.Values.sidecar_prometheus.version $ }}'
+    imagePullPolicy: IfNotPresent
+    resources:
+      limits:
+        cpu: 200m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    envvars:
+      xds_cluster:
+        type: value
+        value: 'prometheus'
+    secret:
+      secret_name: sidecar-certs
+      mountPoint: /etc/proxy/tls/sidecar
+      secretKeys:
+        ca: ca.crt
+        cert: server.crt
+        key: server.key
+          
+slo: 
   slo:
+    version: 1.1.1
     image: docker.production.deciphernow.com/deciphernow/gm-slo:1.1.1
-    ssl:
-      enabled: true
-      name: slo-certs
+    imagePullPolicy: IfNotPresent
+    resources:
+      limits:
+        cpu: 250m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    secret:
+      secret_name: slo-certs
       mountPoint: /service-certs
+      secretKeys:
+        ca: ca.crt
+        cert: service.crt
+        key: service.key
+
   sidecar:
-    image: 'docker-dev.production.deciphernow.com/deciphernow/gm-proxy:latest'
-    create_sidecar_secret: false
+    version: '{{- $.Values.global.slo.sidecar.version | default $.Values.global.sidecar.version }}'
+    image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:{{ tpl $.Values.sidecar.version $ }}'
+    metrics_key_function: depth
+    imagePullPolicy: IfNotPresent
+    secret:
+      secret_name: sidecar-certs
+      mountPoint: /etc/proxy/tls/sidecar
+      secretKeys:
+        ca: ca.crt
+        cert: service.crt
+        key: service.key
+    resources:
+      limits:
+        cpu: 200m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
     envvars:
       xds_cluster:
         type: value
         value: 'slo'
 
   postgres:
-    private_image: true
-    data_mount_point: /var/lib/pgsql/data
-    ssl:
-      enabled: true
-      name: postgres-ssl-certs
-      mountPoint: /certs
     credentials:
       secret_name: postgres-credentials
       username: greymatter
-      password: greymatter
       database: greymatter
-
+    rds:
+      enabled: false
+      endpoint:
+    data_mount_point: /var/lib/pgsql/data
+    openshift:
+      image: 'docker.io/centos/postgresql-10-centos7'
+    k8s:
+      image: 'docker.io/centos/postgresql-10-centos7'
+    imagePullPolicy: IfNotPresent
+    replica_count: 1
+    private_image: false
+    resources:
+      limits:
+        cpu: 200m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    confMountPoint: /conf
+    # This override is unique to OpenShift's postgresql container
+    # https://github.com/sclorg/postgresql-container/tree/master/examples/custom-config
+    overridesMountPoint: /opt/app-root/src/postgresql-cfg
+    secret:
+      secret_name: postgres-ssl-certs
+      mountPoint: /certs
+      secretKeys:
+        ca: ca.pem
+        cert: server.crt
+        key: server.key
     envvars:
       - type: secret
         name: postgresql_user
@@ -564,224 +388,3 @@ slo:
         name: POSTGRESQL_DATABASE
         secret: postgres-credentials
         key: database
-
-jwt:
-  sidecar:
-    image: 'docker-dev.production.deciphernow.com/deciphernow/gm-proxy:latest'
-    create_sidecar_secret: false
-    envvars:
-      xds_cluster:
-        type: value
-        value: 'jwt-security'
-
-  jwt:
-    use_aac: false
-    users_mount_point: /gm-jwt-security/etc
-    image: docker.production.deciphernow.com/deciphernow/gm-jwt-security:1.0.0
-    envvars:
-      - type: value
-        name: HTTPS_PORT
-        value: '3000'
-      - type: secret
-        name: PRIVATE_KEY
-        secret: jwt-security
-        key: jwt.key
-      - type: secret
-        name: JWT_API_KEY
-        secret: jwt-security
-        key: jwt.api_key
-      - type: value
-        name: ENABLE_TLS
-        value: true
-      - type: secret
-        name: SERVER_TRUST
-        secret: jwt-certs
-        key: jwt.trust.pem
-      - type: secret
-        name: SERVER_CERT
-        secret: jwt-certs
-        key: jwt.cert.pem
-      - type: secret
-        name: SERVER_KEY
-        secret: jwt-certs
-        key: jwt.key.pem
-      - type: value
-        name: TOKEN_EXP_TIME
-        value: '300'
-
-
-  redis:
-    private_image: true
-
-internal-jwt:
-  sidecar:
-    image: 'docker-dev.production.deciphernow.com/deciphernow/gm-proxy:latest'
-    create_sidecar_secret: false
-    envvars:
-      xds_cluster:
-        type: value
-        value: 'internal-jwt-security'
-  jwt:
-    name: internal-jwt-security
-    certs_mount_point: /gm-jwt-security/certs
-    image: docker.production.deciphernow.com/deciphernow/gm-jwt-security:1.0.0
-    envvars:
-      - type: value
-        name: HTTPS_PORT
-        value: '3000'
-      - type: secret
-        name: PRIVATE_KEY
-        secret: internal-jwt-security-secret
-        key: jwt.key
-      - type: secret
-        name: JWT_API_KEY
-        secret: internal-jwt-security-secret
-        key: jwt.api_key
-      - type: value
-        name: ENABLE_TLS
-        value: true
-      - type: secret
-        name: SERVER_TRUST
-        secret: internal-jwt-certs
-        key: jwt.trust.pem
-      - type: secret
-        name: SERVER_CERT
-        secret: internal-jwt-certs
-        key: jwt.cert.pem
-      - type: secret
-        name: SERVER_KEY
-        secret: internal-jwt-certs
-        key: jwt.key.pem
-      - type: value
-        name: TOKEN_EXP_TIME
-        value: '300'
-
-    users_cg_name: internal-jwt-users
-    # This is a list of authorized users for the JWT service. It's preloaded with the DNs for GM Control, GM Catalog and the Mesh Cert.
-    users: |-
-      {
-        "users": [
-        {
-          "label": "CN=gm-control,OU=Engineering,O=Decipher Technology Studios,=Alexandria,=Virginia,C=US",
-          "values": {
-            "email": [
-                "gm-control@deciphernow.com"
-            ],
-            "org": [
-                "www.deciphernow.com"
-            ],
-            "privilege": [
-                "root"
-            ]
-          }
-        },
-        {
-          "label": "CN=gm-catalog,OU=Engineering,O=Decipher Technology Studios,=Alexandria,=Virginia,C=US",
-          "values": {
-            "email": [
-                "engineering@deciphernow.com"
-            ],
-            "org": [
-                "www.deciphernow.com"
-            ],
-            "privilege": [
-                "root"
-            ]
-          }
-        },
-        {
-          "label": "C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=*.greymatter.svc.cluster.local",
-          "values": {
-            "email": [
-                "engineering@deciphernow.com"
-            ],
-            "org": [
-                "www.deciphernow.com"
-            ],
-            "privilege": [
-                "root"
-            ]
-          }
-        }]
-      }
-  redis:
-    name: internal-redis
-    secret_name: internal-redis-password
-    password: 'internalRedis'
-
-sidecar:
-  image: 'docker-dev.production.deciphernow.com/deciphernow/gm-proxy:latest'
-  create_sidecar_secret: true
-  certificates:
-    name: sidecar
-    ca: |-
-      -----BEGIN CERTIFICATE-----
-      ...
-      -----END CERTIFICATE-----
-    cert: |-
-      -----BEGIN CERTIFICATE-----
-      ...
-      -----END CERTIFICATE-----
-    key: |-
-      -----BEGIN RSA PRIVATE KEY-----
-      ...
-      -----END RSA PRIVATE KEY-----
-
-edge:
-  sidecar:
-    version: 1.1.1
-    image: 'docker-dev.production.deciphernow.com/deciphernow/gm-proxy:latest'
-    envvars:
-      xds_cluster:
-        type: value
-        value: 'edge'
-  edge:
-    base_path: /services/edge/1.1.1
-    create_edge_secret: true
-
-    ingress:
-      # There are a lot of options for ingress into a kubernetes cluster.
-      # Change the values below if you want to use an ingress controller other than Voyager
-
-      # For instance, these values will work for nginx ingress
-
-      # apiVersion: extensions/v1beta1
-      # annotations:
-      #   nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-      #   nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-      #   nginx.ingress.kubernetes.io/backend-protocol: "https"
-
-      # rules:
-      #   - host: greymatter.development.deciphernow.com
-      #     http:
-      #       paths:
-      #         - path: /
-      #           backend:
-      #             serviceName: edge
-      #             servicePort: 8080
-
-      apiVersion: voyager.appscode.com/v1beta1
-
-      # Specific annotations for your deployment
-      # Choosing the ingress.appscode.com/type is important and depends on your environment type.
-      #   - If using EKS, you need to configure the Type as LoadBalancer
-      #   - If using voyager, you need to configure the type as NodePort
-      annotations:
-        kubernetes.io/ingress.class: 'voyager'
-        ingress.appscode.com/ssl-passthrough: 'true'
-        ingress.appscode.com/type: NodePort
-
-      # Provide the rule set you want your ingress controller to use
-      rules:
-        - tcp:
-            port: '80'
-            nodePort: '30001'
-            backend:
-              serviceName: edge
-              servicePort: 8080
-        - tcp:
-            port: '443'
-            nodePort: '30000'
-            backend:
-              serviceName: edge
-              servicePort: 8080

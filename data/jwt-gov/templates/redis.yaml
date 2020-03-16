@@ -45,12 +45,12 @@ spec:
           - name: REDIS_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.redis.secret_name }}
+                name: {{ .Values.redis.secret.secret_name }}
                 key: password
           imagePullPolicy: {{ .Values.redis.imagePullPolicy }}
       {{- if .Values.redis.private_image }}
       imagePullSecrets:
-      - name: docker.secret
+      - name: {{ .Values.global.imagePullSecret }}
       {{- end }}
       dnsPolicy: ClusterFirst
       restartPolicy: Always
