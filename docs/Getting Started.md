@@ -1,24 +1,25 @@
 # Getting Started
 
-- [Helm](#helm)
-- [OpenShift](#openshift)
-- [Configuration](#configuration)
-  - [Storage](#storage)
-  - [Ingress](#ingress)
-  - [Observables](#observables)
-  - [Docker credentials](#docker-credentials)
-  - [AWS credentials (optional)](#aws-credentials-optional)
-  - [Certificates](#certificates)
-  - [SPIRE](#spire)
-  - [TLS Options](#tls-options)
-  - [Single-service deployments](#single-service-deployments)
-- [Install](#install)
-  - [Prepare Tiller](#prepare-tiller)
-  - [Prepare Service Accounts](#prepare-service-accounts)
-  - [Latest Helm charts release](#latest-helm-charts-release)
-  - [Local Helm charts](#local-helm-charts)
-  - [Additional Helm install flags](#additional-helm-install-flags)
-- [Verification](#verification)
+- [Getting Started](#getting-started)
+  - [Helm](#helm)
+  - [OpenShift](#openshift)
+  - [Configuration](#configuration)
+    - [Storage](#storage)
+    - [Ingress](#ingress)
+    - [Observables](#observables)
+    - [Docker credentials](#docker-credentials)
+    - [AWS credentials (optional)](#aws-credentials-optional)
+    - [Certificates](#certificates)
+    - [SPIRE](#spire)
+    - [TLS Options](#tls-options)
+    - [Single-service deployments](#single-service-deployments)
+  - [Install](#install)
+    - [Prepare Tiller](#prepare-tiller)
+    - [Prepare Service Accounts](#prepare-service-accounts)
+    - [Latest Helm charts release](#latest-helm-charts-release)
+    - [Local Helm charts](#local-helm-charts)
+    - [Additional Helm install flags](#additional-helm-install-flags)
+  - [Verification](#verification)
 
 This guide assumes that your target environment is a hosted Kubernetes based platform. If you want to test drive Grey Matter on your local machine, follow [Deploy with Minikube](./Deploy%20with%20Minikube.md).
 
@@ -150,7 +151,7 @@ You may notice a large section of your `custom-greymatter-secrets.yaml` file con
 
 To access anything in the mesh, your request will pass through the edge proxy, which performs Mutual TLS (mTLS) authentication. Both the client and server must authenticate themselves and your browser (or other HTTPS client like `curl` or `wget`) will need to have the appropriate certificates loaded.
 
-To keep things simple, `greymatter-secrets.yaml` uses the same certificates as those from `common/certificates/user/quickstart.p12` in the [DecipherNow/grey-matter-quickstart](https://github.com/DecipherNow/grey-matter-quickstarts) repository. If you load `quickstart.p12` into your browser, when you access the Grey Matter Dashboard, you'll be prompted to use that certificate to verify yourself.
+To keep things simple, `greymatter-secrets.yaml` uses the same certificates as those from `common/certificates/user/quickstart.p12` in the [DecipherNow/grey-matter-quickstart](./certs/) repository. If you load `quickstart.p12` into your browser, when you access the Grey Matter Dashboard, you'll be prompted to use that certificate to verify yourself.
 
 For production deployments it's recommened to use certificates generated from a secure Certificate Auhority (CA).
 
