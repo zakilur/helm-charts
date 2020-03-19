@@ -20,6 +20,15 @@ echo "Creating service configuration objects..."
 
 delay=0.01
 
+create_or_update() {
+    resp=$(greymatter create $1 <$1.json)
+    if [ -z $resp ]; then
+        echo "Already exists! Editing $2"
+        greymatter edit $1 _ <$1.json
+    fi
+    echo "CODE $?"
+}
+
 cd $MESH_CONFIG_DIR/services
 # Each service should be able to be created all by itself. This means it needs to contain a domain
 for d in */; do
@@ -34,7 +43,7 @@ for d in */; do
     names="domain cluster listener proxy shared_rules route"
     for name in $names; do
         echo "Creating mesh object: $name."
-        greymatter create $name <$name.json
+        create_or_update $name $d
         sleep $delay
     done
 
@@ -45,12 +54,12 @@ done
 # The edge domain must be created before it can be referenced
 cd $MESH_CONFIG_DIR/special
 echo "Creating special configuration objects (domain, edge listener + proxy)"
-greymatter create domain <domain.json
-greymatter create listener <listener.json
-greymatter create proxy <proxy.json
-greymatter create cluster <cluster.json
-greymatter create shared_rules <shared_rules.json
-greymatter create route <route.json
+create_or_update "domain"
+create_or_update "listener"
+create_or_update "proxy"
+create_or_update "cluster"
+create_or_update "shared_rules"
+create_or_update "route"
 
 # for file in $(ls route*.json); do
 #     greymatter create route < $file
@@ -67,7 +76,7 @@ for d in */; do
     names="cluster shared_rules"
     for name in $names; do
         echo "Creating mesh object: $name."
-        greymatter create $name <$name.json
+        create_or_update $name $d
         sleep $delay
     done
 
@@ -85,6 +94,7 @@ echo "Adding additional Special Routes"
 for rte in $(ls route-*.json); do
     greymatter create route <$rte
 done
+
 # greymatter create route < route-data-jwt-slash.json
 # greymatter create route < route-data-jwt.json
 # greymatter create route < route-dashboard-slash.json
