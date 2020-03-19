@@ -95,10 +95,10 @@ edge:
           nodePort: '30001'
           backend:
             serviceName: edge
-            servicePort: 8080
+            servicePort: 10808
       - tcp:
           port: '443'
           nodePort: '30000'
           backend:
             serviceName: edge
-            servicePort: 8080 
+            servicePort: 10808
