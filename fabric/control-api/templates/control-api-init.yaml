@@ -1,7 +1,12 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .Values.controlApi.name}}-init
+  name: {{.Values.controlApi.name}}-init
+  annotations:
+    # Run this job after an install or an upgrade
+    "helm.sh/hook": post-install,post-upgrade
+    # If a job with this name already exists, delete it before running this one
+    "helm.sh/hook-delete-policy": before-hook-creation
 spec:
   template:
     metadata:
