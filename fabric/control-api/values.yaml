@@ -230,7 +230,7 @@ services:
     controlEnabled: true
     name: 'Grey Matter Dashboard'
     serviceName: 'dashboard'
-    observablesEnabled: true
+    observablesEnabled: false
     port: 1337
     enableInstanceMetrics: 'true'
     capability: 'Apps'
