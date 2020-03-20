@@ -64,7 +64,7 @@ spec:
             command:
               - /bin/sh
               - -c
-              - "curl -k --cacert {{ .Values.sidecar.secret.mount_point }}/{{ .Values.sidecar.secret.secret_keys.ca }} --key  {{ .Values.sidecar.secret.mount_point }}/{{ .Values.sidecar.secret.secret_keys.key }} --cert  {{ .Values.catalog.secret.mount_point }}/{{ .Values.sidecar.secret.secret_keys.cert }} https://localhost:9080/summary"
+              - "curl -k --cacert {{ .Values.sidecar.secret.mount_point }}/{{ .Values.sidecar.secret.secret_keys.ca }} --key  {{ .Values.sidecar.secret.mount_point }}/{{ .Values.sidecar.secret.secret_keys.key }} --cert  {{ .Values.sidecar.secret.mount_point }}/{{ .Values.sidecar.secret.secret_keys.cert }} https://localhost:9080/summary"
           initialDelaySeconds: 20
           periodSeconds: 5
       {{- if .Values.global.consul.enabled }}

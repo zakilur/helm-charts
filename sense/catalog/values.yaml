@@ -182,6 +182,7 @@ services:
     version: 1.0.1
     minInstances: 1
     maxInstances: 1
+    data_prefix: "/data"
     secret:          
       egressTLS: false
       enabled: true  
