@@ -206,7 +206,7 @@ services:
     minInstances: 1
     maxInstances: 1
     secret:          
-      egressTLS: false
+      egressTLS: true
       enabled: true  
       secret_name: sidecar-certs
       mount_point: /etc/pki
@@ -242,7 +242,7 @@ services:
       - '/services/dashboard/latest'
       - '/services/dashboard/latest/'
     secret:          
-      egressTLS: false
+      egressTLS: true
       enabled: true  
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
@@ -275,11 +275,12 @@ services:
     documentation: '/services/data/latest/static/ui/index.html'
     owner: 'Decipher'
     version: 1.0.0
+    jwt_prefix: /jwt
     routes:
       - '/services/data/{{ $.Values.global.data.version }}'
       - '/services/data/{{ $.Values.global.data.version }}/'
     secret:          
-      egressTLS: false
+      egressTLS: true
       enabled: true  
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
@@ -302,8 +303,9 @@ services:
     name: 'Grey Matter Internal Data'
     owner: 'Decipher'
     version: 1.0.0
+    jwt_prefix: /jwt
     secret:          
-      egressTLS: false
+      egressTLS: true
       enabled: true  
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
@@ -329,7 +331,7 @@ services:
       - '/services/jwt-security/{{ $.Values.global.jwt.version }}'
       - '/services/jwt-security/{{ $.Values.global.jwt.version }}/'
     secret:          
-      egressTLS: false
+      egressTLS: true
       enabled: true  
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
@@ -353,7 +355,7 @@ services:
     version: '0.2.0'
     secret:          
       enabled: true  
-      egressTLS: false
+      egressTLS: true
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
       insecure: true
@@ -379,7 +381,7 @@ services:
       - '/services/control-api/{{ $.Values.global.gmControlApi.version }}/'
     secret:          
       enabled: true  
-      egressTLS: false
+      egressTLS: true
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
       insecure: true
@@ -405,8 +407,8 @@ services:
     owner: 'Decipher'
     version: '1.0.0'
     secret:          
-      enabled: true  
-      egressTLS: false
+      enabled: true 
+      egressTLS: true
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/edge
       insecure: true
@@ -422,7 +424,6 @@ services:
     serviceName: 'slo'
     observablesEnabled: false
     port: 1337
-    # egressTLS: 'false'
     enableInstanceMetrics: 'true'
     capability: 'Sense'
     documentation:
@@ -433,7 +434,7 @@ services:
       - '/services/slo/{{ $.Values.global.slo.version }}/'
     secret:          
       enabled: true  
-      egressTLS: false
+      egressTLS: true
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
       insecure: true

@@ -42,7 +42,7 @@ spec:
               mountPath: /tmp/bootstrap
             - name: bootstrap-zone-volume
               mountPath: /etc/config/mesh/zones/
-            {{- if and $.Values.services.catalog.egressTLS }}
+            {{- if and $.Values.services.catalog.secret.egressTLS }}
             - name: certs
               mountPath: /etc/pki
             {{- end }}
@@ -61,7 +61,7 @@ spec:
         - name: bootstrap-zone-volume
           configMap:
             name: {{ .Values.catalog.name}}-zone-bootstrap
-        {{- if and $.Values.services.catalog.egressTLS }}
+        {{- if and $.Values.services.catalog.secret.egressTLS }}
         - name: certs
           secret:
             secretName: sidecar-certs

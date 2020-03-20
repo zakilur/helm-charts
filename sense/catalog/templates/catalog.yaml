@@ -78,8 +78,10 @@ spec:
       - name: config-consul
         emptyDir: {}
       {{- end }}
-      {{- if .Values.catalog.secret }}
+      {{- if .Values.sidecar.secret }}
       {{- include "sidecar_certs_volumes" . | indent 6 }}
+      {{- end }}
+      {{- if .Values.catalog.secret }}
       - name: certs
         secret:
           secretName: {{ .Values.catalog.secret.secret_name }}

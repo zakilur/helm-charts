@@ -134,7 +134,7 @@ catalog:
         value: '{{ .Values.catalog.name }}:{{ .Values.catalog.port }}'
       use_tls:
         type: value
-        value: '{{ $.Values.services.catalog.egressTLS | default false }}'
+        value: '{{ $.Values.services.catalog.secret.egressTLS | default false }}'
 
 # Sidecar configuration for Catalog
 sidecar:
@@ -209,7 +209,7 @@ services:
     controlEnabled: true
     name: 'Grey Matter Dashboard'
     serviceName: 'dashboard'
-    observablesEnabled: true
+    observablesEnabled: false
     port: 1337
     enableInstanceMetrics: 'true'
     capability: 'Apps'
@@ -400,7 +400,6 @@ services:
     serviceName: 'slo'
     observablesEnabled: false
     port: 1337
-    # egressTLS: 'false'
     enableInstanceMetrics: 'true'
     capability: 'Sense'
     documentation:
