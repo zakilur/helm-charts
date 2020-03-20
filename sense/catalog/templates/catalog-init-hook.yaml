@@ -2,12 +2,11 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ .Values.catalog.name }}-init
-  # annotations:
-  #   # This is what defines this resource as a hook. Without this line, the
-  #   # job is considered part of the release.
-  #   "helm.sh/hook": post-install
-  #   "helm.sh/hook-weight": "0"
-  #   "helm.sh/hook-delete-policy": hook-succeeded
+  annotations:
+    # Run this job after an install or an upgrade
+    "helm.sh/hook": post-install,post-upgrade
+    # If a job with this name already exists, delete it before running this one
+    "helm.sh/hook-delete-policy": before-hook-creation
 spec:
   template:
     metadata:
