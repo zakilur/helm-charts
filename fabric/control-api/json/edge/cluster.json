@@ -5,7 +5,7 @@
   "instances": [],
   "circuit_breakers": null,
   "outlier_detection": null,
-  "health_checks": []{{- if .service.secret }},
+  "health_checks": []{{- if .service.secret.enabled }},
   "require_tls": true,
   "ssl_config": {
     "protocols": [
