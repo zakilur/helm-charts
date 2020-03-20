@@ -1,11 +1,11 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{.Values.controlApi.name}}-init
+  name: {{ .Values.controlApi.name}}-init
 spec:
   template:
     metadata:
-      name: {{.Values.controlApi.name}}-init
+      name: {{ .Values.controlApi.name}}-init
     spec:
       restartPolicy: "Never"
       # We need a SA with read access to the `Endpoints` resource

@@ -108,7 +108,7 @@ spec:
           {{- end }}
           env:
           {{- include "sidecar.envvars" . | indent 12 }}
-        {{- if .Values.sidecar.secret.enabled }}
+        {{- if .Values.sidecar.secret }}
           volumeMounts:
           {{- include "sidecar_volume_certs_mount" . | indent 12 }}
         {{- end }}
@@ -131,7 +131,7 @@ spec:
       - name: config-consul
         emptyDir: {}
       {{- end }}
-      {{- if .Values.controlApi.secret.enabled }}
+      {{- if .Values.sidecar.secret }}
       {{- include "sidecar_certs_volumes" . | indent 6 }}
       {{- end }}
   volumeClaimTemplates:
