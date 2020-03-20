@@ -183,7 +183,7 @@ postgres:
       key: password
     postgres_user_cn:
       type: value
-      value: CN=*.greymatter.svc, OU=Engineering, O=Decipher Technology Studios, L=Alexandria, ST=Virginia, C=US
+      value: C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=greymatter
     postgresql_database:
       type: secret
       secret: postgres-credentials

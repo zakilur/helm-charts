@@ -117,7 +117,7 @@ catalog:
     #   value: 'world'
     # client_identity:
     #   type: value
-    #   value: 'CN=gm-control,OU=Engineering,O=Decipher Technology Studios,=Alexandria,=Virginia,C=US'
+    #   value: 'C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=greymatter'
     # client_email:
     #   type: value
     #   value: 'gm-control@deciphernow.com'

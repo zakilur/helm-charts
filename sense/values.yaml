@@ -179,7 +179,7 @@ slo:
         key: password
       postgres_user_cn:
         type: value
-        value: CN=*.greymatter.svc, OU=Engineering, O=Decipher Technology Studios, L=Alexandria, ST=Virginia, C=US
+        value: CN=greymatter, OU=Engineering, O=Decipher Technology Studios, L=Alexandria, ST=Virginia, C=US
       postgresql_database:
         type: secret
         secret: postgres-credentials
@@ -387,7 +387,7 @@ catalog:
         value: 'world'
       client_identity:
         type: value
-        value: 'CN=gm-control,OU=Engineering,O=Decipher Technology Studios,=Alexandria,=Virginia,C=US'
+        value: 'C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=greymatter'
       client_email:
         type: value
         value: 'gm-control@deciphernow.com'

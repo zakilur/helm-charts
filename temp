@@ -15,15 +15,15 @@ Starting mesh configuration ...
 Creating service configuration objects...
 Found service: catalog/
 Creating mesh object: domain.
-FILE 
-[info] 2020/03/20 13:10:09 Preferring --api.key for authentication
+Trying to create object with domain.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Domain().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:09 Preferring --api.key for authentication
+Already exists! Editing domain.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "domain_key": "domain-catalog",
   "zone_key": "zone-default-zone",
@@ -56,18 +56,17 @@ Already exists! Editing
   "custom_headers": null,
   "checksum": "293e7ff65bc3019782c969e9489eccc1b5884e018ff694ad47bbf8af797aaa12"
 }
-CODE 0\n
------
+----------
 Creating mesh object: cluster.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with cluster.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "cluster_key": "cluster-catalog",
   "zone_key": "zone-default-zone",
@@ -96,18 +95,17 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "1690eef624e78e41f6054e0d4e2810d3fab4c4776a14f296f2cd1536dc0156f6"
 }
-CODE 0\n
------
+----------
 Creating mesh object: listener.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with listener.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Listener().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing listener.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "listener_key": "listener-catalog",
   "zone_key": "zone-default-zone",
@@ -136,18 +134,17 @@ Already exists! Editing
   },
   "checksum": "9f7916d8e4d05558a08d53e4c2fb0f5fb0be56ace06ef02982ebd6e8f8203ebb"
 }
-CODE 0\n
------
+----------
 Creating mesh object: proxy.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with proxy.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Proxy().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing proxy.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "proxy_key": "proxy-catalog",
   "zone_key": "zone-default-zone",
@@ -181,18 +178,17 @@ Already exists! Editing
   },
   "checksum": "2b30b0d747c5920a23b25e26ea2d7377e7d71ec529ee072c11a6011e97a99777"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "shared_rules_key": "shared-rules-catalog",
   "name": "catalog",
@@ -218,18 +214,17 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "e8e74712896918801bd1dbecc4ddf3e6af4215d3dbc3027cc67b2e28f9cb4716"
 }
-CODE 0\n
------
+----------
 Creating mesh object: route.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with route.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing route.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "route_key": "route-catalog",
   "domain_key": "domain-catalog",
@@ -250,19 +245,18 @@ Already exists! Editing
   "filter_metadata": null,
   "checksum": "e8358b0ceb9d7d6f79f1e751011708826513fbc1fb69118f731a78a1289de65d"
 }
-CODE 0\n
------
+----------
 Found service: dashboard/
 Creating mesh object: domain.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with domain.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Domain().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing domain.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "domain_key": "domain-dashboard",
   "zone_key": "zone-default-zone",
@@ -295,18 +289,17 @@ Already exists! Editing
   "custom_headers": null,
   "checksum": "6adc719d1f05b08f52927755c39c038f5713f6d7987289c45969fe050b48d0a4"
 }
-CODE 0\n
------
+----------
 Creating mesh object: cluster.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with cluster.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "cluster_key": "cluster-dashboard",
   "zone_key": "zone-default-zone",
@@ -335,18 +328,17 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "172f3351c7693fae89ad55f92c7ecbeb00cec40fb66b9a75bb64e0b50a437042"
 }
-CODE 0\n
------
+----------
 Creating mesh object: listener.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with listener.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Listener().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing listener.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "listener_key": "listener-dashboard",
   "zone_key": "zone-default-zone",
@@ -375,18 +367,17 @@ Already exists! Editing
   },
   "checksum": "741c5453e435b6edd07f8a0357534c2fbe2c60b3f984a046291c5d6383ac8b24"
 }
-CODE 0\n
------
+----------
 Creating mesh object: proxy.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with proxy.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Proxy().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing proxy.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "proxy_key": "proxy-dashboard",
   "zone_key": "zone-default-zone",
@@ -400,7 +391,6 @@ Already exists! Editing
   "listeners": null,
   "upgrades": "",
   "active_proxy_filters": [
-    "gm.observables",
     "gm.impersonation",
     "gm.metrics"
   ],
@@ -417,28 +407,21 @@ Already exists! Editing
       "metrics_ring_buffer_size": 4096,
       "metrics_key_function": "depth",
       "metrics_key_depth": "1"
-    },
-    "gm_observables": {
-      "useKafka": true,
-      "topic": "dashboard",
-      "eventTopic": "greymatter",
-      "kafkaServerConnection": ""
     }
   },
-  "checksum": "1dc20b23ecb27768748dbb5f9e3d029944f4406f9be4ff59307b3b17776b33ef"
+  "checksum": "715eed12cf596e3dca8a8a2630802d6102d72baee2ba849026a08351a4fa9efa"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "shared_rules_key": "shared-rules-dashboard",
   "name": "dashboard",
@@ -464,18 +447,17 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "88a73b17fe8bba9cd9e41fad73cfe61223c3cc3d4f35e20812e27d2250f6adf2"
 }
-CODE 0\n
------
+----------
 Creating mesh object: route.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with route.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing route.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "route_key": "route-dashboard",
   "domain_key": "domain-dashboard",
@@ -496,19 +478,18 @@ Already exists! Editing
   "filter_metadata": null,
   "checksum": "098f4ce004230a6fa6e7889e8c1fefd1faae8bd4912e9a95f9a68c498f0d7f41"
 }
-CODE 0\n
------
+----------
 Found service: data-internal/
 Creating mesh object: domain.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with domain.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Domain().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing domain.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "domain_key": "domain-data-internal",
   "zone_key": "zone-default-zone",
@@ -541,18 +522,17 @@ Already exists! Editing
   "custom_headers": null,
   "checksum": "c1e9f08278ca25e17cb2af460bf320dfde4f480633790826cbe6d3ad0b46582b"
 }
-CODE 0\n
------
+----------
 Creating mesh object: cluster.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with cluster.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "cluster_key": "cluster-data-internal",
   "zone_key": "zone-default-zone",
@@ -581,18 +561,17 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "1f3343f1a619e8fa80424e515b3542b6300cba9d14f15a336602530d523092c9"
 }
-CODE 0\n
------
+----------
 Creating mesh object: listener.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with listener.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Listener().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing listener.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "listener_key": "listener-data-internal",
   "zone_key": "zone-default-zone",
@@ -621,18 +600,17 @@ Already exists! Editing
   },
   "checksum": "18f40bf1e6963e5ba84af899e4f8ebac6f3275cd6145e0eeff5e966f3006a498"
 }
-CODE 0\n
------
+----------
 Creating mesh object: proxy.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with proxy.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Proxy().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing proxy.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "proxy_key": "proxy-data-internal",
   "zone_key": "zone-default-zone",
@@ -666,18 +644,17 @@ Already exists! Editing
   },
   "checksum": "77f1dab0c042a3fc04bf0d7f5d5a8a9a139d9b46ff17875d014289a6b842ff07"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "shared_rules_key": "shared-rules-data-internal",
   "name": "data-internal",
@@ -703,18 +680,17 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "aca21afa500ff54ebb09a927720f4fde461e60c1e935c87e0f8b367552eeec90"
 }
-CODE 0\n
------
+----------
 Creating mesh object: route.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with route.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing route.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "route_key": "route-data-internal",
   "domain_key": "domain-data-internal",
@@ -735,19 +711,18 @@ Already exists! Editing
   "filter_metadata": null,
   "checksum": "473a6e5e109991ea3b21b7da6fcd90e3f22acb48154377c3ab5822a8ee09a8db"
 }
-CODE 0\n
------
+----------
 Found service: data/
 Creating mesh object: domain.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with domain.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Domain().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing domain.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "domain_key": "domain-data",
   "zone_key": "zone-default-zone",
@@ -780,18 +755,17 @@ Already exists! Editing
   "custom_headers": null,
   "checksum": "9f49f5d1d6f7628bc62ceaa26e353cb0dd79a69804b79c3c628de7eaa388734f"
 }
-CODE 0\n
------
+----------
 Creating mesh object: cluster.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with cluster.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "cluster_key": "cluster-data",
   "zone_key": "zone-default-zone",
@@ -820,18 +794,17 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "a0309aad302d71d09a2d9d3a9258b788e4d780d4188fdd44f83a2e74a3ea6eb3"
 }
-CODE 0\n
------
+----------
 Creating mesh object: listener.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with listener.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Listener().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing listener.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 {
   "listener_key": "listener-data",
   "zone_key": "zone-default-zone",
@@ -860,18 +833,17 @@ Already exists! Editing
   },
   "checksum": "eecbc9ba6c915c9af3201b70b47f0e6a5812b1008acfc5571b1fea8a712b8208"
 }
-CODE 0\n
------
+----------
 Creating mesh object: proxy.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with proxy.json
+[info] 2020/03/20 14:26:57 Preferring --api.key for authentication
 create: {
   "message": "Proxy().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing proxy.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "proxy_key": "proxy-data",
   "zone_key": "zone-default-zone",
@@ -905,18 +877,17 @@ Already exists! Editing
   },
   "checksum": "30c2857c3024f2fc1f1804172c3c7998114c0d2df413843d78c6464026975149"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "shared_rules_key": "shared-rules-data",
   "name": "data",
@@ -942,18 +913,17 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "6dcfd9f654e3a940afc75e58f8496e224c6db6860845f73fac1833501670b013"
 }
-CODE 0\n
------
+----------
 Creating mesh object: route.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with route.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing route.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "route_key": "route-data",
   "domain_key": "domain-data",
@@ -974,19 +944,18 @@ Already exists! Editing
   "filter_metadata": null,
   "checksum": "6fe5a51c2a8608bcc9d3beee5deafcc54069ef90bdbf144696df5df4e93113c4"
 }
-CODE 0\n
------
+----------
 Found service: gm-control-api/
 Creating mesh object: domain.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with domain.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Domain().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing domain.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "domain_key": "domain-gm-control-api",
   "zone_key": "zone-default-zone",
@@ -1019,18 +988,17 @@ Already exists! Editing
   "custom_headers": null,
   "checksum": "f08bb85750faaa7f6cf9a6b11d5807d3ed998180265b6ce1bba8fb754038eb01"
 }
-CODE 0\n
------
+----------
 Creating mesh object: cluster.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with cluster.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "cluster_key": "cluster-gm-control-api",
   "zone_key": "zone-default-zone",
@@ -1059,18 +1027,17 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "0979d1e1954157cd66573e8c4c95dc207672bb342bb367482b5a21cf9d372d65"
 }
-CODE 0\n
------
+----------
 Creating mesh object: listener.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with listener.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Listener().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing listener.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "listener_key": "listener-gm-control-api",
   "zone_key": "zone-default-zone",
@@ -1099,18 +1066,17 @@ Already exists! Editing
   },
   "checksum": "4c905dfabd922f00e4b1646cbccc84475f6a4c0e8b23933b720bfc2eae249527"
 }
-CODE 0\n
------
+----------
 Creating mesh object: proxy.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with proxy.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Proxy().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing proxy.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "proxy_key": "proxy-gm-control-api",
   "zone_key": "zone-default-zone",
@@ -1144,18 +1110,17 @@ Already exists! Editing
   },
   "checksum": "bdea4c5d65160f16ccf72b675a4bfce337e993879d1755c723875a29ee690f3f"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "shared_rules_key": "shared-rules-gm-control-api",
   "name": "gm-control-api",
@@ -1181,18 +1146,17 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "81dce4d147b1f6722be4b530722e554f1213f7a24bf7225e0092e8aba16e0055"
 }
-CODE 0\n
------
+----------
 Creating mesh object: route.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with route.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing route.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "route_key": "route-gm-control-api",
   "domain_key": "domain-gm-control-api",
@@ -1213,19 +1177,18 @@ Already exists! Editing
   "filter_metadata": null,
   "checksum": "365cbe3d2afd41174dfb5a9512ed0bc614d78ba6a28a7eee63f1756e1cfc7437"
 }
-CODE 0\n
------
+----------
 Found service: internal-jwt-security/
 Creating mesh object: domain.
-FILE 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Trying to create object with domain.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Domain().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:10 Preferring --api.key for authentication
+Already exists! Editing domain.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "domain_key": "domain-internal-jwt-security",
   "zone_key": "zone-default-zone",
@@ -1258,18 +1221,17 @@ Already exists! Editing
   "custom_headers": null,
   "checksum": "954474de72bc301ecd7d8c90e4c5fcb58a770925da5442561e945b851b7dbb02"
 }
-CODE 0\n
------
+----------
 Creating mesh object: cluster.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with cluster.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "cluster_key": "cluster-internal-jwt-security",
   "zone_key": "zone-default-zone",
@@ -1298,18 +1260,17 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "e61629221e19b76cdccd75830d8ffed91b2758bde583b561b91716ecadf4362b"
 }
-CODE 0\n
------
+----------
 Creating mesh object: listener.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with listener.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Listener().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing listener.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "listener_key": "listener-internal-jwt-security",
   "zone_key": "zone-default-zone",
@@ -1338,18 +1299,17 @@ Already exists! Editing
   },
   "checksum": "b896ae64aa3a88e19851f2acabbb466ecdacc84c02e871d50c8eb4948287a3e3"
 }
-CODE 0\n
------
+----------
 Creating mesh object: proxy.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with proxy.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Proxy().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing proxy.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "proxy_key": "proxy-internal-jwt-security",
   "zone_key": "zone-default-zone",
@@ -1383,18 +1343,17 @@ Already exists! Editing
   },
   "checksum": "06777377eedc9ffd4421c088781fa8c7bf4ae7a3a3f1196c6783e840c9438b06"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "shared_rules_key": "shared-rules-internal-jwt-security",
   "name": "internal-jwt-security",
@@ -1420,18 +1379,17 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "a4881decfd1a0daac310e425082cdacfe45232a11031338f10ccee24c41a188c"
 }
-CODE 0\n
------
+----------
 Creating mesh object: route.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with route.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing route.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "route_key": "route-internal-jwt-security",
   "domain_key": "domain-internal-jwt-security",
@@ -1452,19 +1410,18 @@ Already exists! Editing
   "filter_metadata": null,
   "checksum": "19c981e81de40da3289c7f18a6b8320f2544825fb6c0082404c0d250e4039e25"
 }
-CODE 0\n
------
+----------
 Found service: jwt-security/
 Creating mesh object: domain.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with domain.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Domain().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing domain.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "domain_key": "domain-jwt-security",
   "zone_key": "zone-default-zone",
@@ -1497,18 +1454,17 @@ Already exists! Editing
   "custom_headers": null,
   "checksum": "26c89d31f8a04b3e2194abab8a6b3ae23dae1ddf5b29d3047c6e9c5fb8a6202b"
 }
-CODE 0\n
------
+----------
 Creating mesh object: cluster.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with cluster.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "cluster_key": "cluster-jwt-security",
   "zone_key": "zone-default-zone",
@@ -1537,18 +1493,17 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "db07013cd97d715cb64308bd787b7d967ef8edf13cede80fe28c0334bc9ed242"
 }
-CODE 0\n
------
+----------
 Creating mesh object: listener.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with listener.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Listener().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing listener.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "listener_key": "listener-jwt-security",
   "zone_key": "zone-default-zone",
@@ -1577,18 +1532,17 @@ Already exists! Editing
   },
   "checksum": "df43c1621ddbef6b35ebfd3c1e6647e151410fc859353377f59f8a34713a175c"
 }
-CODE 0\n
------
+----------
 Creating mesh object: proxy.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with proxy.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Proxy().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing proxy.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "proxy_key": "proxy-jwt-security",
   "zone_key": "zone-default-zone",
@@ -1622,18 +1576,17 @@ Already exists! Editing
   },
   "checksum": "53d425b9908abb8e53a29fe56df2f7b935fcae1644d13a4af6f0643218bdbd93"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "shared_rules_key": "shared-rules-jwt-security",
   "name": "jwt-security",
@@ -1659,18 +1612,17 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "577a3e422e5518b447beb2630b573200185ed45ddee00fcd1d34295cf6997ccf"
 }
-CODE 0\n
------
+----------
 Creating mesh object: route.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with route.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing route.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "route_key": "route-jwt-security",
   "domain_key": "domain-jwt-security",
@@ -1691,19 +1643,18 @@ Already exists! Editing
   "filter_metadata": null,
   "checksum": "ba922cfd340bd0cfeec2bf099cf7de6369edd6c1e87b560690d564ea7fcdd858"
 }
-CODE 0\n
------
+----------
 Found service: prometheus/
 Creating mesh object: domain.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with domain.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Domain().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing domain.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "domain_key": "domain-prometheus",
   "zone_key": "zone-default-zone",
@@ -1717,18 +1668,17 @@ Already exists! Editing
   "custom_headers": null,
   "checksum": "525e53b841ce20fd2db20530b0a992736ec6260522376715084b3a4fcec587a4"
 }
-CODE 0\n
------
+----------
 Creating mesh object: cluster.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with cluster.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "cluster_key": "cluster-prometheus",
   "zone_key": "zone-default-zone",
@@ -1757,18 +1707,17 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "44c9333849ee36ff1f49237c9689ddd8d0e811c54889aaf2bdf08b59cc1ca953"
 }
-CODE 0\n
------
+----------
 Creating mesh object: listener.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with listener.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Listener().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing listener.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "listener_key": "listener-prometheus",
   "zone_key": "zone-default-zone",
@@ -1797,18 +1746,17 @@ Already exists! Editing
   },
   "checksum": "b911cf97828ebdcaab026ba4b991547d6a978811895b5a78007f393811bfcfb4"
 }
-CODE 0\n
------
+----------
 Creating mesh object: proxy.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with proxy.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Proxy().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing proxy.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "proxy_key": "proxy-prometheus",
   "zone_key": "zone-default-zone",
@@ -1838,18 +1786,17 @@ Already exists! Editing
   },
   "checksum": "5be556700a9e3698d79a2cec3b3de14a94b8156b3ea8d9f8822896798c20f47b"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 {
   "shared_rules_key": "shared-rules-prometheus",
   "name": "prometheus",
@@ -1875,18 +1822,17 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "fe9aa33900880e70f2ce7c5c31dc39bdecff63d4c5029fe8628ac5cf39d902c8"
 }
-CODE 0\n
------
+----------
 Creating mesh object: route.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with route.json
+[info] 2020/03/20 14:26:58 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing route.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "route_key": "route-prometheus",
   "domain_key": "domain-prometheus",
@@ -1907,19 +1853,18 @@ Already exists! Editing
   "filter_metadata": null,
   "checksum": "4480cbbb250324d96acc7f2215e9dc7bd7855a6bfebdcaff77dad0a14640a723"
 }
-CODE 0\n
------
+----------
 Found service: slo/
 Creating mesh object: domain.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with domain.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Domain().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing domain.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "domain_key": "domain-slo",
   "zone_key": "zone-default-zone",
@@ -1952,18 +1897,17 @@ Already exists! Editing
   "custom_headers": null,
   "checksum": "13b71d70f5ea4b42611851830c32c660a83fe7324cd8b219dba8331c75b848ad"
 }
-CODE 0\n
------
+----------
 Creating mesh object: cluster.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with cluster.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "cluster_key": "cluster-slo",
   "zone_key": "zone-default-zone",
@@ -1992,18 +1936,17 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "dcfb5d91d97dc8ea3cadbf6b3ae89c7e666492f7fd42fe5b752e912d6f90a5f7"
 }
-CODE 0\n
------
+----------
 Creating mesh object: listener.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with listener.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Listener().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing listener.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "listener_key": "listener-slo",
   "zone_key": "zone-default-zone",
@@ -2032,18 +1975,17 @@ Already exists! Editing
   },
   "checksum": "6c9656b919c7612fa1e2f3cedcebff7d476df15a2c07dce959398d2b1df46fb4"
 }
-CODE 0\n
------
+----------
 Creating mesh object: proxy.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with proxy.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Proxy().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing proxy.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "proxy_key": "proxy-slo",
   "zone_key": "zone-default-zone",
@@ -2077,18 +2019,17 @@ Already exists! Editing
   },
   "checksum": "66865e2bd377d612e9ccab92898a51bd1f0508bcaec83c75dbe8f18b9875efed"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "shared_rules_key": "shared-rules-slo",
   "name": "slo",
@@ -2114,18 +2055,17 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "4723467832ae3f44125e65b45f1b686e21e336eb225ac019c8da9437a6a2072e"
 }
-CODE 0\n
------
+----------
 Creating mesh object: route.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with route.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing route.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "route_key": "route-slo",
   "domain_key": "domain-slo",
@@ -2146,18 +2086,17 @@ Already exists! Editing
   "filter_metadata": null,
   "checksum": "3a242478bb5d2e816b6e202b389d99069ffb2d4197afe1b312ef262227fd8407"
 }
-CODE 0\n
------
+----------
 Creating special configuration objects (domain, edge listener + proxy)
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with domain.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Domain().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing domain.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "domain_key": "edge",
   "zone_key": "zone-default-zone",
@@ -2190,17 +2129,16 @@ Already exists! Editing
   "custom_headers": null,
   "checksum": "a72232a485bb40a37ad4774dddd0a98ea11e924218d5c0ca0e52fc2eb3d5bbe3"
 }
-CODE 0\n
------
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+----------
+Trying to create object with listener.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Listener().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing listener.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "listener_key": "edge-listener",
   "zone_key": "zone-default-zone",
@@ -2229,17 +2167,16 @@ Already exists! Editing
   },
   "checksum": "7b353884c3b93d85f18ef0f101177e578dce52fa0390a3240e759d191de936e0"
 }
-CODE 0\n
------
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+----------
+Trying to create object with proxy.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Proxy().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing proxy.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "proxy_key": "edge-proxy",
   "zone_key": "zone-default-zone",
@@ -2269,17 +2206,16 @@ Already exists! Editing
   },
   "checksum": "8a7dbb64a8b44aa94683e3f54340edd195f05bdd2677ce3b7b3790e0f7a7f572"
 }
-CODE 0\n
------
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+----------
+Trying to create object with cluster.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "cluster_key": "cluster-edge",
   "zone_key": "zone-default-zone",
@@ -2308,17 +2244,16 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "e9e17bd4782137ba04613c36e22b9f685a3267deed0513568f644107786af4e4"
 }
-CODE 0\n
------
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+----------
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "shared_rules_key": "shared-rules-edge",
   "name": "edge",
@@ -2344,17 +2279,16 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "c818f03f3b586c781a743e8601739c4cbd96406bd8f7d0f57969b17c8896f2fe"
 }
-CODE 0\n
------
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+----------
+Trying to create object with route.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing route.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "route_key": "route-edge",
   "domain_key": "edge",
@@ -2375,20 +2309,19 @@ Already exists! Editing
   "filter_metadata": null,
   "checksum": "c4cf26e701529e100dd390fd524611259491d5021e12d77b715d0842145ee396"
 }
-CODE 0\n
------
+----------
 Creating edge configuration objects
 Found service: catalog/
 Creating mesh object: cluster.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with cluster.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "cluster_key": "edge-to-catalog-cluster",
   "zone_key": "zone-default-zone",
@@ -2430,18 +2363,17 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "07f6ec6a53af474e9ec69a56f2084f15ebce3b9473591268c66e32fc8df03731"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:11 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "shared_rules_key": "edge-catalog-shared-rules",
   "name": "catalog",
@@ -2467,18 +2399,17 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "afe2d3a44b2e444c0fe0f82a7aea8a2606158a29a8f23d0a6ca13fb8ed972aba"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE route-1.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with route-1.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-1.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "route_key": "edge-catalog-route",
   "domain_key": "edge",
@@ -2499,18 +2430,17 @@ Already exists! Editing route-1.json
   "filter_metadata": null,
   "checksum": "c942662463404383f9f360e3a99066f966e9bc3e3e7a84c9cba5e9440c856a65"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE route-2.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with route-2.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-2.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "route_key": "edge-catalog-route-slash",
   "domain_key": "edge",
@@ -2531,19 +2461,18 @@ Already exists! Editing route-2.json
   "filter_metadata": null,
   "checksum": "f6f11ec50eb0d1e96263a2619cdb6ee7c4fca4fdab5439bdca50b1185b2efb2a"
 }
-CODE 0\n
------
+----------
 Found service: dashboard/
 Creating mesh object: cluster.
-FILE 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with cluster.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "cluster_key": "edge-to-dashboard-cluster",
   "zone_key": "zone-default-zone",
@@ -2585,18 +2514,17 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "6c657f2e3ede22a8a72a0d8f34447d2dbc4d5382be1d96667fc9831f0a99da99"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "shared_rules_key": "edge-dashboard-shared-rules",
   "name": "dashboard",
@@ -2622,18 +2550,17 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "9f031febdb5685e74ecb3abf21b3f37a62150d32e55a83234f0df3e5edd3bd06"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE route-1.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with route-1.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-1.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "route_key": "edge-dashboard-route",
   "domain_key": "edge",
@@ -2654,18 +2581,17 @@ Already exists! Editing route-1.json
   "filter_metadata": null,
   "checksum": "020bed5d15ef06ead924ceb41692ed0c04979cf4035a70f3896bec4dd33b9a84"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE route-2.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with route-2.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-2.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "route_key": "edge-dashboard-route-slash",
   "domain_key": "edge",
@@ -2686,19 +2612,18 @@ Already exists! Editing route-2.json
   "filter_metadata": null,
   "checksum": "f5d22a0ea4b47a5a74a68e335aa19fc3f584d36e0d98d19994007651a48464dc"
 }
-CODE 0\n
------
+----------
 Found service: data-internal/
 Creating mesh object: cluster.
-FILE 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with cluster.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "cluster_key": "edge-to-data-internal-cluster",
   "zone_key": "zone-default-zone",
@@ -2740,18 +2665,17 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "350fe3b7a9433f55a0a83340f6bca7126fc1fd7841df86a413f4f2c1f754ab6b"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "shared_rules_key": "edge-data-internal-shared-rules",
   "name": "data-internal",
@@ -2777,18 +2701,17 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "55c889feabb27f163b3ee431997a49e37042611b9cee7ec201c114025da47726"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE route-1.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with route-1.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-1.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "route_key": "edge-data-internal-route",
   "domain_key": "edge",
@@ -2809,18 +2732,17 @@ Already exists! Editing route-1.json
   "filter_metadata": null,
   "checksum": "c750a4c6676524ddd68b8bf4933eda4ff9c72f44880047b8786caa339b59fabc"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE route-2.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with route-2.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-2.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "route_key": "edge-data-internal-route-slash",
   "domain_key": "edge",
@@ -2841,19 +2763,18 @@ Already exists! Editing route-2.json
   "filter_metadata": null,
   "checksum": "694d646b15eface02684892a3beb439cadfbb8a40be6c994b4145cd638177f58"
 }
-CODE 0\n
------
+----------
 Found service: data/
 Creating mesh object: cluster.
-FILE 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with cluster.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "cluster_key": "edge-to-data-cluster",
   "zone_key": "zone-default-zone",
@@ -2895,18 +2816,17 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "d5e95d13b8ef92a73a3c873cc3769d4a0c7a961b6be1f425006eab7f251b5ed0"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "shared_rules_key": "edge-data-shared-rules",
   "name": "data",
@@ -2932,18 +2852,17 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "25df72ad525b245a2a12d0d78bea07688f03207f5306dbfecc5dd9096f7b77a9"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE route-1.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with route-1.json
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-1.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+[info] 2020/03/20 14:26:59 Preferring --api.key for authentication
 {
   "route_key": "edge-data-route",
   "domain_key": "edge",
@@ -2964,18 +2883,17 @@ Already exists! Editing route-1.json
   "filter_metadata": null,
   "checksum": "3af918fe829bd6007ac639333d2288a018c337f5d0520bafba77d5a0da176c0a"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE route-2.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with route-2.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-2.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "route_key": "edge-data-route-slash",
   "domain_key": "edge",
@@ -2996,19 +2914,18 @@ Already exists! Editing route-2.json
   "filter_metadata": null,
   "checksum": "72f97f2bb2b5f7514a4ffd70927b16989f5bd1e0965841146ba04ef34875c6b3"
 }
-CODE 0\n
------
+----------
 Found service: gm-control-api/
 Creating mesh object: cluster.
-FILE 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with cluster.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "cluster_key": "edge-to-gm-control-api-cluster",
   "zone_key": "zone-default-zone",
@@ -3050,18 +2967,17 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "904a02eeded9c77693119d94888b174c26d90b67321a40485a23203c875b0700"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "shared_rules_key": "edge-gm-control-api-shared-rules",
   "name": "gm-control-api",
@@ -3087,18 +3003,17 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "246ef3435d8048b02f53e7831cf0301c683f35faee47e4627dfb2283437aeb79"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE route-1.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with route-1.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-1.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "route_key": "edge-gm-control-api-route",
   "domain_key": "edge",
@@ -3119,18 +3034,17 @@ Already exists! Editing route-1.json
   "filter_metadata": null,
   "checksum": "8d3e72774027a1ba2bad4be94f9b9854951fcfd1494c88edcb7f37ef78cacb4d"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE route-2.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with route-2.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-2.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "route_key": "edge-gm-control-api-route-slash",
   "domain_key": "edge",
@@ -3151,19 +3065,18 @@ Already exists! Editing route-2.json
   "filter_metadata": null,
   "checksum": "b10bce4f395b24f6a30537323f9e714b0facee7ea8325d0523e20ef1ac405348"
 }
-CODE 0\n
------
+----------
 Found service: internal-jwt-security/
 Creating mesh object: cluster.
-FILE 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with cluster.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "cluster_key": "edge-to-internal-jwt-security-cluster",
   "zone_key": "zone-default-zone",
@@ -3205,18 +3118,17 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "b98ff1f6dd6e3ea5df2f28fd8cee0954e89c25b8eaa9eb51f64a332e4a460efd"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "shared_rules_key": "edge-internal-jwt-security-shared-rules",
   "name": "internal-jwt-security",
@@ -3242,18 +3154,17 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "5524aee5b1e7df2d7a6d066520c08b11914517bd83638eb5110240b0759ea87d"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE route-1.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with route-1.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-1.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "route_key": "edge-internal-jwt-security-route",
   "domain_key": "edge",
@@ -3274,18 +3185,17 @@ Already exists! Editing route-1.json
   "filter_metadata": null,
   "checksum": "983ab863ec08d38cb65bddb3ef4a291b064dcc5191f621fa8ad724a57efcf5b9"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE route-2.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with route-2.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-2.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "route_key": "edge-internal-jwt-security-route-slash",
   "domain_key": "edge",
@@ -3306,19 +3216,18 @@ Already exists! Editing route-2.json
   "filter_metadata": null,
   "checksum": "ff70ccfb0aaf295ab3f788282efb77241ab6855bcd6141265e665167155d6b7c"
 }
-CODE 0\n
------
+----------
 Found service: jwt-security/
 Creating mesh object: cluster.
-FILE 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with cluster.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "cluster_key": "edge-to-jwt-security-cluster",
   "zone_key": "zone-default-zone",
@@ -3360,18 +3269,17 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "3228db5bad65dfe6f6dd46f0c677cf4d0ed2bb9dac7aa1c691a23c65b7fd3ef4"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "shared_rules_key": "edge-jwt-security-shared-rules",
   "name": "jwt-security",
@@ -3397,18 +3305,17 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "bbb7d1db16c8cf03ea1d01ffebbfab07b3c239792cc1f9b6bf7c8ddb7541cad9"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE route-1.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with route-1.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-1.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "route_key": "edge-jwt-security-route",
   "domain_key": "edge",
@@ -3429,18 +3336,17 @@ Already exists! Editing route-1.json
   "filter_metadata": null,
   "checksum": "de1b9560e27bfb6f539d9c3b3629fbe7bc0660b2e4c3c0fbcb5987bb2916d397"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE route-2.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with route-2.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-2.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "route_key": "edge-jwt-security-route-slash",
   "domain_key": "edge",
@@ -3461,19 +3367,18 @@ Already exists! Editing route-2.json
   "filter_metadata": null,
   "checksum": "9feeafeafd5edf8151dd14c2b60385d206694d10d6ed036689a939e605e33d6e"
 }
-CODE 0\n
------
+----------
 Found service: prometheus/
 Creating mesh object: cluster.
-FILE 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with cluster.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "cluster_key": "edge-to-prometheus-cluster",
   "zone_key": "zone-default-zone",
@@ -3515,18 +3420,17 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "863761e1de2c8016881104f24c0d3054e18b8f357bf737e85b50cb8f0b68963e"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "shared_rules_key": "edge-prometheus-shared-rules",
   "name": "prometheus",
@@ -3552,18 +3456,17 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "f75aab3ecfda8f75356bee70e3e9c7e75c614a7f66d390006e10e47bdd4beeca"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE route-1.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with route-1.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-1.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "route_key": "edge-prometheus-route",
   "domain_key": "edge",
@@ -3584,18 +3487,17 @@ Already exists! Editing route-1.json
   "filter_metadata": null,
   "checksum": "2d4fc3ecb0527b6177fe5c85cd9af8a5ff47836cf211bb343a0ad61581760e66"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE route-2.json
-[info] 2020/03/20 13:10:12 Preferring --api.key for authentication
+Trying to create object with route-2.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-2.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "route_key": "edge-prometheus-route-slash",
   "domain_key": "edge",
@@ -3616,19 +3518,18 @@ Already exists! Editing route-2.json
   "filter_metadata": null,
   "checksum": "64ad9b78db17de1465f10a4384965a5bb1cd55987bf2f4423bd77901f0bd4f6a"
 }
-CODE 0\n
------
+----------
 Found service: slo/
 Creating mesh object: cluster.
-FILE 
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+Trying to create object with cluster.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Cluster().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+Already exists! Editing cluster.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "cluster_key": "edge-to-slo-cluster",
   "zone_key": "zone-default-zone",
@@ -3670,18 +3571,17 @@ Already exists! Editing
   "lb_policy": "",
   "checksum": "3148436479df8929095ce70e445de3f6633e4f4cebce351db405d5d63b5a22a5"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE 
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+Trying to create object with shared_rules.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "SharedRules().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
-Already exists! Editing 
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+Already exists! Editing shared_rules.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "shared_rules_key": "edge-slo-shared-rules",
   "name": "slo",
@@ -3707,18 +3607,17 @@ Already exists! Editing
   "retry_policy": null,
   "checksum": "97a22bb7bd1a39086c68592346c7c72bd0ba45c948c641a33aa7f51252306898"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE route-1.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+Trying to create object with route-1.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-1.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "route_key": "edge-slo-route",
   "domain_key": "edge",
@@ -3739,18 +3638,17 @@ Already exists! Editing route-1.json
   "filter_metadata": null,
   "checksum": "8929a3fd7688526f3eec06d4cc447451251d50a071048134f39dfead82113b12"
 }
-CODE 0\n
------
+----------
 Creating mesh object: shared_rules.
-FILE route-2.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+Trying to create object with route-2.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-2.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "route_key": "edge-slo-route-slash",
   "domain_key": "edge",
@@ -3771,19 +3669,18 @@ Already exists! Editing route-2.json
   "filter_metadata": null,
   "checksum": "a179f5891612245d48c09a20a5b71752c0bc0a46d57dc33b98d88668db2d73e0"
 }
-CODE 0\n
------
+----------
 Adding additional Special Routes
 RTE route-catalog-to-internal-data-slash.json
-FILE route-catalog-to-internal-data-slash.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+Trying to create object with route-catalog-to-internal-data-slash.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-catalog-to-internal-data-slash.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "route_key": "catalog-internal-data-route-slash",
   "domain_key": "domain-catalog",
@@ -3804,18 +3701,17 @@ Already exists! Editing route-catalog-to-internal-data-slash.json
   "filter_metadata": null,
   "checksum": "2d428675c4a4695d46e22c992fb13f0d0f1628816fcfa607d4e1df341be68076"
 }
-CODE 0\n
------
+----------
 RTE route-catalog-to-internal-data.json
-FILE route-catalog-to-internal-data.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+Trying to create object with route-catalog-to-internal-data.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-catalog-to-internal-data.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "route_key": "catalog-internal-data-route",
   "domain_key": "domain-catalog",
@@ -3836,18 +3732,17 @@ Already exists! Editing route-catalog-to-internal-data.json
   "filter_metadata": null,
   "checksum": "243b6c1c6086fa253823bd83d8e7b387f4273b55cb3aaa8eab4e2f54e7889a4e"
 }
-CODE 0\n
------
+----------
 RTE route-dashboard-slash.json
-FILE route-dashboard-slash.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+Trying to create object with route-dashboard-slash.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-dashboard-slash.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "route_key": "edge-dashboard-route-no-slash",
   "domain_key": "edge",
@@ -3868,18 +3763,17 @@ Already exists! Editing route-dashboard-slash.json
   "filter_metadata": null,
   "checksum": "f3490871e2b8700908b94d8d75e84dc0ac170406df4d2685f86e79c27b8607ed"
 }
-CODE 0\n
------
+----------
 RTE route-data-jwt-slash.json
-FILE route-data-jwt-slash.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+Trying to create object with route-data-jwt-slash.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-data-jwt-slash.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "route_key": "data-jwt-route-slash",
   "domain_key": "domain-data",
@@ -3900,18 +3794,17 @@ Already exists! Editing route-data-jwt-slash.json
   "filter_metadata": null,
   "checksum": "0a50b25387753642af87067f26332ae9fee703ba797b35a869c49945b485fc41"
 }
-CODE 0\n
------
+----------
 RTE route-data-jwt.json
-FILE route-data-jwt.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+Trying to create object with route-data-jwt.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-data-jwt.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "route_key": "data-jwt-route",
   "domain_key": "domain-data",
@@ -3932,18 +3825,17 @@ Already exists! Editing route-data-jwt.json
   "filter_metadata": null,
   "checksum": "4f6e91222bfb80668846d0c51e8a37734d893f5c32a21564e3176a39634b15c0"
 }
-CODE 0\n
------
+----------
 RTE route-internal-data-jwt-slash.json
-FILE route-internal-data-jwt-slash.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+Trying to create object with route-internal-data-jwt-slash.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-internal-data-jwt-slash.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "route_key": "data-internal-jwt-route-slash",
   "domain_key": "domain-data-internal",
@@ -3964,18 +3856,17 @@ Already exists! Editing route-internal-data-jwt-slash.json
   "filter_metadata": null,
   "checksum": "30a1843b1ac3f1dd4e8ad9912ee5daabee7b3395b99720fafc17c3b5fa3915bc"
 }
-CODE 0\n
------
+----------
 RTE route-internal-data-jwt.json
-FILE route-internal-data-jwt.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+Trying to create object with route-internal-data-jwt.json
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 create: {
   "message": "Route().Create failed: Duplicate Key",
   "code": "MiscCode"
 }
 
 Already exists! Editing route-internal-data-jwt.json
-[info] 2020/03/20 13:10:13 Preferring --api.key for authentication
+[info] 2020/03/20 14:27:00 Preferring --api.key for authentication
 {
   "route_key": "data-internal-jwt-route",
   "domain_key": "domain-data-internal",
@@ -3996,5 +3887,4 @@ Already exists! Editing route-internal-data-jwt.json
   "filter_metadata": null,
   "checksum": "b783c3594f9b1ac12513279304823e034222ec479b970748fa38fdf1a3c51e0d"
 }
-CODE 0\n
------
+----------
