@@ -6,7 +6,7 @@
     "redirects": null,
     "gzip_enabled": false,
     "cors_config": null,
-    "aliases": null{{ if .Values.services.edge.secret }},
+    "aliases": null{{ if .Values.services.edge.secret.enabled }},
     "force_https": true,
     "ssl_config": {
         "protocols": ["SSLv3", "SSLv2", "TLSv1", "TLSv1.1", "TLSv1.2"],
