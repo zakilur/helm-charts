@@ -20,13 +20,24 @@ echo "Creating service configuration objects..."
 
 delay=0.01
 
+# Create or update takes an object type and an optional filename
 create_or_update() {
-    resp=$(greymatter create $1 <$1.json)
-    if [ -z $resp ]; then
-        echo "Already exists! Editing $2"
-        greymatter edit $1 _ <$1.json
+    file=$2
+    # If file is null, set to objecttype.json, eg route.json
+    if [ -z $file ]; then
+        file=$1.json
     fi
-    echo "CODE $?"
+
+    echo "Trying to create object with $file"
+    resp=$(greymatter create $1 <$file)
+
+    # If response from the api is null, try editing the object
+    if [ -z $resp ]; then
+        echo "Already exists! Editing $file"
+        greymatter edit $1 _ <$file
+    fi
+
+    echo "----------"
 }
 
 cd $MESH_CONFIG_DIR/services
@@ -43,7 +54,7 @@ for d in */; do
     names="domain cluster listener proxy shared_rules route"
     for name in $names; do
         echo "Creating mesh object: $name."
-        create_or_update $name $d
+        create_or_update $name
         sleep $delay
     done
 
@@ -61,10 +72,6 @@ create_or_update "cluster"
 create_or_update "shared_rules"
 create_or_update "route"
 
-# for file in $(ls route*.json); do
-#     greymatter create route < $file
-# done
-
 cd $MESH_CONFIG_DIR/edge
 echo "Creating edge configuration objects"
 
@@ -76,13 +83,13 @@ for d in */; do
     names="cluster shared_rules"
     for name in $names; do
         echo "Creating mesh object: $name."
-        create_or_update $name $d
+        create_or_update $name
         sleep $delay
     done
 
     for file in route-*.json; do
         echo "Creating mesh object: $name."
-        greymatter create route <$file
+        create_or_update "route" $file
         sleep $delay
     done
 
@@ -92,7 +99,8 @@ done
 cd $MESH_CONFIG_DIR/special
 echo "Adding additional Special Routes"
 for rte in $(ls route-*.json); do
-    greymatter create route <$rte
+    echo "RTE $rte"
+    create_or_update "route" $rte
 done
 
 # greymatter create route < route-data-jwt-slash.json
