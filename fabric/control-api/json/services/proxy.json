@@ -29,7 +29,7 @@
     {{- end }}
     {{- if .service.secret.enabled }}
     "gm_impersonation": {
-      "servers": "{{ .Values.services.edge.egressDn }}{{- if not (eq .service.serviceName "dashboard") -}}|{{ .Values.services.sidecar_dn }}{{- end -}}"
+      "servers": "{{ .Values.services.edge.egressDn }}{{- if not (eq .service.serviceName "dashboard") -}}|{{ .Values.global.sidecar.dn }}{{- end -}}"
     },
     {{- end }}
     "gm_metrics": {

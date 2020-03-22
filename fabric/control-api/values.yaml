@@ -26,6 +26,7 @@ global:
   # Global sidecar configuration
   sidecar:
     version: 1.2.0
+    dn: C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=greymatter
    
 controlApi:
   # Name used for the deployment and service resources
@@ -190,7 +191,6 @@ bootstrap:
       value: '{{ .Values.bootstrap.secret.mount_point }}/{{ .Values.bootstrap.secret.secret_keys.key }}'
 
 services:
-  sidecar_dn: C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=greymatter
   catalog:
     catalogEnabled: true
     controlEnabled: true
