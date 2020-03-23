@@ -58,8 +58,8 @@ control:
     # Number of replicas for the deployment
     replicas: 1
     # Version of control
-    version: 1.2.0
-    image: 'deciphernow/gm-control:http2bug'
+    version: 1.2.1
+    image: 'docker-dev.production.deciphernow.com/deciphernow/gm-control:{{ $.Values.control.version }}'
     # When to pull images, used in the deployment
     image_pull_policy: IfNotPresent
     # Secret used to talk to control-api
