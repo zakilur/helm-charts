@@ -99,7 +99,6 @@ done
 cd $MESH_CONFIG_DIR/special
 echo "Adding additional Special Routes"
 for rte in $(ls route-*.json); do
-    echo "RTE $rte"
     create_or_update "route" $rte
 done
 

@@ -393,7 +393,7 @@ services:
     removeListenerSecret: true
     enableInstanceMetrics: 'true'
     capability: 'Mesh'
-    documentatio: ''
+    documentation: ''
     owner: 'Decipher'
     version: '1.0.0'
     secret:          
