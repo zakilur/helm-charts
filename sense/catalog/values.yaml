@@ -357,7 +357,7 @@ services:
     catalogEnabled: true
     controlEnabled: true
     name: 'Grey Matter Control API'
-    serviceName: 'gm-control-api'
+    serviceName: 'control-api'
     observablesEnabled: false
     port: 5555
     enableInstanceMetrics: 'true'
