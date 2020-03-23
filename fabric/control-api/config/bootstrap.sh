@@ -24,16 +24,16 @@ delay=0.01
 create_or_update() {
     file=$2
     # If file is null, set to objecttype.json, eg route.json
-    if [ -z $file ]; then
+    if [ -z "$file" ]; then
         file=$1.json
     fi
 
-    echo "Trying to create object with $file"
+    echo "Creating object with $file"
     resp=$(greymatter create $1 <$file)
-
+    echo "$resp"
     # If response from the api is null, try editing the object
-    if [ -z $resp ]; then
-        echo "Already exists! Editing $file"
+    if [ -z "$resp" ]; then
+        echo "Object already exists! Editing $file"
         greymatter edit $1 _ <$file
     fi
 
