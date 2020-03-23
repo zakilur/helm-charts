@@ -380,8 +380,8 @@ services:
     owner: 'Decipher'
     version: '1.1.0'
     routes:
-      - '/services/control-api/{{ $.Values.global.gmControlApi.version }}'
-      - '/services/control-api/{{ $.Values.global.gmControlApi.version }}/'
+      - '/services/control-api/{{ $.Values.controlApi.version }}'
+      - '/services/control-api/{{ $.Values.controlApi.version }}/'
     secret:          
       enabled: true  
       egressTLS: true
