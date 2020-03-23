@@ -18,8 +18,8 @@ fi
 cd $MESH_CONFIG_DIR
 
 if [ "$USE_TLS" == "true" ]; then
-    CURL_COMMAND='curl -s -o /dev/null -w "%{http_code}" -k --cacert /etc/pki/ca.crt --cert /etc/pki/server.crt --key /etc/pki/server.key'
-    HTTP="https"
+	CURL_COMMAND='curl -s -o /dev/null -w "%{http_code}" -k --cacert '"$CERTS_MOUNT"'/'"$CA_CERT"' --cert '$CERTS_MOUNT'/'$CERT' --key '$CERTS_MOUNT'/'$KEY
+        HTTP="https"
 fi
 
 echo "Config dir contains:"
@@ -41,7 +41,7 @@ sendCommand() {
     fi
 
     echo "Uploading $file..."
-    http_response=$($CURL_COMMAND -X POST -d @$2 $HTTP://$CATALOG_API_HOST/$1)
+    http_response=$(${CURL_COMMAND} -X POST -d @$2 $HTTP://$CATALOG_API_HOST/$1)
     if [ "$DEBUG" == "true" ]; then
         echo $http_response
     fi 

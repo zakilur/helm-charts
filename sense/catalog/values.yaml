@@ -135,7 +135,19 @@ catalog:
         value: '{{ .Values.catalog.name }}:{{ .Values.catalog.port }}'
       use_tls:
         type: value
-        value: '{{ $.Values.services.catalog.secret.enabled | default false }}'
+        value: '{{ $.Values.catalog.secret.enabled | default false }}'
+      certs_mount:
+        type: value
+        value: '{{ .Values.catalog.secret.mount_point | default "/etc/pki" }}'
+      ca_cert:
+        type: value
+        value: '{{ .Values.catalog.secret.secret_keys.ca | default "ca.crt" }}'
+      cert:
+        type: value
+        value: '{{ .Values.catalog.secret.secret_keys.cert | default "server.crt" }}'
+      key:
+        type: value
+        value: '{{ .Values.catalog.secret.secret_keys.key | default "server.key" }}'
 
 # Sidecar configuration for Catalog
 sidecar:
