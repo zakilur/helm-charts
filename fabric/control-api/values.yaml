@@ -190,6 +190,7 @@ bootstrap:
       type: value
       value: '{{ .Values.bootstrap.secret.mount_point }}/{{ .Values.bootstrap.secret.secret_keys.key }}'
 
+# Services list used to create Grey Matter configuration objects in control-api/config
 services:
   catalog:
     catalogEnabled: true
@@ -217,8 +218,8 @@ services:
         key: server.key
         ca: ca.crt
     routes:
-      - '/services/catalog/{{ $.Values.global.catalog.version }}'
-      - '/services/catalog/{{ $.Values.global.catalog.version }}/'
+      - '/services/catalog/{{ $.Values.services.catalog.version }}'
+      - '/services/catalog/{{ $.Values.services.catalog.version }}/'
 
   # control:
   #   name: 'Grey Matter Control'
@@ -279,8 +280,8 @@ services:
     version: 1.0.0
     jwt_prefix: /jwt
     routes:
-      - '/services/data/{{ $.Values.global.data.version }}'
-      - '/services/data/{{ $.Values.global.data.version }}/'
+      - '/services/data/{{ $.Values.services.data.version }}'
+      - '/services/data/{{ $.Values.services.data.version }}/'
     secret:          
       egressTLS: true
       enabled: true  
@@ -331,8 +332,8 @@ services:
     owner: 'Decipher'
     version: '0.2.0'
     routes:
-      - '/services/jwt-security/{{ $.Values.global.jwt.version }}'
-      - '/services/jwt-security/{{ $.Values.global.jwt.version }}/'
+      - '/services/jwt-security/{{ $.Values.services.jwt.version }}'
+      - '/services/jwt-security/{{ $.Values.services.jwt.version }}/'
     secret:          
       egressTLS: true
       enabled: true  
@@ -378,10 +379,10 @@ services:
     capability: 'Mesh'
     documentation:
     owner: 'Decipher'
-    version: '1.1.0'
+    version: '1.2.0'
     routes:
-      - '/services/control-api/{{ $.Values.controlApi.version }}'
-      - '/services/control-api/{{ $.Values.controlApi.version }}/'
+      - '/services/control-api/{{ $.Values.services.controlApi.version }}'
+      - '/services/control-api/{{ $.Values.services.controlApi.version }}/'
     secret:          
       enabled: true  
       egressTLS: true
@@ -408,7 +409,7 @@ services:
     capability: 'Mesh'
     documentatio: ''
     owner: 'Decipher'
-    version: '1.0.0'
+    version: '1.2.0'
     secret:          
       enabled: true 
       egressTLS: true
@@ -433,8 +434,8 @@ services:
     owner: 'Decipher'
     version: '1.1.1'
     routes:
-      - '/services/slo/{{ $.Values.global.slo.version }}'
-      - '/services/slo/{{ $.Values.global.slo.version }}/'
+      - '/services/slo/{{ $.Values.services.slo.version }}'
+      - '/services/slo/{{ $.Values.services.slo.version }}/'
     secret:          
       enabled: true  
       egressTLS: true
