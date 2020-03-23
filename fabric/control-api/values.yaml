@@ -399,7 +399,7 @@ services:
     name: 'Grey Matter Edge'
     serviceName: 'edge'
     observablesEnabled: false
-    port: 8080
+    port: 10808
     # This is the DN of the new certificate issued to the edge for internal mesh communication. It needs to be whitelisted by the proxies
     egressDn: C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=edge
     # We use a static cert on the edge listener

@@ -70,7 +70,7 @@ spec:
         {{- end }}
         ports:
         - name: proxy
-          containerPort: 8080
+          containerPort: 10808
         - name: metrics
           containerPort: 8081
         env:
