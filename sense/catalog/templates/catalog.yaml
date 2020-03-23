@@ -55,7 +55,7 @@ spec:
             containerPort: {{ .Values.sidecar.metrics_port }}
         env:
         {{- include "sidecar.envvars" $ | indent 10 }}
-        {{- if .Values.catalog.secret }}
+        {{- if .Values.sidecar.secret }}
         volumeMounts:
         {{- include "sidecar_volume_certs_mount" . | indent 10 }}
         {{- end }}

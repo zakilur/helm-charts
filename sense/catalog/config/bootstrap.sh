@@ -45,7 +45,7 @@ sendCommand() {
     if [ "$DEBUG" == "true" ]; then
         echo $http_response
     fi 
-
+    echo $http_response
     http_response="${http_response%\"}"
     http_response="${http_response#\"}"
 

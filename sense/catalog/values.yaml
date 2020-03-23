@@ -42,6 +42,7 @@ catalog:
   # Catalog service port
   port: 9080
   secret:
+    enabled: true
     secret_name: sidecar-certs
     mount_point: /etc/pki
     secret_keys:
@@ -134,7 +135,7 @@ catalog:
         value: '{{ .Values.catalog.name }}:{{ .Values.catalog.port }}'
       use_tls:
         type: value
-        value: '{{ $.Values.services.catalog.secret.egressTLS | default false }}'
+        value: '{{ $.Values.services.catalog.secret.enabled | default false }}'
 
 # Sidecar configuration for Catalog
 sidecar:

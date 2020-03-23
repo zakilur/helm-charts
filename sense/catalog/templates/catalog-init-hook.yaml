@@ -42,9 +42,9 @@ spec:
               mountPath: /tmp/bootstrap
             - name: bootstrap-zone-volume
               mountPath: /etc/config/mesh/zones/
-            {{- if and $.Values.services.catalog.secret.egressTLS }}
+            {{- if and $.Values.catalog.secret.enabled }}
             - name: certs
-              mountPath: /etc/pki
+              mountPath: {{ .Values.catalog.secret.mount_point }}
             {{- end }}
       volumes:
         {{- range $name, $service := .Values.services }}
@@ -61,10 +61,10 @@ spec:
         - name: bootstrap-zone-volume
           configMap:
             name: {{ .Values.catalog.name}}-zone-bootstrap
-        {{- if and $.Values.services.catalog.secret.egressTLS }}
+        {{- if and $.Values.catalog.secret.enabled }}
         - name: certs
           secret:
-            secretName: sidecar-certs
+            secretName: {{ .Values.catalog.secret.secret_name }}
         {{- end }}
       imagePullSecrets:
         - name: docker.secret
