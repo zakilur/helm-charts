@@ -138,9 +138,9 @@ spec:
       {{- include "sidecar_certs_volumes" . | indent 6 }}
       {{- end }}
       {{- if .Values.global.spire.enabled }}
-      {{- include "spire_volumes" . | indent 6 }}
+      {{- include "sidecar_volumes" . | indent 6 }}
       {{- end }}
-      volumeClaimTemplates:
+  volumeClaimTemplates:
   - metadata:
       name: control-api-backup
     spec:

@@ -62,7 +62,7 @@ spec:
           mountPath: {{ .Values.sidecar_dashboard.secret.mount_point }}
           readOnly: true
         {{- end }}
-        {{- if .Values.spire.global.enabled }}
+        {{- if .Values.global.spire.enabled }}
         {{- include "spire_volume_mount" . | indent 8 }}
         {{- end }}
       {{- if .Values.global.consul.enabled }}
