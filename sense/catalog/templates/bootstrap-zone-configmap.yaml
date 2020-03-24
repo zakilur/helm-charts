@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.catalog.name}}-zone-bootstrap
   namespace: {{ .Release.Namespace }}
 data:
-  zone.json: |-
+  {{ .Values.global.zone }}.json: |-
     {
       "serverAddress": "control.{{ .Release.Namespace }}.svc:{{ .Values.global.control_port }}",
       "zoneName": "{{ .Values.global.zone }}",
