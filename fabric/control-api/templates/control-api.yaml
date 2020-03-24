@@ -108,10 +108,13 @@ spec:
           {{- end }}
           env:
           {{- include "sidecar.envvars" . | indent 12 }}
-        {{- if .Values.sidecar.secret }}
           volumeMounts:
+          {{- if .Values.sidecar.secret.enabled }}
           {{- include "sidecar_volume_certs_mount" . | indent 12 }}
-        {{- end }}
+          {{- end }}
+          {{- if .Values.global.spire.enabled }}
+          {{- include "spire_volume_mount" . | indent 12 }}
+          {{- end }}
         {{- if .Values.global.consul.enabled }}
         {{- $data := dict "Values" .Values "ServiceName" .Values.controlApi.name }}
         {{- include "consul.agent" $data | nindent 8 }}
@@ -131,10 +134,13 @@ spec:
       - name: config-consul
         emptyDir: {}
       {{- end }}
-      {{- if .Values.sidecar.secret }}
+      {{- if .Values.sidecar.secret.enabled }}
       {{- include "sidecar_certs_volumes" . | indent 6 }}
       {{- end }}
-  volumeClaimTemplates:
+      {{- if .Values.global.spire.enabled }}
+      {{- include "spire_volumes" . | indent 6 }}
+      {{- end }}
+      volumeClaimTemplates:
   - metadata:
       name: control-api-backup
     spec:

@@ -22,6 +22,10 @@ global:
   # Global sidecar configuration (supports global version and envvars)
   sidecar:
     version: 1.2.0
+  # Whether or not to use spire for cert management and the trust domain
+  spire:
+    enabled: false
+    trust_domain: greymatter.io
     
 slo:
   name: "slo"

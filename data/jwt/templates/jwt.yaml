@@ -53,9 +53,12 @@ spec:
         - containerPort: {{ .Values.sidecar.metrics_port }}
           name: metrics
           protocol: TCP
-        {{- if .Values.sidecar.secret }}
         volumeMounts:
+        {{- if .Values.sidecar.secret.enabled }}
         {{- include "sidecar_volume_certs_mount" . | indent 8 }}
+        {{- end }}
+        {{- if .Values.global.spire.enabled }}
+        {{- include "spire_volume_mount" . | indent 8 }}
         {{- end }}
       {{- if .Values.global.consul.enabled }}
       {{- $data := dict "Values" .Values "ServiceName"  (default "jwt-security"  .Values.jwt.name) }}
@@ -64,9 +67,11 @@ spec:
       imagePullSecrets:
       - name: {{ .Values.global.image_pull_secret }}
       volumes:
-      {{- if .Values.sidecar.secret }}
-      volumes:
+      {{- if .Values.sidecar.secret.enabled }}
       {{- include "sidecar_certs_volumes" . | indent 6 }}
+      {{- end }}
+      {{- if .Values.global.spire.enabled }}
+      {{- include "spire_volumes" . | indent 6 }}
       {{- end }}
       - name: jwt-users
         configMap:

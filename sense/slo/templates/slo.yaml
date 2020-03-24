@@ -75,9 +75,12 @@ spec:
           containerPort: 8081
         env:
         {{- include "sidecar.envvars" . | indent 8 }}
-        {{- if .Values.sidecar.secret.enabled }}
         volumeMounts:
+        {{- if .Values.sidecar.secret.enabled }}
         {{- include "sidecar_volume_certs_mount" . | indent 8 }}
+        {{- end }}
+        {{- if .Values.global.spire.enabled }}
+        {{- include "spire_volume_mount" . | indent 8 }}
         {{- end }}
       {{- if .Values.global.consul.enabled }}
       {{- $data := dict "Values" .Values "ServiceName" "slo" }}
@@ -88,6 +91,9 @@ spec:
       volumes:
       {{- if .Values.sidecar.secret.enabled }}
       {{- include "sidecar_certs_volumes" . | indent 6 }}
+      {{- end }}
+      {{- if .Values.global.spire.enabled }}
+      {{- include "spire_volumes" . | indent 6 }}
       {{- end }}
       {{- if .Values.postgres.secret.enabled }}
       - name: postgres-certs
