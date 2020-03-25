@@ -109,11 +109,10 @@ spec:
           env:
           {{- include "sidecar.envvars" . | indent 12 }}
           volumeMounts:
-          {{- if .Values.sidecar.secret.enabled }}
-          {{- include "sidecar_volume_certs_mount" . | indent 12 }}
-          {{- end }}
           {{- if .Values.global.spire.enabled }}
           {{- include "spire_volume_mount" . | indent 12 }}
+          {{- else if .Values.sidecar.secret.enabled }}
+          {{- include "sidecar_volume_certs_mount" . | indent 12 }}
           {{- end }}
         {{- if .Values.global.consul.enabled }}
         {{- $data := dict "Values" .Values "ServiceName" .Values.controlApi.name }}
@@ -134,11 +133,10 @@ spec:
       - name: config-consul
         emptyDir: {}
       {{- end }}
-      {{- if .Values.sidecar.secret.enabled }}
-      {{- include "sidecar_certs_volumes" . | indent 6 }}
-      {{- end }}
       {{- if .Values.global.spire.enabled }}
       {{- include "sidecar_volumes" . | indent 6 }}
+      {{- else if .Values.sidecar.secret.enabled }}
+      {{- include "sidecar_certs_volumes" . | indent 6 }}
       {{- end }}
   volumeClaimTemplates:
   - metadata:

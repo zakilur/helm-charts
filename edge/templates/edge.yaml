@@ -34,12 +34,11 @@ spec:
         {{- if .Values.edge.ingress.secret.enabled }}
         {{- include "edge_ingress_certs_mount" . | indent 8 }}
         {{- end }}
-        {{- if .Values.edge.egress.secret.enabled }}
-        {{- include "edge_egress_certs_mount" . | indent 8 }}
-        {{- end }}
         {{- if .Values.global.spire.enabled }}
         {{- include "spire_volume_mount" . | indent 8 }}
-        {{- end }} 
+        {{- else if .Values.edge.egress.secret.enabled }}
+        {{- include "edge_egress_certs_mount" . | indent 8 }}
+        {{- end }}
       {{- if .Values.global.consul.enabled }}
       {{- $data := dict "Values" .Values "ServiceName" "edge" }}
       {{- include "consul.agent" $data | nindent 6 }}
@@ -56,9 +55,8 @@ spec:
       {{- if .Values.edge.ingress.secret.enabled }}
       {{- include "edge_ingress_volumes" . | indent 6 }}
       {{- end }}
-      {{- if .Values.edge.egress.secret.enabled }}
-      {{- include "edge_egress_volumes" . | indent 6 }}
-      {{- end }}
       {{- if .Values.global.spire.enabled }}
       {{- include "spire_volumes" . | indent 6 }}
+      {{- else if .Values.edge.egress.secret.enabled }}
+      {{- include "edge_egress_volumes" . | indent 6 }}
       {{- end }}

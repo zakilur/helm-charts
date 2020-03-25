@@ -68,13 +68,12 @@ spec:
 {{ toYaml .Values.sidecar_prometheus.resources | indent 10 }}
         {{- end }}
         volumeMounts:
-        {{- if .Values.sidecar_prometheus.secret.enabled }}
+        {{- if .Values.global.spire.enabled }}
+        {{- include "spire_volume_mount" . | indent 8 }}
+        {{- else if .Values.sidecar_prometheus.secret.enabled }}
         - name: sidecar-certs
           mountPath: {{ .Values.sidecar_prometheus.secret.mount_point }}
           readOnly: true
-        {{- end }}
-        {{- if .Values.global.spire.enabled }}
-        {{- include "spire_volume_mount" . | indent 8 }}
         {{- end }}
         ports:
         - name: proxy
@@ -92,13 +91,12 @@ spec:
       - name: config-consul
         emptyDir: {}
       {{- end }}
-      {{- if .Values.sidecar_prometheus.secret.enabled }}
+      {{- if .Values.global.spire.enabled }}
+      {{- include "spire_volumes" . | indent 6 }}
+      {{- else if .Values.sidecar_prometheus.secret.enabled }}
       - name: sidecar-certs
         secret:
           secretName: {{ .Values.sidecar_prometheus.secret.secret_name }}
-      {{- end }}
-      {{- if .Values.global.spire.enabled }}
-      {{- include "spire_volumes" . | indent 6 }}
       {{- end }}
       - name: prometheus-configuration
         configMap:

@@ -71,12 +71,11 @@ spec:
           name: metrics
           protocol: TCP
         volumeMounts:
-        {{- if .Values.sidecar.secret.enabled }}
-        {{- include "sidecar_volume_certs_mount" . | indent 8 }}
-        {{- end}}
         {{- if .Values.global.spire.enabled }}
         {{- include "spire_volume_mount" . | indent 8 }}
-        {{- end }}
+        {{- else if .Values.sidecar.secret.enabled }}
+        {{- include "sidecar_volume_certs_mount" . | indent 8 }}
+        {{- end}}
       {{- if .Values.global.consul.enabled }}
       {{- $data := dict "Values" .Values "ServiceName" .Values.data.name }}
       {{- include "consul.agent" $data | nindent 6 }}
@@ -99,11 +98,10 @@ spec:
       - name: config-consul
         emptyDir: {}
       {{- end }}
-      {{- if .Values.sidecar.secret.enabled }}
-      {{- include "sidecar_certs_volumes" . | indent 6 }}
-      {{- end }}
       {{- if .Values.global.spire.enabled }}
       {{- include "spire_volumes" . | indent 6 }}
+      {{- else if .Values.sidecar.secret.enabled }}
+      {{- include "sidecar_certs_volumes" . | indent 6 }}
       {{- end }}
       {{- if .Values.data.secret }}
       - name: data
