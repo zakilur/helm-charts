@@ -12,7 +12,8 @@ global:
     enabled: false
     host: ''
     port: 8500
-  # TODO: REFACTOR THIS
+
+  # Observables configuration, used to build Control API objects (see control-api/json)
   observables:
     topic: "greymatter"
   # Port for Grey Matter Control. Used in control, control-api, and sidecar envvars.
@@ -31,6 +32,7 @@ global:
   spire:
     enabled: false
     trust_domain: greymatter.io
+
    
 controlApi:
   # Name used for the deployment and service resources
@@ -134,7 +136,6 @@ sidecar:
   # Port where the proxy will expose metrics
   metrics_port: 8081
   secret:
-    enabled: true
     secret_name: sidecar-certs
     mount_point: /etc/proxy/tls/sidecar
     secret_keys:
