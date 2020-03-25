@@ -4,12 +4,12 @@ metadata:
   name: edge
   namespace: {{ .Release.Namespace }}
   labels:
-    app: edge
+    gm.proxy: edge
 spec:
   ports:
     - name: proxy
-      port: 8080
+      port: 10808
     - name: metrics
       port: 8081
   selector:
-    app: edge
+    gm.proxy: edge

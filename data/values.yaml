@@ -70,7 +70,7 @@ data:
     envvars:
       uses3:
         type: value
-        value: 'true'
+        value: 'false'
       aws_access_key_id:
         type: secret
         secret: '{{ .Values.data.name }}-secrets'
@@ -501,7 +501,7 @@ internal-jwt:
           }
         },
         {
-          "label": "C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=*.greymatter.svc.cluster.local",
+          "label": "C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=greymatter",
           "values": {
             "email": [
                 "engineering@deciphernow.com"

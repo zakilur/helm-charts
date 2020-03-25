@@ -102,13 +102,13 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - "curl -k --cacert {{ .Values.sidecar.secret.mount_point }}/{{ .Values.sidecar.secret.secret_keys.ca }} --key  {{ .Values.sidecar.secret.mountPoint }}/{{ .Values.sidecar.secret.secret_keys.key }} --cert  {{ .Values.sidecar.secret.mount_point }}/{{ .Values.sidecar.secret.secret_keys.cert }} https://localhost:5555/v1.0/cluster"
+                - "curl -k --cacert {{ .Values.sidecar.secret.mount_point }}/{{ .Values.sidecar.secret.secret_keys.ca }} --key  {{ .Values.sidecar.secret.mount_point }}/{{ .Values.sidecar.secret.secret_keys.key }} --cert  {{ .Values.sidecar.secret.mount_point }}/{{ .Values.sidecar.secret.secret_keys.cert }} https://localhost:5555/v1.0/cluster"
             initialDelaySeconds: 60
             periodSeconds: 3
           {{- end }}
           env:
           {{- include "sidecar.envvars" . | indent 12 }}
-        {{- if .Values.sidecar.secret.enabled }}
+        {{- if .Values.sidecar.secret }}
           volumeMounts:
           {{- include "sidecar_volume_certs_mount" . | indent 12 }}
         {{- end }}
@@ -131,7 +131,7 @@ spec:
       - name: config-consul
         emptyDir: {}
       {{- end }}
-      {{- if .Values.controlApi.secret.enabled }}
+      {{- if .Values.sidecar.secret }}
       {{- include "sidecar_certs_volumes" . | indent 6 }}
       {{- end }}
   volumeClaimTemplates:

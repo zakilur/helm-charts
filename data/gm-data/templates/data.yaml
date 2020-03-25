@@ -71,7 +71,7 @@ spec:
           name: metrics
           protocol: TCP
         volumeMounts:
-        {{- if .Values.data.secret }}
+        {{- if .Values.sidecar.secret }}
         {{- include "sidecar_volume_certs_mount" . | indent 8 }}
         {{- end}}
       {{- if .Values.global.consul.enabled }}
@@ -96,12 +96,14 @@ spec:
       - name: config-consul
         emptyDir: {}
       {{- end }}
-      {{- if .Values.data.secret }}
+      {{- if .Values.sidecar.secret }}
       {{- include "sidecar_certs_volumes" . | indent 6 }}
       {{- end }}
+      {{- if .Values.data.secret }}
       - name: data
         secret:
           secretName: {{ .Values.data.secret.secret_name }}
+      {{- end }}
       - name: jwt-security
         secret:
           secretName: jwt-security

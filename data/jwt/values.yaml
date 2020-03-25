@@ -49,9 +49,6 @@ jwt:
       memory: 64Mi
 
   envvars:
-    http_port:
-      type: value
-      value: '3000'
     private_key: 
       type: secret
       secret: jwt-security
@@ -66,9 +63,6 @@ jwt:
     zerolog_level:
       type: value
       value: 'info'
-    token_exp_time:   
-      type: value
-      value: '300'
     redis_port:
       type: value
       value: "6379"
