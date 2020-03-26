@@ -27,7 +27,7 @@ global:
       create: true
       name: waiter-sa
   sidecar:
-    version: 1.2.0
+    version: 1.2.1
 
 data:
   # Name used for the deployment and service resources
@@ -139,7 +139,7 @@ data:
       value: localhost
     client_jwt_endpoint_port:
       type: value
-      value: '10808'
+      value: '10909'
     client_jwt_endpoint_prefix:
       type: value
       value: '/jwt'

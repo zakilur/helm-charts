@@ -17,7 +17,7 @@ global:
 
   # Default configuration for all sidecars in all subcharts
   sidecar: 
-    version: '1.2'
+    version: '1.2.1'
     envvars:
       xds_cluster:
         type: value
@@ -141,7 +141,7 @@ data:
         value: localhost
       client_jwt_endpoint_port:
         type: value
-        value: '10808'
+        value: '10909'
       client_jwt_endpoint_prefix:
         type: value
         value: /jwt
@@ -529,7 +529,7 @@ internal-jwt:
           }
         },
         {
-          "label": "C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=greymatter",
+          "label": "CN=greymatter,OU=Engineering,O=Decipher Technology Studios,L=Alexandria,ST=Virginia,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"

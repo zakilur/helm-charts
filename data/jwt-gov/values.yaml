@@ -18,7 +18,7 @@ global:
   consul:
     enabled: false
   sidecar:
-    version: 1.2.0
+    version: 1.2.1
 
 jwt:
   version: '1.0.1'

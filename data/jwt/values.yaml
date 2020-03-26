@@ -19,7 +19,7 @@ global:
     enabled: false
 
   sidecar:
-    version: 1.2.0
+    version: 1.2.1
 
 jwt:
   # Name used for the deployment and service resources
@@ -141,7 +141,7 @@ jwt:
         }
       },
       {
-        "label": "C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=greymatter",
+        "label": "CN=greymatter,OU=Engineering,O=Decipher Technology Studios,L=Alexandria,ST=Virginia,C=US",
         "values": {
           "email": [
               "engineering@deciphernow.com"

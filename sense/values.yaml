@@ -23,7 +23,7 @@ global:
       create: true
   # Global sidecar configuration (supports global version and envvars)
   sidecar:
-    version: 1.2.0
+    version: 1.2.1
     envvars:
       proxy_dynamic:
         type: 'value'
@@ -355,7 +355,7 @@ catalog:
         value: localhost
       client_port:
         type: value
-        value: '10808'
+        value: '10909'
       client_prefix:
         type: value
         value: '/data'
