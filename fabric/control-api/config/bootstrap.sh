@@ -54,6 +54,11 @@ for d in */; do
     names="domain cluster listener proxy shared_rules route"
     for name in $names; do
         echo "Creating mesh object: $name."
+        if [ "$name" == "domain" ]; then
+            create_or_update $name domain-egress.json
+        elif [ "$name" == "listener" ]; then
+            create_or_update $name listener-egress.json
+        fi
         create_or_update $name
         sleep $delay
     done
