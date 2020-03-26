@@ -6,5 +6,18 @@
   "port": 10808,
   "protocol": "http_auto",
   "domain_keys": ["domain-{{.service.serviceName}}"],
-  "tracing_config": null
+  "tracing_config": null{{- if .Values.global.spire.enabled }},
+  "secret": {
+    "secret_key": "secret-{{.service.serviceName}}-secret",
+    "secret_name": "spiffe://{{ .Values.global.spire.trustDomain }}/{{.service.serviceName}}",
+    "secret_validation_name": "spiffe://{{ .Values.global.spire.trustDomain }}",
+    "ecdh_curves": [
+        "X25519:P-256:P-521:P-384"
+    ],
+    "forward_client_cert_details": "SANITIZE_SET",
+    "set_current_client_cert_details": {
+        "uri": true
+    }
+  }
+  {{- end }}
 }

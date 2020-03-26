@@ -5,17 +5,20 @@ metadata:
   namespace: spire
   labels:
     app: agent
+    gm.proxy: agent
     cluster: spire.agent
 spec:
   selector:
     matchLabels:
       app: agent
+      gm.proxy: agent
       cluster: spire.agent
   template:
     metadata:
       namespace: spire
       labels:
         app: agent
+        gm.proxy: agent
         cluster: spire.agent
     spec:
       hostPID: true

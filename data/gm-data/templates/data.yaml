@@ -70,6 +70,17 @@ spec:
         - containerPort: {{ .Values.sidecar.metrics_port }}
           name: metrics
           protocol: TCP
+        {{- if .Values.global.spire.enabled }}
+        {{- else if .Values.sidecar.secret.enabled }}
+        readinessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - "curl -k --cacert {{ .Values.sidecar.secret.mount_point }}{{ .Values.sidecar.secret.secret_keys.ca }} --key {{ .Values.sidecar.secret.mount_point }}{{ .Values.sidecar.secret.secret_keys.key }} --cert {{ .Values.sidecar.secret.mount_point }}{{ .Values.sidecar.secret.secret_keys.cert }} https://localhost:8181/list/1/"
+          initialDelaySeconds: 20
+          periodSeconds: 5
+        {{- end }}
         volumeMounts:
         {{- if .Values.global.spire.enabled }}
         {{- include "spire_volume_mount" . | indent 8 }}
@@ -80,14 +91,7 @@ spec:
       {{- $data := dict "Values" .Values "ServiceName" .Values.data.name }}
       {{- include "consul.agent" $data | nindent 6 }}
       {{- end }}
-        readinessProbe:
-          exec:
-            command:
-              - /bin/sh
-              - -c
-              - "curl -k --cacert {{ .Values.sidecar.secret.mount_point }}{{ .Values.sidecar.secret.secret_keys.ca }} --key {{ .Values.sidecar.secret.mount_point }}{{ .Values.sidecar.secret.secret_keys.key }} --cert {{ .Values.sidecar.secret.mount_point }}{{ .Values.sidecar.secret.secret_keys.cert }} https://localhost:8181/list/1/"
-          initialDelaySeconds: 20
-          periodSeconds: 5
+
 
       imagePullSecrets:
       - name: {{ .Values.global.image_pull_secret | default "docker.secret" }}

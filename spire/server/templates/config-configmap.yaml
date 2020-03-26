@@ -22,7 +22,7 @@ data:
       registration_uds_path = "/run/spire/socket/registration.sock"
       trust_domain = "{{ .Values.global.spire.trust_domain }}"
       data_dir = "/run/spire/data"
-      log_level = "info"
+      log_level = "DEBUG"
       upstream_bundle = true
       default_svid_ttl = "1h"
       ca_subject = {

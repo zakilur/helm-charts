@@ -61,6 +61,8 @@ spec:
         {{- else if .Values.sidecar.secret.enabled }}
         {{- include "sidecar_volume_certs_mount" . | indent 8 }}
         {{- end }}
+        {{- if .Values.global.spire.enabled }}
+        {{- else if .Values.sidecar.secret.enabled }}
         readinessProbe:
           exec:
             command:
@@ -69,6 +71,7 @@ spec:
               - "curl -k --cacert {{ .Values.sidecar.secret.mount_point }}/{{ .Values.sidecar.secret.secret_keys.ca }} --key  {{ .Values.sidecar.secret.mount_point }}/{{ .Values.sidecar.secret.secret_keys.key }} --cert  {{ .Values.sidecar.secret.mount_point }}/{{ .Values.sidecar.secret.secret_keys.cert }} https://localhost:9080/summary"
           initialDelaySeconds: 20
           periodSeconds: 5
+        {{- end }}
       {{- if .Values.global.consul.enabled }}
       {{- $data := dict "Values" .Values "ServiceName" "catalog" }}
       {{- include "consul.agent" $data | nindent 8 }}

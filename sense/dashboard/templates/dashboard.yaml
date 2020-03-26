@@ -75,14 +75,14 @@ spec:
       - name: config-consul
         emptyDir: {}
       {{- end }}
-      {{- if .Values.sidecar_dashboard.secret.enabled }}
+      {{- if .Values.global.spire.enabled }}
+      {{- include "spire_volumes" . | indent 6 }}
+      {{- else if .Values.sidecar_dashboard.secret.enabled }}
       - name: sidecar-certs
         secret:
           secretName: {{ .Values.sidecar_dashboard.secret.secret_name }}
       {{- end }}
-      {{- if .Values.global.spire.enabled }}
-      {{- include "spire_volumes" . | indent 6 }}
-      {{- else if .Values.dashboard.secret.enabled }}
+      {{- if .Values.dashboard.secret.enabled }}
       - name: service-certs
         secret:
           secretName: {{ .Values.dashboard.secret.secret_name }}
