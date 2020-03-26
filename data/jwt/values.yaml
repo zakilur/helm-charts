@@ -14,7 +14,7 @@ global:
   # Whether or not to use spire for cert management and the trust domain
   spire:
     enabled: false
-    trust_domain: greymatter.io
+    trust_domain: quickstart.greymatter.io
   # Whether to register services with Consul and where to find the Consul server
   consul:
     enabled: false

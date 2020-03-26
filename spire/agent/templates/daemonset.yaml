@@ -2,23 +2,20 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: agent
-  namespace: spire
+  namespace: {{ .Values.global.spire.namespace }}
   labels:
     app: agent
-    gm.proxy: agent
     cluster: spire.agent
 spec:
   selector:
     matchLabels:
       app: agent
-      gm.proxy: agent
       cluster: spire.agent
   template:
     metadata:
-      namespace: spire
+      namespace: {{ .Values.global.spire.namespace }}
       labels:
         app: agent
-        gm.proxy: agent
         cluster: spire.agent
     spec:
       hostPID: true
@@ -32,15 +29,15 @@ spec:
             - "-t"
             - "30"
             - "server:8443"
-        - name: init-registrar
-          image: gcr.io/spiffe-io/wait-for-it
-          args:
-            - "-t"
-            - "30"
-            - "registrar:8444"
+        #- name: init-registrar
+        #  image: gcr.io/spiffe-io/wait-for-it
+        #  args:
+        #    - "-t"
+        #    - "30"
+        #    - "registrar:8444"
       containers:
         - name: agent
-          image: gcr.io/spiffe-io/spire-agent:0.9.3
+          image: {{ .Values.agent.image }}
           args:
             - "-config"
             - "/run/spire/config/agent.conf"
@@ -48,22 +45,15 @@ spec:
             - name: agent-config
               mountPath: /run/spire/config
               readOnly: true
-            - name: server-bundle
-              mountPath: /run/spire/bundle
-              readOnly: true
             - name: agent-socket
               mountPath: /run/spire/socket
-              readOnly: false
-            - name: agent-token
-              mountPath: /run/spire/token
               readOnly: false
           livenessProbe:
             exec:
               command:
-                - /opt/spire/bin/spire-agent
-                - healthcheck
-                - -socketPath
-                - /run/spire/sockets/agent.sock
+                - /bin/sh
+                - -c
+                - "/opt/spire/bin/spire-agent api fetch -socketPath /run/spire/socket/agent.sock 2>&1 | grep -vqE 'connection refused|no such file or directory'"
             failureThreshold: 2
             initialDelaySeconds: 15
             periodSeconds: 60
@@ -72,17 +62,7 @@ spec:
         - name: agent-config
           configMap:
             name: agent-config
-        - name: server-bundle
-          configMap:
-            name: server-bundle
         - name: agent-socket
           hostPath:
             path: /run/spire/socket
             type: DirectoryOrCreate
-        - name: agent-token
-          projected:
-            sources:
-              - serviceAccountToken:
-                  path: agent
-                  expirationSeconds: 7200
-                  audience: server

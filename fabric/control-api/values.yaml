@@ -31,7 +31,7 @@ global:
   # Whether or not to use spire for cert management and the trust domain
   spire:
     enabled: false
-    trust_domain: greymatter.io
+    trust_domain: quickstart.greymatter.io
 
    
 controlApi:
@@ -95,38 +95,6 @@ controlApi:
   pvc:
     size: 1Gi
 
-  init:
-    image: 'docker-dev.production.deciphernow.com/deciphernow/greymatter:1.2.0'
-    image_pull_policy: IfNotPresent
-    envvars:
-      greymatter_console_level:
-        value: 'debug'
-        type: 'value'
-      greymatter_api_host:
-        value: '{{ .Values.controlApi.name }}:{{ .Values.controlApi.container_port }}'
-        type: 'value'
-      greymatter_api_key:
-        value: 'xxx'
-        type: 'value'
-      greymatter_api_ssl:
-        value: 'false'
-        type: 'value'
-      basic_object_path:
-        value: '/tmp/mesh/basic_objects'
-        type: 'value'
-      greymatter_api_ssl:
-        type: value
-        value: 'true'
-      greymatter_api_insecure:
-        type: value
-        value: 'true'
-      greymatter_api_sslcert:
-        type: value
-        value: '{{ .Values.controlApi.secret.mount_point }}/{{ .Values.controlApi.secret.secret_keys.cert }}'
-      greymatter_api_sslkey:
-        type: value
-        value: '{{ .Values.controlApi.secret.mount_point }}/{{ .Values.controlApi.secret.secret_keys.key }}'
-
 # Sidecar configuration for Control Api
 sidecar:
   version: '{{- $.Values.global.sidecar.version | default "latest" }}'
@@ -183,6 +151,9 @@ bootstrap:
     basic_object_path:
       value: '/tmp/mesh/basic_objects'
       type: 'value'
+    spire_enabled:
+      type: 'value'
+      value: '{{ .Values.global.spire.enabled }}'
     greymatter_api_ssl:
       type: value
       value: '{{ .Values.bootstrap.secret.enabled }}'

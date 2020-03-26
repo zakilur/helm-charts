@@ -22,7 +22,7 @@ global:
   # Whether or not to use spire for cert management and the trust domain
   spire:
     enabled: false
-    trust_domain: greymatter.io
+    trust_domain: quickstart.greymatter.io
     
 dashboard:
   # Name used for the deployment and service resources

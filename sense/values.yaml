@@ -25,6 +25,7 @@ global:
     image: deciphernow/k8s-waiter:latest
     service_account: 
       create: true
+      name: waiter-sa
   # Global sidecar configuration (supports global version and envvars)
   sidecar:
     version: 1.2.0
@@ -47,7 +48,11 @@ global:
       envoy_admin_log_path:
         type: 'value'
         value: '/dev/stdout'
-        name: waiter-sa
+      # SPIRE: If spire is enabled, uncomment spire_path
+      #spire_path:
+      #  type: 'value'
+      #  value: '/run/spire/socket/agent.sock'
+  
 
 slo:   
   slo:
@@ -344,7 +349,7 @@ catalog:
         value: 'edge'
       use_tls:
         type: value
-        value: 'true'
+        value: '{{ not .Values.global.spire.enabled }}'
       ca_cert_path:
         type: value
         value: '/etc/pki/{{ .Values.catalog.secret.secret_keys.ca }}'
@@ -359,13 +364,13 @@ catalog:
         value: localhost
       client_port:
         type: value
-        value: '10808'
+        value: '{{- if .Values.global.spire.enabled }}10818{{- else }}10808{{- end }}'
       client_prefix:
         type: value
         value: '/data'
       client_use_tls:
         type: value
-        value: 'true'
+        value: '{{ not .Values.global.spire.enabled }}'
       client_cert:
         type: secret
         secret: sidecar-certs
@@ -402,6 +407,13 @@ catalog:
         xds_cluster:
           type: value
           value: '{{ .Values.catalog.name }}'
+
+    # SPIRE: If spire is enabled, set init job use_tls to false
+    #init:
+    #  envvars:
+    #    use_tls:
+    #      type: value
+    #      value: ''
 
 # Services list used to configure Catalog, which populates service metadata for GM Dashboard
 services:

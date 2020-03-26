@@ -5,7 +5,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: server
-    namespace: spire
+    namespace: {{ .Values.global.spire.namespace }}
 roleRef:
   kind: ClusterRole
   name: spire:server
