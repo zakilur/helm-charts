@@ -114,7 +114,7 @@ slo:
       # SSL for the SLO service. Enabled if slo.secret.enabled is true.
       service_ssl_enabled:
         type: value
-        value: "{{- if .Values.slo.secret.enabled }}true{{- else }}false{{- end }}"
+        value: "{{- if .Values.global.spire.enabled }}false{{- else if .Values.slo.secret.enabled }}true{{- else }}false{{- end }}"
       service_ssl_ca:
         type: value
         value: "{{ .Values.slo.secret.mount_point}}/{{ .Values.slo.secret.secret_keys.ca }}"
@@ -214,6 +214,7 @@ dashboard:
         memory: '12Gi'
         cpu: '2'
     secret:
+      enabled: true
       secret_name: dashboard-certs
       mount_point: /certs
       secret_keys:
@@ -244,7 +245,7 @@ dashboard:
         value: '15000'
       server_ssl_enabled:
         type: "value"
-        value: "true"
+        value: "{{ not .Values.global.spire.enabled }}"
       server_ssl_ca:
         type: "value"
         value: '{{ .Values.dashboard.secret.mount_point}}/{{ .Values.dashboard.secret.secret_keys.ca }}'
@@ -408,7 +409,7 @@ catalog:
           type: value
           value: '{{ .Values.catalog.name }}'
 
-    # SPIRE: If spire is enabled, set init job use_tls to false
+    # SPIRE: If spire is enabled, uncomment to set init job use_tls to false
     #init:
     #  envvars:
     #    use_tls:

@@ -227,7 +227,7 @@ control-api:
   #  envvars:
   #    greymatter_api_ssl:
   #      type: value
-  #      value: "{{ .Values.controlApi.secret.enabled }}"
+  #      value: '{{ not .Values.global.spire.enabled }}'
   #    spire_enabled:
   #      type: 'value'
   #      value: '{{ .Values.global.spire.enabled }}'
@@ -446,16 +446,24 @@ services:
     documentation: ''
     owner: 'Decipher'
     version: '1.2.0'
-    secret:          
-      enabled: true 
-      secret_name: sidecar-certs
-      mount_point: /etc/proxy/tls/edge
-      insecure: true
-      secret_keys:
-        cert: server.crt
-        key: server.key
-        ca: ca.crt
-
+    ingress:
+      secret:
+        enabled: true
+        secret_name: greymatter-edge-ingress
+        mount_point: /etc/proxy/tls/edge
+        secret_keys:
+          cert: server.crt
+          key: server.key
+          ca: ca.crt
+    egress:
+      secret:
+        enabled: false
+        secret_name: greymatter-edge-egress
+        mount_point: /etc/proxy/tls/sidecar
+        secret_keys:
+          cert: server.crt
+          key: server.key
+          ca: ca.crt
   slo:
     catalogEnabled: true
     controlEnabled: true

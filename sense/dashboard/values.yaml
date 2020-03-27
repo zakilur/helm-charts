@@ -74,7 +74,7 @@ dashboard:
       value: '15000'
     server_ssl_enabled:
       type: "value"
-      value: "true"
+      value: "{{ not .Values.global.spire.enabled }}"
     server_ssl_ca:
       type: "value"
       value: '{{ .Values.dashboard.secret.mount_point}}/{{ .Values.dashboard.secret.secret_keys.ca }}'

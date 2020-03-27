@@ -21,6 +21,22 @@ spec:
         resources:
 {{ toYaml .Values.dashboard.resources | indent 10 }}
         {{- end }}
+        {{- if .Values.global.spire.enabled }}
+        readinessProbe:
+          httpGet:
+            path: "/#/?ascending=true"
+            port: {{ .Values.dashboard.port | default 1337 }}
+            scheme: HTTP
+          initialDelaySeconds: 20
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: "/#/?ascending=true"
+            port: {{ .Values.dashboard.port | default 1337 }}
+            scheme: HTTP
+          initialDelaySeconds: 20
+          periodSeconds: 5
+        {{- else if .Values.dashboard.secret.enabled }}
         readinessProbe:
           httpGet:
             path: "/#/?ascending=true"
@@ -35,9 +51,10 @@ spec:
             scheme: HTTPS
           initialDelaySeconds: 20
           periodSeconds: 5
+        {{- end }}
         env:
         {{- include "envvars" (dict "envvar" .Values.dashboard.envvars "top" $) | indent 10 }}
-        {{- if .Values.dashboard.secret }}
+        {{- if .Values.dashboard.secret.enabled }}
         volumeMounts:
         - name: service-certs
           mountPath: {{ .Values.dashboard.secret.mount_point }}
