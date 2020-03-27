@@ -137,6 +137,7 @@ data:
     client_jwt_endpoint_address:
       type: value
       value: localhost
+    # Use data's egress listener port
     client_jwt_endpoint_port:
       type: value
       value: '10909'
