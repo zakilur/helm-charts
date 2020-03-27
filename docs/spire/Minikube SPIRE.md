@@ -44,7 +44,7 @@ This largely follows the [Deploy with Minikube](../Deploy%20with%20Minikube.md) 
         trust_domain: quickstart.greymatter.io
     ```
 
-    All other configuration requirements are noted in the `<chart>/values.yaml` files with `# SPIRE:`. Make sure to make the changes as noted in these comments before installing each chart.
+    All other configuration requirements are noted in the `<chart>/values.yaml` files with `# SPIRE:`. **Make sure to make the changes as noted in these comments before installing each chart**.
 
 4. Once all chart values files are properly configured for spire, install the charts as usual (the below uses kubernetes and edge voyager ingress):
 
