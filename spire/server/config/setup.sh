@@ -8,9 +8,6 @@ echo "k8s Namespace: $KUBERNETES_NAMESPACE"
 services=$(cat $SERVICE_LIST_FILE)
 echo "Got: $services"
 
-services="$services spire-client"
-echo "Final service list: $services"
-
 delay=5
 echo "Waiting $delay seconds for SPIRE registration API to be enabled"
 sleep $delay
@@ -49,13 +46,14 @@ else
                 -spiffeID spiffe://$TRUST_DOMAIN/$service \
                 -selector k8s:pod-label:app:$service \
                 -selector k8s:ns:$KUBERNETES_NAMESPACE \
+		-dns ${service}.${TRUST_DOMAIN} \
                 -registrationUDSPath $REGISTRATION_API_PATH &&
             /opt/spire/bin/spire-server \
                 entry create \
                 -parentID spiffe://$TRUST_DOMAIN/$service \
                 -spiffeID spiffe://$TRUST_DOMAIN/$service/mTLS \
-                -selector k8s:pod-label:app:$service \
                 -selector k8s:ns:$KUBERNETES_NAMESPACE \
+		-dns ${service}.${TRUST_DOMAIN} \
                 -registrationUDSPath $REGISTRATION_API_PATH &&
             echo "Done with service: $service"
         } || { # catch

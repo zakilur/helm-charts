@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: agent
+  namespace: {{ .Values.global.spire.namespace }}
+  labels:
+    app: agent
+    cluster: spire.agent
+spec:
+  selector:
+    matchLabels:
+      app: agent
+      cluster: spire.agent
+  template:
+    metadata:
+      namespace: {{ .Values.global.spire.namespace }}
+      labels:
+        app: agent
+        cluster: spire.agent
+    spec:
+      hostPID: true
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      serviceAccountName: agent
+      initContainers:
+        - name: init-server
+          image: gcr.io/spiffe-io/wait-for-it
+          args:
+            - "-t"
+            - "30"
+            - "server:8443"
+        #- name: init-registrar
+        #  image: gcr.io/spiffe-io/wait-for-it
+        #  args:
+        #    - "-t"
+        #    - "30"
+        #    - "registrar:8444"
+      containers:
+        - name: agent
+          image: {{ .Values.agent.image }}
+          args:
+            - "-config"
+            - "/run/spire/config/agent.conf"
+          volumeMounts:
+            - name: agent-config
+              mountPath: /run/spire/config
+              readOnly: true
+            - name: agent-socket
+              mountPath: /run/spire/socket
+              readOnly: false
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "/opt/spire/bin/spire-agent api fetch -socketPath /run/spire/socket/agent.sock 2>&1 | grep -vqE 'connection refused|no such file or directory'"
+            failureThreshold: 2
+            initialDelaySeconds: 15
+            periodSeconds: 60
+            timeoutSeconds: 3
+      volumes:
+        - name: agent-config
+          configMap:
+            name: agent-config
+        - name: agent-socket
+          hostPath:
+            path: /run/spire/socket
+            type: DirectoryOrCreate

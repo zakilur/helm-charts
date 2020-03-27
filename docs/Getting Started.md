@@ -1,24 +1,25 @@
 # Getting Started
 
-- [Helm](#helm)
-- [OpenShift](#openshift)
-- [Configuration](#configuration)
-  - [Storage](#storage)
-  - [Ingress](#ingress)
-  - [Observables](#observables)
-  - [Docker credentials](#docker-credentials)
-  - [AWS credentials (optional)](#aws-credentials-optional)
-  - [Certificates](#certificates)
-  - [SPIRE](#spire)
-  - [TLS Options](#tls-options)
-  - [Single-service deployments](#single-service-deployments)
-- [Install](#install)
-  - [Prepare Tiller](#prepare-tiller)
-  - [Prepare Service Accounts](#prepare-service-accounts)
-  - [Latest Helm charts release](#latest-helm-charts-release)
-  - [Local Helm charts](#local-helm-charts)
-  - [Additional Helm install flags](#additional-helm-install-flags)
-- [Verification](#verification)
+- [Getting Started](#getting-started)
+  - [Helm](#helm)
+  - [OpenShift](#openshift)
+  - [Configuration](#configuration)
+    - [Storage](#storage)
+    - [Ingress](#ingress)
+    - [Observables](#observables)
+    - [Docker credentials](#docker-credentials)
+    - [AWS credentials (optional)](#aws-credentials-optional)
+    - [Certificates](#certificates)
+    - [SPIRE](#spire)
+    - [TLS Options](#tls-options)
+    - [Single-service deployments](#single-service-deployments)
+  - [Install](#install)
+    - [Prepare Tiller](#prepare-tiller)
+    - [Prepare Service Accounts](#prepare-service-accounts)
+    - [Latest Helm charts release](#latest-helm-charts-release)
+    - [Local Helm charts](#local-helm-charts)
+    - [Additional Helm install flags](#additional-helm-install-flags)
+  - [Verification](#verification)
 
 This guide assumes that your target environment is a hosted Kubernetes based platform. If you want to test drive Grey Matter on your local machine, follow [Deploy with Minikube](./Deploy%20with%20Minikube.md).
 
@@ -208,7 +209,7 @@ mesh_tls:
   enabled: true
 spire:
   enabled: true
-  trustDomain: deciphernow.com
+  trust_domain: deciphernow.com
 ```
 
 ### Single-service deployments

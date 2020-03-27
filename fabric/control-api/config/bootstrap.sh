@@ -51,7 +51,39 @@ for d in */; do
     # So we add a delay of 0.1 seconds between each request to hopefully streamline this
     # A better option is probably to hardcode the order of items
 
-    names="domain cluster listener proxy shared_rules route"
+    names="domain"
+    for name in $names; do
+        echo "Creating mesh object: $name."
+        create_or_update $name
+        sleep $delay
+    done
+
+    if $SPIRE_ENABLED; then
+        names="domain-local"
+        for name in $names; do
+            echo "Creating mesh object: $name."
+            create_or_update "domain" $name.json
+            sleep $delay
+        done
+    fi
+
+    names="cluster listener"
+    for name in $names; do
+        echo "Creating mesh object: $name."
+        create_or_update $name
+        sleep $delay
+    done
+
+    if $SPIRE_ENABLED; then
+        names="listener-local"
+        for name in $names; do
+            echo "Creating mesh object: $name."
+            create_or_update "listener" $name.json
+            sleep $delay
+        done
+    fi
+
+    names="proxy shared_rules route"
     for name in $names; do
         echo "Creating mesh object: $name."
         if [ "$name" == "domain" ]; then
@@ -122,6 +154,12 @@ echo "Adding additional Special Routes"
 for rte in $(ls route-*.json); do
     create_or_update "route" $rte
 done
+
+if $SPIRE_ENABLED; then
+    for rte in $(ls local-route-*.json); do
+        create_or_update "route" $rte
+    done
+fi
 
 # greymatter create route < route-data-jwt-slash.json
 # greymatter create route < route-data-jwt.json
