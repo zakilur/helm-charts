@@ -7,7 +7,7 @@
   "protocol": "http_auto",
   "domain_keys": ["domain-{{ .service.serviceName}}"],
   "tracing_config": null,
-  "active_http_filters": ["gm.metrics", "gm.jwtsecurity"],
+  "active_http_filters": ["gm.metrics"{{- if and (ne .service.serviceName "jwt-security") (ne .service.serviceName "internal-jwt-security") }}, "gm.jwtsecurity"{{- end}}],
   "http_filters": {
     "gm_metrics": {
       "metrics_port": 8081,
