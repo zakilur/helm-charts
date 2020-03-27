@@ -66,19 +66,6 @@ for d in */; do
     cd $MESH_CONFIG_DIR/services
 done
 
-# After all service objects have been created, we need to add egress jwt routes to each service proxy
-# This is done in another loop because it references internal-jwt keys
-for d in */; do
-    echo "Found service: $d"
-    cd $d
-
-    # Create JWT egress routes for each proxy
-    create_or_update route route-jwt-slash.json
-    create_or_update route route-jwt-slash.json
-
-    cd $MESH_CONFIG_DIR/services
-done
-
 # The edge service is created last as it links to the clusters of every other service.
 # The edge domain must be created before it can be referenced
 cd $MESH_CONFIG_DIR/special
@@ -114,6 +101,20 @@ for d in */; do
     done
 
     cd $MESH_CONFIG_DIR/edge
+done
+
+cd $MESH_CONFIG_DIR/services
+# After all service + edge objects have been created, we need to add egress jwt routes to each service proxy
+# This is done in another loop because it references internal-jwt & edge keys
+for d in */; do
+    echo "Found service: $d"
+    cd $d
+
+    # Create JWT egress routes for each proxy
+    create_or_update route route-jwt-slash.json
+    create_or_update route route-jwt-slash.json
+
+    cd $MESH_CONFIG_DIR/services
 done
 
 cd $MESH_CONFIG_DIR/special
