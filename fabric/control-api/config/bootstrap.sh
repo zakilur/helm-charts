@@ -59,8 +59,8 @@ for d in */; do
         elif [ "$name" == "listener" ]; then
             create_or_update $name listener-egress.json
         elif [ "$name" == "route" ]; then
-            create_or_update $name jwt-route-slash.json
-            create_or_update $name jwt-route.json
+            create_or_update $name route-jwt-slash.json
+            create_or_update $name route-jwt-slash.json
         fi
         create_or_update $name
         sleep $delay
@@ -74,7 +74,9 @@ done
 cd $MESH_CONFIG_DIR/special
 echo "Creating special configuration objects (domain, edge listener + proxy)"
 create_or_update "domain"
+create_or_update "domain" domain-egress.json
 create_or_update "listener"
+create_or_update "listener" listener-egress.json
 create_or_update "proxy"
 create_or_update "cluster"
 create_or_update "shared_rules"

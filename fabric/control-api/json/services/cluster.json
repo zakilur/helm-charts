@@ -1,7 +1,7 @@
 {
   "cluster_key": "cluster-{{.service.serviceName}}",
   "zone_key": "{{ .Values.global.zone}}",
-  "name": "service",
+  "name": "{{.service.serviceName}}-service",
   "instances": [
     {
         "host": "0.0.0.0",
