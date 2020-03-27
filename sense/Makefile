@@ -6,27 +6,44 @@ else
 	FLAG=--set=global.waiter.service_account.create=true
 endif
 
+pwd_name := $(notdir $(PWD))
+
+NAME:=sense
+CHART := .
+
+ifeq ($(pwd_name),helm-charts)
+	CHART=$@
+	INSTALLDIR := sense/
+	DEPUPDIR := sense
+endif
+ifeq ($(pwd_name),sense)
+	CHART= .
+	INSTALLDIR := 
+	DEPUPDIR := .
+endif
+
+
 .PHONY: catalog
 catalog:
-	helm install sense catalog --set=global.environment=kubernetes $(FLAG)
+	helm install $(NAME) $(INSTALLDIR)$(CHART) --set=global.environment=kubernetes $(FLAG)
 
 .PHONY: dashboard
 dashboard:
-	helm install sense dashboard --set=global.environment=kubernetes $(FLAG)
+	helm install $(NAME) $(INSTALLDIR)$(CHART) --set=global.environment=kubernetes $(FLAG)
 
 .PHONY: slo
 slo:
-	helm install sense slo --set=global.environment=kubernetes $(FLAG)
+	helm install $(NAME) $(INSTALLDIR)$(CHART) --set=global.environment=kubernetes $(FLAG)
 
 .PHONY: package-sense
 package-sense:
-	rm charts/*
-	helm dep up .
+	rm -f $(CHART)/charts/*
+	helm dep up $(DEPUPDIR)
 
 .PHONY: sense
 sense: package-sense
-	helm install sense . --set=global.environment=kubernetes $(FLAG)
+	helm install $(NAME) $(CHART) --set=global.environment=kubernetes $(FLAG)
 
 .PHONY: remove-sense
 remove-sense:
-	helm uninstall sense
+	helm uninstall $(NAME)
