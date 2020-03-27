@@ -58,13 +58,23 @@ for d in */; do
             create_or_update $name domain-egress.json
         elif [ "$name" == "listener" ]; then
             create_or_update $name listener-egress.json
-        elif [ "$name" == "route" ]; then
-            create_or_update $name route-jwt-slash.json
-            create_or_update $name route-jwt-slash.json
         fi
         create_or_update $name
         sleep $delay
     done
+
+    cd $MESH_CONFIG_DIR/services
+done
+
+# After all service objects have been created, we need to add egress jwt routes to each service proxy
+# This is done in another loop because it references internal-jwt keys
+for d in */; do
+    echo "Found service: $d"
+    cd $d
+
+    # Create JWT egress routes for each proxy
+    create_or_update route route-jwt-slash.json
+    create_or_update route route-jwt-slash.json
 
     cd $MESH_CONFIG_DIR/services
 done
