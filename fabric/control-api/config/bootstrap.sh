@@ -58,6 +58,9 @@ for d in */; do
             create_or_update $name domain-egress.json
         elif [ "$name" == "listener" ]; then
             create_or_update $name listener-egress.json
+        elif [ "$name" == "route" ]; then
+            create_or_update $name jwt-route-slash.json
+            create_or_update $name jwt-route.json
         fi
         create_or_update $name
         sleep $delay

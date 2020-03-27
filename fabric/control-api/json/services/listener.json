@@ -20,7 +20,7 @@
     },
     "gm_jwtsecurity": {
       "apiKey": "dm9sY2Fuby1lcGlkZW1pYy10d2VsZnRoLXRhbWFsZQ==",
-      "endpoint": "https://jwt-security:3000",
+      "endpoint": "https://localhost:10909/jwt",
       "jwtHeaderName": "userpolicy",
       "useTls": true,
       "caPath": "{{ .service.secret.mount_point }}/ca.crt",

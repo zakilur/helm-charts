@@ -1,0 +1,13 @@
+{
+  "route_key": "route-jwt",
+  "domain_key": "domain-{{.service.serviceName}}",
+  "zone_key": "{{ .Values.global.zone}}",
+  "path": "/jwt/",
+  "prefix_rewrite": "/",
+  "redirects": null,
+  "shared_rules_key": "shared-rules-internal-jwt-security",
+  "rules": null,
+  "response_data": {},
+  "cohort_seed": null,
+  "retry_policy": null
+}
