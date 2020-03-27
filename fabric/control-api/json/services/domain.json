@@ -4,7 +4,6 @@
   "name": "*",
   "port": 10808,
   "redirects": null,
-  "gzip_enabled": false,
   "cors_config": null,
   "aliases": null,
   "gzip_enabled": false{{- if .Values.global.spire.enabled }},
@@ -21,4 +20,5 @@
   },
   "force_https": true
   {{- end }}
+
 }

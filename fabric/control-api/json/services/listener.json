@@ -20,13 +20,15 @@
     },
     "gm_jwtsecurity": {
       "apiKey": "dm9sY2Fuby1lcGlkZW1pYy10d2VsZnRoLXRhbWFsZQ==",
+      "jwtHeaderName": "userpolicy"{{ if (not .Values.global.spire.enabled) }},
       "endpoint": "https://localhost:10909/jwt",
-      "jwtHeaderName": "userpolicy",
       "useTls": true,
       "caPath": "{{ .service.secret.mount_point }}/ca.crt",
       "certPath": "{{ .service.secret.mount_point }}/server.crt",
       "keyPath": "{{ .service.secret.mount_point }}/server.key",
-      "insecureSkipVerify": true
+      "insecureSkipVerify": true{{- else }},
+      "endpoint": "http://localhost:10909/jwt"
+      {{- end }}
     },
     {{-  if (.service.observablesEnabled) }}	
     "gm_observables": {	

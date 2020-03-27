@@ -6,7 +6,13 @@
   "redirects": null,
   "gzip_enabled": false,
   "cors_config": null,
-  "aliases": null{{- if .service.secret.enabled }},
+  "custom_headers": [
+    {
+        "key": "user_dn",
+        "value": "spiffe://quickstart.greymatter.io/{{.service.serviceName}}/mTLS"
+    }
+  ],
+  "aliases": null{{- if and (.service.secret.enabled) (not .Values.global.spire.enabled) }},
   "ssl_config": {
       "protocols": [
         "SSLv3",

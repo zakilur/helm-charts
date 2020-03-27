@@ -1,6 +1,7 @@
 helm dep up data
 helm dep up fabric
 helm dep up sense
+helm dep up spire
 
 helm install secrets secrets -f credentials.yaml
 
@@ -12,6 +13,8 @@ helm install voyager-operator appscode/voyager \
 while [[ $(kubectl get pods -n kube-system -l app=voyager -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do
     echo "waiting for pod" && sleep 10
 done
+
+helm install spire spire
 
 helm install edge edge --set=global.environment=kubernetes
 

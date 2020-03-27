@@ -154,10 +154,164 @@ jwt:
               "root"
           ]
         }
-      }]
+      },        
+      {
+        "label": "spiffe://quickstart.greymatter.io/edge/mTLS",
+        "values": {
+          "email": [
+              "engineering@deciphernow.com"
+          ],
+          "org": [
+              "www.deciphernow.com"
+          ],
+          "privilege": [
+              "root"
+          ]
+        }
+      },
+              {
+        "label": "spiffe://quickstart.greymatter.io/catalog/mTLS",
+        "values": {
+          "email": [
+              "engineering@deciphernow.com"
+          ],
+          "org": [
+              "www.deciphernow.com"
+          ],
+          "privilege": [
+              "root"
+          ]
+        }
+      },
+              {
+        "label": "spiffe://quickstart.greymatter.io/dashboard/mTLS",
+        "values": {
+          "email": [
+              "engineering@deciphernow.com"
+          ],
+          "org": [
+              "www.deciphernow.com"
+          ],
+          "privilege": [
+              "root"
+          ]
+        }
+      },
+              {
+        "label": "spiffe://quickstart.greymatter.io/data-internal/mTLS",
+        "values": {
+          "email": [
+              "engineering@deciphernow.com"
+          ],
+          "org": [
+              "www.deciphernow.com"
+          ],
+          "privilege": [
+              "root"
+          ]
+        }
+      },
+        {
+        "label": "spiffe://quickstart.greymatter.io/data/mTLS",
+        "values": {
+          "email": [
+              "engineering@deciphernow.com"
+          ],
+          "org": [
+              "www.deciphernow.com"
+          ],
+          "privilege": [
+              "root"
+          ]
+        }
+      },
+        {
+        "label": "spiffe://quickstart.greymatter.io/prometheus/mTLS",
+        "values": {
+          "email": [
+              "engineering@deciphernow.com"
+          ],
+          "org": [
+              "www.deciphernow.com"
+          ],
+          "privilege": [
+              "root"
+          ]
+        }
+      },
+        {
+        "label": "spiffe://quickstart.greymatter.io/jwt-security/mTLS",
+        "values": {
+          "email": [
+              "engineering@deciphernow.com"
+          ],
+          "org": [
+              "www.deciphernow.com"
+          ],
+          "privilege": [
+              "root"
+          ]
+        }
+      },
+        {
+        "label": "spiffe://quickstart.greymatter.io/internal-jwt-security/mTLS",
+        "values": {
+          "email": [
+              "engineering@deciphernow.com"
+          ],
+          "org": [
+              "www.deciphernow.com"
+          ],
+          "privilege": [
+              "root"
+          ]
+        }
+      },
+        {
+        "label": "spiffe://quickstart.greymatter.io/control/mTLS",
+        "values": {
+          "email": [
+              "engineering@deciphernow.com"
+          ],
+          "org": [
+              "www.deciphernow.com"
+          ],
+          "privilege": [
+              "root"
+          ]
+        }
+      },
+        {
+        "label": "spiffe://quickstart.greymatter.io/control-api/mTLS",
+        "values": {
+          "email": [
+              "engineering@deciphernow.com"
+          ],
+          "org": [
+              "www.deciphernow.com"
+          ],
+          "privilege": [
+              "root"
+          ]
+        }
+      },
+        {
+        "label": "spiffe://quickstart.greymatter.io/slo/mTLS",
+        "values": {
+          "email": [
+              "engineering@deciphernow.com"
+          ],
+          "org": [
+              "www.deciphernow.com"
+          ],
+          "privilege": [
+              "root"
+          ]
+        }
+      }
+      ]
     }
-
-
+    
 redis:
   # Name used for the redis deployment and service resources
   name: redis
