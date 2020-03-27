@@ -70,11 +70,12 @@ jobs:
           command: |
             echo "export NEXUS_URL=https://nexus.production.deciphernow.com/repository/helm-staging/" >> $BASH_ENV
       - run:
-          name: Change Grey Matter (fabric, sense, data) Requirements from local to helm-staging
+          name: Change Grey Matter (fabric, sense, data, spire) Requirements from local to helm-staging
           command: |
             sed -e "s|file:.*|$NEXUS_URL|" $(pwd)/fabric/Chart.yaml
             sed -e "s|file:.*|$NEXUS_URL|" $(pwd)/sense/Chart.yaml
             sed -e "s|file:.*|$NEXUS_URL|" $(pwd)/data/Chart.yaml
+            sed -e "s|file:.*|$NEXUS_URL|" $(pwd)/spire/Chart.yaml
       - run:
           name: Print directory listing
           command: |
@@ -156,11 +157,12 @@ jobs:
           command: |
             echo "export NEXUS_URL=https://nexus.production.deciphernow.com/repository/helm-hosted/" >> $BASH_ENV
       - run:
-          name: Change Grey Matter (fabric, sense, data) Requirements from local to helm-hosted
+          name: Change Grey Matter (fabric, sense, data, spire) Requirements from local to helm-hosted
           command: |
             sed -e "s|file:.*|$NEXUS_URL|" $(pwd)/fabric/Chart.yaml
             sed -e "s|file:.*|$NEXUS_URL|" $(pwd)/sense/Chart.yaml
             sed -e "s|file:.*|$NEXUS_URL|" $(pwd)/data/Chart.yaml
+            sed -e "s|file:.*|$NEXUS_URL|" $(pwd)/spire/Chart.yaml
       - run:
           name: Package and Publish Fabric
           command: |
