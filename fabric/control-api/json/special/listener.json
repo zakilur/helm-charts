@@ -20,7 +20,7 @@
       "metrics_key_function": "none"
     },
     "gm_jwtsecurity": {
-      "apiKey": "dm9sY2Fuby1lcGlkZW1pYy10d2VsZnRoLXRhbWFsZQ==",
+      "apiKey": "{{ .Values.global.jwt_api_key }}",
       "jwtHeaderName": "userpolicy"{{ if (not .Values.global.spire.enabled) }},
       "endpoint": "https://localhost:10909/jwt",
       "useTls": true,

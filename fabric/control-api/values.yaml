@@ -12,7 +12,8 @@ global:
     enabled: false
     host: ''
     port: 8500
-
+  # API Key used to configure the gm_jwtsecurity filter. Refactor this to use the jwt-certs secret.
+  jwt_api_key: dm9sY2Fuby1lcGlkZW1pYy10d2VsZnRoLXRhbWFsZQ==
   # Observables configuration, used to build Control API objects (see control-api/json)
   observables:
     topic: "greymatter"
@@ -94,6 +95,39 @@ controlApi:
   resources:
   pvc:
     size: 1Gi
+
+  init:
+    image: 'docker-dev.production.deciphernow.com/deciphernow/greymatter:1.2.0'
+    image_pull_policy: IfNotPresent
+    envvars:
+      greymatter_console_level:
+        value: 'debug'
+        type: 'value'
+      greymatter_api_host:
+        value: '{{ .Values.controlApi.name }}:{{ .Values.controlApi.container_port }}'
+        type: 'value'
+      greymatter_api_key:
+        value: 'xxx'
+        type: 'value'
+      greymatter_api_ssl:
+        value: 'false'
+        type: 'value'
+      basic_object_path:
+        value: '/tmp/mesh/basic_objects'
+        type: 'value'
+      greymatter_api_ssl:
+        type: value
+        value: 'true'
+      greymatter_api_insecure:
+        type: value
+        value: 'true'
+      greymatter_api_sslcert:
+        type: value
+        value: '{{ .Values.controlApi.secret.mount_point }}/{{ .Values.controlApi.secret.secret_keys.cert }}'
+      greymatter_api_sslkey:
+        type: value
+        value: '{{ .Values.controlApi.secret.mount_point }}/{{ .Values.controlApi.secret.secret_keys.key }}'
+
 
 # Sidecar configuration for Control Api
 sidecar:
