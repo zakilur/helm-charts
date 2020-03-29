@@ -12,6 +12,8 @@ global:
     enabled: false
     host: ''
     port: 8500
+  # API Key used to configure the gm_jwtsecurity filter. Refactor this to use the jwt-certs secret.
+  jwt_api_key: dm9sY2Fuby1lcGlkZW1pYy10d2VsZnRoLXRhbWFsZQ==
   # Observables configuration, used to build Control API objects (see control-api/json)
   observables:
     topic: "greymatter"
@@ -27,7 +29,7 @@ global:
   sidecar:
     version: 1.2.1
     dn: C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=greymatter
-   
+  
 controlApi:
   # Name used for the deployment and service resources
   name: control-api                   
@@ -120,6 +122,7 @@ controlApi:
       greymatter_api_sslkey:
         type: value
         value: '{{ .Values.controlApi.secret.mount_point }}/{{ .Values.controlApi.secret.secret_keys.key }}'
+
 
 # Sidecar configuration for Control Api
 sidecar:

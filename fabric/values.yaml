@@ -12,6 +12,8 @@ global:
     enabled: false
     host: ''
     port: 8500
+  # API Key used to configure the gm_jwtsecurity filter. Refactor this to use the jwt-certs secret.
+  jwt_api_key: dm9sY2Fuby1lcGlkZW1pYy10d2VsZnRoLXRhbWFsZQ==
   # Port for Grey Matter Control. Used in control-api and sidecar envvars.
   control_port: 50000 
   # Comma delimited string of namespaces for control to monitor. Also used by prometheus.    
