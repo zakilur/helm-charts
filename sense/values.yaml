@@ -23,7 +23,7 @@ global:
       create: true
   # Global sidecar configuration (supports global version and envvars)
   sidecar:
-    version: 1.2.0
+    version: 1.2.2
     envvars:
       proxy_dynamic:
         type: 'value'
@@ -217,7 +217,7 @@ dashboard:
         value: '/services/catalog/latest/'
       config_server:
         type: "value"
-        value: '/services/gm-control-api/latest/v1.0'
+        value: '/services/control-api/latest/v1.0'
       use_prometheus:
         type: "value"
         value: 'true'
@@ -285,12 +285,13 @@ dashboard:
       limits:
         memory: "40Gi"
         cpu: "2"
-    # Sidecar configuration overrides for prometheus
-    sidecar:
-      envvars:
-        xds_cluster:
-          type: value
-          value: '{{ .Values.prometheus.name }}'
+        
+  # Sidecar configuration overrides for prometheus
+  sidecar_prometheus:
+    envvars:
+      xds_cluster:
+        type: value
+        value: '{{ .Values.prometheus.name }}'
 
 catalog:
   catalog:
@@ -325,7 +326,7 @@ catalog:
         value: 'gmdata'
       config_polling_interval:
         type: value
-        value: '300s'
+        value: '30s'
       port:
         type: value
         value: '{{ $.Values.catalog.port }}'
@@ -355,7 +356,7 @@ catalog:
         value: localhost
       client_port:
         type: value
-        value: '10808'
+        value: '10909'
       client_prefix:
         type: value
         value: '/data'
