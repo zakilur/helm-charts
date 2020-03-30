@@ -13,12 +13,12 @@ CHART := .
 ifeq ($(pwd_name),helm-charts)
 	CHART=$@
 	INSTALLDIR := data/
-	DEPUPDIR := data
+	override DEPUPDIR := data
 endif
 ifeq ($(pwd_name),data)
 	CHART= .
 	INSTALLDIR := 
-	DEPUPDIR := .
+	override DEPUPDIR := .
 endif
 
 
@@ -34,9 +34,12 @@ jwt:
 jwt-gov:
 	helm install $(NAME) $(INSTALLDIR)$(CHART) --set=global.environment=kubernetes $(FLAG)
 
-.PHONY: package-data
-package-data:
-	rm -f $(CHART)/charts/*
+clean-data:
+	echo "$(DEPUPDIR)"
+	rm -f $(DEPUPDIR)/charts/*
+
+package-data: clean-data
+	echo "target hit package-data"
 	helm dep up $(DEPUPDIR)
 
 .PHONY: data
