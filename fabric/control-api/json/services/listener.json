@@ -29,8 +29,7 @@
       "insecureSkipVerify": true{{- else }},
       "endpoint": "http://localhost:10909/jwt"
       {{- end }}
-    },
-    {{-  if (.service.observablesEnabled) }}	
+    }{{-  if (.service.observablesEnabled) }},
     "gm_observables": {	
       "useKafka": true,	
       "topic": "{{.service.serviceName}}",	
