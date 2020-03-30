@@ -449,6 +449,239 @@ jwt:
         secret: jwt-certs
         key: jwt.key.pem
 
+    # Provides a list of authorized users for the JWT service - preloaded with the DNs for GM Control, GM Catalog and the Mesh cert
+    users_cg_name: internal-jwt-users
+    users: |-
+      {
+        "users": [
+            {
+          "label": "CN=quickstart,OU=Engineering,O=Decipher Technology Studios,L=Alexandria,ST=Virginia,C=US",
+          "values": {
+            "email": [
+              "quickstart@deciphernow.com"
+            ],
+            "org": [
+              "www.deciphernow.com"
+            ],
+            "privilege": [
+              "root"
+            ]
+          }
+        },
+        {
+          "label": "CN=localuser,OU=Engineering,O=Decipher Technology Studios,=Alexandria,=Virginia,C=US",
+          "values": {
+            "email": [
+              "localuser@deciphernow.com"
+            ],
+            "org": [
+              "www.deciphernow.com"
+            ],
+            "privilege": [
+              "root"
+            ]
+          }
+        },
+        {
+          "label": "CN=gm-control,OU=Engineering,O=Decipher Technology Studios,=Alexandria,=Virginia,C=US",
+          "values": {
+            "email": [
+                "gm-control@deciphernow.com"
+            ],
+            "org": [
+                "www.deciphernow.com"
+            ],
+            "privilege": [
+                "root"
+            ]
+          }
+        },
+        {
+          "label": "CN=gm-catalog,OU=Engineering,O=Decipher Technology Studios,=Alexandria,=Virginia,C=US",
+          "values": {
+            "email": [
+                "engineering@deciphernow.com"
+            ],
+            "org": [
+                "www.deciphernow.com"
+            ],
+            "privilege": [
+                "root"
+            ]
+          }
+        },
+        {
+          "label": "CN=greymatter,OU=Engineering,O=Decipher Technology Studios,L=Alexandria,ST=Virginia,C=US",
+          "values": {
+            "email": [
+                "engineering@deciphernow.com"
+            ],
+            "org": [
+                "www.deciphernow.com"
+            ],
+            "privilege": [
+                "root"
+            ]
+          }
+        },        
+        {
+          "label": "edge.quickstart.greymatter.io,O=SPIRE,C=US",
+          "values": {
+            "email": [
+                "engineering@deciphernow.com"
+            ],
+            "org": [
+                "www.deciphernow.com"
+            ],
+            "privilege": [
+                "root"
+            ]
+          }
+        },
+                {
+          "label": "catalog.quickstart.greymatter.io,O=SPIRE,C=US",
+          "values": {
+            "email": [
+                "engineering@deciphernow.com"
+            ],
+            "org": [
+                "www.deciphernow.com"
+            ],
+            "privilege": [
+                "root"
+            ]
+          }
+        },
+        {
+          "label": "dashboard.quickstart.greymatter.io,O=SPIRE,C=US",
+          "values": {
+            "email": [
+                "engineering@deciphernow.com"
+            ],
+            "org": [
+                "www.deciphernow.com"
+            ],
+            "privilege": [
+                "root"
+            ]
+          }
+        },
+        {
+          "label": "data-internal.quickstart.greymatter.io,O=SPIRE,C=US",
+          "values": {
+            "email": [
+                "engineering@deciphernow.com"
+            ],
+            "org": [
+                "www.deciphernow.com"
+            ],
+            "privilege": [
+                "root"
+            ]
+          }
+        },
+          {
+          "label": "data.quickstart.greymatter.io,O=SPIRE,C=US",
+          "values": {
+            "email": [
+                "engineering@deciphernow.com"
+            ],
+            "org": [
+                "www.deciphernow.com"
+            ],
+            "privilege": [
+                "root"
+            ]
+          }
+        },
+          {
+          "label": "prometheus.quickstart.greymatter.io,O=SPIRE,C=US",
+          "values": {
+            "email": [
+                "engineering@deciphernow.com"
+            ],
+            "org": [
+                "www.deciphernow.com"
+            ],
+            "privilege": [
+                "root"
+            ]
+          }
+        },
+          {
+          "label": "jwt-security.quickstart.greymatter.io,O=SPIRE,C=US",
+          "values": {
+            "email": [
+                "engineering@deciphernow.com"
+            ],
+            "org": [
+                "www.deciphernow.com"
+            ],
+            "privilege": [
+                "root"
+            ]
+          }
+        },
+          {
+          "label": "internal-jwt-security.quickstart.greymatter.io,O=SPIRE,C=US",
+          "values": {
+            "email": [
+                "engineering@deciphernow.com"
+            ],
+            "org": [
+                "www.deciphernow.com"
+            ],
+            "privilege": [
+                "root"
+            ]
+          }
+        },
+          {
+          "label": "control.quickstart.greymatter.io,O=SPIRE,C=US",
+          "values": {
+            "email": [
+                "engineering@deciphernow.com"
+            ],
+            "org": [
+                "www.deciphernow.com"
+            ],
+            "privilege": [
+                "root"
+            ]
+          }
+        },
+          {
+          "label": "control-api.quickstart.greymatter.io,O=SPIRE,C=US",
+          "values": {
+            "email": [
+                "engineering@deciphernow.com"
+            ],
+            "org": [
+                "www.deciphernow.com"
+            ],
+            "privilege": [
+                "root"
+            ]
+          }
+        },
+          {
+          "label": "slo.quickstart.greymatter.io,O=SPIRE,C=US",
+          "values": {
+            "email": [
+                "engineering@deciphernow.com"
+            ],
+            "org": [
+                "www.deciphernow.com"
+            ],
+            "privilege": [
+                "root"
+            ]
+          }
+        }
+        ]
+      }
+
+
 
   redis:
     private_image: true
@@ -589,7 +822,7 @@ internal-jwt:
           }
         },        
         {
-          "label": "spiffe://quickstart.greymatter.io/edge/mTLS",
+          "label": "edge.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -603,7 +836,7 @@ internal-jwt:
           }
         },
                 {
-          "label": "spiffe://quickstart.greymatter.io/catalog/mTLS",
+          "label": "catalog.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -616,8 +849,8 @@ internal-jwt:
             ]
           }
         },
-                {
-          "label": "spiffe://quickstart.greymatter.io/dashboard/mTLS",
+        {
+          "label": "dashboard.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -630,22 +863,8 @@ internal-jwt:
             ]
           }
         },
-                {
-          "label": "spiffe://quickstart.greymatter.io/data-internal/mTLS",
-          "values": {
-            "email": [
-                "engineering@deciphernow.com"
-            ],
-            "org": [
-                "www.deciphernow.com"
-            ],
-            "privilege": [
-                "root"
-            ]
-          }
-        },
-          {
-          "label": "spiffe://quickstart.greymatter.io/data/mTLS",
+        {
+          "label": "data-internal.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -659,7 +878,7 @@ internal-jwt:
           }
         },
           {
-          "label": "spiffe://quickstart.greymatter.io/prometheus/mTLS",
+          "label": "data.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -673,7 +892,7 @@ internal-jwt:
           }
         },
           {
-          "label": "spiffe://quickstart.greymatter.io/jwt-security/mTLS",
+          "label": "prometheus.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -687,7 +906,7 @@ internal-jwt:
           }
         },
           {
-          "label": "spiffe://quickstart.greymatter.io/internal-jwt-security/mTLS",
+          "label": "jwt-security.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -701,7 +920,7 @@ internal-jwt:
           }
         },
           {
-          "label": "spiffe://quickstart.greymatter.io/control/mTLS",
+          "label": "internal-jwt-security.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -715,7 +934,7 @@ internal-jwt:
           }
         },
           {
-          "label": "spiffe://quickstart.greymatter.io/control-api/mTLS",
+          "label": "control.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -729,7 +948,21 @@ internal-jwt:
           }
         },
           {
-          "label": "spiffe://quickstart.greymatter.io/slo/mTLS",
+          "label": "control-api.quickstart.greymatter.io,O=SPIRE,C=US",
+          "values": {
+            "email": [
+                "engineering@deciphernow.com"
+            ],
+            "org": [
+                "www.deciphernow.com"
+            ],
+            "privilege": [
+                "root"
+            ]
+          }
+        },
+          {
+          "label": "slo.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"

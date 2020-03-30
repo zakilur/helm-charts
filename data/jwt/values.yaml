@@ -78,10 +78,8 @@ jwt:
       secret: '{{ .Values.redis.secret.secret_name | default "redis-password" }}'
       key: password
 
-
   # Provides a list of authorized users for the JWT service - preloaded with the DNs for GM Control, GM Catalog and the Mesh cert
-  users_cg_name: jwt-users
-  # A JSON list of users that will be permited access to JWT
+  users_cg_name: internal-jwt-users
   users: |-
     {
       "users": [
@@ -156,7 +154,7 @@ jwt:
         }
       },        
       {
-        "label": "spiffe://quickstart.greymatter.io/edge/mTLS",
+        "label": "edge.quickstart.greymatter.io,O=SPIRE,C=US",
         "values": {
           "email": [
               "engineering@deciphernow.com"
@@ -170,7 +168,7 @@ jwt:
         }
       },
               {
-        "label": "spiffe://quickstart.greymatter.io/catalog/mTLS",
+        "label": "catalog.quickstart.greymatter.io,O=SPIRE,C=US",
         "values": {
           "email": [
               "engineering@deciphernow.com"
@@ -183,8 +181,8 @@ jwt:
           ]
         }
       },
-              {
-        "label": "spiffe://quickstart.greymatter.io/dashboard/mTLS",
+      {
+        "label": "dashboard.quickstart.greymatter.io,O=SPIRE,C=US",
         "values": {
           "email": [
               "engineering@deciphernow.com"
@@ -197,22 +195,8 @@ jwt:
           ]
         }
       },
-              {
-        "label": "spiffe://quickstart.greymatter.io/data-internal/mTLS",
-        "values": {
-          "email": [
-              "engineering@deciphernow.com"
-          ],
-          "org": [
-              "www.deciphernow.com"
-          ],
-          "privilege": [
-              "root"
-          ]
-        }
-      },
-        {
-        "label": "spiffe://quickstart.greymatter.io/data/mTLS",
+      {
+        "label": "data-internal.quickstart.greymatter.io,O=SPIRE,C=US",
         "values": {
           "email": [
               "engineering@deciphernow.com"
@@ -226,7 +210,7 @@ jwt:
         }
       },
         {
-        "label": "spiffe://quickstart.greymatter.io/prometheus/mTLS",
+        "label": "data.quickstart.greymatter.io,O=SPIRE,C=US",
         "values": {
           "email": [
               "engineering@deciphernow.com"
@@ -240,7 +224,7 @@ jwt:
         }
       },
         {
-        "label": "spiffe://quickstart.greymatter.io/jwt-security/mTLS",
+        "label": "prometheus.quickstart.greymatter.io,O=SPIRE,C=US",
         "values": {
           "email": [
               "engineering@deciphernow.com"
@@ -254,7 +238,7 @@ jwt:
         }
       },
         {
-        "label": "spiffe://quickstart.greymatter.io/internal-jwt-security/mTLS",
+        "label": "jwt-security.quickstart.greymatter.io,O=SPIRE,C=US",
         "values": {
           "email": [
               "engineering@deciphernow.com"
@@ -268,7 +252,7 @@ jwt:
         }
       },
         {
-        "label": "spiffe://quickstart.greymatter.io/control/mTLS",
+        "label": "internal-jwt-security.quickstart.greymatter.io,O=SPIRE,C=US",
         "values": {
           "email": [
               "engineering@deciphernow.com"
@@ -282,7 +266,7 @@ jwt:
         }
       },
         {
-        "label": "spiffe://quickstart.greymatter.io/control-api/mTLS",
+        "label": "control.quickstart.greymatter.io,O=SPIRE,C=US",
         "values": {
           "email": [
               "engineering@deciphernow.com"
@@ -296,7 +280,21 @@ jwt:
         }
       },
         {
-        "label": "spiffe://quickstart.greymatter.io/slo/mTLS",
+        "label": "control-api.quickstart.greymatter.io,O=SPIRE,C=US",
+        "values": {
+          "email": [
+              "engineering@deciphernow.com"
+          ],
+          "org": [
+              "www.deciphernow.com"
+          ],
+          "privilege": [
+              "root"
+          ]
+        }
+      },
+        {
+        "label": "slo.quickstart.greymatter.io,O=SPIRE,C=US",
         "values": {
           "email": [
               "engineering@deciphernow.com"
@@ -311,7 +309,7 @@ jwt:
       }
       ]
     }
-    
+  
 redis:
   # Name used for the redis deployment and service resources
   name: redis
