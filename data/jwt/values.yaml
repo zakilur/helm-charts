@@ -20,13 +20,13 @@ global:
     enabled: false
 
   sidecar:
-    version: 1.2.1
+    version: 1.2.2
 
 jwt:
   # Name used for the deployment and service resources
   name: jwt-security
   version: '1.0.1'
-  image: 'docker-dev.production.deciphernow.com/deciphernow/gm-jwt-security:{{ tpl $.Values.jwt.version $ }}'
+  image: 'docker.production.deciphernow.com/deciphernow/gm-jwt-security:{{ tpl $.Values.jwt.version $ }}'
   command: ['/bin/sh']
   args:
     [
@@ -352,12 +352,8 @@ sidecar:
   secret:
     enabled: true
     secret_name: sidecar-certs
-    mount_point: /etc/proxy/tls/sidecar/
-    secret_keys:
-      ca: ca.crt
-      key: server.key
-      cert: server.crt
-  image: 'docker-dev.production.deciphernow.com/deciphernow/gm-proxy:{{ tpl $.Values.sidecar.version $ }}'
+    mount_point: /etc/proxy/tls/sidecar
+  image: 'docker.production.deciphernow.com/deciphernow/gm-proxy:{{ tpl $.Values.sidecar.version $ }}'
   image_pull_policy: IfNotPresent
   resources:
     limits:

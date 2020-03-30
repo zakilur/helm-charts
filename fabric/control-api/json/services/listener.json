@@ -20,7 +20,7 @@
     },
     "gm_jwtsecurity": {
       "apiKey": "{{ .Values.global.jwt_api_key }}",
-      "jwtHeaderName": "userpolicy"{{ if (not .Values.global.spire.enabled) }},
+      "jwtHeaderName": "userpolicy"{{ if and (not .Values.global.spire.enabled) .service.secret.enabled}},
       "endpoint": "https://localhost:10909/jwt",
       "useTls": true,
       "caPath": "{{ .service.secret.mount_point }}/ca.crt",
@@ -36,9 +36,8 @@
       "topic": "{{.service.serviceName}}",	
       "eventTopic": "{{ .Values.global.observables.topic }}",	
       "kafkaServerConnection": "{{ .Values.global.observables.kafkaServerConnection }}"	
-    },	
-    {{- end }}	
-    {{- if .service.secret.enabled }}	
+    }
+    {{- end }}{{- if .service.secret.enabled }},
     "gm_impersonation": {	
       "servers": "{{ .Values.services.edge.egressDn }}{{- if not (eq .service.serviceName "dashboard") -}}|{{ .Values.global.sidecar.dn }}{{- end -}}"	
     }
