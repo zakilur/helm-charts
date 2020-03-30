@@ -79,7 +79,7 @@ jwt:
       key: password
 
   # Provides a list of authorized users for the JWT service - preloaded with the DNs for GM Control, GM Catalog and the Mesh cert
-  users_cg_name: internal-jwt-users
+  users_cg_name: jwt-users
   users: |-
     {
       "users": [
