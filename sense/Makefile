@@ -1,23 +1,23 @@
 
 WAITERSACHECK=$(shell kubectl get sa waiter-sa | tail -n +2 | awk '{if ($$1=="waiter-sa") print "present"}')
 ifeq (${WAITERSACHECK},present)
-	FLAG=--set=global.waiter.service_account.create=false
+	FLAG-SENSE=--set=global.waiter.service_account.create=false
 else
-	FLAG=--set=global.waiter.service_account.create=true
+	FLAG-SENSE=--set=global.waiter.service_account.create=true
 endif
 
 pwd_name := $(notdir $(PWD))
 
-NAME:=sense
-CHART := .
+NAME-SENSE:=sense
+CHART-SENSE := .
 
 ifeq ($(pwd_name),helm-charts)
-	CHART=$@
+	CHART-SENSE=$@
 	INSTALLDIR := sense/
 	override DEPUPDIR-SENSE := sense
 endif
 ifeq ($(pwd_name),sense)
-	CHART= .
+	CHART-SENSE= .
 	INSTALLDIR := 
 	override DEPUPDIR-SENSE := .
 endif
@@ -25,15 +25,15 @@ endif
 
 .PHONY: catalog
 catalog:
-	helm install $(NAME) $(INSTALLDIR)$(CHART) --set=global.environment=kubernetes $(FLAG)
+	helm install $(NAME-SENSE) $(INSTALLDIR)$(CHART-SENSE) --set=global.environment=kubernetes $(FLAG-SENSE)
 
 .PHONY: dashboard
 dashboard:
-	helm install $(NAME) $(INSTALLDIR)$(CHART) --set=global.environment=kubernetes $(FLAG)
+	helm install $(NAME-SENSE) $(INSTALLDIR)$(CHART-SENSE) --set=global.environment=kubernetes $(FLAG-SENSE)
 
 .PHONY: slo
 slo:
-	helm install $(NAME) $(INSTALLDIR)$(CHART) --set=global.environment=kubernetes $(FLAG)
+	helm install $(NAME-SENSE) $(INSTALLDIR)$(CHART-SENSE) --set=global.environment=kubernetes $(FLAG-SENSE)
 
 clean-sense:
 	echo "$(DEPUPDIR-SENSE)"
@@ -45,8 +45,8 @@ package-sense: clean-sense
 
 .PHONY: sense
 sense: package-sense
-	helm install $(NAME) $(CHART) --set=global.environment=kubernetes $(FLAG)
+	helm install $(NAME-SENSE) $(CHART-SENSE) --set=global.environment=kubernetes $(FLAG-SENSE)
 
 .PHONY: remove-sense
 remove-sense:
-	helm uninstall $(NAME)
+	helm uninstall $(NAME-SENSE)

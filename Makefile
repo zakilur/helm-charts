@@ -29,24 +29,11 @@ minikube:
 #   helm install greymatter -f greymatter.yaml -f greymatter-secrets.yaml -f credentials.yaml --set global.environment=kubernetes -n gm-deploy	
 #   ./ci/scripts/show-voyager.sh
 
-clean:
-	rm -rf fabric/charts
-	rm -rf edge/charts
-	rm -rf data/charts
-	rm -rf sense/charts
+clean: clean-fabric clean-data clean-sense
 
-dev-dep: clean
-	helm dep up fabric/ --skip-refresh
-	helm dep up edge/ --skip-refresh
-	helm dep up data/ --skip-refresh
-	helm dep up sense/ --skip-refresh
+dev-dep: clean package-fabric package-data package-sense
 
-# dep: clean
-# 	helm dep up greymatter/
-
-install: dev-dep
-	@echo "installing greymatter helm charts"
-	helm install greymatter -f ./custom.yaml --name gm-deploy
+install: dev-dep fabric data sense
 
 destroy:
 	minikube delete
