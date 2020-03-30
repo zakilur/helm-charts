@@ -9,16 +9,17 @@ pwd_name := $(notdir $(PWD))
 
 NAME:=fabric
 CHART := .
+DEPUPDIR-FABRIC:=fabric
 
 ifeq ($(pwd_name),helm-charts)
 	CHART=$@
 	INSTALLDIR := fabric/
-	DEPUPDIR := data
+	override DEPUPDIR-FABRIC:=fabric
 endif
 ifeq ($(pwd_name),fabric)
-	CHART = .
+	CHART= .
 	INSTALLDIR := 
-	DEPUPDIR := .
+	override DEPUPDIR-FABRIC := .
 endif
 
 .PHONY: control
@@ -29,10 +30,13 @@ control:
 control-api:
 	helm install $(NAME) $(INSTALLDIR)$(CHART)  --set=global.environment=kubernetes $(FLAG)
 
-.PHONY: package-fabric
-package-fabric:
-	rm -f $(CHART)/charts/*
-	helm dep up $(DEPUPDIR)
+clean-fabric:
+	echo "DEPDIR: $(DEPUPDIR-FABRIC)"
+	rm -f $(DEPUPDIR-FABRIC)/charts/*
+
+package-fabric: clean-fabric
+	echo "target hit package-fabric"
+	helm dep up $(DEPUPDIR-FABRIC)
 
 .PHONY: fabric
 fabric: package-fabric
@@ -41,3 +45,8 @@ fabric: package-fabric
 .PHONY: remove-fabric
 remove-fabric:
 	helm uninstall $(NAME)
+
+.PHONY: name
+name:
+	echo $(pwd_name)
+	echo $(DEPUPDIR-FABRIC)

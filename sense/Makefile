@@ -14,12 +14,12 @@ CHART := .
 ifeq ($(pwd_name),helm-charts)
 	CHART=$@
 	INSTALLDIR := sense/
-	override DEPUPDIR := sense
+	override DEPUPDIR-SENSE := sense
 endif
 ifeq ($(pwd_name),sense)
 	CHART= .
 	INSTALLDIR := 
-	override DEPUPDIR := .
+	override DEPUPDIR-SENSE := .
 endif
 
 
@@ -36,12 +36,12 @@ slo:
 	helm install $(NAME) $(INSTALLDIR)$(CHART) --set=global.environment=kubernetes $(FLAG)
 
 clean-sense:
-	echo "$(DEPUPDIR)"
-	rm -f $(DEPUPDIR)/charts/*
+	echo "$(DEPUPDIR-SENSE)"
+	rm -f $(DEPUPDIR-SENSE)/charts/*
 
 package-sense: clean-sense
 	echo "target hit package-sense"
-	helm dep up $(DEPUPDIR)
+	helm dep up $(DEPUPDIR-SENSE)
 
 .PHONY: sense
 sense: package-sense
