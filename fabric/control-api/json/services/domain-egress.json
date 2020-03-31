@@ -6,6 +6,7 @@
   "redirects": null,
   "gzip_enabled": false,
   "cors_config": null,
+  "custom_headers": [{"key": "x-forwarded-proto", "value": "https"}],
   "aliases": null{{- if and (.service.secret.enabled) (not .Values.global.spire.enabled) }},
   "ssl_config": {
       "protocols": [

@@ -6,6 +6,8 @@
     "redirects": null,
     "gzip_enabled": false,
     "cors_config": null,
+    "force_https": false,
+    "custom_headers": [{"key": "x-forwarded-proto", "value": "https"}],
     "aliases": null{{ if and .Values.services.edge.egress.secret.enabled (not .Values.global.spire.enabled) }},
     "force_https": true,
     "ssl_config": {

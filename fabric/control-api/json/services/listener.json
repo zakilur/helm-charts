@@ -39,8 +39,7 @@
     {{- end }}{{- if .service.secret.enabled }},
     "gm_impersonation": {	
       "servers": "{{ .Values.services.edge.egressDn }}{{- if not (eq .service.serviceName "dashboard") -}}|{{ .Values.global.sidecar.dn }}{{- end -}}"	
-    }
-    {{- end }}
+    }{{- end }}
   },
   "tracing_config": null{{- if .Values.global.spire.enabled }},
   "secret": {

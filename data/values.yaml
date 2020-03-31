@@ -454,6 +454,7 @@ jwt:
     users: |-
       {
         "users": [
+          
             {
           "label": "CN=quickstart,OU=Engineering,O=Decipher Technology Studios,L=Alexandria,ST=Virginia,C=US",
           "values": {
@@ -525,7 +526,7 @@ jwt:
           }
         },        
         {
-          "label": "edge.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=edge.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -539,7 +540,7 @@ jwt:
           }
         },
                 {
-          "label": "catalog.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=catalog.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -553,7 +554,7 @@ jwt:
           }
         },
         {
-          "label": "dashboard.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=dashboard.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -567,7 +568,7 @@ jwt:
           }
         },
         {
-          "label": "data-internal.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=data-internal.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -581,7 +582,7 @@ jwt:
           }
         },
           {
-          "label": "data.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=data.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -595,7 +596,7 @@ jwt:
           }
         },
           {
-          "label": "prometheus.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=prometheus.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -609,7 +610,7 @@ jwt:
           }
         },
           {
-          "label": "jwt-security.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=jwt-security.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -623,7 +624,7 @@ jwt:
           }
         },
           {
-          "label": "internal-jwt-security.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=internal-jwt-security.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -637,7 +638,7 @@ jwt:
           }
         },
           {
-          "label": "control.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=control.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -651,7 +652,7 @@ jwt:
           }
         },
           {
-          "label": "control-api.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=control-api.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -665,7 +666,7 @@ jwt:
           }
         },
           {
-          "label": "slo.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=slo.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -822,7 +823,7 @@ internal-jwt:
           }
         },        
         {
-          "label": "edge.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=edge.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -836,7 +837,7 @@ internal-jwt:
           }
         },
                 {
-          "label": "catalog.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=catalog.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -850,7 +851,7 @@ internal-jwt:
           }
         },
         {
-          "label": "dashboard.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=dashboard.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -864,7 +865,7 @@ internal-jwt:
           }
         },
         {
-          "label": "data-internal.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=data-internal.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -878,7 +879,7 @@ internal-jwt:
           }
         },
           {
-          "label": "data.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=data.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -892,7 +893,7 @@ internal-jwt:
           }
         },
           {
-          "label": "prometheus.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=prometheus.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -906,7 +907,7 @@ internal-jwt:
           }
         },
           {
-          "label": "jwt-security.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=jwt-security.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -920,7 +921,7 @@ internal-jwt:
           }
         },
           {
-          "label": "internal-jwt-security.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=internal-jwt-security.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -934,7 +935,7 @@ internal-jwt:
           }
         },
           {
-          "label": "control.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=control.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -948,7 +949,7 @@ internal-jwt:
           }
         },
           {
-          "label": "control-api.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=control-api.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
@@ -962,7 +963,7 @@ internal-jwt:
           }
         },
           {
-          "label": "slo.quickstart.greymatter.io,O=SPIRE,C=US",
+          "label": "CN=slo.quickstart.greymatter.io,O=SPIRE,C=US",
           "values": {
             "email": [
                 "engineering@deciphernow.com"
