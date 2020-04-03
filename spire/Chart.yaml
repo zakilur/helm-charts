@@ -1,5 +1,4 @@
 apiVersion: v2
-appVersion: 2.2.0
 description: Deploys the SPIRE server which signs SVIDs and does Node attestation and resolution
 name: spire
-version: 2.1.1
+version: 2.2.0
