@@ -7,8 +7,77 @@
   "protocol": "http_auto",
   "domain_keys": ["domain-{{ .service.serviceName}}"],
   "tracing_config": null,
-  "active_http_filters": ["gm.metrics"{{- if .service.secret.enabled }}, "gm.impersonation"{{- end }}{{- if and (ne .service.serviceName "jwt-security") (ne .service.serviceName "internal-jwt-security") }}, "gm.jwtsecurity"{{- end}}{{- if (.service.observablesEnabled) }}, "gm.observables"{{- end }}],
+  {{- if .Values.global.spire.enabled }}
+  "secret": {
+    "secret_key": "secret-{{.service.serviceName}}-secret",
+    "secret_name": "spiffe://{{ .Values.global.spire.trust_domain}}/{{.service.serviceName}}",
+    "secret_validation_name": "spiffe://{{ .Values.global.spire.trust_domain}}",
+    "forward_client_cert_details": "APPEND_FORWARD",
+    "set_current_client_cert_details": {
+      "uri": true
+    },
+    "ecdh_curves": [
+        "X25519:P-256:P-521:P-384"
+    ],
+    "subject_names": [
+      "spiffe://{{ .Values.global.spire.trust_domain}}/edge"{{- if eq .service.serviceName "jwt-security" }},
+      "spiffe://{{ .Values.global.spire.trust_domain}}/data"{{- else if eq .service.serviceName "data-internal"}},
+      "spiffe://{{ .Values.global.spire.trust_domain}}/catalog"{{- else if eq .service.serviceName "internal-jwt-security"}},
+      "spiffe://{{ .Values.global.spire.trust_domain}}/data-internal"{{- end }}
+    ]
+  },
+  {{- end }}
+  "active_http_filters": [
+    "gm.metrics",{{- if (.service.observablesEnabled) }},
+    "gm.observables",{{- end }}
+    "envoy.rbac"
+  ],
   "http_filters": {
+    "envoy_rbac": {
+      "rules": {
+          "action": 0,
+          "policies": {
+              "service-admin": {
+                  "permissions": [{
+                      "any": true
+                  }],
+                  "principals": [{
+                      "header": {
+                          "name": "user_dn",
+                          "exact_match": "CN=quickstart,OU=Engineering,O=Decipher Technology Studios,L=Alexandria,ST=Virginia,C=US"
+                      }
+                }]
+              },
+              "services": {
+                "permissions": [
+                  {
+                    "any": true
+                  }
+                ],
+                "principals": [
+                  {
+                    "authenticated": {
+                      "principal_name": {
+                        "regex": "spiffe:\/\/quickstart.greymatter.io\/(.+)"
+                      }
+                    }
+                  }
+                ]
+              },    
+              "product-viewer": {
+                  "permissions": [{
+                      "header": {
+                          "name": ":method",
+                          "exact_match": "GET"
+                      }
+                  }],
+                  "principals": [{
+                      "any": true
+                  }]
+              }
+          }
+      }
+  },
     "gm_metrics": {
       "metrics_port": 8081,
       "metrics_host": "0.0.0.0",
@@ -17,26 +86,12 @@
       "metrics_ring_buffer_size": 4096,
       "prometheus_system_metrics_interval_seconds": 15,
       "metrics_key_function": "none"
-    },
-    "gm_jwtsecurity": {
-      "apiKey": "{{ .Values.global.jwt_api_key }}",
-      "endpoint": "https://localhost:10909/jwt",
-      "jwtHeaderName": "userpolicy"{{- if .service.secret.enabled }},
-      "useTls": true,
-      "caPath": "{{ .service.secret.mount_point }}/ca.crt",
-      "certPath": "{{ .service.secret.mount_point }}/server.crt",
-      "keyPath": "{{ .service.secret.mount_point }}/server.key",
-      "insecureSkipVerify": true{{- end }}
     }{{-  if (.service.observablesEnabled) }},
     "gm_observables": {	
       "useKafka": true,	
       "topic": "{{.service.serviceName}}",	
       "eventTopic": "{{ .Values.global.observables.topic }}",	
       "kafkaServerConnection": "{{ .Values.global.observables.kafkaServerConnection }}"	
-    }
-    {{- end }}{{- if .service.secret.enabled }},
-    "gm_impersonation": {	
-      "servers": "{{ .Values.services.edge.egressDn }}{{- if not (eq .service.serviceName "dashboard") -}}|{{ .Values.global.sidecar.dn }}{{- end -}}"	
     }
     {{- end }}
   }

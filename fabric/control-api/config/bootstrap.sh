@@ -103,25 +103,30 @@ for d in */; do
     cd $MESH_CONFIG_DIR/edge
 done
 
-cd $MESH_CONFIG_DIR/services
-# After all service + edge objects have been created, we need to add egress jwt routes to each service proxy
-# This is done in another loop because it references internal-jwt & edge keys
-for d in */; do
-    echo "Found service: $d"
-    cd $d
-
-    # Create JWT egress routes for each proxy
-    create_or_update route route-jwt-slash.json
-    create_or_update route route-jwt.json
-
-    cd $MESH_CONFIG_DIR/services
-done
-
 cd $MESH_CONFIG_DIR/special
+
+if $SPIRE_ENABLED; then
+    echo "Adding internal clusters"
+    for cl in $(ls internal-cluster-*.json); do
+        create_or_update "cluster" $cl
+    done
+
+    echo "Adding internal shared_rules"
+    for sr in $(ls internal-shared-rules-*.json); do
+        create_or_update "shared_rules" $sr
+    done
+fi
+
 echo "Adding additional Special Routes"
 for rte in $(ls route-*.json); do
     create_or_update "route" $rte
 done
+
+if $SPIRE_ENABLED; then
+    for rte in $(ls local-route-*.json); do
+        create_or_update "route" $rte
+    done
+fi
 
 # greymatter create route < route-data-jwt-slash.json
 # greymatter create route < route-data-jwt.json

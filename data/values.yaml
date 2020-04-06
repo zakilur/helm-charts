@@ -14,6 +14,10 @@ global:
   edge_port: 10808
   # Port for Grey Matter Control. Used in sidecar envvars
   control_port: 50000
+  # Whether or not to use spire for cert management and the trust domain
+  spire:
+    enabled: true
+    trust_domain: quickstart.greymatter.io
 
   # Default configuration for all sidecars in all subcharts
   sidecar: 
@@ -40,6 +44,10 @@ global:
       envoy_admin_log_path:
         type: 'value'
         value: '/dev/stdout'
+      # SPIRE: If spire is enabled, uncomment spire_path
+      spire_path:
+        type: 'value'
+        value: '/run/spire/socket/agent.sock'
 
   # Configures the init container used to wait on various deployments to be ready
   waiter:
@@ -66,6 +74,7 @@ data:
       enabled: false
     # If set, enables tls using the secret specified in secret_name
     secret:
+      enabled: true
       secret_name: data-secrets
     envvars:
       uses3:
@@ -117,7 +126,11 @@ data:
         key: database
       gmdata_use_tls:
         type: value
-        value: 'true'
+        value: '{{ not .Values.global.spire.enabled }}'
+      # SPIRE: If spire is enabled, use bind_address
+      bind_address:
+        type: value
+        value: 127.0.0.1
       gmdata_cert:
         type: secret
         secret: jwt-certs
@@ -139,7 +152,6 @@ data:
       client_jwt_endpoint_address:
         type: value
         value: localhost
-      # Use data's egress listener port
       client_jwt_endpoint_port:
         type: value
         value: '10909'
@@ -148,7 +160,7 @@ data:
         value: /jwt
       client_jwt_endpoint_use_tls:
         type: value
-        value: 'true'
+        value: '{{ not .Values.global.spire.enabled }}'
       client_jwt_endpoint_cert:
         type: secret
         secret: jwt-certs
@@ -235,6 +247,7 @@ internal-data:
       xds_cluster:
         type: value
         value: 'data-internal'
+
   data:
     # Name used for the deployment and service resources
     name: data-internal
@@ -242,6 +255,7 @@ internal-data:
     image: 'docker.production.deciphernow.com/deciphernow/gm-data:{{ .Values.data.version }}'
     # If set, enables tls using the secret specified in secret_name
     secret:
+      enabled: true
       secret_name: internal-data-secrets
     # Security context for the statefulset if enabled
     security_context:
@@ -270,7 +284,11 @@ internal-data:
         value: greymatter
       gmdata_use_tls:
         type: value
-        value: 'true'
+        value: '{{ not .Values.global.spire.enabled }}'
+      # SPIRE: If spire is enabled, use bind_address
+      bind_address:
+        type: value
+        value: 127.0.0.1
       jwt_pub:
         type: secret
         secret: internal-jwt-security-secret
@@ -279,6 +297,26 @@ internal-data:
         type: secret
         secret: internal-jwt-security-secret
         key: jwt.api_key
+      # SPIRE: If spire is enabled, uncomment the client env vars
+      client_prefix:
+        type: value
+        value: /services/data-internal/1.0.0
+      client_jwt_prefix:
+        type: value
+        value: /jwt
+      client_jwt_endpoint_address:
+        type: value
+        value: localhost
+      client_jwt_endpoint_port:
+        type: value
+        value: '10909'
+      client_jwt_endpoint_prefix:
+        type: value
+        value: /jwt
+      client_jwt_endpoint_use_tls:
+        type: value
+        value: '{{ not .Values.global.spire.enabled }}'
+
 
   mongo:
     # Name used for the mongo deployment and service resources
@@ -379,7 +417,7 @@ jwt:
         key: jwt.api_key
       enable_tls:
         type: value
-        value: 'true'
+        value: '{{ not .Values.global.spire.enabled }}'
       zerolog_level:
         type: value
         value: 'info'
@@ -392,7 +430,11 @@ jwt:
       redis_db:
         type: value
         value: "0"
-      https_port:
+      # SPIRE: If spire is enabled, don't set https_port, set http_port
+      #https_port:
+      #  type: value
+      #  value: '3000'
+      http_port:
         type: value
         value: '3000'
       server_trust:
@@ -419,6 +461,7 @@ internal-jwt:
       xds_cluster:
         type: value
         value: 'internal-jwt-security'
+
   jwt:
     # Name used for the deployment and service resources
     name: internal-jwt-security
@@ -439,7 +482,7 @@ internal-jwt:
         key: jwt.api_key
       enable_tls:
         type: value
-        value: 'true'
+        value: '{{ not .Values.global.spire.enabled }}'
       zerolog_level:
         type: value
         value: 'info'
@@ -452,7 +495,11 @@ internal-jwt:
       redis_db:
         type: value
         value: "0"
-      https_port:
+      # SPIRE: If spire is enabled, don't set https_port, set http_port
+      #https_port:
+      #  type: value
+      #  value: '3000'
+      http_port:
         type: value
         value: '3000'
       server_trust:
@@ -542,7 +589,21 @@ internal-jwt:
                 "root"
             ]
           }
-        }]
+        },
+      {
+        "label": "O=SPIRE,C=US",
+        "values": {
+          "email": [
+              "engineering@deciphernow.com"
+          ],
+          "org": [
+              "www.deciphernow.com"
+          ],
+          "privilege": [
+              "root"
+          ]
+        }
+      }]
       }
 
 

@@ -16,6 +16,10 @@ global:
   jwt_api_key: dm9sY2Fuby1lcGlkZW1pYy10d2VsZnRoLXRhbWFsZQ==
   # Port for Grey Matter Control. Used in control-api and sidecar envvars.
   control_port: 50000 
+  # Whether or not to use spire for cert management and the trust domain
+  spire:
+    enabled: true
+    trust_domain: quickstart.greymatter.io
   # Comma delimited string of namespaces for control to monitor. Also used by prometheus.    
   control_additional_namespaces:
   # Configures the init container used to wait on various deployments to be ready
@@ -50,6 +54,10 @@ global:
       envoy_admin_log_path:
         type: 'value'
         value: '/dev/stdout'
+      # SPIRE: If spire is enabled, uncomment spire_path
+      spire_path:
+        type: 'value'
+        value: '/run/spire/socket/agent.sock'
 
 control:
   control:
@@ -60,7 +68,7 @@ control:
     # Number of replicas for the deployment
     replicas: 1
     # Version of control
-    version: 1.2.2
+    version: 1.2.3
     image: 'docker.production.deciphernow.com/deciphernow/gm-control:{{ $.Values.control.version }}'
     # When to pull images, used in the deployment
     image_pull_policy: IfNotPresent
@@ -92,7 +100,7 @@ control:
         value: "{{ .Values.control.secret.insecure }}"
       gm_control_api_ssl:
         type: 'value'
-        value: "{{ .Values.control.secret.enabled }}"
+        value: "{{- if .Values.global.spire.enabled }}false{{- else }}{{ .Values.control.secret.enabled }}{{- end }}"
       gm_control_api_sslcert:
         type: 'value'
         value: "{{ .Values.control.secret.mount_point }}/{{ .Values.control.secret.secret_keys.cert }}"
@@ -171,7 +179,7 @@ control-api:
     envvars:
       gm_control_api_use_tls:
         type: 'value'
-        value: "{{ .Values.controlApi.secret.enabled }}"
+        value: "{{- if .Values.global.spire.enabled }}false{{- else}}{{ .Values.controlApi.secret.enabled }}{{- end }}"
       gm_control_api_ca_cert_path:
         type: 'value'
         value: "{{ .Values.controlApi.secret.mount_point}}/{{ .Values.controlApi.secret.secret_keys.ca }}"
@@ -216,6 +224,16 @@ control-api:
     pvc:
       size: 1Gi
 
+  # SPIRE: If spire is enabled, uncomment these bootstrap envvars
+  bootstrap:
+    envvars:
+      greymatter_api_ssl:
+        type: value
+        value: '{{ not .Values.global.spire.enabled }}'
+      spire_enabled:
+        type: 'value'
+        value: '{{ .Values.global.spire.enabled }}'
+
 
 # Services list used to create Grey Matter configuration objects in control-api/config
 services:
@@ -234,8 +252,7 @@ services:
     version: 1.0.1
     minInstances: 1
     maxInstances: 1
-    secret:          
-      egressTLS: true
+    secret:
       enabled: true  
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
@@ -270,8 +287,7 @@ services:
     routes:
       - '/services/dashboard/latest'
       - '/services/dashboard/latest/'
-    secret:          
-      egressTLS: true
+    secret:
       enabled: true  
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
@@ -289,8 +305,8 @@ services:
     serviceName: 'prometheus'
     observablesEnabled: false
     port: 9090
-    secret:          
-      egressTLS: false
+    secret:
+      enabled: false
 
   data:
     catalogEnabled: true
@@ -309,8 +325,7 @@ services:
     routes:
       - '/services/data/{{ $.Values.services.data.version }}'
       - '/services/data/{{ $.Values.services.data.version }}/'
-    secret:          
-      egressTLS: true
+    secret:
       enabled: true  
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
@@ -335,8 +350,7 @@ services:
     owner: 'Decipher'
     version: 1.0.0
     jwt_prefix: /jwt
-    secret:          
-      egressTLS: true
+    secret:
       enabled: true  
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
@@ -361,8 +375,7 @@ services:
     routes:
       - '/services/jwt-security/{{ $.Values.services.jwt.version }}'
       - '/services/jwt-security/{{ $.Values.services.jwt.version }}/'
-    secret:          
-      egressTLS: true
+    secret:
       enabled: true  
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
@@ -384,9 +397,8 @@ services:
     documentation: ''
     owner: 'Decipher'
     version: '0.2.0'
-    secret:          
-      enabled: true  
-      egressTLS: true
+    secret:
+      enabled: true
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
       insecure: true
@@ -411,8 +423,7 @@ services:
       - '/services/control-api/{{ $.Values.services.controlApi.version }}'
       - '/services/control-api/{{ $.Values.services.controlApi.version }}/'
     secret:          
-      enabled: true  
-      egressTLS: true
+      enabled: true
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
       insecure: true
@@ -437,16 +448,24 @@ services:
     documentation: ''
     owner: 'Decipher'
     version: '1.2'
-    secret:          
-      enabled: true 
-      egressTLS: true
-      secret_name: sidecar-certs
-      mount_point: /etc/proxy/tls/edge
-      insecure: true
-      secret_keys:
-        cert: server.crt
-        key: server.key
-        ca: ca.crt
+    ingress:
+      secret:
+        enabled: true
+        secret_name: greymatter-edge-ingress
+        mount_point: /etc/proxy/tls/edge
+        secret_keys:
+          cert: server.crt
+          key: server.key
+          ca: ca.crt
+    egress:
+      secret:
+        enabled: false
+        secret_name: greymatter-edge-egress
+        mount_point: /etc/proxy/tls/sidecar
+        secret_keys:
+          cert: server.crt
+          key: server.key
+          ca: ca.crt
 
   slo:
     catalogEnabled: true
@@ -463,9 +482,8 @@ services:
     routes:
       - '/services/slo/{{ $.Values.services.slo.version }}'
       - '/services/slo/{{ $.Values.services.slo.version }}/'
-    secret:          
-      enabled: true  
-      egressTLS: true
+    secret:
+      enabled: true
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
       insecure: true

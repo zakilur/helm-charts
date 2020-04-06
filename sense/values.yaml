@@ -14,6 +14,10 @@ global:
     port: 8500
   # Port for Grey Matter Control. Used in catalog init and sidecar envvars.
   control_port: 50000
+  # Whether or not to use spire for cert management and the trust domain
+  spire:
+    enabled: true
+    trust_domain: quickstart.greymatter.io
   # Comma delimited string of namespaces for control to monitor. Also used by prometheus.    
   control_additional_namespaces:                   
   # Configures the init container used to wait on various deployments to be ready
@@ -21,6 +25,7 @@ global:
     image: deciphernow/k8s-waiter:latest
     service_account: 
       create: true
+      name: waiter-sa
   # Global sidecar configuration (supports global version and envvars)
   sidecar:
     version: 1.2.2
@@ -43,7 +48,10 @@ global:
       envoy_admin_log_path:
         type: 'value'
         value: '/dev/stdout'
-        name: waiter-sa
+      # SPIRE: If spire is enabled, uncomment spire_path
+      spire_path:
+        type: 'value'
+        value: '/run/spire/socket/agent.sock'
 
 slo:   
   slo:
@@ -105,7 +113,7 @@ slo:
       # SSL for the SLO service. Enabled if slo.secret.enabled is true.
       service_ssl_enabled:
         type: value
-        value: "{{- if .Values.slo.secret.enabled }}true{{- else }}false{{- end }}"
+        value: "{{- if .Values.global.spire.enabled }}false{{- else if .Values.slo.secret.enabled }}true{{- else }}false{{- end }}"
       service_ssl_ca:
         type: value
         value: "{{ .Values.slo.secret.mount_point}}/{{ .Values.slo.secret.secret_keys.ca }}"
@@ -205,6 +213,7 @@ dashboard:
         memory: '6Gi'
         cpu: '2'
     secret:
+      enabled: true
       secret_name: dashboard-certs
       mount_point: /certs
       secret_keys:
@@ -235,7 +244,7 @@ dashboard:
         value: '15000'
       server_ssl_enabled:
         type: "value"
-        value: "true"
+        value: "{{ not .Values.global.spire.enabled }}"
       server_ssl_ca:
         type: "value"
         value: '{{ .Values.dashboard.secret.mount_point}}/{{ .Values.dashboard.secret.secret_keys.ca }}'
@@ -298,7 +307,7 @@ catalog:
     # Name used for the deployment and service resources
     name: catalog
     # GM Catalog version
-    version: latest
+    version: 1.0
     image: docker.production.deciphernow.com/deciphernow/gm-catalog:{{ $.Values.catalog.version }}
     # When to pull container images, used in the deployment
     image_pull_policy: IfNotPresent
@@ -341,7 +350,7 @@ catalog:
         value: 'edge'
       use_tls:
         type: value
-        value: 'true'
+        value: '{{ not .Values.global.spire.enabled }}'
       ca_cert_path:
         type: value
         value: '/etc/pki/{{ .Values.catalog.secret.secret_keys.ca }}'
@@ -362,7 +371,7 @@ catalog:
         value: '/data'
       client_use_tls:
         type: value
-        value: 'true'
+        value: '{{ not .Values.global.spire.enabled }}'
       client_cert:
         type: secret
         secret: sidecar-certs
@@ -389,7 +398,7 @@ catalog:
         value: 'world'
       client_identity:
         type: value
-        value: 'C=US,ST=Virginia,L=Alexandria,O=Decipher Technology Studios,OU=Engineering,CN=greymatter'
+        value: 'CN=greymatter,OU=Engineering,O=Decipher Technology Studios,L=Alexandria,ST=Virginia,C=US'
       client_email:
         type: value
         value: 'engineering@deciphernow.com'
@@ -399,6 +408,13 @@ catalog:
         xds_cluster:
           type: value
           value: '{{ .Values.catalog.name }}'
+
+    # SPIRE: If spire is enabled, uncomment to set init job use_tls to false
+    init:
+      envvars:
+        use_tls:
+          type: value
+          value: 'false'
 
 # Services list used to configure Catalog, which populates service metadata for GM Dashboard
 services:
@@ -417,9 +433,8 @@ services:
     minInstances: 1
     maxInstances: 1
     data_prefix: "/data"
-    secret:          
-      egressTLS: false
-      enabled: true  
+    secret:
+      enabled: true
       secret_name: sidecar-certs
       mount_point: /etc/pki
       insecure: true
@@ -453,9 +468,8 @@ services:
     routes:
       - '/services/dashboard/latest'
       - '/services/dashboard/latest/'
-    secret:          
-      egressTLS: false
-      enabled: true  
+    secret:
+      enabled: true
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
       insecure: true
@@ -472,8 +486,8 @@ services:
     serviceName: 'prometheus'
     observablesEnabled: false
     port: 9090
-    secret:          
-      egressTLS: false
+    secret:
+      enabled: false
 
   data:
     catalogEnabled: true
@@ -490,9 +504,8 @@ services:
     routes:
       - '/services/data/{{ $.Values.services.data.version }}'
       - '/services/data/{{ $.Values.services.data.version }}/'
-    secret:          
-      egressTLS: false
-      enabled: true  
+    secret:
+      enabled: true
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
       insecure: true
@@ -514,9 +527,8 @@ services:
     name: 'Grey Matter Internal Data'
     owner: 'Decipher'
     version: 1.0.0
-    secret:          
-      egressTLS: false
-      enabled: true  
+    secret:
+      enabled: true
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
       insecure: true
@@ -540,9 +552,8 @@ services:
     routes:
       - '/services/jwt-security/{{ $.Values.services.jwt.version }}'
       - '/services/jwt-security/{{ $.Values.services.jwt.version }}/'
-    secret:          
-      egressTLS: false
-      enabled: true  
+    secret:
+      enabled: true
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
       insecure: true
@@ -563,9 +574,8 @@ services:
     documentation: ''
     owner: 'Decipher'
     version: '0.2.0'
-    secret:          
-      enabled: true  
-      egressTLS: false
+    secret:
+      enabled: true
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
       insecure: true
@@ -589,9 +599,8 @@ services:
     routes:
       - '/services/control-api/{{ $.Values.services.controlApi.version }}'
       - '/services/control-api/{{ $.Values.services.controlApi.version }}/'
-    secret:          
-      enabled: true  
-      egressTLS: false
+    secret:
+      enabled: true
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
       insecure: true
@@ -616,9 +625,8 @@ services:
     documentatio: ''
     owner: 'Decipher'
     version: '1.0.0'
-    secret:          
-      enabled: true  
-      egressTLS: false
+    secret:
+      enabled: true
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/edge
       insecure: true
@@ -642,9 +650,8 @@ services:
     routes:
       - '/services/slo/{{ $.Values.services.slo.version }}'
       - '/services/slo/{{ $.Values.services.slo.version }}/'
-    secret:          
-      enabled: true  
-      egressTLS: false
+    secret:
+      enabled: true
       secret_name: sidecar-certs
       mount_point: /etc/proxy/tls/sidecar
       insecure: true
