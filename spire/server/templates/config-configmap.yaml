@@ -5,9 +5,9 @@ metadata:
   namespace: {{ .Values.global.spire.namespace }}
 data:
   registrar.conf: |-
-    log_level = "info"
+    log_level = "debug"
     log_path = "/dev/stdout"
-    addr = "0.0.0.0:8444"
+    addr = "0.0.0.0:443"
     cluster = "quickstart"
     server_socket_path = "/run/spire/socket/registration.sock"
     trust_domain = "quickstart.greymatter.io"
@@ -23,7 +23,7 @@ data:
       registration_uds_path = "/run/spire/socket/registration.sock"
       trust_domain = "quickstart.greymatter.io"
       data_dir = "/run/spire/data"
-      log_level = "info"
+      log_level = "debug"
       upstream_bundle = true
       default_svid_ttl = "1h"
       ca_subject = {
@@ -41,12 +41,12 @@ data:
         }
       }
 
-      NodeAttestor "k8s_psat" {
+      NodeAttestor "k8s_sat" {
         plugin_data {
           clusters = {
             "quickstart" = {
               service_account_whitelist = ["spire:agent"]
-              audience = ["server"]
+              use_token_review_api_validation = true
             }
           }
         }

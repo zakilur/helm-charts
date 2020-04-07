@@ -36,7 +36,7 @@ spec:
           args:
             - "-t"
             - "30"
-            - "registrar:8444"
+            - "registrar:443"
       containers:
         - name: agent
           image: {{ .Values.agent.image }}
@@ -53,9 +53,6 @@ spec:
             - name: server-bundle
               mountPath: /run/spire/bundle
               readOnly: true
-            - name: agent-token
-              mountPath: /run/spire/token
-              readOnly: false
           livenessProbe:
             exec:
               command:
@@ -78,10 +75,3 @@ spec:
         - name: server-bundle
           configMap:
             name: server-bundle
-        - name: agent-token
-          projected:
-            sources:
-              - serviceAccountToken:
-                  path: agent
-                  expirationSeconds: 7200
-                  audience: server

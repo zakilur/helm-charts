@@ -7,7 +7,7 @@ data:
   agent.conf: |-
     agent {
       data_dir = "/run/spire"
-      log_level = "info"
+      log_level = "debug"
       server_address = "server"
       server_port = "8443"
       socket_path = "/run/spire/socket/agent.sock"
@@ -17,10 +17,9 @@ data:
     }
 
     plugins {
-      NodeAttestor "k8s_psat" {
+      NodeAttestor "k8s_sat" {
         plugin_data {
           cluster = "quickstart"
-          token_path = "/run/spire/token/agent"
         }
       }
 
