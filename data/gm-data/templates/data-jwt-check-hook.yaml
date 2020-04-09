@@ -1,0 +1,58 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{.Values.data.name}}-init
+  annotations:
+    # Run this job after an install or an upgrade
+    "helm.sh/hook": post-install,post-upgrade
+    # If a job with this name already exists, delete it before running this one
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  template:
+    metadata:
+      name: {{ .Values.data.name}}-init
+    spec:
+      restartPolicy: "Never"
+      # We need a SA with read access to the `Endpoints` resource
+      serviceAccountName: {{ .Values.global.waiter.service_account.name }}
+      initContainers:
+        - name: ensure-gm-control-api
+          image: {{ .Values.global.waiter.image }}
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: SERVICE
+            # THIS IS HARDCODED
+              value: control-api
+      containers:
+        - image: {{ tpl .Values.jwtcheck.image . }}
+          name: {{ .Values.data.name }}-init
+          imagePullPolicy: {{ .Values.jwtcheck.image_pull_policy }}
+          command: ["/tmp/jwt-check/jwt-check.sh"]
+          env:
+          {{- include "envvars" (dict "envvar" .Values.jwtcheck.envvars "top" $) | indent 10 }}
+          volumeMounts:
+            {{- if .Values.data.secret }}
+            - name: service-certs
+              mountPath: {{ .Values.jwtcheck.secret.mount_point }}
+            {{- end }}
+            - name: special-config-volume
+              mountPath: /etc/config/mesh/special
+            - name: jwt-check-script-volume
+              mountPath: /tmp/jwt-check
+      volumes:
+        {{- if .Values.data.secret }}
+        - name: service-certs
+          secret:
+            secretName: {{ .Values.jwtcheck.secret.secret_name }}
+        {{- end }}
+        - name: jwt-check-script-volume
+          configMap:
+            name: check-jwt-script
+            defaultMode: 0777
+        - name: special-config-volume
+          configMap:
+            name: special-mesh-config
+      imagePullSecrets:
+        - name: {{ .Values.global.image_pull_secret }}

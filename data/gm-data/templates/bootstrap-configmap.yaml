@@ -1,0 +1,8 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: check-jwt-script
+  namespace: {{ .Release.Namespace }}
+data:
+  check-jwt.sh: |-
+{{ .Files.Get "check/check-jwt.sh" | indent 4 }}
