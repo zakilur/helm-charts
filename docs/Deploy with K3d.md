@@ -9,7 +9,7 @@
 
 ### Cluster Command
 
-- Start Cluster `make k3d`
+- Start Cluster `make k3d` and run `kubectl config use-context greymatter`
 - Delete Cluster `make destroy`
 
 ### Grey Matter Commands
