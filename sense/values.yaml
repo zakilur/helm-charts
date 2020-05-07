@@ -18,6 +18,7 @@ global:
   spire:
     enabled: true
     trust_domain: quickstart.greymatter.io
+    path: '/run/spire/socket/agent.sock'
   # Comma delimited string of namespaces for control to monitor. Also used by prometheus.    
   control_additional_namespaces:                   
   # Configures the init container used to wait on various deployments to be ready
@@ -28,7 +29,7 @@ global:
       name: waiter-sa
   # Global sidecar configuration (supports global version and envvars)
   sidecar:
-    version: 1.3.0
+    version: 1.4.0
     envvars:
       proxy_dynamic:
         type: 'value'
@@ -48,11 +49,6 @@ global:
       envoy_admin_log_path:
         type: 'value'
         value: '/dev/stdout'
-      # SPIRE: If spire is enabled, uncomment spire_path
-      spire_path:
-        type: 'value'
-        value: '/run/spire/socket/agent.sock'
-
 slo:   
   slo:
     # SLO version
@@ -307,7 +303,7 @@ catalog:
     # Name used for the deployment and service resources
     name: catalog
     # GM Catalog version
-    version: 1.0
+    version: 1.0.6
     image: docker-dev.production.deciphernow.com/deciphernow/gm-catalog:{{ $.Values.catalog.version }}
     # When to pull container images, used in the deployment
     image_pull_policy: IfNotPresent
@@ -365,7 +361,7 @@ catalog:
         value: localhost
       client_port:
         type: value
-        value: '10909'
+        value: '{{- if .Values.global.spire.enabled }}10909{{- else}}10808{{- end }}'
       client_prefix:
         type: value
         value: '/data'
@@ -414,7 +410,7 @@ catalog:
       envvars:
         use_tls:
           type: value
-          value: 'false'
+          value: '{{ not .Values.global.spire.enabled }}'
 
 # Services list used to configure Catalog, which populates service metadata for GM Dashboard
 services:
@@ -595,7 +591,7 @@ services:
     capability: 'Mesh'
     documentation:
     owner: 'Decipher'
-    version: '1.3.0'
+    version: '1.4.0'
     routes:
       - '/services/control-api/{{ $.Values.services.controlApi.version }}'
       - '/services/control-api/{{ $.Values.services.controlApi.version }}/'
@@ -624,7 +620,7 @@ services:
     capability: 'Mesh'
     documentatio: ''
     owner: 'Decipher'
-    version: '1.3.0'
+    version: '1.4.0'
     secret:
       enabled: true
       secret_name: sidecar-certs

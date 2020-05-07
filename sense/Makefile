@@ -29,11 +29,11 @@ package-sense: clean-sense
 
 template-sense: package-sense $(BUILD_NUMBER_FILE)
 	mkdir -p $(OUTPUT_PATH)
-	helm template $(NAME-SENSE) . --set=global.environment=kubernetes $(WAITERSACHECK-SENSE) > $(OUTPUT_PATH)/helm-$(NAME-SENSE)$(BN).yaml
+	helm template $(NAME-SENSE) . --set=global.environment=kubernetes $(WAITERSACHECK-SENSE)  -f ../global.yaml > $(OUTPUT_PATH)/helm-$(NAME-SENSE)$(BN).yaml
 
 .PHONY: sense
 sense: package-sense wsa-sense
-	helm install $(NAME-SENSE) . --set=global.environment=kubernetes $(WAITERSACHECK-SENSE) -f ../global.yaml
+	helm install $(NAME-SENSE) . --set=global.environment=kubernetes $(WAITERSACHECK-SENSE) -f ../global.yaml --timeout 10m --wait
 
 .PHONY: remove-sense
 remove-sense:

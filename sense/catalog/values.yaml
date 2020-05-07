@@ -18,6 +18,7 @@ global:
   spire:
     enabled: false
     trust_domain: quickstart.greymatter.io
+    path: '/run/spire/socket/agent.sock'
   # Configures the init container used to wait on various deployments to be ready
   waiter:                             
     image: deciphernow/k8s-waiter:latest
@@ -25,7 +26,7 @@ global:
       name: waiter-sa
   # Global sidecar config (supports version and envvars)
   sidecar:
-    version: 1.3.0
+    version: 1.4.0
 
 catalog:
   # Name used for the deployment and service resources
@@ -367,7 +368,7 @@ services:
     capability: 'Mesh'
     documentation: '/services/control-api/latest/'
     owner: 'Decipher'
-    version: '1.3.0'
+    version: '1.4.0'
     routes:
       - '/services/control-api/{{ $.Values.services.controlApi.version }}'
       - '/services/control-api/{{ $.Values.services.controlApi.version }}/'
@@ -396,7 +397,7 @@ services:
     capability: 'Mesh'
     documentation: ''
     owner: 'Decipher'
-    version: '1.3.0'
+    version: '1.4.0'
     secret:
       enabled: true
       secret_name: sidecar-certs
