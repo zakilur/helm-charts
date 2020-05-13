@@ -10,11 +10,11 @@ wsa-spire:
 
 .PHONY: server
 server: wsa-spire
-	helm install $(NAME-SPIRE)-server server --set=global.environment=kubernetes $(WAITERSACHECK-SPIRE) -f ../global.yaml
+	helm install $(NAME-SPIRE)-server server $(WAITERSACHECK-SPIRE) -f ../global.yaml
 
 .PHONY: agent
 agent: wsa-spire
-	helm install $(NAME-SPIRE)-agent agent --set=global.environment=kubernetes $(WAITERSACHECK-SPIRE) -f ../global.yaml
+	helm install $(NAME-SPIRE)-agent agent $(WAITERSACHECK-SPIRE) -f ../global.yaml
 
 clean-spire:
 	rm -f ./charts/*
@@ -25,7 +25,7 @@ package-spire: clean-spire
 
 template-spire: package-spire $(BUILD_NUMBER_FILE)
 	mkdir -p $(OUTPUT_PATH)
-	helm template $(NAME-SPIRE) . --set=global.environment=kubernetes $(WAITERSACHECK-SPIRE)  -f ../global.yaml > $(OUTPUT_PATH)/helm-$(NAME-SPIRE)$(BN).yaml
+	helm template $(NAME-SPIRE) . $(WAITERSACHECK-SPIRE)  -f ../global.yaml > $(OUTPUT_PATH)/helm-$(NAME-SPIRE)$(BN).yaml
 
 .PHONY: spire
 spire: package-spire wsa-spire
