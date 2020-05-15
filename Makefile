@@ -45,17 +45,14 @@ dev-dep: clean
 .PHONY: check-secrets
 check-secrets:
 	$(eval SECRET_CHECK=$(shell helm ls | grep secrets | awk '{if ($$1 == "secrets") print "present"; else print "not-present"}'))
-	echo $(SECRET_CHECK)
 	if [[ "$(SECRET_CHECK)" != "present" ]]; then \
-		echo "present" ;\
 		(make secrets);\
 	fi
 
 .PHONY: install-spire
 install-spire:
-	@read -p "Would you like to install Spire? [y/N] " response; \
-	if [ "$$response" = "y" ]; then \
-		echo "Installing spire"; \
+	$(eval IS=$(shell cat global.yaml | grep -A3 'spire:'| grep enabled: | awk '{print $$2}'))
+	if [ "$(IS)" = "true" ]; then \
 		(cd spire && make spire); \
 	fi
 
