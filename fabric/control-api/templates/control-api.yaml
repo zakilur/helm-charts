@@ -20,9 +20,9 @@ spec:
     spec:
       {{- if and .Values.global.environment (ne .Values.global.environment "openshift") }}
       securityContext:
-        runAsUser: 2000
+        runAsUser: {{ .Values.controlApi.userID }}
         runAsGroup: 0
-        fsGroup: 2000
+        fsGroup: {{ .Values.controlApi.userID }}
       {{- end }}
       containers:
         - name: {{ .Values.controlApi.name }}
