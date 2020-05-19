@@ -129,12 +129,12 @@ slo:
       ssl_1_way_ssl:
         type: value
         value: "{{- if .Values.postgres.rds.enabled }}true{{- else }}false{{- end }}"
-    # Sidecar configuration overrides for SLO
-    sidecar:
-      envvars:
-        xds_cluster:
-          type: value
-          value: '{{ .Values.slo.name }}'
+  # Sidecar configuration overrides for SLO
+  sidecar:
+    envvars:
+      xds_cluster:
+        type: value
+        value: '{{ .Values.slo.name }}'
 
   postgres:
     image: 'docker.io/centos/postgresql-10-centos7'
@@ -253,12 +253,12 @@ dashboard:
       server_ssl_key:
         type: "value"
         value: '{{ .Values.dashboard.secret.mount_point}}/{{ .Values.dashboard.secret.secret_keys.key }}'
-    # Sidecar configuration overrides for dashboard
-    sidecar:
-      envvars:
-        xds_cluster:
-          type: value
-          value: '{{ .Values.dashboard.name }}'
+  # Sidecar configuration overrides for dashboard
+  sidecar_dashboard:
+    envvars:
+      xds_cluster:
+        type: value
+        value: '{{ .Values.dashboard.name }}'
 
   prometheus:
     # Used by promethues-configmap.yaml to enable prometheus metrics scraping for sense
@@ -401,19 +401,21 @@ catalog:
       client_email:
         type: value
         value: 'engineering@deciphernow.com'
-    # Sidecar configuration overrides for catalog
-    sidecar:
-      envvars:
-        xds_cluster:
-          type: value
-          value: '{{ .Values.catalog.name }}'
+  # Sidecar configuration overrides for catalog
+  sidecar:
+    image:
+    envvars:
+      xds_cluster:
+        type: value
+        value: '{{ .Values.catalog.name }}'
 
-    # SPIRE: If spire is enabled, uncomment to set init job use_tls to false
-    init:
-      envvars:
-        use_tls:
-          type: value
-          value: '{{ not .Values.global.spire.enabled }}'
+  # SPIRE: If spire is enabled, uncomment to set init job use_tls to false
+  init:
+    image:
+    envvars:
+      use_tls:
+        type: value
+        value: '{{ not .Values.global.spire.enabled }}'
 
 # Services list used to configure Catalog, which populates service metadata for GM Dashboard
 services:
