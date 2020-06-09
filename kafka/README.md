@@ -2,8 +2,6 @@
 
 This directory contains the files needed to install kafka with 3 brokers with a sidecar for each broker.  This will follow the pattern described in the full setup.
 
-TODO: add image of diagram here.
-
 ## Steps
 
 1. Create kafka namespace and add secrets
@@ -13,8 +11,6 @@ TODO: add image of diagram here.
     kubectl get secret docker.secret --export -o yaml | kubectl apply --namespace=kafka -f -
     kubectl get secret sidecar-certs --export -o yaml | kubectl apply --namespace=kafka -f -
     ```
-
-    TODO: add `kafka` namespace to control
 
 2. Install kafka/sidecars
 
