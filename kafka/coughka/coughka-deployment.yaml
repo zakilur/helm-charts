@@ -28,7 +28,7 @@ spec:
             - -b127.0.0.1:9092
             - -b127.0.0.1:9093
             - -b127.0.0.1:9094
-            - -tcoughka-topic
+            - -tcoughka-test-topic
         - name: sidecar
           image: "docker-dev.production.deciphernow.com/deciphernow/gm-proxy:1.4.0"
           imagePullPolicy: IfNotPresent
