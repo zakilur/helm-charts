@@ -205,6 +205,18 @@ spec:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/component: zookeeper
     spec:
+      securityContext:
+        fsGroup: 1001
+      initContainers:
+        - name: volume-permissions
+          image: docker.io/bitnami/minideb:buster
+          imagePullPolicy: "Always"
+          command: ["chown", "-R", "1001:1001", "/bitnami/zookeeper"]
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/zookeeper
       
       containers:
         - name: zookeeper
@@ -344,6 +356,25 @@ spec:
       securityContext:
         fsGroup: 1001
         runAsUser: 1001
+      initContainers:
+        - name: volume-permissions
+          image: docker.io/bitnami/minideb:buster
+          imagePullPolicy: "Always"
+          command:
+            - /bin/bash
+          args:
+            - -ec
+            - |
+              mkdir -p /bitnami/kafka
+              chown -R "1001:1001" "/bitnami/kafka"
+          securityContext:
+            runAsUser: 0
+          resources:
+            limits: {}
+            requests: {}
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/kafka
       containers:
         - name: sidecar
           image: "docker-dev.production.deciphernow.com/deciphernow/gm-proxy:1.4.0"
@@ -539,6 +570,25 @@ spec:
       securityContext:
         fsGroup: 1001
         runAsUser: 1001
+      initContainers:
+        - name: volume-permissions
+          image: docker.io/bitnami/minideb:buster
+          imagePullPolicy: "Always"
+          command:
+            - /bin/bash
+          args:
+            - -ec
+            - |
+              mkdir -p /bitnami/kafka
+              chown -R "1001:1001" "/bitnami/kafka"
+          securityContext:
+            runAsUser: 0
+          resources:
+            limits: {}
+            requests: {}
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/kafka
       containers:
         - name: sidecar
           image: "docker-dev.production.deciphernow.com/deciphernow/gm-proxy:1.4.0"
@@ -734,6 +784,25 @@ spec:
       securityContext:
         fsGroup: 1001
         runAsUser: 1001
+      initContainers:
+        - name: volume-permissions
+          image: docker.io/bitnami/minideb:buster
+          imagePullPolicy: "Always"
+          command:
+            - /bin/bash
+          args:
+            - -ec
+            - |
+              mkdir -p /bitnami/kafka
+              chown -R "1001:1001" "/bitnami/kafka"
+          securityContext:
+            runAsUser: 0
+          resources:
+            limits: {}
+            requests: {}
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/kafka
       containers:
         - name: sidecar
           image: "docker-dev.production.deciphernow.com/deciphernow/gm-proxy:1.4.0"
