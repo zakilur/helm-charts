@@ -1,0 +1,8 @@
+{
+  "proxy_key": "proxy-kibana-observables-proxy",
+  "zone_key": "zone-default-zone",
+  "name": "kibana-observables-proxy",
+  "domain_keys": ["domain-kibana-observables-proxy"],
+  "listener_keys": ["listener-kibana-observables-proxy"],
+  "listeners": null
+}

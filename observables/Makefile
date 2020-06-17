@@ -74,6 +74,7 @@ helm-dep-up:
 kafka: helm-dep-up
 	helm install $(KAFKA-NAME) bitnami/kafka \
 		-f custom-values-files/kafka-values.yaml \
+		--set zookeeper.volumePermissions.enabled=true \
 		--namespace $(NAMESPACE) \
 		$(DRYRUN) --debug
 
@@ -96,7 +97,7 @@ kibana-proxy: helm-dep-up
 		--namespace $(NAMESPACE) \
 		-f custom-values-files/kibana-proxy-values.yaml \
 		--namespace $(NAMESPACE) \
-		--set=global.spire.enabled=true \
+		--set=global.spire.enabled=false \
 		$(DRYRUN) --debug
 
 logstash: helm-dep-up
