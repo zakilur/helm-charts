@@ -8,7 +8,7 @@ ELASTICSEARCH-NAME?=elasticsearch
 KIBANA-NAME?=kibana
 LOGSTASH-NAME?=logstash
 KAFKA-NAME?=kafka-observables
-
+EKS?=false
 
 # DEBUG=
 ifeq ($(TEST),TRUE)
@@ -23,6 +23,13 @@ pwd_name := $(notdir $(PWD))
 
 install-observables: kafka elasticsearch kibana logstash kibana-proxy
 
+.PHONY: check-namespace
+check-namespace:
+	$(eval OBS_NS_CHECK=$(shell kubectl get ns | grep $(NAMESPACE) | awk '{if ($$1 == "$(NAMESPACE)") print "present"; else print "not-present"}'))
+	if [[ "$(OBS_NS_CHECK)" != "present" ]]; then \
+		(make namespace);\
+	fi
+
 # make obseravables namespace
 namespace:
 	kubectl create namespace $(NAMESPACE)
@@ -33,6 +40,13 @@ copy-credentials:
 		cp ../credentials.yaml .; \
 	else \
 		echo "Make sure you are running this from observables makefile"; \
+	fi
+
+.PHONY: check-secrets
+check-secrets: 
+	$(eval SECRET_CHECK=$(shell helm ls -n $(NAMESPACE) | grep secrets | awk '{if ($$1 == "secrets") print "present"; else print "not-present"}'))
+	if [[ "$(SECRET_CHECK)" != "present" ]]; then \
+		(make secrets);\
 	fi
 
 .PHONY: secrets
@@ -74,15 +88,27 @@ helm-dep-up:
 kafka: helm-dep-up
 	helm install $(KAFKA-NAME) bitnami/kafka \
 		-f custom-values-files/kafka-values.yaml \
+		--set zookeeper.volumePermissions.enabled=$(EKS) \
 		--namespace $(NAMESPACE) \
 		$(DRYRUN) --debug
 
 elasticsearch: helm-dep-up
-	helm install $(ELASTICSEARCH-NAME) elastic/elasticsearch \
-		--namespace $(NAMESPACE) \
-		-f custom-values-files/elasticsearch-values.yaml \
-		--namespace $(NAMESPACE) \
-		$(DRYRUN) --debug
+	if [ "$(EKS)" = "true" ]; then \
+		helm install $(ELASTICSEARCH-NAME) elastic/elasticsearch \
+			--namespace $(NAMESPACE) \
+			-f custom-values-files/elasticsearch-values.yaml \
+			--set extraEnvs[0].name=discovery.type,extraEnvs[0].value=single-node \
+			--set extraEnvs[1].name=cluster.initial_master_nodes,extraEnvs[1].value= \
+			--set sysctlInitContainer.enabled=true \
+			--namespace $(NAMESPACE) \
+			$(DRYRUN) --debug; \
+	else \
+		helm install $(ELASTICSEARCH-NAME) elastic/elasticsearch \
+			--namespace $(NAMESPACE) \
+			-f custom-values-files/elasticsearch-values.yaml \
+			--namespace $(NAMESPACE) \
+			$(DRYRUN) --debug; \
+	fi
 
 kibana: helm-dep-up
 	helm install $(KIBANA-NAME) elastic/kibana \
@@ -94,9 +120,9 @@ kibana: helm-dep-up
 kibana-proxy: helm-dep-up
 	helm install $(KIBANA-NAME)-observables-proxy ../proxy \
 		--namespace $(NAMESPACE) \
+		-f ../global.yaml \
 		-f custom-values-files/kibana-proxy-values.yaml \
 		--namespace $(NAMESPACE) \
-		--set=global.spire.enabled=true \
 		$(DRYRUN) --debug
 
 logstash: helm-dep-up

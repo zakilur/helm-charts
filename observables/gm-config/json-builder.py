@@ -6,23 +6,51 @@ import shutil
 
 # requires python 3.6
 
-configFilesDir = "./kibana-observables-proxy"
+spire = input("Is SPIRE enabled? True or False: ")
+if spire == "True":
+    configFilesDir = "./kibana-observables-proxy-spire"
+else:
+    configFilesDir = "./kibana-observables-proxy"
 
 listOfFiles = os.listdir(configFilesDir)
 
 # find and replace kibana-observables
-target = "kibana-observables"
-replacement = "kibana-observables2"
+target = "kibana-name"
+replacement = "kibana-observables-proxy"
+ns_target = "obs-namespace"
+ns_replacement = "observables"
+display_target = "display-name"
+display_name = "Kibana Proxy"
 
 try:
     sys.argv[1]
 except:
-    print("No argument passed")
+    print("No argument for kibana name passed")
     replacement = input("Input the name of the kibana-proxy: ").lower()
 else:
     print("Argument: [%s]" % sys.argv[1])
     replacement = sys.argv[1].lower()
     print("Using [%s] as the kibana-proxy's name " % (replacement))
+
+try:
+    sys.argv[2]
+except:
+    print("No argument for observables namespace passed")
+    ns_replacement = input("Input the observables namespace: ").lower()
+else:
+    print("Argument: [%s]" % sys.argv[2])
+    ns_replacement = sys.argv[2].lower()
+    print("Using [%s] as the observables namespace " % (ns_replacement))
+
+try:
+    sys.argv[3]
+except:
+    print("No argument for Kibana display name passed")
+    display_name = input("Input the display name: ")
+else:
+    print("Argument: [%s]" % sys.argv[3])
+    display_name = sys.argv[3].lower()
+    print("Using [%s] as the display name " % (display_name))
 
 # Make export directory
 export_dir = "%s/export/%s" % (".", replacement)
@@ -54,10 +82,22 @@ for file in listOfFiles:
     fout = open("%s/%s%s" % (export_dir, name, ext), "wt")
 
     for line in fin:
-        fout.write(line.replace(target, replacement))
+        if file == "00.cluster.json":
+            line = line.replace(target, replacement)
+            line = line.replace(ns_target, ns_replacement)
+            fout.write(line)
+        elif file == "06.catalog.json":
+            line = line.replace(target, replacement)
+            line = line.replace(display_target, display_name)
+            fout.write(line)
+        else:
+            fout.write(line.replace(target, replacement))
 
     fin.close()
     fout.close()
+
+os.chmod(export_dir + "/create.sh", 0o777)
+os.chmod(export_dir + "/delete.sh", 0o777)
 
 print("Done Builder")
 print(
