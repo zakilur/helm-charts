@@ -97,13 +97,13 @@ control:
     gm_control_kubernetes_namespaces:
       type: 'value'
       value: '{{ include "control.namespaces" . }}'
+    # The following values are not applied. Change the 'type' to 'value' to use these variables.
     gm_control_stats_backends:
-        type: 'value'
+        type: 'null'
         value: 'prometheus'
     gm_control_stats_addr:
-      type: 'value'
+      type: 'null'
       value: '0.0.0.0:{{ .Values.global.control.prometheus_port }}/prometheus'
-    # The following values are not applied. Change the 'type' to 'value' to use these variables.
     gm_control_diff_dry_run:
       type: 'null'
       value: 'true'
