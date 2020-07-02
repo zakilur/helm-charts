@@ -28,6 +28,9 @@ spec:
             - name: grpc
               containerPort: {{ .Values.global.control.port }}
               protocol: TCP
+            - name: als-metrics
+              containerPort: {{ .Values.global.control.prometheus_port }}
+              protocol: TCP
           livenessProbe:
             tcpSocket:
               port: grpc

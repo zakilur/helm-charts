@@ -20,6 +20,8 @@ global:
     port: 50000
     # The label Control uses to find pods to include in the mesh
     cluster_label: greymatter.io/control
+    # port for prometheus to listen on
+    prometheus_port: 9102
     # Comma delimited string of namespaces for control to monitor. Also used by prometheus.    
     additional_namespaces:
   data:
@@ -76,8 +78,8 @@ control:
     # Number of replicas for the deployment
     replicas: 1
     # Version of control
-    version: 1.4.2
-    image: 'docker.production.deciphernow.com/deciphernow/gm-control:{{ $.Values.control.version }}'
+    version: latest
+    image: 'deciphernow/gm-control:{{ $.Values.control.version }}'
     # When to pull images, used in the deployment
     image_pull_policy: IfNotPresent
     # Secret used to talk to control-api
@@ -136,6 +138,12 @@ control:
       gm_control_kubernetes_namespaces:
         type: 'value'
         value: '{{ include "control.namespaces" . }}'
+      gm_control_stats_backends:
+        type: 'value'
+        value: 'prometheus'
+      gm_control_stats_addr:
+        type: 'value'
+        value: '0.0.0.0:9102/prometheus'
       # The following values are not applied. Change the type to 'value' to use these variables.
       gm_control_diff_dry_run:
         type: 'null'
