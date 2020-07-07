@@ -3,7 +3,7 @@ SHELL := /bin/bash
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 pwd_name := $(notdir $(PWD))
-HELM_REPO:=adx
+HELM_REPO:=decipher
 
 
 copy-credentials:

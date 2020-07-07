@@ -4,7 +4,7 @@ current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 
 NAME-EDGE:=edge
 
-HELM_REPO:=adx
+HELM_REPO:=decipher
 
 pwd_name := $(notdir $(PWD))
 

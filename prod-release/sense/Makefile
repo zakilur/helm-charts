@@ -2,7 +2,7 @@ SHELL := /bin/bash
 NAME-SENSE:=sense
 CHART-SENSE := .
 
-HELM_REPO:=adx
+HELM_REPO:=decipher
 
 include ../output.mk
 
