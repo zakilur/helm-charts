@@ -24,7 +24,7 @@ upgrade-secrets: helm-repo-update copy-credentials values-validation
 
 values-validation:
 	# Ensure that the rds.enabled is true in secrets and in fabric values files
-	if [ "$(shell cat secrets.custom-secrets-values.yaml | grep -A1 rds | grep enabled: | awk '{print $$2}')" == "$(shell cat ../sense/custom-sense-values.yaml | grep -A1 rds | grep enabled: | awk '{print $$2}')" ]; then \
+	if [ "$(shell cat custom-secrets-values.yaml | grep -A1 rds | grep enabled: | awk '{print $$2}')" == "$(shell cat ../sense/custom-sense-values.yaml | grep -A1 rds | grep enabled: | awk '{print $$2}')" ]; then \
 		echo "rds.enabled in secrets and sense match"; \
 	else \
 		echo "rds.enabled in secrets and sense DO NOT MATCH.  Secrets will not be created"; \
