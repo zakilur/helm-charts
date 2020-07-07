@@ -15,11 +15,11 @@ helm-repo-update:
 
 .PHONY: secrets
 secrets: helm-repo-update copy-credentials values-validation
-	helm secrets install secrets $(HELM_REPO)/secrets --version 2.2.0 -f custom-secrets.yaml -f credentials.yaml -f ../global.yaml
+	helm install secrets $(HELM_REPO)/secrets --version 2.2.0 -f custom-secrets.yaml -f credentials.yaml -f ../global.yaml
 
 .PHONY: upgrade-secrets
 upgrade-secrets: helm-repo-update copy-credentials values-validation
-	helm secrets upgrade secrets $(HELM_REPO)/secrets --version 2.2.0 -f custom-secrets.yaml -f credentials.yaml -f ../global.yaml
+	helm upgrade secrets $(HELM_REPO)/secrets --version 2.2.0 -f custom-secrets.yaml -f credentials.yaml -f ../global.yaml
 	rm credentials.yaml
 
 values-validation:
