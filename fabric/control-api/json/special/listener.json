@@ -118,6 +118,11 @@
       }
     },
     "gm_jwtsecurity": {
+      "retryDelayMs": 1000,
+      "maxRetries": 5,
+      "timeoutMs": 3000,
+      "cacheLimit": 100,
+      "cachedTokenExp": 5,
       {{- if .Values.global.spire.enabled }}
       "apiKey": "{{ .Values.global.jwt_api_key }}",
       "endpoint": "http://localhost:10909/jwt",
