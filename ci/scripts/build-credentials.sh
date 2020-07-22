@@ -1,9 +1,17 @@
 #!/bin/bash
 
 #Helper Function in case of S3
+empty_input_check() {
+    if [[ -z "$1" ]]; then
+        printf '%s\n' "No input entered"
+        exit 1
+    fi
+}
+
 aws() {
     echo -e "\nS3 Access Key:"
     read ACCESS
+    empty_input_check $ACCESS
     echo S3 Secret Key:
     read SECRET
     echo AWS Region:
@@ -17,7 +25,8 @@ echo decipher email:
 read EMAIL
 echo password:
 read -s PASSWORD
-read -p "Do you wish to configure S3 credentials for gm-data backing [yn] " -n 1 yn
+echo "Do you wish to configure S3 credentials for gm-data backing [yn] "
+read -re yn
 TEMPLATE=credentials.template
 case $yn in
     [Yy]* ) TEMPLATE=s3credentials.template; aws;;
