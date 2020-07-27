@@ -35,7 +35,7 @@ global:
     path: '/run/spire/socket/agent.sock'
 edge:
   version: '1.4.2'
-  image: 'deciphernow/gm-proxy:latest'
+  image: 'deciphernow/gm-proxy:jwt-cache-api'
   image_pull_policy: IfNotPresent
   # Port where the edge proxy will listen
   port: 10808
