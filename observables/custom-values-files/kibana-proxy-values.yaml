@@ -4,8 +4,8 @@ imagePullSecrets:
   - name: {{ .Values.global.image_pull_secret }}
 
 sidecar:
-  version: 1.4.0
-  image: 'docker-dev.production.deciphernow.com/deciphernow/gm-proxy:1.4.0'
+  version: 1.4.4
+  image: 'docker-dev.production.deciphernow.com/deciphernow/gm-proxy:1.4.4'
   envvars:
     xds_host:
       type: 'value'
