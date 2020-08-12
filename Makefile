@@ -127,3 +127,7 @@ observables:
 remove-observables:
 	cd observables && \
 	make destroy-observables NAMESPACE=$(OBSERVABLES_NAMESPACE)
+
+.PHONY: spire-custom-ca
+spire-custom-ca:
+	cd spire && make custom-ca
