@@ -18,7 +18,7 @@ spec:
       initContainers:
         - name: ensure-{{ .Values.catalog.name }}
           image: {{ .Values.global.waiter.image }}
-          imagePullPolicy: {{ .Values.catalog.init.image_pull_policy }}
+          imagePullPolicy: {{ .Values.catalog.init.imagePullPolicy }}
           env:
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
@@ -27,13 +27,17 @@ spec:
       containers:
         - image: {{ tpl .Values.catalog.init.image . }}
           name: {{ .Values.catalog.name }}-init
-          imagePullPolicy: {{ .Values.catalog.init.image_pull_policy }}
+          imagePullPolicy: {{ .Values.catalog.init.imagePullPolicy }}
           command: ["/tmp/bootstrap/bootstrap.sh"]
           env:
           {{- include "envvars" (dict "envvar" .Values.catalog.init.envvars "top" $) | indent 12 }}
           volumeMounts:
+          {{- $data := .Values.global.data.external.enabled }}
+          {{- $intdata := .Values.global.data.internal.enabled }}
           {{- range $name, $service := .Values.services }}
-          {{- if $service.catalogEnabled }}
+          {{- if and (eq .serviceName "data") (not $data) }}
+          {{- else if and (eq .serviceName "internal-data") (not $intdata) }}
+          {{- else if $service.catalogEnabled }}
             - name: service-config-volume-{{$service.serviceName}}
               mountPath: /etc/config/mesh/services/{{$service.serviceName}}
           {{- end }}
@@ -47,8 +51,12 @@ spec:
               mountPath: {{ .Values.catalog.secret.mount_point }}
             {{- end }}
       volumes:
+        {{- $data := .Values.global.data.external.enabled }}
+        {{- $intdata := .Values.global.data.internal.enabled }}
         {{- range $name, $service := .Values.services }}
-        {{- if $service.catalogEnabled }}
+        {{- if and (eq .serviceName "data") (not $data) }}
+        {{- else if and (eq .serviceName "internal-data") (not $intdata) }}
+        {{- else if $service.catalogEnabled }}
         - name: service-config-volume-{{ $service.serviceName }}
           configMap:
             name: service-{{ $service.serviceName }}-catalog-api-config
@@ -67,4 +75,4 @@ spec:
             secretName: {{ .Values.catalog.secret.secret_name }}
         {{- end }}
       imagePullSecrets:
-        - name: docker.secret
+        - name: {{ .Values.global.image_pull_secret }}

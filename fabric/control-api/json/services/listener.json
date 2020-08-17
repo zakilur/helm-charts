@@ -20,9 +20,9 @@
         "X25519:P-256:P-521:P-384"
     ],
     "subject_names": [
-      "spiffe://{{ .Values.global.spire.trust_domain}}/edge"{{- if eq .service.serviceName "jwt-security" }},
+      "spiffe://{{ .Values.global.spire.trust_domain}}/edge"{{- if and (eq .service.serviceName "jwt-security") (.Values.global.data.external.enabled) }},
       "spiffe://{{ .Values.global.spire.trust_domain}}/data"{{- else if eq .service.serviceName "data-internal"}},
-      "spiffe://{{ .Values.global.spire.trust_domain}}/catalog"{{- else if eq .service.serviceName "internal-jwt-security"}},
+      "spiffe://{{ .Values.global.spire.trust_domain}}/catalog"{{- else if and (eq .service.serviceName "internal-jwt-security") (.Values.global.data.internal.enabled) }},
       "spiffe://{{ .Values.global.spire.trust_domain}}/data-internal"{{- end }}
     ]
   },
@@ -30,9 +30,11 @@
   "active_http_filters": [
     "gm.metrics"{{- if (.service.observablesEnabled) }},
     "gm.observables"{{- end }}{{- if .Values.global.spire.enabled }},
-    "envoy.rbac"{{- end }}
+    "envoy.rbac"{{- else }},
+    "gm.impersonation"{{- end }}
   ],
   "http_filters": {
+    {{- if .Values.global.spire.enabled }}
     "envoy_rbac": {
       "rules": {
           "action": 0,
@@ -81,6 +83,11 @@
           }
       }
   },
+  {{- else }}
+    "gm_impersonation": {
+      "servers": "{{ .Values.services.edge.egressDn }}{{- if not (eq .service.serviceName "dashboard") -}}|{{  .Values.global.sidecar.dn }}{{- end -}}"
+    },
+  {{- end }}
     "gm_metrics": {
       "metrics_port": 8081,
       "metrics_host": "0.0.0.0",

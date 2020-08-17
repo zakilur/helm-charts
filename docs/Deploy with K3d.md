@@ -2,19 +2,18 @@
 
 ## Prerequisites
 
-- Docker (must have at least 13Gb of memory allocated)
+- Docker (must have at least 13 GB of memory and 65 GB of disk allocated)
 - Helm 3
 
 ## Local Usage
 
 1. `make k3d` - start a kubernetes cluster locally.
-2. `export KUBECONFIG="$(k3d get-kubeconfig --name='greymatter')"` - configures `kubectl` to use the local k3d cluster.
+2. `export KUBECONFIG=$(k3d kubeconfig write greymatter)` - configures `kubectl` to use the local k3d cluster.
 3. `make credentials` - creates a git ignored file `credentials.yaml`
 4. `make secrets` - inserts data from `credentials.yaml` and `secrets/values.yaml` into the cluster as secrets
 5. `make install` - installs each helm chart (spire, fabric, edge, data, sense). This will take about 1.5 minutes
 6. Open up <https://localhost:30000> using the certificate `./certs/quickstart.p12`. The password is "password"
 7. When you're ready, uninstall Grey Matter with `make uninstall`
-
 
 ### Cluster Command
 
@@ -33,3 +32,7 @@
   - `make delete` will preform an uninstall but will also purge pvc and pods typically spared by helm.  Leaves secrets/credentials.
 - To template Grey Matter `make template`
   - Templating sub charts can be accomplished with `make template-<chart-name>` ex: `helm template-fabric`
+
+### Troubleshooting
+
+If pods are being `Evicted` then check events by running `kubectl get events --sort-by=.metadata.creationTimestamp`. If you see pods failing due to `disk pressure` then you need to increase the amount of disk allocated to Docker. Go to Docker > Preferences > Resources, and increase the disk image size to 65 GB (sufficient at time of this writing).

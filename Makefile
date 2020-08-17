@@ -5,6 +5,8 @@ include output.mk
 # `make credentials` to build out credentials with user input
 # `make secrets` deploys the credentials
 
+K3D?=false
+
 .PHONY: minikube
 minikube:
 	./ci/scripts/minikube.sh
@@ -12,8 +14,7 @@ minikube:
 .PHONY: k3d
 k3d:
 	./ci/scripts/k3d.sh
-	@echo -e "\nSet KUBECONFIG in your shell by running:"
-	@echo -e "export KUBECONFIG=$$(k3d get-kubeconfig --name='greymatter')"
+  K3D=true
 
 reveal-endpoint:
 	./ci/scripts/show-voyager.sh
@@ -22,7 +23,7 @@ reveal-endpoint:
 destroy:
 	-(make delete)
 	-minikube delete
-	-k3d delete --name greymatter
+	-k3d cluster delete greymatter
 	-(eval unset KUBECONFIG)
 
 
@@ -45,7 +46,7 @@ dev-dep: clean
 check-secrets:
 	$(eval SECRET_CHECK=$(shell helm ls | grep secrets | awk '{if ($$1 == "secrets") print "present"; else print "not-present"}'))
 	if [[ "$(SECRET_CHECK)" != "present" ]]; then \
-		(make secrets);\
+		(make secrets); \
 	fi
 
 .PHONY: install-spire
@@ -61,6 +62,9 @@ install: dev-dep check-secrets install-spire
 	sleep 20
 	(cd edge && make edge)
 	sleep 20
+	if [ "$(K3D)" = "true" ]; then \
+		(kubectl patch svc edge -p '{"spec": {"type": "LoadBalancer"}}'); \
+	fi
 	(cd data && make data)
 	sleep 20
 	(cd sense && make sense)
@@ -108,3 +112,22 @@ remove-secrets:
 .PHONY: credentials
 credentials:
 	cd secrets && make credentials
+
+EKS?=false
+OBSERVABLES_NAMESPACE?=observables
+
+.PHONY: observables
+observables:
+	cd observables && \
+	make check-namespace NAMESPACE=$(OBSERVABLES_NAMESPACE) && \
+	make check-secrets NAMESPACE=$(OBSERVABLES_NAMESPACE) && \
+	make install-observables NAMESPACE=$(OBSERVABLES_NAMESPACE) EKS=$(EKS)
+
+.PHONY: remove-observables
+remove-observables:
+	cd observables && \
+	make destroy-observables NAMESPACE=$(OBSERVABLES_NAMESPACE)
+
+.PHONY: spire-custom-ca
+spire-custom-ca:
+	cd spire && make custom-ca
