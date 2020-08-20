@@ -102,6 +102,9 @@ controlApi:
     gm_control_api_persister_path:
       type: value
       value: '{{ .Values.controlApi.pvc_mount_point }}'
+    gm_control_api_disable_version_check:
+      type: value
+      value: 'true'
   resources:
   pvc:
     size: 1Gi
