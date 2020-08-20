@@ -81,6 +81,7 @@ edge:
       mount_point: /etc/proxy/tls/sidecar/
   # If set, enables ingress TLS on the edge proxy using the secret specified in secret_name
   ingress:
+    type: ClusterIP
     secret:
       enabled: true
       secret_name: greymatter-edge-ingress
