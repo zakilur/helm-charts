@@ -23,10 +23,7 @@ global:
   data:
     # whether to install an external data
     external:
-      enabled: true
-    # whether to install an internal data
-    internal:
-      enabled: true    
+      enabled: false
   # Whether or not to use spire for cert management and the trust domain
   spire:
     enabled: true
@@ -315,7 +312,7 @@ catalog:
     # Name used for the deployment and service resources
     name: catalog
     # GM Catalog version
-    version: 1.0.7
+    version: 1.1-dev
     image: docker.greymatter.io/development/gm-catalog:{{ $.Values.catalog.version }}
     # When to pull container images, used in the deployment
     image_pull_policy: IfNotPresent
@@ -340,10 +337,40 @@ catalog:
     envvars:
       config_source:
         type: value
-        value: 'gmdata'
-      config_polling_interval:
+        value: 'redis'
+      redis_host:
         type: value
-        value: '30s'
+        value: '{{- if .Values.global.external_redis.disabled }}mesh-redis.{{ .Release.Namespace }}.svc.cluster.local{{- else}}{{ .Values.global.external_redis.host }}{{- end }}'
+      redis_port:
+        type: value
+        value: '{{- if .Values.global.external_redis.disabled }}6379{{- else}}{{ .Values.global.external_redis.port }}{{- end }}'
+      redis_use_tls:
+        type: value
+        value: '{{- if .Values.global.external_redis.disabled }}false{{- else}}{{ .Values.global.external_redis.use_tls }}{{- end }}'
+      redis_ca_cert_path:
+        type: value
+        value: '{{- if .Values.global.external_redis.disabled }}{{- else}}{{ .Values.global.external_redis.ca_cert_path }}{{- end }}'
+      redis_server_cert_path:
+        type: value
+        value: '{{- if .Values.global.external_redis.disabled }}{{- else}}{{ .Values.global.external_redis.server_cert_path }}{{- end }}'
+      redis_server_key_path:
+        type: value
+        value: '{{- if .Values.global.external_redis.disabled }}{{- else}}{{ .Values.global.external_redis.server_key_path }}{{- end }}'
+      redis_pass:
+        type: value
+        value: '{{- if .Values.global.external_redis.disabled }}{{- else}}{{ .Values.global.external_redis.pass }}{{- end }}'
+      redis_db:
+        type: value
+        value: '{{- if .Values.global.external_redis.disabled }}1{{- else}}{{ .Values.global.external_redis.control_api_db }}{{- end }}'
+      redis_max_retries:
+        type: value
+        value: '{{- if .Values.global.external_redis.disabled }}50{{- else}}{{ .Values.global.external_redis.max_retries }}{{- end }}'
+      redis_retry_delay:
+        type: value
+        value: '{{- if .Values.global.external_redis.disabled }}5s{{- else}}{{ .Values.global.external_redis.retry_delay }}{{- end }}'
+      instance_polling_interval:
+        type: value
+        value: '5s'
       port:
         type: value
         value: '{{ $.Values.catalog.port }}'
@@ -368,48 +395,7 @@ catalog:
       server_key_path:
         type: value
         value: '/etc/pki/{{ .Values.catalog.secret.secret_keys.key }}'
-      client_address:
-        type: value
-        value: localhost
-      client_port:
-        type: value
-        value: '10909'
-      client_prefix:
-        type: value
-        value: '/data'
-      client_use_tls:
-        type: value
-        value: '{{ not .Values.global.spire.enabled }}'
-      client_cert:
-        type: secret
-        secret: sidecar-certs
-        key: cert_b64
-      client_key:
-        type: secret
-        secret: sidecar-certs
-        key: key_b64
-      client_trust:
-        type: secret
-        secret: sidecar-certs
-        key: ca_b64
-      gmdata_startup_delay:
-        type: value
-        value: '10s'
-      gmdata_max_retries:
-        type: value
-        value: '100'
-      gmdata_retry_delay:
-        type: value
-        value: '5s'
-      gmdata_root_event_name:
-        type: value
-        value: 'world'
-      client_identity:
-        type: value
-        value: 'CN=greymatter,OU=Engineering,O=Decipher Technology Studios,L=Alexandria,ST=Virginia,C=US'
-      client_email:
-        type: value
-        value: 'engineering@greymatter.io'
+
     # Sidecar configuration overrides for catalog
     sidecar:
       envvars:
@@ -510,29 +496,6 @@ services:
         key: server.key
         ca: ca.crt
 
-  internal-data:
-    catalogEnabled: false
-    controlEnabled: true
-    name: 'Grey Matter Internal Data'
-    serviceName: 'data-internal'
-    observablesEnabled: false
-    port: 8181
-    enableInstanceMetrics: "true" 
-    capability: 'Data'
-    documentation: '/services/data/latest/static/ui/index.html'
-    name: 'Grey Matter Internal Data'
-    owner: 'Decipher'
-    version: 1.1.1
-    secret:
-      enabled: true
-      secret_name: sidecar-certs
-      mount_point: /etc/proxy/tls/sidecar
-      insecure: true
-      secret_keys:
-        cert: server.crt
-        key: server.key
-        ca: ca.crt
-
   jwt:
     catalogEnabled: true
     controlEnabled: true
@@ -542,28 +505,6 @@ services:
     port: 3000
     enableInstanceMetrics: 'true'
     capability: 'Security'
-    documentation: ''
-    owner: 'Decipher'
-    version: '1.1.1'
-    secret:
-      enabled: true
-      secret_name: sidecar-certs
-      mount_point: /etc/proxy/tls/sidecar
-      insecure: true
-      secret_keys:
-        cert: server.crt
-        key: server.key
-        ca: ca.crt
-
-  internal-jwt:
-    catalogEnabled: false
-    controlEnabled: true
-    name: 'Grey Matter JWT Security Internal'
-    serviceName: 'internal-jwt-security'
-    observablesEnabled: false
-    port: 3000
-    enableInstanceMetrics: 'true'
-    capability: 'Grey Matter'
     documentation: ''
     owner: 'Decipher'
     version: '1.1.1'

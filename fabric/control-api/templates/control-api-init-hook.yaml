@@ -37,10 +37,8 @@ spec:
               mountPath: {{ .Values.bootstrap.secret.mount_point }}
             {{- end }}
           {{- $data := .Values.global.data.external.enabled }}
-          {{- $intdata := .Values.global.data.internal.enabled }}
           {{- range $name, $service := .Values.services }}
           {{- if and (eq .serviceName "data") (not $data) }}
-          {{- else if and (eq .serviceName "internal-data") (not $intdata) }}
           {{- else if $service.controlEnabled }}
             - name: service-config-volume-{{$service.serviceName}}
               mountPath: /etc/config/mesh/services/{{$service.serviceName}}
@@ -63,10 +61,8 @@ spec:
             {{- end }}
         {{- end }}
         {{- $data := .Values.global.data.external.enabled }}
-        {{- $intdata := .Values.global.data.internal.enabled }}
         {{- range $name, $service := .Values.services }}
         {{- if and (eq .serviceName "data") (not $data) }}
-        {{- else if and (eq .serviceName "internal-data") (not $intdata) }}
         {{- else if $service.controlEnabled }}
         - name: service-config-volume-{{ $service.serviceName }}
           configMap:

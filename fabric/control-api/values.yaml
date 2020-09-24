@@ -52,7 +52,7 @@ controlApi:
   display_name: control-api
   # Number of replicas for the deployment
   replicas: 1
-  version: 1.4.3
+  version: v1.5.0-dev
   image: 'docker.greymatter.io/development/gm-control-api:{{ .Values.controlApi.version }}'
   # When to pull images, used in the deployment
   image_pull_policy: IfNotPresent
@@ -98,10 +98,37 @@ controlApi:
       value: '{{ .Values.global.zone }}'
     gm_control_api_persister_type:
       type: value
-      value: 'file'
-    gm_control_api_persister_path:
+      value: 'redis'
+    gm_control_api_redis_host:
       type: value
-      value: '{{ .Values.controlApi.pvc_mount_point }}'
+      value: '{{- if .Values.global.external_redis.disabled }}mesh-redis.{{ .Release.Namespace }}.svc{{- else}}{{ .Values.global.external_redis.host }}{{- end }}'
+    gm_control_api_redis_port:
+      type: value
+      value: '{{- if .Values.global.external_redis.disabled }}6379{{- else}}{{ .Values.global.external_redis.port }}{{- end }}'
+    gm_control_api_redis_use_tls:
+      type: value
+      value: '{{- if .Values.global.external_redis.disabled }}false{{- else}}{{ .Values.global.external_redis.use_tls }}{{- end }}'
+    gm_control_api_redis_ca_cert_path:
+      type: value
+      value: '{{- if .Values.global.external_redis.disabled }}{{- else}}{{ .Values.global.external_redis.ca_cert_path }}{{- end }}'
+    gm_control_api_redis_server_cert_path:
+      type: value
+      value: '{{- if .Values.global.external_redis.disabled }}{{- else}}{{ .Values.global.external_redis.server_cert_path }}{{- end }}'
+    gm_control_api_redis_server_key_path:
+      type: value
+      value: '{{- if .Values.global.external_redis.disabled }}{{- else}}{{ .Values.global.external_redis.server_key_path }}{{- end }}'
+    gm_control_api_redis_pass:
+      type: value
+      value: '{{- if .Values.global.external_redis.disabled }}{{- else}}{{ .Values.global.external_redis.pass }}{{- end }}'
+    gm_control_api_redis_db:
+      type: value
+      value: '{{- if .Values.global.external_redis.disabled }}0{{- else}}{{ .Values.global.external_redis.control_api_db }}{{- end }}'
+    gm_control_api_redis_max_retries:
+      type: value
+      value: '{{- if .Values.global.external_redis.disabled }}50{{- else}}{{ .Values.global.external_redis.max_retries }}{{- end }}'
+    gm_control_api_redis_retry_delay:
+      type: value
+      value: '{{- if .Values.global.external_redis.disabled }}5s{{- else}}{{ .Values.global.external_redis.retry_delay }}{{- end }}'
   resources:
   pvc:
     size: 1Gi
@@ -135,7 +162,7 @@ sidecar:
 
 
 bootstrap:
-  image: 'docker.greymatter.io/development/greymatter:1.4.2'
+  image: 'docker.greymatter.io/development/greymatter:latest'
   image_pull_policy: IfNotPresent
   secret:
     enabled: true
@@ -155,9 +182,6 @@ bootstrap:
       type: 'value'
     greymatter_api_key:
       value: 'xxx'
-      type: 'value'
-    greymatter_api_ssl:
-      value: 'false'
       type: 'value'
     basic_object_path:
       value: '/tmp/mesh/basic_objects'
@@ -252,32 +276,6 @@ services:
     documentation: '/services/data/latest/static/ui/index.html'
     owner: 'Decipher'
     version: 1.1.1
-    jwt_prefix: /jwt
-    secret:
-      enabled: true
-      secret_name: sidecar-certs
-      mount_point: /etc/proxy/tls/sidecar
-      insecure: true
-      secret_keys:
-        cert: server.crt
-        key: server.key
-        ca: ca.crt
-
-  internal-data:
-    catalogEnabled: false
-    controlEnabled: true
-    name: 'Grey Matter Internal Data'
-    serviceName: 'data-internal'
-    observablesEnabled: false
-    port: 8181
-    enableInstanceMetrics: "true"
-    capability: 'Data'
-    jwt_prefix: '/jwt'
-    documentation: '/services/data/latest/static/ui/index.html'
-    name: 'Grey Matter Internal Data'
-    owner: 'Decipher'
-    version: 1.1.1
-    jwt_prefix: /jwt
     secret:
       enabled: true
       secret_name: sidecar-certs
@@ -297,28 +295,6 @@ services:
     port: 3000
     enableInstanceMetrics: 'true'
     capability: 'Security'
-    documentation: ''
-    owner: 'Decipher'
-    version: '1.1.1'
-    secret:
-      enabled: true
-      secret_name: sidecar-certs
-      mount_point: /etc/proxy/tls/sidecar
-      insecure: true
-      secret_keys:
-        cert: server.crt
-        key: server.key
-        ca: ca.crt
-
-  internal-jwt:
-    catalogEnabled: false
-    controlEnabled: true
-    name: 'Grey Matter JWT Security Internal'
-    serviceName: 'internal-jwt-security'
-    observablesEnabled: false
-    port: 3000
-    enableInstanceMetrics: 'true'
-    capability: 'Grey Matter'
     documentation: ''
     owner: 'Decipher'
     version: '1.1.1'
