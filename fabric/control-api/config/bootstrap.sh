@@ -66,6 +66,22 @@ for d in */; do
     cd $MESH_CONFIG_DIR/services
 done
 
+# Create configurations objects for Prometheus
+cd $MESH_CONFIG_DIR/special
+echo "Creating special configuration objects for Prometheus"
+create_or_update "domain" domain-prometheus.json
+create_or_update "domain" domain-egress-prometheus.json
+create_or_update "listener" listener-prometheus.json
+create_or_update "listener" listener-egress-prometheus.json
+create_or_update "proxy" proxy-prometheus.json
+create_or_update "cluster" cluster-prometheus.json
+create_or_update "shared_rules" shared_rules-prometheus.json
+create_or_update "route" route-prometheus.json
+create_or_update "cluster" cluster-edge-prometheus.json
+create_or_update "route" route-1-edge-prometheus.json
+create_or_update "route" route-2-edge-prometheus.json
+create_or_update "shared_rules" shared_rules-edge-prometheus.json
+
 # The edge service is created last as it links to the clusters of every other service.
 # The edge domain must be created before it can be referenced
 cd $MESH_CONFIG_DIR/special
